@@ -22,6 +22,11 @@ proposing anything.
 - **No bespoke editing surfaces.** Resolve is the editor. Code is burners+glue.
 - **Lint before spend; verify artifacts, not self-reports.** Silent failure is
   this API's house style (False returns, first-AddRenderJob no-op → retry).
+- **Resolve lifecycle: quit gracefully, never pkill, and WAIT.** Save via API →
+  AppleScript quit → poll until the process is actually gone (+ a few seconds)
+  before any relaunch. A pkill + instant relaunch crashed Resolve 21.0.2 in
+  libggml (its bundled ML runtime) on 2026-07-11. The Studio Daemon owns this
+  sequence; nothing else starts/stops Resolve.
 - **The bible** lives at `../bible/README.md`. Judge all architecture against it.
 
 ## Known state / active work
