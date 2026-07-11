@@ -1,5 +1,27 @@
 # Install-day checklist — Resolve Studio
 
+## Progress 2026-07-11 (install day WAS today)
+- ✅ Studio 21.0.2.4 installed, licensed, external scripting **Local** confirmed live
+- ✅ E2E smoke PASSED (`scripts/smoke_e2e.py`): project → import → timeline →
+  markers → render → ffprobe. Finding: render inherited project-default 24fps
+  vs 30fps sources — **Compiler must always set timebase explicitly.**
+  AddRenderJob first call returned a job id (quirk didn't manifest; guard kept).
+- ✅ Interchange smoke PASSED (`scripts/smoke_interchange.py`): auto-editor
+  FCPXML → `ImportTimelineFromFile` → 5 editable clips.
+- ✅ `.setting` format verified against BMD's own shipped examples at
+  `/Library/Application Support/Blackmagic Design/DaVinci Resolve/Developer/Fusion Templates/`
+  (MacroOperator + InstanceInput, plain-text Lua table — as designed for).
+- ✅ Bundled docs located (`Developer/Scripting/README.txt`, 26 May 2026 — newer
+  than the gist mirror, 8 May). CHANGELOG.txt: drift is ADDITIVE only. Resolve 21
+  added: TranscribeAudio(useSpeakerDetection), PerformAudioClassification,
+  AnalyzeForIntellisearch, AnalyzeForSlate, GenerateSpeech,
+  DisableBackgroundTasksForCurrentResolveSession. → Check whether transcript
+  TEXT is now retrievable via API (old folklore: trigger-only).
+- 🔎 Found `Developer/OGraf HTML Templates/` — EBU OGraf HTML graphics support?
+  Potential hyperframes↔Resolve bridge. INVESTIGATE.
+- ⬜ Remaining: MCP `install.py` · headless `-nogui` probe · agent-authored
+  `.setting` → Effects Library round-trip (needs one Resolve restart + Ryan's eyes)
+
 Run top to bottom the day Studio lands. Each item is minutes; together they
 convert RESEARCH.md's remaining [UNVERIFIED] claims into ground truth on THIS
 machine before any building starts.
