@@ -18,27 +18,17 @@ fix this file.*
   - Emitter decision: **OTIO** (reliable/faithful; FCPXML regressed to silent
     no-op). Recorded in `docs/STORY-IR.md`.
 
-## Open issue (top of next session)
+## ~~Open issue~~ SOLVED (2026-07-11, next session)
 
-**Cold-start import flake.** `ImportTimelineFromFile` into a project *created in
-the current session* fails silently (~half the time, non-deterministic) even
-after the save/close/reload recipe. Same call succeeds when the project is
-warm/pre-existing — the test suite passes, but a truly cold CLI first-build can
-fail and need a retry. Evidence: ~4 inline/manual repros succeeded, ~4 CLI cold
-runs failed, no single reliable differentiator found. This is the "silent
-failure is the API's house style" reality the research warned about.
+**The "cold-start import flake" was never a flake.** Root cause:
+`ImportTimelineFromFile` silently fails on **relative paths** — Resolve is a
+separate process with its own CWD. Every historical failure had a relative
+path; every success an absolute one. Proven back-to-back in one project:
+relative → False, absolute → True. Fix: `compile.py` resolves the interchange
+path absolute; retry loop removed (it was noise). True cold CLI build + render
+now passes end-to-end.
 
-Candidate fixes to try next session (do NOT thrash live — pick one, test clean):
-1. Create+configure the project in a **separate process**, exit, then compile
-   in a fresh process (the create/import split — matches the "warm project
-   imports fine" evidence).
-2. Drive import through the **gursky MCP server** instead of raw scripting —
-   it may sequence project ops more robustly (also the planned MCP-install task).
-3. A warm-up: import a throwaway 1-clip timeline first, delete it, then import
-   the real one.
-
-Current `compile.py` retries 6× / 2s, which covers warm-session flakiness but
-not a truly cold first build.
+**Doctrine: every path handed to any Resolve API call is absolute. No exceptions.**
 
 ## Known Resolve quirks (doctrine, learned the hard way 2026-07-11)
 

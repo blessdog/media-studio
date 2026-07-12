@@ -3,8 +3,6 @@
 Project-per-IR named {name}@{hash8}. Idempotent: an existing project+timeline
 for the same content is reused, not rebuilt.
 """
-import time
-
 from . import emit as emitmod
 from . import ir as irmod
 from .resolve import connect
@@ -48,23 +46,15 @@ def compile_ir(ir, base_dir, otio_path):
     pm.CloseProject(proj)
     proj = pm.LoadProject(proj_name)
 
-    emitmod.emit(ir, base_dir, otio_path)
+    # Resolve is a separate process with its own CWD: relative paths in
+    # ImportTimelineFromFile fail silently. Absolute, always.
+    otio_path = emitmod.emit(ir, base_dir, otio_path).resolve()
     mp = proj.GetMediaPool()
-    # KNOWN FLAKE (docs/STORY-IR.md): the first ImportTimelineFromFile into a
-    # project created in the current session can silently fail even after
-    # save/close/reload. Retrying helps in warm sessions; a truly cold first
-    # build may still need a second invocation. See STATUS.md open issue.
-    tl = None
-    for _ in range(6):
-        mp = proj.GetMediaPool()
-        tl = mp.ImportTimelineFromFile(str(otio_path), {"timelineName": tl_name})
-        if tl:
-            break
-        time.sleep(2)
+    tl = mp.ImportTimelineFromFile(str(otio_path), {"timelineName": tl_name})
     if not tl:
         raise RuntimeError(
             f"ImportTimelineFromFile failed for {otio_path} "
-            f"(project {proj_name}, fps {fps}) — known cold-start flake, retry the command")
+            f"(project {proj_name}, fps {fps})")
 
     # -- markers via API (proven path; not carried in the interchange file) --
     start = tl.GetStartFrame()
