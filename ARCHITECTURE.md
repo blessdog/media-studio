@@ -89,8 +89,8 @@ opportunity later, not a day-one merge.
    plugin (live key-state displays). Recommendation: Companion first.
 3. **MCP posture**: adopt gursky's server as-is for exploration + wrap our own
    deterministic verbs in the daemon (recommendation), or granular-tools-only.
-4. **Registry scope**: this repo only, or eventually shared with bongpot/cutwork
-   (recommendation: this repo only until the split lesson says otherwise).
+4. ~~**Registry scope**~~ BLESSED 2026-07-12: **this repo only** (widen later
+   only if the split lesson says otherwise).
 5. **Veo/Kling/Wan provider mix and budget** for Scene Forge (deferred to Phase 7).
 6. **Whether cutwork ever routes through Resolve** (its doctrine currently says
    hyperframes; a change is Ryan's call, made there, not here).

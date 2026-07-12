@@ -5,13 +5,19 @@ session continuity. Read CLAUDE.md and STATUS.md first; this file is the map.*
 
 ## The end state
 
-Ryan hands the system a script/brief and raw material. Agents transcribe,
-propose the cut, compile editable Resolve timelines, populate his approved
-motion templates, apply his saved grades, render, and put finished files in
-front of him. He does two things: creative brief at the front, verdicts on
-rendered artifacts at the end. Tactile control via Stream Deck; zero GUI
-scavenger hunts. Bongpot and cutwork are consumers, never absorbed.
-Everything verified against ground truth at every stage.
+**Copilot, not autopilot** (Ryan's alignment correction, 2026-07-12 — this
+overrides any earlier "brief in → finished video out" framing). Ryan MAKES the
+videos: live OBS sessions driven from the Stream Deck (zoom-ins, cut scenes,
+screen shares), iPhone footage, found media, his own script. The system is his
+co-editor in the loop: scene-by-scene, conversational — place a meme image at
+a moment, build a motion graphic for a beat, time an overlay to the music,
+tighten a cut — Claude talking to Resolve at the software-to-software level,
+every visual change returned to Ryan's eyes as a rendered artifact. He is the
+creative input all the way through, not just at the ends. Agents do the
+precision and the tedium: transcription, IR mutation, compile, template
+population, grade application, render, delivery, verification. Tactile control
+via Stream Deck; zero GUI scavenger hunts. Bongpot and cutwork are consumers,
+never absorbed. Everything verified against ground truth at every stage.
 
 ## Division of labor (locked)
 
@@ -27,7 +33,7 @@ application, render, delivery, verification.
 | 0 Foundation | Studio license, scripting, smokes | ✅ 2026-07-11 |
 | 1 Story IR + Compiler | schema/, studio/, tools/compile-ir.py, tests 9/9 | ✅ 2026-07-11 (path doctrine: ABSOLUTE paths to all Resolve calls) |
 | 2 Ingest lane | tools/ingest-recording.py: recording → Deepgram + auto-editor → evidence-linked IR → verified timeline | ✅ 2026-07-11 |
-| 3 Cut Brain v0 + Registry v0 | LLM (OpenRouter): transcript + brief → proposed IR, linted; SQLite registry | **NEXT** — [RYAN gate: registry scope; rec: this repo only] |
+| 3 Assembly Loop v0 + Registry v0 | Claude-in-session co-editing: IR verbs + scene previews + SQLite registry | **IN PROGRESS** — registry scope blessed 2026-07-12: this repo only |
 | 4 Template Library v0 | 3–5 Ryan-approved .setting templates; agent populates only; Anim-Curves doctrine; OGraf investigation | queued |
 | 5 Studio Daemon + Deck | Python HTTP daemon owns Resolve lifecycle + verbs; Stream Deck keys | queued — [RYAN gates: Companion vs custom plugin (rec: Companion); MCP posture (rec: gursky for exploration + daemon verbs)] |
 | 6 Finishing lane | Grade Library (DRX/LUT apply), delivery fan-out, bongpot adapter (video-plan.json seconds → IR frames) | queued |
@@ -52,18 +58,32 @@ creative pass in the GUI. Look via Phase 6 grade + Phase 4 lyric/title
 templates. Delivery fan-out via Phase 6. What stays Ryan's: which image lands
 on which beat, and what the video means.
 
-## Phase 3 drill-down (next up — needs Ryan's registry-scope blessing first)
+## Phase 3 drill-down — Assembly Loop v0 + Registry v0 (in progress)
 
-1. **Registry v0** (SQLite, `studio/registry.py` + `registry.db` gitignored):
-   tables assets / transcripts / irs / renders / decisions; every tool writes
-   through it; the cross-session memory the research called the hardest problem.
-2. **Cut Brain v0** (`studio/brain.py` + `tools/cut-brain.py`): OpenRouter call
-   (model id in a config SSOT, per bible §2.2): transcript.json + Ryan's
-   brief/script → proposed Story IR. Every edit MUST carry evidence; the
-   deterministic linter gates before compile (bongpot lint-plan pattern).
-   Key q for Ryan at design time: brief format (freeform text first).
-3. Exit: script + recording in → approved rough cut out, every cut explainable
-   via its evidence link. Test: speech.mp4 + a two-line brief.
+*Reframed 2026-07-12 per Ryan's alignment correction. The earlier "Cut Brain
+v0" (one-shot OpenRouter brief→IR) is DEAD as a centerpiece — a one-shot
+brief→video generator is not this project. Claude Code in session IS the
+brain; what Phase 3 builds is the fast deterministic loop it drives while
+Ryan and Claude work scene-by-scene.*
+
+1. **Registry v0** (SQLite, `studio/registry.py` + `registry.db` gitignored —
+   scope BLESSED 2026-07-12: this repo only): tables assets / transcripts /
+   irs / renders / decisions; every tool writes through it; the cross-session
+   memory the research called the hardest problem.
+2. **IR verbs** (`studio/edit_ir.py`): safe programmatic IR mutations Claude
+   drives conversationally — insert/remove/retime edits, shift a scene,
+   place an asset at a record frame, add markers. Output is always a full IR
+   that goes back through lint (nothing bypasses the gates).
+3. **Scene previews** (`tools/preview.py` or verb in compile CLI): render just
+   a frame range / working scene, not the whole timeline — seconds-fast
+   feedback, artifact `open`ed on Ryan's screen. His eyes are the verdict.
+4. (Demoted, optional later) an OpenRouter batch pass for cheap mechanical
+   subtasks (e.g. candidate silence-cut suggestions) — never the author of
+   the video.
+5. Exit: a working session where Ryan says "put X at moment Y" style
+   directions and gets a verified, rendered scene preview back within the
+   conversation, with every change linted, compiled, and recorded in the
+   registry. Test: speech.mp4 + a live co-editing exchange.
 
 ## Phase 4 drill-down — Template Library v0
 
@@ -145,7 +165,7 @@ license). Curation surface = files on disk + Ryan's eyes, not a bespoke UI.
 2. Resolve running + external scripting Local (else `scripts/restart_resolve.py`).
 3. Sanity: `.venv/bin/python tools/compile-ir.py tests/fixtures/golden-ir.json`
    → COMPILE OK (reused cached timeline).
-4. Continue at Phase 3 (above) — ask Ryan the registry-scope gate first.
+4. Continue at Phase 3 (above) — registry gate is blessed; build per drill-down.
 
 ## Key doctrine (hard-won 2026-07-11, full list in STATUS.md)
 

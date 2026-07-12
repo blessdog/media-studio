@@ -10,6 +10,11 @@ Read `RESEARCH.md` (verified ground truth) and `ARCHITECTURE.md` before
 proposing anything.
 
 ## Locked decisions
+- **Copilot, not autopilot** (Ryan, 2026-07-12). Ryan makes the videos (live
+  OBS + Stream Deck sessions, iPhone footage, his script); this system is his
+  in-loop co-editor, scene by scene — memes, motion graphics, music overlays,
+  cut timing — Claude driving Resolve software-to-software, Ryan the creative
+  input throughout. NO one-shot brief→finished-video generation, ever.
 - **Resolve Studio only.** No free-edition bridges in production.
 - **Edits are computed OUTSIDE Resolve** (Story IR → FCPXML/OTIO →
   `ImportTimelineFromFile`). Never clip-by-clip API surgery; the API is
