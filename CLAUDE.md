@@ -30,11 +30,14 @@ proposing anything.
 - **The bible** lives at `../bible/README.md`. Judge all architecture against it.
 
 ## Known state / active work
-- 2026-07-11: research + architecture done, repo bootstrapped. Resolve Studio
-  NOT yet purchased/installed — Phase 0 blocks everything.
-- Open [RYAN] decisions listed at the end of `ARCHITECTURE.md` (name, deck
+- **Read `STATUS.md` then `docs/PLAN.md` first** — live status + the full
+  approved phase map with pickup checklist.
+- 2026-07-11: Phases 0, 1, 2 ALL shipped on install day. Compiler + ingest
+  lane work end-to-end, verified. Next: Phase 3 (Cut Brain + Registry) —
+  blocked on Ryan's registry-scope gate. MCP install is a small parallel task
+  (vendor/davinci-resolve-mcp cloned, venv ready).
+- Open [RYAN] decisions in `ARCHITECTURE.md` §Open decisions (name, deck
   middleware, MCP posture, registry scope). Do not build past a blocked decision.
-- Install-day checklist: `docs/INSTALL-DAY.md`.
 
 ## How to work with me (Ryan)
 - **Pressure-test before agreeing**; argue the "we don't need this" side first.
