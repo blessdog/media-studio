@@ -40,8 +40,20 @@ now passes end-to-end.
   (`scripts/restart_resolve.py`).
 - Renders inherit project-default fps unless set explicitly (the 24-vs-30 bug).
 
+## Phase 2 — Ingest lane ✅ (2026-07-11, same evening)
+
+`tools/ingest-recording.py <recording> [--render]` — one command: probe →
+auto-editor loudness spans (v3 export, maps losslessly to IR) → Deepgram
+nova-3 diarized transcription (key in repo .env, gitignored) → Story IR with
+per-edit utterance evidence + speaker-colored transcript markers mapped onto
+the CUT timeline → lint → compile → verify [→ render+ffprobe].
+Proven on a real spoken recording (say-generated): 3 speech spans kept, 3
+utterances as evidence/markers, all gates green, rendered output verified.
+Modules: `studio/{probe,transcribe,silence,ingest}.py`.
+Transcribe degrades gracefully (missing key → silence-only ingest, warns).
+
 ## Next
 
-1. Harden cold-start (above) — small, isolated.
-2. MCP server install (parallel track).
-3. **Phase 2** — ingest lane: recording → Deepgram + auto-editor → IR → rough cut.
+1. MCP server install (parallel track, small).
+2. **Phase 3** — Cut Brain v0 + Registry v0 ([RYAN gate: registry scope]).
+3. Ryan gates still open: project name, deck middleware, MCP posture.
