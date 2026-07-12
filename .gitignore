@@ -1,4 +1,5 @@
 outputs/
+registry.db*
 dist/
 node_modules/
 .env

@@ -19,6 +19,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from studio import ingest as ingestmod
 from studio import lint as lintmod
 from studio import probe as probemod
+from studio import registry as regmod
 from studio import silence as silencemod
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -45,6 +46,8 @@ def main():
 
     meta = probemod.probe(rec)
     print(f"probe: {meta['width']}x{meta['height']} @ {meta['fps']} fps, {meta['duration']:.1f}s")
+    reg = regmod.connect()
+    regmod.record_asset(reg, rec, kind="video", probe=meta)
 
     timebase, spans = silencemod.loud_spans(rec, margin=args.margin)
     kept = sum(s["srcOut"] - s["srcIn"] for s in spans)
@@ -60,12 +63,14 @@ def main():
             n_spk = len({u['speaker'] for u in transcript['utterances']})
             print(f"transcript: {len(transcript['utterances'])} utterances, "
                   f"{n_spk} speaker(s) -> {ws / 'transcript.json'}")
+            regmod.record_transcript(reg, rec, transcript, ws / "transcript.json")
         except tmod.TranscribeError as e:
             print(f"transcribe skipped: {e}")
 
     ir = ingestmod.build_ir(name, rec, meta, timebase, spans, transcript)
     ir_path = ws / "story.json"
     ir_path.write_text(json.dumps(ir, indent=1))
+    regmod.record_ir(reg, ir, ir_path)
     print(f"IR written: {ir_path}")
 
     errors, warnings = lintmod.lint(ir, ws)
@@ -100,6 +105,7 @@ def main():
             for e in rerrs:
                 print(f"  {e}")
             return 1
+        regmod.record_render(reg, ir, out, verified=True)
         print(f"verify (render): green | output: {out}")
     print("INGEST OK")
     return 0

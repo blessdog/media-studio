@@ -14,6 +14,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from studio import ir as irmod
 from studio import lint as lintmod
 from studio import compile as compmod
+from studio import registry as regmod
 from studio import verify as verifymod
 
 
@@ -58,6 +59,9 @@ def main():
         return 1
     print("verify (structure): green")
 
+    reg = regmod.connect()
+    regmod.record_ir(reg, ir, args.ir_file)
+
     if args.render:
         rerrors, out = verifymod.verify_render(
             ir, proj, timeline, base_dir / "outputs" / "compiled")
@@ -66,6 +70,7 @@ def main():
             for e in rerrors:
                 print(f"  {e}")
             return 1
+        regmod.record_render(reg, ir, out, verified=True)
         print(f"verify (render): green | output: {out}")
 
     print("COMPILE OK")
