@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://media-studio.local/schema/story-ir-0.1.json",
+  "title": "Story IR v0.1",
+  "description": "Versioned, Resolve-independent edit-decision contract. Frame integers everywhere; timing is meaningless without the timebase.",
+  "type": "object",
+  "required": ["irVersion", "name", "timebase", "resolution", "assets", "edits"],
+  "additionalProperties": false,
+  "properties": {
+    "irVersion": { "const": "0.1" },
+    "name": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{1,63}$",
+      "description": "kebab-case identifier; becomes the timeline name prefix"
+    },
+    "timebase": {
+      "type": "object",
+      "required": ["fps"],
+      "additionalProperties": false,
+      "properties": {
+        "fps": {
+          "type": "string",
+          "pattern": "^[0-9]{1,6}/[0-9]{1,4}$",
+          "description": "rational frames-per-second, e.g. 30/1 or 30000/1001"
+        }
+      }
+    },
+    "resolution": {
+      "type": "object",
+      "required": ["width", "height"],
+      "additionalProperties": false,
+      "properties": {
+        "width": { "type": "integer", "minimum": 16, "maximum": 16384 },
+        "height": { "type": "integer", "minimum": 16, "maximum": 16384 }
+      }
+    },
+    "assets": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "path", "kind"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "$ref": "#/$defs/id" },
+          "path": {
+            "type": "string",
+            "minLength": 1,
+            "description": "absolute, or relative to the IR file's directory"
+          },
+          "kind": { "enum": ["video", "audio", "image"] },
+          "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+        }
+      }
+    },
+    "edits": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "asset", "srcIn", "srcOut", "record"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "$ref": "#/$defs/id" },
+          "asset": { "$ref": "#/$defs/id" },
+          "srcIn": { "type": "integer", "minimum": 0, "description": "first source frame, inclusive" },
+          "srcOut": { "type": "integer", "minimum": 1, "description": "last source frame, exclusive" },
+          "record": { "type": "integer", "minimum": 0, "description": "timeline frame where the edit lands" },
+          "track": { "type": "integer", "minimum": 1, "default": 1 },
+          "beat": { "type": "string" },
+          "evidence": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "markers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["frame", "color", "name"],
+        "additionalProperties": false,
+        "properties": {
+          "frame": { "type": "integer", "minimum": 0 },
+          "color": {
+            "enum": ["Blue", "Cyan", "Green", "Yellow", "Red", "Pink",
+                     "Purple", "Fuchsia", "Rose", "Lavender", "Sky",
+                     "Mint", "Lemon", "Sand", "Cocoa", "Cream"]
+          },
+          "name": { "type": "string", "minLength": 1 },
+          "note": { "type": "string" },
+          "duration": { "type": "integer", "minimum": 1, "default": 1 }
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "generator": { "type": "string" },
+        "promptVersion": { "type": "string" },
+        "createdBy": { "type": "string" }
+      }
+    }
+  },
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[a-z][a-z0-9_-]{0,31}$" }
+  }
+}

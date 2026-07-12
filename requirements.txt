@@ -1,0 +1,2 @@
+jsonschema==4.26.0
+opentimelineio==0.18.1
