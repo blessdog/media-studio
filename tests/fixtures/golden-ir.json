@@ -1,0 +1,23 @@
+{
+  "irVersion": "0.1",
+  "name": "golden",
+  "timebase": { "fps": "30/1" },
+  "resolution": { "width": 1920, "height": 1080 },
+  "assets": [
+    {
+      "id": "a1",
+      "path": "../../outputs/smoke/talky.mp4",
+      "kind": "video",
+      "sha256": "a1d5aa9ad949922ace1f39389dc63f754115512df89975547d7e091d7c18986a"
+    }
+  ],
+  "edits": [
+    { "id": "e1", "asset": "a1", "srcIn": 60,  "srcOut": 150, "record": 0,   "track": 1, "evidence": ["intro"] },
+    { "id": "e2", "asset": "a1", "srcIn": 300, "srcOut": 360, "record": 120, "track": 1, "evidence": ["mid"] }
+  ],
+  "markers": [
+    { "frame": 0,   "color": "Red",   "name": "beat-1", "note": "open" },
+    { "frame": 120, "color": "Green", "name": "beat-2", "note": "cut point" }
+  ],
+  "provenance": { "generator": "hand-authored", "createdBy": "ryan" }
+}

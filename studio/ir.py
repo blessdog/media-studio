@@ -41,9 +41,19 @@ def asset_path(asset, base_dir):
     return p if p.is_absolute() else (base_dir / p).resolve()
 
 
+def _strip_internal(obj):
+    """Drop lint/enrichment keys (underscore-prefixed) so the identity hash is
+    stable whether or not lint has run."""
+    if isinstance(obj, dict):
+        return {k: _strip_internal(v) for k, v in obj.items() if not k.startswith("_")}
+    if isinstance(obj, list):
+        return [_strip_internal(v) for v in obj]
+    return obj
+
+
 def content_hash(ir):
     """Canonical hash of the IR content (identity for idempotence)."""
-    canon = json.dumps(ir, sort_keys=True, separators=(",", ":"))
+    canon = json.dumps(_strip_internal(ir), sort_keys=True, separators=(",", ":"))
     return hashlib.sha256(canon.encode()).hexdigest()
 
 

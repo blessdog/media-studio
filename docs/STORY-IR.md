@@ -41,4 +41,31 @@ The compiler's interchange emitter is decided empirically by
 `opentimelineio` library (v0.18.1) imported into Resolve 21.0.2 and probed for
 clip count / fps fidelity.
 
-**RESULT: see the Spike Result section appended by the spike run.**
+### Spike result (2026-07-11) — OTIO is primary
+
+Empirical findings on Resolve 21.0.2, verified with `scripts/spike_otio.py`,
+`diag_import.py`, `diag_fps_recipe.py`:
+
+1. **OTIO imports reliably and faithfully** — clip count, record offsets, and
+   durations all exact (built with `opentimelineio` 0.18.1). **Primary emitter.**
+2. **FCPXML regressed within-session** to returning `True` while silently
+   creating no timeline (a lie worse than OTIO's honest behavior). Not used.
+3. **OTIO inherits the PROJECT's timeline frame rate**, not the file's. This is
+   controllable and is why the compiler stamps fps before import.
+4. **Resolve locks project frame rate once any timeline exists.** So fps must
+   be set on a fresh project before its first timeline.
+5. **Imports into a just-created project fail silently** (`False`/no-op) until
+   the project is saved, closed, and reloaded. This caused a confusing string
+   of false failures during the spike; the reload clears it.
+
+### The compiler recipe (proven)
+
+Per IR, one project named `{name}@{hash8}`:
+1. Create project (or load if it already exists → idempotence).
+2. `SetSetting("timelineFrameRate", fps)` + resolution, **before any timeline**.
+3. Save → close → **reload** (mandatory; clears fresh-project import flakiness).
+4. `ImportTimelineFromFile(otio, {"timelineName": ...})`.
+5. Add markers via API; verify.
+
+Project-per-IR (not timeline-in-shared-project) because frame rate is
+per-project-immutable and different IRs carry different rates.

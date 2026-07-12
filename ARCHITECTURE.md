@@ -73,8 +73,8 @@ opportunity later, not a day-one merge.
 
 | Phase | Deliverable | Exit condition |
 |---|---|---|
-| 0 | Studio purchased + installed; `docs/INSTALL-DAY.md` executed; BMD Edit/Fusion training started | External scripting Local works; bundled Developer README diffed vs mirror |
-| 1 | **Compiler spike (no AI)**: hand-written Story IR → bins, timeline, markers, render → ffprobe green; rerunnable | Same IR → same timeline, twice, no corruption |
+| 0 ✅ | Studio purchased + installed; `docs/INSTALL-DAY.md` executed; BMD Edit/Fusion training started | External scripting Local works; bundled Developer README diffed vs mirror |
+| 1 ✅ | Story IR v0.1 + deterministic compiler (`studio/`, `tools/compile-ir.py`) → editable timeline + render, ffprobe-verified; test 9/9 | MET (steady state); cold-start import flake open — see STATUS.md |
 | 2 | auto-editor handoff: real recording → silence-stripped editable timeline | Timeline opens with cuts as clips, relinked media |
 | 3 | Cut Brain v0 + IR linter: script + transcript → Story IR → compiled rough cut | Every cut carries evidence; lint gate holds |
 | 4 | Template Library v0: 3–5 Ryan-approved `.setting` templates + agent population | Templates appear in Effects Library; agent fills text/params; motion approved by eye |
