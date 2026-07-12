@@ -65,6 +65,79 @@ on which beat, and what the video means.
 3. Exit: script + recording in → approved rough cut out, every cut explainable
    via its evidence link. Test: speech.mp4 + a two-line brief.
 
+## Phase 4 drill-down — Template Library v0
+
+Full doctrine in `docs/MOTION-GRAPHICS.md` (three tiers, formats, anti-slop).
+Deliverables: 3–5 `.setting` templates (caption style, lower third, callout,
+chapter card) authored as text, Anim-Curves duration-adaptive, each entering
+the library ONLY via render-preview → Ryan's eyes; `studio/templates.py`
+(populate installed template via fusionscript `SetInput`, or write
+per-instance .setting); template linter; IR schema bump to carry a `graphics`
+entity (version 0.2 — additive). Insertion via
+`InsertFusionTitleIntoTimeline` (proven). OGraf investigation time-boxed.
+
+## Phase 5 drill-down — Studio Daemon + Deck
+
+Daemon (Python, localhost HTTP): owns Resolve lifecycle — the proven
+`scripts/restart_resolve.py` sequence (save → AppleScript quit → poll exit →
++5s settle → launch; NEVER pkill, libggml crash) becomes its restart verb.
+Verbs v0: `arm-capture` (Audio Hijack `.ahcommand` — requires its
+Settings > Advanced "Allow execution of external scripts"), `ingest-last`
+(newest file in OBS output dir → tools/ingest-recording.py), `rough-cut`,
+`queue-render`, `status`. Deck wiring: **Companion first** (4.3.4, 700+
+modules incl. OBS, generic HTTP button → daemon; no Resolve module needed) —
+custom Node plugin (SDK WebSocket: keyDown/dialRotate/touchTap in, per-key
+images/state OUT) only later if live key-state displays earn it. Farrago:
+official first-party plugin (Settings > Controllers; six action types; works
+backgrounded) — zero glue. MCP posture rec: gursky server for
+exploration/conversational control; the daemon's verbs stay deterministic.
+
+## Phase 6 drill-down — Finishing lane
+
+**Grade Library** (author-once, apply-forever — verified API surface):
+Ryan builds a look by hand in the color page → saved as DRX still (+ LUT
+export via `ExportLUT`, 17/33/65pt CUBE) → versioned in repo → agent applies
+per-clip via `ApplyGradeFromDRX(path, gradeMode)` / `Graph.SetLUT(nodeIdx,
+path)` / `CopyGrades`. NOT scriptable (confirmed v21 README): wheels, curves,
+qualifiers — grades are appliable, never authorable, by script. `SetCDL`
+(slope/offset/power/sat) for coarse scripted correction.
+**Delivery fan-out**: named presets → YouTube master / vertical / podcast
+audio (loudness via ffmpeg — Fairlight is essentially unscriptable). Render
+quirk: first `AddRenderJob` in a fresh project can no-op → retry guard.
+**Bongpot adapter** (one-way): `video-plan.json` `cut.shots`
+{id, covers, start/end float-seconds, speaker} → Story IR
+(covers→`evidence[]`, seconds×fps→frames, one shot→one edit) → finishing
+timeline with approved Wan clips on V1 + untouched call audio on A1 + shot
+IDs/verdicts as markers. FFmpeg lane stays the deterministic default;
+nothing writes back to bongpot.
+
+## Phase 7 drill-down — Scene Forge
+
+**Stills-first economics** (verified pricing 2026-07-11): stills ~$0.039
+(Nano Banana) vs video $0.05/s (Veo 3.1 Lite 720p) / $0.10–0.12 (Fast) /
+$0.40 (Standard 1080p) — generate MANY stills, curate hard, animate winners
+only. Veo 3/2 are DEAD (shutdown 2026-06-30) — 3.1 model ids only.
+**Character consistency**: native reference-identity FIRST (Veo/Sora identity
+anchors; open-weights Wan 2.2 Animate holds identity from a single reference
+image via DWPose+SAM2, FP8 14B checkpoint), train a LoRA only for a recurring
+character reused across many videos. Kling v3 tops the blind-vote arena
+(small sample); Hailuo/Seedance cited strongest at I2V; open-weights on GPU
+rental wins above ~5K videos/mo (blog-grade heuristic).
+**Blender bpy headless**: deterministic camera work (the mountain-road car
+shot), repeatable scenes, alpha overlays; hybrid worth testing =
+Blender-rendered motion → Wan Animate restyle (its video-driving mode).
+Everything lands in Registry with provenance (model, prompt version,
+license). Curation surface = files on disk + Ryan's eyes, not a bespoke UI.
+
+## Deferred / explicitly out of scope until revisited
+
+- Audio-only IR tracks, transitions, retimes (schema bumps when needed).
+- Multicam sync producer (Phase 2 extension when a real shoot needs it).
+- Beat-grid producer for music videos (small; lands with Phase 2/3 code).
+- Watch-folder auto-ingest (end of Phase 2 scope, optional).
+- Selling any of this (market research in RESEARCH.md Part 5: capped/niche/
+  productized or nothing; service-first if ever).
+
 ## Session pickup checklist (after reboot)
 
 1. Open Claude Code anywhere under `/Users/SSDrive/projects` (memory loads) or
