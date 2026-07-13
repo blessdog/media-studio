@@ -62,6 +62,10 @@ def transcribe(media_path, out_path):
             data = json.loads(r.read())
     except urllib.error.HTTPError as e:
         raise TranscribeError(f"deepgram {e.code}: {e.read()[:300]}") from e
+    except (urllib.error.URLError, OSError, TimeoutError) as e:
+        # network/SSL trouble must degrade to silence-only ingest, not kill
+        # the job (bit us live on a deck press, 2026-07-13)
+        raise TranscribeError(f"deepgram unreachable: {e}") from e
 
     alt = (data.get("results", {}).get("channels", [{}])[0]
                .get("alternatives", [{}])[0])

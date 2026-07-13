@@ -165,8 +165,13 @@ Found the hard way en route:
   instead of auto-editor refusing.
 - UTF-8 encoding sweep: all read_text/write_text now explicit (ASCII-locale
   subprocesses crashed on em-dashes).
-Deck wiring itself still waits on the Companion [RYAN] gate; daemon runs
-manually for now (launchd later).
+**Deck wiring DONE (2026-07-13, proven by Ryan's fingers)** — Companion
+BLESSED + v5.0.0 installed; Stream Deck XL runs the studio page via the
+Elgato Companion plugin (coexists with his OBS rig). Full doctrine incl.
+Companion-v5 config-by-database in docs/DECK.md. Two full REC→STOP+INGEST
+cycles from physical keys produced verified timelines; a third exposed the
+Deepgram-network crash (now degrades to silence-only ingest). Daemon runs
+manually (launchd later); control page at 127.0.0.1:8873 as backup surface.
 
 ## Next
 
