@@ -6,22 +6,31 @@
       "name": "MS BR OnAir",
       "file": "ms-br-onair.setting",
       "version": 1,
-      "approved": false,
-      "inputs": {"StyledText": "tag text (ON AIR, OFF AIR, REC...)"}
+      "approved": true,
+      "inputs": {
+        "StyledText": "tag text (ON AIR, OFF AIR, REC...)"
+      },
+      "approvalNote": "PROVISIONAL \u2014 Ryan 2026-07-13: 'I think they're fine' \u2014 usable for builds; dedicated aesthetics pass later"
     },
     {
       "name": "MS BR Freq",
       "file": "ms-br-freq.setting",
       "version": 1,
-      "approved": false,
-      "inputs": {"StyledText": "frequency/readout line (top band)"}
+      "approved": true,
+      "inputs": {
+        "StyledText": "frequency/readout line (top band)"
+      },
+      "approvalNote": "PROVISIONAL \u2014 Ryan 2026-07-13: 'I think they're fine' \u2014 usable for builds; dedicated aesthetics pass later"
     },
     {
       "name": "MS BR Station",
       "file": "ms-br-station.setting",
       "version": 1,
-      "approved": false,
-      "inputs": {"StyledText": "station ID lines (\\n between lines)"}
+      "approved": true,
+      "inputs": {
+        "StyledText": "station ID lines (\\n between lines)"
+      },
+      "approvalNote": "PROVISIONAL \u2014 Ryan 2026-07-13: 'I think they're fine' \u2014 usable for builds; dedicated aesthetics pass later"
     }
   ]
 }

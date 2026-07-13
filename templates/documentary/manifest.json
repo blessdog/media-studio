@@ -6,22 +6,31 @@
       "name": "MS DOC Chapter",
       "file": "ms-doc-chapter.setting",
       "version": 1,
-      "approved": false,
-      "inputs": {"StyledText": "chapter title"}
+      "approved": true,
+      "inputs": {
+        "StyledText": "chapter title"
+      },
+      "approvalNote": "PROVISIONAL \u2014 Ryan 2026-07-13: 'I think they're fine' \u2014 usable for builds; dedicated aesthetics pass later"
     },
     {
       "name": "MS DOC Place",
       "file": "ms-doc-place.setting",
       "version": 1,
-      "approved": false,
-      "inputs": {"StyledText": "location/date line (lower-left)"}
+      "approved": true,
+      "inputs": {
+        "StyledText": "location/date line (lower-left)"
+      },
+      "approvalNote": "PROVISIONAL \u2014 Ryan 2026-07-13: 'I think they're fine' \u2014 usable for builds; dedicated aesthetics pass later"
     },
     {
       "name": "MS DOC Quote",
       "file": "ms-doc-quote.setting",
       "version": 1,
-      "approved": false,
-      "inputs": {"StyledText": "quote + attribution (\\n between lines)"}
+      "approved": true,
+      "inputs": {
+        "StyledText": "quote + attribution (\\n between lines)"
+      },
+      "approvalNote": "PROVISIONAL \u2014 Ryan 2026-07-13: 'I think they're fine' \u2014 usable for builds; dedicated aesthetics pass later"
     }
   ]
 }

@@ -1,27 +1,36 @@
 {
   "package": "podcast-clips",
-  "style": "Lemonhead/Lemon Clips-ish: warm cream text, amber/charcoal bands — matches the Lava Lounge studio warmth",
+  "style": "Lemonhead/Lemon Clips-ish: warm cream text, amber/charcoal bands \u2014 matches the Lava Lounge studio warmth",
   "templates": [
     {
       "name": "MS PC Caption",
       "file": "ms-pc-caption.setting",
       "version": 1,
-      "approved": false,
-      "inputs": {"StyledText": "punch-in caption text for clips"}
+      "approved": true,
+      "inputs": {
+        "StyledText": "punch-in caption text for clips"
+      },
+      "approvalNote": "PROVISIONAL \u2014 Ryan 2026-07-13: 'I think they're fine' \u2014 usable for builds; dedicated aesthetics pass later"
     },
     {
       "name": "MS PC Speaker",
       "file": "ms-pc-speaker.setting",
       "version": 1,
-      "approved": false,
-      "inputs": {"StyledText": "speaker name (lower-left card)"}
+      "approved": true,
+      "inputs": {
+        "StyledText": "speaker name (lower-left card)"
+      },
+      "approvalNote": "PROVISIONAL \u2014 Ryan 2026-07-13: 'I think they're fine' \u2014 usable for builds; dedicated aesthetics pass later"
     },
     {
       "name": "MS PC Episode",
       "file": "ms-pc-episode.setting",
       "version": 1,
-      "approved": false,
-      "inputs": {"StyledText": "show + episode lines (use \\n for the second line)"}
+      "approved": true,
+      "inputs": {
+        "StyledText": "show + episode lines (use \\n for the second line)"
+      },
+      "approvalNote": "PROVISIONAL \u2014 Ryan 2026-07-13: 'I think they're fine' \u2014 usable for builds; dedicated aesthetics pass later"
     }
   ]
 }
