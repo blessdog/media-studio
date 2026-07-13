@@ -9,22 +9,27 @@ from . import ir as irmod
 
 
 def verify_timeline(ir, proj, timeline):
-    """Structural checks against the imported timeline. Returns error list."""
+    """Structural checks against the imported timeline, every video track.
+    Returns error list."""
     errors = []
-    items = timeline.GetItemListInTrack("video", 1) or []
-    v1_edits = [e for e in ir["edits"] if e.get("track", 1) == 1]
-    if len(items) != len(v1_edits):
-        errors.append(f"V1 clip count {len(items)} != IR edits {len(v1_edits)}")
-
     start = timeline.GetStartFrame()
-    for it, e in zip(items, sorted(v1_edits, key=lambda e: e["record"])):
-        rec = it.GetStart() - start
-        dur = it.GetDuration()
-        want_dur = e["srcOut"] - e["srcIn"]
-        if rec != e["record"]:
-            errors.append(f"edit {e['id']}: record {rec} != IR {e['record']}")
-        if dur != want_dur:
-            errors.append(f"edit {e['id']}: duration {dur} != IR {want_dur}")
+    by_track = {}
+    for e in ir["edits"]:
+        by_track.setdefault(e.get("track", 1), []).append(e)
+
+    for track, edits in sorted(by_track.items()):
+        items = timeline.GetItemListInTrack("video", track) or []
+        if len(items) != len(edits):
+            errors.append(
+                f"V{track} clip count {len(items)} != IR edits {len(edits)}")
+        for it, e in zip(items, sorted(edits, key=lambda e: e["record"])):
+            rec = it.GetStart() - start
+            dur = it.GetDuration()
+            want_dur = e["srcOut"] - e["srcIn"]
+            if rec != e["record"]:
+                errors.append(f"edit {e['id']}: record {rec} != IR {e['record']}")
+            if dur != want_dur:
+                errors.append(f"edit {e['id']}: duration {dur} != IR {want_dur}")
 
     got_fps = str(timeline.GetSetting("timelineFrameRate"))
     want_fps = float(irmod.fps(ir))
