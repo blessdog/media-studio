@@ -1,0 +1,27 @@
+{
+  "package": "documentary",
+  "style": "Fern-ish: warm off-white Georgia serif, restrained shadows, quiet dark bands",
+  "templates": [
+    {
+      "name": "MS DOC Chapter",
+      "file": "ms-doc-chapter.setting",
+      "version": 1,
+      "approved": false,
+      "inputs": {"StyledText": "chapter title"}
+    },
+    {
+      "name": "MS DOC Place",
+      "file": "ms-doc-place.setting",
+      "version": 1,
+      "approved": false,
+      "inputs": {"StyledText": "location/date line (lower-left)"}
+    },
+    {
+      "name": "MS DOC Quote",
+      "file": "ms-doc-quote.setting",
+      "version": 1,
+      "approved": false,
+      "inputs": {"StyledText": "quote + attribution (\\n between lines)"}
+    }
+  ]
+}

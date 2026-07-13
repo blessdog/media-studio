@@ -1,0 +1,27 @@
+{
+  "package": "broadcast-retro",
+  "style": "Red Bar / pirate radio: mono Courier, signal-red ON AIR, phosphor-green readout, amber station IDs on murky bands. Grain/static overlay deferred (needs a non-TextPlus substrate).",
+  "templates": [
+    {
+      "name": "MS BR OnAir",
+      "file": "ms-br-onair.setting",
+      "version": 1,
+      "approved": false,
+      "inputs": {"StyledText": "tag text (ON AIR, OFF AIR, REC...)"}
+    },
+    {
+      "name": "MS BR Freq",
+      "file": "ms-br-freq.setting",
+      "version": 1,
+      "approved": false,
+      "inputs": {"StyledText": "frequency/readout line (top band)"}
+    },
+    {
+      "name": "MS BR Station",
+      "file": "ms-br-station.setting",
+      "version": 1,
+      "approved": false,
+      "inputs": {"StyledText": "station ID lines (\\n between lines)"}
+    }
+  ]
+}

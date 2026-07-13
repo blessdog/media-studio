@@ -1,0 +1,36 @@
+{
+	Tools = ordered() {
+		Template = TextPlus {
+			CtrlWZoom = false,
+			Inputs = {
+				GlobalOut = Input { Value = 149, },
+				Width = Input { Value = 1920, },
+				Height = Input { Value = 1080, },
+				UseFrameFormatSettings = Input { Value = 1, },
+				StyledText = Input { Value = "LONGMONT, COLORADO — 2026", },
+				Font = Input { Value = "Georgia", },
+				Style = Input { Value = "Regular", },
+				Size = Input { Value = 0.034, },
+				VerticalJustificationNew = Input { Value = 3, },
+				HorizontalJustificationNew = Input { Value = 3, },
+				Center = Input { Value = { 0.17, 0.1 }, },
+				Red1 = Input { Value = 0.96, },
+				Green1 = Input { Value = 0.95, },
+				Blue1 = Input { Value = 0.92, },
+				Enabled2 = Input { Value = 1, },
+				SelectElement = Input { Value = 1, },
+				Select = Input { Value = 3, },
+				Name2 = Input { Value = "Shadow", },
+				ElementShape2 = Input { Value = 2, },
+				Thickness2 = Input { Value = 0.08, },
+				Red2 = Input { Value = 0, },
+				Green2 = Input { Value = 0, },
+				Blue2 = Input { Value = 0, },
+				Alpha2 = Input { Value = 0.6, },
+				Softness2 = Input { Value = 1, },
+				Offset2 = Input { Value = { 0.002, -0.003 }, }
+			},
+			ViewInfo = OperatorInfo { Pos = { 220, 49.5 } },
+		}
+	}
+}

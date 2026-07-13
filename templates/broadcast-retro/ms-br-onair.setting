@@ -1,0 +1,36 @@
+{
+	Tools = ordered() {
+		Template = TextPlus {
+			CtrlWZoom = false,
+			Inputs = {
+				GlobalOut = Input { Value = 149, },
+				Width = Input { Value = 1920, },
+				Height = Input { Value = 1080, },
+				UseFrameFormatSettings = Input { Value = 1, },
+				StyledText = Input { Value = "ON AIR", },
+				Font = Input { Value = "Courier New", },
+				Style = Input { Value = "Bold", },
+				Size = Input { Value = 0.05, },
+				VerticalJustificationNew = Input { Value = 3, },
+				HorizontalJustificationNew = Input { Value = 3, },
+				Center = Input { Value = { 0.11, 0.9 }, },
+				Red1 = Input { Value = 1, },
+				Green1 = Input { Value = 0.25, },
+				Blue1 = Input { Value = 0.15, },
+				Enabled2 = Input { Value = 1, },
+				SelectElement = Input { Value = 1, },
+				Select = Input { Value = 3, },
+				Name2 = Input { Value = "Box", },
+				ElementShape2 = Input { Value = 2, },
+				Level2 = Input { Value = 1, },
+				ExtendHorizontal2 = Input { Value = 0.45, },
+				ExtendVertical2 = Input { Value = 0.5, },
+				Red2 = Input { Value = 0.06, },
+				Green2 = Input { Value = 0.02, },
+				Blue2 = Input { Value = 0.02, },
+				Alpha2 = Input { Value = 0.95, }
+			},
+			ViewInfo = OperatorInfo { Pos = { 220, 49.5 } },
+		}
+	}
+}
