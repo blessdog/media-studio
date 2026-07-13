@@ -107,7 +107,24 @@ per moment.
 - **hyperframes (HTML)**: cutwork's locked compositor; agent authors
   end-to-end deterministically; import renders as clips. NOT wired into this
   repo unless Ryan changes doctrine.
-- **OGraf HTML Templates** (`Developer/OGraf HTML Templates/` discovered on
-  install): EBU standard for HTML overlay graphics, possibly native in
-  Resolve 21 — POTENTIAL hyperframes↔Resolve bridge. Investigate during
-  Phase 4 before building anything on it.
+- **OGraf HTML Templates — INVESTIGATED 2026-07-12 (report-only, per plan).**
+  CONFIRMED native: Resolve renders OGraf graphics as Edit-page **Titles**
+  via Chromium (CEF) through Fusion's OGrafLoader. Full docs ship at
+  `/Library/Application Support/.../Developer/OGraf HTML Templates/`
+  (7 docs + examples + prebuilt). Key facts:
+  - HTML/CSS/JS Web Component + `.ograf.json` manifest (EBU open standard);
+    parameters defined in `schema.properties`; **duration set in manifest**
+    (`"v_bmd": {"duration": 5}`) — no 150-frame still-duration cage.
+  - Resolve REQUIRES `supportsNonRealTime: true` + `goToTime()` — graphics
+    must render deterministically from a timestamp (no timers, no
+    unseeded random, seek-only animation). Perfect fit for our
+    verify-everything pipeline.
+  - Installs per-user under `Fusion/Templates/Edit/Titles/OGraf/`
+    (same live-scanned tree as .setting titles) or packaged as .drfx.
+  - STRATEGIC: this is the **hyperframes↔Resolve bridge confirmed** and a
+    second authoring substrate where agent authoring is far stronger than
+    blind Fusion Lua (CSS/JS animation = kinetic typography's natural
+    home). UNVERIFIED before building: whether
+    `InsertFusionTitleIntoTimeline`/our forge picks up OGraf titles by
+    name, and render-pipeline behavior — smoke first, then decide which
+    package pieces author as OGraf vs .setting.

@@ -137,6 +137,10 @@ video-asset IRs broke the old single-asset assumption).
 
 1. Packages 2–4 on the same rails (podcast/clips incl. captions →
    documentary → broadcast-retro), each ending in preview verdicts.
-2. OGraf HTML Templates investigation (time-boxed, report-only).
+2. ~~OGraf investigation~~ DONE 2026-07-12 (report in
+   docs/MOTION-GRAPHICS.md): NATIVE in Resolve as CEF-rendered Titles,
+   manifest-defined duration, deterministic goToTime — the hyperframes
+   bridge confirmed + kinetic typography's natural substrate. Next step
+   there: smoke whether our forge inserts OGraf titles by name.
 3. MCP server install (parallel track, small).
 4. Ryan gates still open: project name, deck middleware, MCP posture.
