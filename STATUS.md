@@ -276,14 +276,41 @@ Directive: stay regrounded in THIS project's own foundation — finish the
 remaining phase-map items with content-agnostic mechanics and fixture
 material only.
 
+## Scene Forge slices 3 + 4 ✅ (2026-07-13, after regrounding)
+
+**Slice 3 identity — LIVE-PROVEN ($0.16, Ryan-approved):** neutral fixture
+character (wooden marionette, chipped blue hat, red scarf — deliberately
+NOT his studio, NOT LPC). flux-2 `input_images` conditioning held identity
+across marketplace/rowboat/snowy-street scenes — hat chips, scarf, wood
+grain, even the strings persisted. Composite proof:
+outputs/projects/forge-demo/forge/identity-sheet.jpg. This is the
+recurring-character mechanics; WHAT any character is = Prompt Brain, his.
+
+**Slice 4a Blender lane:** `studio/blender.py` + repo `blender/` scene
+scripts + `tools/forge-blender.py`. Blender 5.1.2 facts: `Action.fcurves`
+GONE (layered actions — set
+`preferences.edit.keyframe_new_interpolation_type` BEFORE keying);
+**built-in video export REMOVED** (image_settings enum is stills-only) →
+scenes render PNG sequences, harness muxes with ffmpeg. Fixture
+`orbit-cube` (Track-To constraint = the reusable aim idiom) renders 48f
+headless in seconds, probe-exact 2.00s.
+
+**Slice 4b beat grid:** `studio/beatgrid.py` + `tools/beat-grid.py`:
+librosa beats → ALL frames in beats.json + every-Nth Purple markers →
+recompile. Oracle-tested on a synthesized 120 BPM click (±2 frames);
+live-run on loop-demo (its 5s ambient bed = 1 beat — real-music
+validation awaits Ryan's track). Quantize-to-grid edit verbs come when a
+real music video wants them.
+
 ## Next
 
-1. Slice 3 identity: flux-2 `input_images` reference conditioning
-   (generate consistent character/scene from Ryan-provided reference
-   stills; same gates). Then slice 4 Blender bpy + beat-grid.
-2. Grade Library ([RYAN gate: author a look in the color page first]).
-3. Backlog: per-image prompt variation in batches; empirical cost
-   correction from Replicate bills.
+1. Phase map is BUILT WIDE (Ryan's directive satisfied): all 7 phases have
+   working foundations. Remaining gates are Ryan's: Grade Library (author
+   a look first), Prompt Brain dialogue, bongpot×studio project, project
+   name, aesthetics passes.
+2. Backlog: per-image prompt variation in batches; empirical cost
+   correction from Replicate bills; launchd daemon; deck polish; LAN/auth
+   control page; captions --native exercise; quantize-to-beat edit verbs.
 2. Packages 2–4: **podcast-clips v1 AUTHORED + previewed (autonomous loop,
    2026-07-12)** — outputs/previews/ms-pc-{caption,speaker,episode}-preview.mp4
    awaiting Ryan's verdicts. Documentary + broadcast-retro next, same rails.
