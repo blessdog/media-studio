@@ -30,6 +30,19 @@ MODELS = {
                        "input_images identity conditioning"},
 }
 DEFAULT_MODEL = "qwen-fast"
+
+# I2V models (slice 2). Only models with VERIFIED per-second pricing enter —
+# the approval gate needs deterministic estimates (replicate.com/pricing,
+# checked 2026-07-13; Kling/Seedance/Veo prices unfetchable — revisit).
+# wan-2.1 output length is fixed (~5s, no duration input); supports
+# lora_weights (future identity lane).
+VIDEO_MODELS = {
+    "wan-480p": {"id": "wavespeedai/wan-2.1-i2v-480p", "cost_per_s": 0.09,
+                 "clip_s": 5.0, "note": "cheap motion tier"},
+    "wan-720p": {"id": "wavespeedai/wan-2.1-i2v-720p", "cost_per_s": 0.25,
+                 "clip_s": 5.0, "note": "quality tier"},
+}
+DEFAULT_VIDEO_MODEL = "wan-480p"
 BASE = "https://api.replicate.com/v1"
 
 
@@ -183,6 +196,41 @@ def contact_sheet(batch_dir, cols=4, thumb_w=480):
         draw.text((x + 8, y + t.height + 8), label, fill="#f0f0f0")
     out = batch_dir / "sheet.jpg"
     sheet.save(out, quality=88)
+    return out
+
+
+def estimate_video(model_key):
+    """Dollars per clip (fixed output length -> deterministic)."""
+    m = VIDEO_MODELS[model_key]
+    return m["cost_per_s"] * m["clip_s"]
+
+
+def animate(still, prompt, out_dir, model_key=DEFAULT_VIDEO_MODEL):
+    """Animate one still (I2V) -> <out_dir>/<stem>-mNN.mp4 + sidecar
+    provenance json. The still is the initial frame; the prompt directs
+    the MOTION (Ryan's per-moment creative call, never a default)."""
+    import requests
+    still = Path(still)
+    if not still.is_file():
+        raise ForgeError(f"still missing: {still}")
+    model = VIDEO_MODELS[model_key]
+    out_dir = Path(out_dir)
+    out_dir.mkdir(parents=True, exist_ok=True)
+    n = 1 + sum(1 for _ in out_dir.glob(f"{still.stem}-m*.mp4"))
+    out = out_dir / f"{still.stem}-m{n:02d}.mp4"
+
+    session = requests.Session()
+    session.headers["Authorization"] = f"Bearer {_token()}"
+    urls = _predict(session, model["id"],
+                    {"image": _data_uri(still), "prompt": prompt},
+                    timeout=900)
+    clip = session.get(urls[0], timeout=300)
+    clip.raise_for_status()
+    out.write_bytes(clip.content)
+    out.with_suffix(".json").write_text(json.dumps({
+        "still": str(still), "prompt": prompt, "model": model["id"],
+        "modelKey": model_key, "costUSD": round(estimate_video(model_key), 2),
+    }, indent=1), encoding="utf-8")
     return out
 
 

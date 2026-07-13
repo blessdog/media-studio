@@ -63,6 +63,18 @@ check("sheet is a 3x2 grid", im.width == 600 and im.height > 2 * 100)
 sheet2 = forgemod.contact_sheet(batch, cols=3, thumb_w=200)
 check("sheet excluded from re-tile", Image.open(sheet2).width == 600)
 
+# -- video model SSOT ----------------------------------------------------------
+check("video estimate 480p", abs(forgemod.estimate_video("wan-480p") - 0.45) < 1e-9)
+check("video estimate 720p", abs(forgemod.estimate_video("wan-720p") - 1.25) < 1e-9)
+check("video models have fixed clip length",
+      all("clip_s" in m and "cost_per_s" in m
+          for m in forgemod.VIDEO_MODELS.values()))
+try:
+    forgemod.animate(tmp / "no-such-still.png", "x", tmp / "motion")
+    check("animate missing still rejected", False)
+except forgemod.ForgeError:
+    check("animate missing still rejected", True)
+
 # -- picks --------------------------------------------------------------------
 (batch / "manifest.json").write_text(
     json.dumps({"prompt": "p", "picks": []}), encoding="utf-8")

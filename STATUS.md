@@ -221,12 +221,28 @@ valid creation status. Batches → `<ws>/forge/batch-NN/` with manifest.json
 (prompt/model/cost/picks provenance) + registry rows. Live-proven: 8-still
 batch on Ryan's studio aesthetic, $0.01, sheet verified by eye (both of us).
 
+## Scene Forge slice 2 — I2V engine built, awaiting first live clip (2026-07-13)
+
+`tools/forge-motion.py <ws> <still> "<motion prompt>"` + forge.animate():
+same spend gate as stills. Model SSOT holds ONLY verifiably-priced models
+(replicate.com/pricing 2026-07-13): wavespeedai/wan-2.1-i2v-480p $0.09/s
+and -720p $0.25/s, fixed ~5s output (no duration input) → deterministic
+$0.45 / $1.25 per clip. Kling/Seedance/Veo/Hailuo prices don't render
+anywhere fetchable — parked until verifiable (or measured empirically).
+wan-2.1 takes `lora_weights` — on-ramp for the identity slice. PROMPT
+BRAIN doctrine (Ryan, 2026-07-13, docs/PLAN.md): the prompt is the
+creative authorship layer — agent-written prompts are fixture material;
+real generation takes Ryan's per-moment direction. CAVEAT: inserting a
+16fps/480p forge clip via insert-clip is UNVERIFIED against the OTIO
+path (Resolve should conform by time) — first live clip proves or
+disproves; conform step gets added if needed.
+
 ## Next
 
-1. Scene Forge slice 2: I2V — animate picked stills via hosted video
-   (verify current Replicate video model ids + $/s first), clip lands in
-   <ws>/media ready for insert-clip. Then slice 3 identity, slice 4
-   Blender bpy + beat-grid.
+1. Slice 2 live test: animate Ryan's picked still ([RYAN: pick + $0.45
+   approval]), insert-clip it into a real timeline — also settles the
+   mixed-fps question. Then slice 3 identity (flux-2 input_images +
+   wan lora_weights), slice 4 Blender bpy + beat-grid.
 2. Grade Library ([RYAN gate: author a look in the color page first]).
 2. Packages 2–4: **podcast-clips v1 AUTHORED + previewed (autonomous loop,
    2026-07-12)** — outputs/previews/ms-pc-{caption,speaker,episode}-preview.mp4
