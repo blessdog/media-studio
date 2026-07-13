@@ -221,6 +221,34 @@ valid creation status. Batches → `<ws>/forge/batch-NN/` with manifest.json
 (prompt/model/cost/picks provenance) + registry rows. Live-proven: 8-still
 batch on Ryan's studio aesthetic, $0.01, sheet verified by eye (both of us).
 
+## Scene Forge slice 2 ✅ LIVE-PROVEN (2026-07-13, later)
+
+Full loop closed on real material: Ryan picked still #08 + gave the motion
+direction → `forge-motion.py` clip (hailuo-2.3-fast, 1378x768@24fps, 5.9s,
+$0.48 ceiling approved) → `insert-clip` cutaway at frame 240 of his real
+morning recording → compiled `2026-07-13-09-43-20@1d525f2c`, ground-truthed
+(V2 item start=240 dur=210 exactly). **Mixed-fps SETTLED: Resolve conforms
+24fps media by time through our OTIO path — no conform step needed.**
+Hard-won same hour:
+- **wan family on Replicate is DEAD upstream** (wavespeedai wan-2.1 AND
+  wan-video wan-2.5 both fail E002 on every run, data-URI and file-URL
+  alike; flux-schnell official ran fine → account healthy). Default is now
+  minimax/hailuo-2.3-fast (768p 6s). Do not re-add wan without a live retest.
+- Replicate rejects **data URIs >~256KB** (that E002 red herring cost a
+  round) — `_image_input()` uploads >200KB stills via the files API.
+- Video pricing is unpublished across providers → estimates are CEILINGS,
+  flagged `estimated`, Ryan approves the ceiling; correct the table from
+  real bills.
+- **CONFESSION: every edit-ir mutation had been broken since the UTF-8
+  sweep** (`encoding=` kwarg inside json.dumps instead of write_text —
+  TypeError on write). The sweep was never re-exercised through the CLI.
+  Fixed + proven by this insert. Lesson: a "mechanical" sweep still needs
+  one end-to-end run per touched tool.
+- PROMPT BRAIN doctrine (Ryan): prompts are the creative authorship layer —
+  its own deferred planning area (docs/PLAN.md); agent prompts = fixture
+  material. Also: one-prompt-x-N batches give seed-level variety only —
+  same-y sheets; real batches want per-image prompt variation (backlog).
+
 ## Scene Forge slice 2 — I2V engine built, awaiting first live clip (2026-07-13)
 
 `tools/forge-motion.py <ws> <still> "<motion prompt>"` + forge.animate():
@@ -239,11 +267,12 @@ disproves; conform step gets added if needed.
 
 ## Next
 
-1. Slice 2 live test: animate Ryan's picked still ([RYAN: pick + $0.45
-   approval]), insert-clip it into a real timeline — also settles the
-   mixed-fps question. Then slice 3 identity (flux-2 input_images +
-   wan lora_weights), slice 4 Blender bpy + beat-grid.
+1. Slice 3 identity: flux-2 `input_images` reference conditioning
+   (generate consistent character/scene from Ryan-provided reference
+   stills; same gates). Then slice 4 Blender bpy + beat-grid.
 2. Grade Library ([RYAN gate: author a look in the color page first]).
+3. Backlog: per-image prompt variation in batches; empirical cost
+   correction from Replicate bills.
 2. Packages 2–4: **podcast-clips v1 AUTHORED + previewed (autonomous loop,
    2026-07-12)** — outputs/previews/ms-pc-{caption,speaker,episode}-preview.mp4
    awaiting Ryan's verdicts. Documentary + broadcast-retro next, same rails.
