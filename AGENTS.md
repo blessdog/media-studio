@@ -44,9 +44,14 @@ gate failure. Every path handed to Resolve must be ABSOLUTE (doctrine).
 | `tools/ingest-recording.py <file> [--name N] [--render]` | recording → probe → silence spans → Deepgram transcript → Story IR → compiled timeline, shown in Resolve. Workspace: `outputs/projects/<name>/` |
 | `tools/edit-ir.py <ws> find "phrase"` | locate spoken words → timeline frame + timecode |
 | `tools/edit-ir.py <ws> insert-image <img> --where "phrase" \| --at M:SS \| --record F [--dur s]` | file image into media/, cutaway edit, lint, recompile, show |
+| `tools/edit-ir.py <ws> insert-clip <video> --where\|--at\|--record [--src-in s] [--dur s]` | found-b-roll video cutaway on the overlay track |
+| `tools/edit-ir.py <ws> insert-graphic <template> --where\|--at\|--record [--dur s] [--input K=V ...]` | APPROVED library template instance (forged alpha master, placed exactly) |
 | `tools/edit-ir.py <ws> retime <edit-id> [--record F] [--dur s]` | move/stretch an edit, recompile |
-| `tools/edit-ir.py <ws> remove <edit-id>` | remove edit (+ orphaned asset), recompile |
+| `tools/edit-ir.py <ws> remove <edit-id>` / `remove-graphic <id>` | remove edit/graphic (+ orphaned asset), recompile |
 | `tools/compile-ir.py <ir.json> [--render] [--show]` | lint → compile → verify (structure; `--render` closes the loop to pixels) |
+| `tools/preview-template.py <name> [--input K=V] [--open]` | render a template preview over real footage — the library approval gate (Ryan's eyes) |
+| `tools/make-captions.py <ws> [--native]` | transcript → SRT remapped to the cut timeline; `--native` = Resolve AI subtitles |
+| `tools/ingest-screensage.py <bundle> [--name N]` | ScreenSage bundle → multitrack timeline (voice by loudness, VFR→CFR, camera cut-in asset, click/zoom markers) |
 | `python -m studio.registry [table]` | inspect the cross-session registry (assets/transcripts/irs/renders/decisions) |
 | `scripts/restart_resolve.py` | ONLY sanctioned way to restart Resolve (graceful save→quit→wait; pkill crashes it) |
 

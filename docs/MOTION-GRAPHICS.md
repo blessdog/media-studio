@@ -52,6 +52,39 @@ the fundamental contrast with Blender/genAI assets (frozen pixels in files).
    agent animates BLIND — must run build → render preview → eyes loop.
 3. **Design language & timing feel — NOT outsourceable.** Ryan's seat.
 
+## The library grows by FORMAT PACKAGES (Round 3, 2026-07-12)
+
+Not isolated widgets — themed sets sharing one look, matching Ryan's actual
+reference space (Fern, Lemonhead/Lemon Clips, Red Bar, Channel 5, Plunder
+Biscuit — never over-index on any two): 1) **news-desk** (ticker, headline,
+bug, LIVE tag — authored, awaiting Ryan's verdicts) 2) podcast/clips (incl.
+captions) 3) documentary 4) broadcast-retro/pirate radio. **Per-package
+looks** — no global brand constraint.
+
+**Rant visuals are a per-video artistic choice, never a system default**:
+kinetic typography / ambient loops / Ryan's found b-roll (insert-clip) /
+Phase 7 generated imagery — the system supplies one-liner verbs, Ryan picks
+per moment.
+
+## Graphics pipeline doctrine (settled by smokes, 2026-07-12)
+
+- `InsertFusionTitleIntoTimeline` into an occupied timeline is a RIPPLE
+  edit (razors V1, shifts everything) — dead path for overlays.
+- Resolve's OTIO importer refuses ProRes4444 file references — graphics
+  never travel through the interchange file.
+- THE pipeline: **forge** (scratch fps-stamped project, insert title on an
+  empty timeline, populate via comp `SetInput` — roundtrip-verified — render
+  ProRes4444 + ExportAlpha, cached by hash of template+version+inputs+fps+res)
+  → **place** (ImportMedia → AddTrack → `AppendToTimeline` with
+  recordFrame/trackIndex; endFrame EXCLUSIVE) → multi-track verify.
+- Masters are 150 frames (user still-duration pref, not scriptable); longer
+  graphics via subrange today, seamless-loop extension later. No timeline-
+  item retime API exists (only SetProperty is callable).
+- Graphics live on one dedicated track above all edit tracks.
+- Preview gate: `tools/preview-template.py` composites the populated master
+  over real footage; approval flips ONLY on Ryan's verdict (manifest
+  `approved` + registry).
+
 ## Anti-slop architecture (locked)
 - **Curated library of 8–15 templates whose motion Ryan approved by eye.**
   Agent-authored candidates go through render-preview → Ryan's verdict BEFORE

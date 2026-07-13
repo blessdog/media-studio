@@ -1,0 +1,36 @@
+{
+	Tools = ordered() {
+		Template = TextPlus {
+			CtrlWZoom = false,
+			Inputs = {
+				GlobalOut = Input { Value = 149, },
+				Width = Input { Value = 1920, },
+				Height = Input { Value = 1080, },
+				UseFrameFormatSettings = Input { Value = 1, },
+				StyledText = Input { Value = "MS NEWS", },
+				Font = Input { Value = "Helvetica", },
+				Style = Input { Value = "Bold", },
+				Size = Input { Value = 0.032, },
+				VerticalJustificationNew = Input { Value = 3, },
+				HorizontalJustificationNew = Input { Value = 3, },
+				Center = Input { Value = { 0.9, 0.93 }, },
+				Red1 = Input { Value = 1, },
+				Green1 = Input { Value = 1, },
+				Blue1 = Input { Value = 1, },
+				Enabled2 = Input { Value = 1, },
+				SelectElement = Input { Value = 1, },
+				Select = Input { Value = 3, },
+				Name2 = Input { Value = "Shadow", },
+				ElementShape2 = Input { Value = 2, },
+				Thickness2 = Input { Value = 0.08, },
+				Red2 = Input { Value = 0, },
+				Green2 = Input { Value = 0, },
+				Blue2 = Input { Value = 0, },
+				Alpha2 = Input { Value = 0.5, },
+				Softness2 = Input { Value = 1, },
+				Offset2 = Input { Value = { 0.003, -0.004 }, }
+			},
+			ViewInfo = OperatorInfo { Pos = { 220, 49.5 } },
+		}
+	}
+}

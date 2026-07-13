@@ -96,9 +96,38 @@ Incident note: an OBS stream output can WEDGE if stopped mid-reconnect
 relaunch is the remedy; OBS shows a safe-mode prompt after (choose Normal
 Mode; Safe Mode disables websockets).
 
+## Phase 4 — Template Library v0: infrastructure BUILT (2026-07-12)
+
+Round 3 dialogue done (all four format packages blessed; per-package looks;
+rant visuals = per-video choice, never a default; composite = OBS live +
+post verb). Built & verified same day:
+
+- **Graphics pipeline** (doctrine in docs/MOTION-GRAPHICS.md): forge cached
+  ProRes4444+alpha masters → AppendToTimeline placement (title insert
+  RIPPLES V1 — dead path; OTIO refuses ProRes4444 refs — smoked). Verified
+  to pixels. IR v0.3 `graphics` entity; approved-only lint gate;
+  `insert-graphic` / `insert-clip` / `remove-graphic` verbs; multi-track +
+  graphics verifier. Tests 31/31.
+- **Captions**: `tools/make-captions.py` — transcript → SRT remapped
+  through kept spans to CUT-timeline time; `--native`
+  CreateSubtitlesFromAudio exists (smoked, unexercised).
+- **ScreenSage ingest**: `tools/ingest-screensage.py` — bundle →
+  multitrack timeline; loudness-based voice pick (his mic often routes to
+  OBS → near-silent sidecar), VFR→CFR normalization (screen captures are
+  VFR — poison for frame integers), camera cut-in asset, click/zoom events
+  as markers. Ryan's real 79s rig demo rebuilt: `rig-demo@48432052`.
+- **News-desk package v1 authored** (templates/news-desk/): headline,
+  ticker (scrolling expression), bug, LIVE tag — all `approved: false`,
+  previews rendered over Ryan's own rig footage (outputs/previews/),
+  self-checked, opened for HIS verdicts. Nothing enters the library
+  without them.
+
 ## Next
 
-1. MCP server install (parallel track, small).
-2. R3 dialogue before Phase 4 (templates, incl. rant-visuals), per docs/PLAN.md.
-3. Music overlay round (audio-track schema bump).
-4. Ryan gates still open: project name, deck middleware, MCP posture.
+1. **Ryan's verdicts on the four news-desk previews** → flip `approved` in
+   manifest + registry per verdict; iterate rejects.
+2. Phase-4 exit test (headline + ticker + b-roll + captions on one
+   timeline in one conversation), then packages 2–4 on the same rails.
+3. OGraf HTML Templates investigation (time-boxed, report-only).
+4. MCP server install (parallel track, small).
+5. Ryan gates still open: project name, deck middleware, MCP posture.

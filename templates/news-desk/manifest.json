@@ -1,0 +1,34 @@
+{
+  "package": "news-desk",
+  "style": "Channel 5-ish broadcast: white bold on dark navy bands, red accents",
+  "templates": [
+    {
+      "name": "MS ND Headline",
+      "file": "ms-nd-headline.setting",
+      "version": 1,
+      "approved": false,
+      "inputs": {"StyledText": "the headline text"}
+    },
+    {
+      "name": "MS ND Ticker",
+      "file": "ms-nd-ticker.setting",
+      "version": 1,
+      "approved": false,
+      "inputs": {"StyledText": "ticker text (scrolls right-to-left across 5s)"}
+    },
+    {
+      "name": "MS ND Bug",
+      "file": "ms-nd-bug.setting",
+      "version": 1,
+      "approved": false,
+      "inputs": {"StyledText": "corner bug text"}
+    },
+    {
+      "name": "MS ND Live",
+      "file": "ms-nd-live.setting",
+      "version": 1,
+      "approved": false,
+      "inputs": {"StyledText": "tag text (LIVE, BREAKING, REPLAY...)"}
+    }
+  ]
+}

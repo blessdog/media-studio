@@ -1,0 +1,36 @@
+{
+	Tools = ordered() {
+		Template = TextPlus {
+			CtrlWZoom = false,
+			Inputs = {
+				GlobalOut = Input { Value = 149, },
+				Width = Input { Value = 1920, },
+				Height = Input { Value = 1080, },
+				UseFrameFormatSettings = Input { Value = 1, },
+				StyledText = Input { Value = "LIVE", },
+				Font = Input { Value = "Helvetica", },
+				Style = Input { Value = "Bold", },
+				Size = Input { Value = 0.036, },
+				VerticalJustificationNew = Input { Value = 3, },
+				HorizontalJustificationNew = Input { Value = 3, },
+				Center = Input { Value = { 0.09, 0.93 }, },
+				Red1 = Input { Value = 1, },
+				Green1 = Input { Value = 1, },
+				Blue1 = Input { Value = 1, },
+				Enabled2 = Input { Value = 1, },
+				SelectElement = Input { Value = 1, },
+				Select = Input { Value = 3, },
+				Name2 = Input { Value = "Box", },
+				ElementShape2 = Input { Value = 2, },
+				Level2 = Input { Value = 1, },
+				ExtendHorizontal2 = Input { Value = 0.5, },
+				ExtendVertical2 = Input { Value = 0.5, },
+				Red2 = Input { Value = 0.82, },
+				Green2 = Input { Value = 0.05, },
+				Blue2 = Input { Value = 0.05, },
+				Alpha2 = Input { Value = 1, }
+			},
+			ViewInfo = OperatorInfo { Pos = { 220, 49.5 } },
+		}
+	}
+}

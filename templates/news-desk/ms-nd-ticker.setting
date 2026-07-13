@@ -1,0 +1,36 @@
+{
+	Tools = ordered() {
+		Template = TextPlus {
+			CtrlWZoom = false,
+			Inputs = {
+				GlobalOut = Input { Value = 149, },
+				Width = Input { Value = 1920, },
+				Height = Input { Value = 1080, },
+				UseFrameFormatSettings = Input { Value = 1, },
+				StyledText = Input { Value = "TICKER TEXT SCROLLS ACROSS THE BOTTOM OF THE SCREEN  +++  MORE HEADLINES HERE  +++  ", },
+				Font = Input { Value = "Helvetica", },
+				Style = Input { Value = "Bold", },
+				Size = Input { Value = 0.038, },
+				VerticalJustificationNew = Input { Value = 3, },
+				HorizontalJustificationNew = Input { Value = 3, },
+				Center = Input { Expression = "Point(1.6 - 2.2*time/149, 0.045)", },
+				Red1 = Input { Value = 1, },
+				Green1 = Input { Value = 1, },
+				Blue1 = Input { Value = 1, },
+				Enabled2 = Input { Value = 1, },
+				SelectElement = Input { Value = 1, },
+				Select = Input { Value = 3, },
+				Name2 = Input { Value = "Band", },
+				ElementShape2 = Input { Value = 2, },
+				Level2 = Input { Value = 1, },
+				ExtendHorizontal2 = Input { Value = 3.0, },
+				ExtendVertical2 = Input { Value = 0.45, },
+				Red2 = Input { Value = 0.05, },
+				Green2 = Input { Value = 0.08, },
+				Blue2 = Input { Value = 0.18, },
+				Alpha2 = Input { Value = 0.92, }
+			},
+			ViewInfo = OperatorInfo { Pos = { 220, 49.5 } },
+		}
+	}
+}
