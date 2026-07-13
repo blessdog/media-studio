@@ -191,8 +191,10 @@ def render_master(app, name, inputs, fps, resolution, cache_dir,
         raise TemplateError(f"forge render: {proj.GetRenderJobStatus(job)}")
     if not out.is_file():
         raise TemplateError(f"forge render produced no file at {out}")
-    pm.SaveProject()
-    return out, int(item.GetDuration())
+    frames = int(item.GetDuration())
+    mp.DeleteTimelines([tl])       # scratch timeline is residue once the
+    pm.SaveProject()               # master .mov exists; keep the forge clean
+    return out, frames
 
 
 def place_overlay(proj, timeline, media_path, record, src_in, src_out, track):
