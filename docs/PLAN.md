@@ -34,9 +34,9 @@ application, render, delivery, verification.
 | 1 Story IR + Compiler | schema/, studio/, tools/compile-ir.py, tests 9/9 | ✅ 2026-07-11 (path doctrine: ABSOLUTE paths to all Resolve calls) |
 | 2 Ingest lane | tools/ingest-recording.py: recording → Deepgram + auto-editor → evidence-linked IR → verified timeline | ✅ 2026-07-11 |
 | 3 Assembly Loop v0 + Registry v0 | conversational co-editing: transcript find + cutaway/retime/remove verbs, versioned timelines shown live in Resolve; SQLite registry | ✅ 2026-07-12 — exit test passed on real-scale sample (14-min iPhone recording); OBS Hybrid-MP4 verified machine-to-machine via websocket |
-| 4 Template Library v0 | format packages (news-desk/podcast/documentary/retro), forge+place graphics pipeline, captions, ScreenSage ingest | news-desk ✅ APPROVED + exit test PASSED 2026-07-12; packages 2–4 + OGraf timebox remain |
-| 5 Studio Daemon + Deck | daemon ✅ 2026-07-13 (verbs + jobs + control page at 127.0.0.1:8873); Companion BLESSED + installed 2026-07-13 (no deck hardware currently — control page is interim surface); MCP installed 2026-07-13 |
-| 6 Finishing lane | Grade Library (DRX/LUT apply), delivery fan-out, bongpot adapter (video-plan.json seconds → IR frames) | queued |
+| 4 Template Library v0 | format packages (news-desk/podcast/documentary/retro), forge+place graphics pipeline, captions, ScreenSage ingest | news-desk ✅ APPROVED + exit test PASSED 2026-07-12; packages 2–4 PROVISIONAL 2026-07-13 (aesthetics pass later); OGraf parked (API-unreachable) |
+| 5 Studio Daemon + Deck | daemon + Companion + Stream Deck XL wired end-to-end | ✅ 2026-07-13 — proven by Ryan's physical presses (2 REC→STOP+INGEST cycles → verified timelines); MCP installed |
+| 6 Finishing lane | Grade Library (DRX/LUT apply), delivery fan-out, bongpot adapter | delivery ✅ + bongpot adapter ✅ 2026-07-13 (proven on clown-motel, 27/47 clips --partial); Grade Library remains — [RYAN gate: author first look in color page, then apply-verbs land] |
 | 7 Scene Forge | stills-first genAI (→I2V), native reference-identity before LoRA, Blender bpy, provenance | queued — [RYAN gate: provider mix + budget] |
 
 Parallel tracks: MCP server install (cloned at vendor/davinci-resolve-mcp,
@@ -189,15 +189,14 @@ license). Curation surface = files on disk + Ryan's eyes, not a bespoke UI.
    Companion app should be running (menu bar); Elgato app owns the deck.
 4. Sanity: `.venv/bin/python tools/compile-ir.py tests/fixtures/golden-ir.json`
    → COMPILE OK.
-5. **Continue at the bongpot adapter** (last Phase 6 slice): FIRST read the
-   bongpot repo (`~/projects/bongpot/` — CLAUDE.md, STATUS.md, an actual
-   video-plan.json) per verify-before-assume; then seconds→frames converter →
-   Story IR → finishing timeline (approved Wan clips V1, untouched call audio
-   A1, shot ids/verdicts as markers). ONE-WAY; FFmpeg lane untouched; speaker
-   attribution sacred. Then Phase 7 dialogue ([RYAN gate: provider + budget]).
-   Deferred backlog: launchd for daemon; deck polish (icons, more keys, tiles
-   in Ryan's OBS profile); LAN/auth for control page; kinetic-type templates;
-   captions --native exercise; aesthetics pass on packages 2–4; project name.
+5. **Continue at Phase 7 Scene Forge — planning dialogue FIRST** (Ryan
+   demands question-rounds before each phase build; [RYAN gates: provider
+   mix + budget]). Bongpot adapter shipped 2026-07-13
+   (`tools/ingest-bongpot.py`, proven on clown-motel).
+   Deferred backlog: Grade Library ([RYAN: author a look first]); launchd
+   for daemon; deck polish (icons, more keys, tiles in Ryan's OBS profile);
+   LAN/auth for control page; kinetic-type templates; captions --native
+   exercise; aesthetics pass on packages 2–4; project name.
 
 ## Key doctrine (hard-won 2026-07-11, full list in STATUS.md)
 

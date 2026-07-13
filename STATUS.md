@@ -181,9 +181,29 @@ pass; podcast m4a loudnormed to -16 LUFS) → every output probe+loudness
 verified + registry-recorded. Proven on loop-demo (voice+music+meme+graphic):
 master/vertical/podcast all green, vertical eyeballed.
 
+## Bongpot adapter ✅ (2026-07-13)
+
+`tools/ingest-bongpot.py <call-dir> [--partial]` (+ `studio/bongpot.py`,
+tests/test_bongpot.py 16/16): bongpot video-plan.json → Resolve finishing
+timeline, ONE-WAY. Facts verified against
+`~/projects/bongpot/outputs/clown-motel`: cut.shots are contiguous
+[start,end) SECONDS; Wan clips (`<shotId>.mp4`, 832x480@16fps) run SHORT of
+their windows → conformed per bongpot's own assembler recipe (scale/crop
+1920x1080, fps 30, last-frame clone-pad, cut at exact frame count, audio
+stripped) into `<ws>/media/`, cached by mtime. The frame grid rounds
+BOUNDARIES once — never per-shot durations — so rounding cannot drift off
+the call audio. The untouched call mp3 (auto-discovered from ear.json
+meta.audio; the spaced LPC-collection path → resolve_safe hardlink) spans
+the whole window as ONE A1 item. Shot ids/speakers/verdicts = colored
+markers (Red missing/reject, Yellow rework, Green approved, Sky
+unreviewed). Fails closed on missing clips unless `--partial`. Proven:
+clown-motel 27/47 clips → `clown-motel-finish@2c1c4bae`, ground-truthed in
+Resolve (27 V1 items, 1 A1 item, 8877 frames exactly, 47 markers). Nothing
+writes into bongpot; its FFmpeg lane stays production.
+
 ## Next
 
-1. Bongpot adapter (last Phase 6 slice), then Phase 7 Scene Forge
+1. Phase 7 Scene Forge — planning dialogue FIRST
    ([RYAN gate: provider mix + budget]).
 2. Packages 2–4: **podcast-clips v1 AUTHORED + previewed (autonomous loop,
    2026-07-12)** — outputs/previews/ms-pc-{caption,speaker,episode}-preview.mp4

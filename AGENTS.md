@@ -54,6 +54,7 @@ gate failure. Every path handed to Resolve must be ABSOLUTE (doctrine).
 | `tools/make-captions.py <ws> [--native]` | transcript → SRT remapped to the cut timeline; `--native` = Resolve AI subtitles |
 | `tools/ingest-screensage.py <bundle> [--name N]` | ScreenSage bundle → multitrack timeline (voice by loudness, VFR→CFR, camera cut-in asset, click/zoom markers) |
 | `tools/deliver.py <ws> [--presets vertical,podcast-audio]` | fan-out: ONE Resolve master render → ffmpeg-derived platform formats, all probe+loudness verified, in <ws>/delivery/ |
+| `tools/ingest-bongpot.py <call-dir> [--partial] [--clips D] [--audio MP3]` | bongpot video-plan → finishing timeline: shots conformed to V1 (scale/crop/fps/last-frame-pad to the exact window), untouched call audio on A1, shot ids/speakers/verdicts as colored markers (Red=missing/reject, Yellow=rework, Green=approved, Sky=unreviewed). ONE-WAY read of the bongpot repo; fails closed on missing clips unless `--partial` |
 | `python -m studio.registry [table]` | inspect the cross-session registry (assets/transcripts/irs/renders/decisions) |
 | `python -m studio.daemon` | studio daemon on 127.0.0.1:8873 — GET /status /verbs /jobs; POST /verb/<name> (record-start, stop-and-ingest, ingest-last, ingest-screensage, compile, restart-resolve). Long verbs = background jobs, logs in outputs/daemon/ |
 | `scripts/restart_resolve.py` | ONLY sanctioned way to restart Resolve (graceful save→quit→wait; pkill crashes it) |
