@@ -122,12 +122,21 @@ post verb). Built & verified same day:
   self-checked, opened for HIS verdicts. Nothing enters the library
   without them.
 
+**News-desk package APPROVED** (Ryan: "love it", all four on first
+previews, 2026-07-12) — manifest + registry flipped.
+**Phase-4 exit test PASSED** on the rig demo (`rig-demo@1f92f016`): one
+conversation placed headline ("THE FEEDBACK LOOP IS REAL") + scrolling
+ticker + his camera track as a 5s cut-in + remapped captions.srt; all gates
+green, render verified, graphics confirmed in extracted frames. Honest
+caveat: captions exist as the SRT deliverable; the --native subtitle-track
+path is smoked but not yet exercised on a real timeline.
+Fix landed en route: spans_from_ir now keys on the track-1 asset (multi-
+video-asset IRs broke the old single-asset assumption).
+
 ## Next
 
-1. **Ryan's verdicts on the four news-desk previews** → flip `approved` in
-   manifest + registry per verdict; iterate rejects.
-2. Phase-4 exit test (headline + ticker + b-roll + captions on one
-   timeline in one conversation), then packages 2–4 on the same rails.
-3. OGraf HTML Templates investigation (time-boxed, report-only).
-4. MCP server install (parallel track, small).
-5. Ryan gates still open: project name, deck middleware, MCP posture.
+1. Packages 2–4 on the same rails (podcast/clips incl. captions →
+   documentary → broadcast-retro), each ending in preview verdicts.
+2. OGraf HTML Templates investigation (time-boxed, report-only).
+3. MCP server install (parallel track, small).
+4. Ryan gates still open: project name, deck middleware, MCP posture.

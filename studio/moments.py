@@ -49,11 +49,11 @@ def src_to_record(src_frame, spans):
 def spans_from_ir(ir, asset_id=None):
     """The kept-span map implied by the IR's track-1 edits of the recording."""
     if asset_id is None:
-        vids = [a["id"] for a in ir["assets"] if a["kind"] == "video"]
-        if len(vids) != 1:
+        t1 = {e["asset"] for e in ir["edits"] if e.get("track", 1) == 1}
+        if len(t1) != 1:
             raise ValueError(
-                f"need asset_id: IR has {len(vids)} video assets, not 1")
-        asset_id = vids[0]
+                f"need asset_id: track 1 references {len(t1)} assets, not 1")
+        asset_id = t1.pop()
     spans = [{"srcIn": e["srcIn"], "srcOut": e["srcOut"], "record": e["record"]}
              for e in ir["edits"]
              if e["asset"] == asset_id and e.get("track", 1) == 1]
