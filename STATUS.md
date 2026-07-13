@@ -201,10 +201,33 @@ clown-motel 27/47 clips → `clown-motel-finish@2c1c4bae`, ground-truthed in
 Resolve (27 V1 items, 1 A1 item, 8877 frames exactly, 47 markers). Nothing
 writes into bongpot; its FFmpeg lane stays production.
 
+## Scene Forge slice 1 ✅ — stills engine (2026-07-13)
+
+Phase-7 round-1 dialogue BLESSED (Ryan): build ALL slices in succession
+(1 stills → 2 I2V animate → 3 reference-identity → 4 Blender/beat-grid);
+**hosted APIs only** (Replicate; GPU lane can join later without rework);
+**per-batch cost approval** — `tools/forge-stills.py` prints the estimate
+and exits 2 unless `--approve`, which an agent may pass ONLY after Ryan's
+go in chat; **curation = contact sheet** (numbered grid jpg, opened in
+Preview, winners named in chat, recorded via `--pick`).
+
+`studio/forge.py` + `tools/forge-stills.py` (tests/test_forge.py 13/13):
+model SSOT cribbed from bongpot's proven config (qwen-image-fast
+$0.0017/img exploration; flux-2-dev $0.04/img, native `input_images`
+identity conditioning — slice 3 rides that). Replicate facts: community
+models 404 on the model-path predictions endpoint — POST /predictions with
+the version id (fetched+cached from the model record); 202 Accepted is a
+valid creation status. Batches → `<ws>/forge/batch-NN/` with manifest.json
+(prompt/model/cost/picks provenance) + registry rows. Live-proven: 8-still
+batch on Ryan's studio aesthetic, $0.01, sheet verified by eye (both of us).
+
 ## Next
 
-1. Phase 7 Scene Forge — planning dialogue FIRST
-   ([RYAN gate: provider mix + budget]).
+1. Scene Forge slice 2: I2V — animate picked stills via hosted video
+   (verify current Replicate video model ids + $/s first), clip lands in
+   <ws>/media ready for insert-clip. Then slice 3 identity, slice 4
+   Blender bpy + beat-grid.
+2. Grade Library ([RYAN gate: author a look in the color page first]).
 2. Packages 2–4: **podcast-clips v1 AUTHORED + previewed (autonomous loop,
    2026-07-12)** — outputs/previews/ms-pc-{caption,speaker,episode}-preview.mp4
    awaiting Ryan's verdicts. Documentary + broadcast-retro next, same rails.

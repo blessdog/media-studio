@@ -37,7 +37,7 @@ application, render, delivery, verification.
 | 4 Template Library v0 | format packages (news-desk/podcast/documentary/retro), forge+place graphics pipeline, captions, ScreenSage ingest | news-desk ✅ APPROVED + exit test PASSED 2026-07-12; packages 2–4 PROVISIONAL 2026-07-13 (aesthetics pass later); OGraf parked (API-unreachable) |
 | 5 Studio Daemon + Deck | daemon + Companion + Stream Deck XL wired end-to-end | ✅ 2026-07-13 — proven by Ryan's physical presses (2 REC→STOP+INGEST cycles → verified timelines); MCP installed |
 | 6 Finishing lane | Grade Library (DRX/LUT apply), delivery fan-out, bongpot adapter | delivery ✅ + bongpot adapter ✅ 2026-07-13 (proven on clown-motel, 27/47 clips --partial); Grade Library remains — [RYAN gate: author first look in color page, then apply-verbs land] |
-| 7 Scene Forge | stills-first genAI (→I2V), native reference-identity before LoRA, Blender bpy, provenance | queued — [RYAN gate: provider mix + budget] |
+| 7 Scene Forge | stills-first genAI (→I2V), native reference-identity before LoRA, Blender bpy, provenance | gates BLESSED 2026-07-13 (hosted APIs only; per-batch cost approval; contact-sheet curation; all slices in succession); slice 1 stills engine ✅ live-proven; slices 2–4 (I2V, identity, Blender/beat-grid) in progress |
 
 Parallel tracks: MCP server install (cloned at vendor/davinci-resolve-mcp,
 venv ready, run its install.py with Resolve up); BMD training (Ryan's craft
@@ -189,10 +189,13 @@ license). Curation surface = files on disk + Ryan's eyes, not a bespoke UI.
    Companion app should be running (menu bar); Elgato app owns the deck.
 4. Sanity: `.venv/bin/python tools/compile-ir.py tests/fixtures/golden-ir.json`
    → COMPILE OK.
-5. **Continue at Phase 7 Scene Forge — planning dialogue FIRST** (Ryan
-   demands question-rounds before each phase build; [RYAN gates: provider
-   mix + budget]). Bongpot adapter shipped 2026-07-13
-   (`tools/ingest-bongpot.py`, proven on clown-motel).
+5. **Continue at Scene Forge slice 2 (I2V)**: verify CURRENT hosted video
+   model ids + $/s on Replicate first (don't trust training data), then
+   animate picked stills → clips in <ws>/media for insert-clip; per-batch
+   approval gate identical to forge-stills. Slice 3 = flux-2 `input_images`
+   identity; slice 4 = Blender bpy + beat-grid. Round-1 gates blessed
+   2026-07-13: hosted only, per-batch approval, contact sheet. Bongpot
+   adapter + stills engine shipped 2026-07-13.
    Deferred backlog: Grade Library ([RYAN: author a look first]); launchd
    for daemon; deck polish (icons, more keys, tiles in Ryan's OBS profile);
    LAN/auth for control page; kinetic-type templates; captions --native
