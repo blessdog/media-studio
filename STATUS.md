@@ -150,5 +150,10 @@ video-asset IRs broke the old single-asset assumption).
    under Effects→Titles at all?). Fusion .setting remains the graphics
    substrate. (Side note: a probe script segfaulted on interpreter exit
    after failed inserts — API teardown flake, Resolve unharmed.)
-3. MCP server install (parallel track, small).
+3. ~~MCP server install~~ DONE 2026-07-13: gursky davinci-resolve-mcp
+   v2.60.0 installed (own venv in vendor/), verified connected to Studio
+   21.0.2.4; config at repo-root `.mcp.json` (project-scoped) — tools load
+   in the NEXT Claude Code session opened in this repo. Posture per plan
+   rec: MCP for exploration/conversational control; our deterministic
+   verbs stay the pipeline.
 4. Ryan gates still open: project name, deck middleware, MCP posture.
