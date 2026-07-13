@@ -86,7 +86,15 @@ timeline → `find "been lopsided this whole time"` → frame 921 →
 `img-1700@04675423` shown in Resolve, multi-track verify green. The sample is
 FIXTURE MATERIAL — infrastructure and video-making are separate concerns;
 Ryan's creative sessions are usage, not build.
-Still unverified: OBS Hybrid-MP4 switch (needs his next real OBS recording).
+**OBS Hybrid-MP4 VERIFIED (2026-07-12)** machine-to-machine: OBS is drivable
+via its websocket (port/password read from its own plugin config — see
+`scripts/verify_obs_recording.py`; obsws-python pinned). Test recording
+rolled and ffprobed: mp4 container, h264+aac, Resolve-ingestable. This is
+also the Phase 5 daemon's OBS control channel, proven early.
+Incident note: an OBS stream output can WEDGE if stopped mid-reconnect
+(ignores StopStream/StartRecord over websocket, ignores SIGTERM) — SIGKILL +
+relaunch is the remedy; OBS shows a safe-mode prompt after (choose Normal
+Mode; Safe Mode disables websockets).
 
 ## Next
 
