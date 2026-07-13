@@ -78,11 +78,19 @@ docs/PLAN.md blessed decisions; one-shot Cut Brain is dead). Shipped:
   backup: basic.ini.bak-premp4). Verify on next real recording.
 - Workspaces moved: `outputs/ingest/` → `outputs/projects/`.
 
+**Exit test PASSED (2026-07-12)** on a real-scale sample (Ryan's 14.3-min
+895MB iPhone recording, `outputs/projects/img-1700/`): ingest → 160-utterance
+diarized transcript (audio-sidecar upload, not video bytes) → compiled
+timeline → `find "been lopsided this whole time"` → frame 921 →
+`insert-image` → lint green → recompiled versioned timeline
+`img-1700@04675423` shown in Resolve, multi-track verify green. The sample is
+FIXTURE MATERIAL — infrastructure and video-making are separate concerns;
+Ryan's creative sessions are usage, not build.
+Still unverified: OBS Hybrid-MP4 switch (needs his next real OBS recording).
+
 ## Next
 
-1. **Phase 3 exit test**: Ryan's first real session — OBS Hybrid-MP4
-   recording → ingest → live "insert meme where I say X" exchange.
-2. MCP server install (parallel track, small).
-3. Ryan gates still open: project name, deck middleware, MCP posture.
-4. Then per docs/PLAN.md: R3 dialogue before Phase 4 (templates, incl.
-   rant-visuals), music overlay round.
+1. MCP server install (parallel track, small).
+2. R3 dialogue before Phase 4 (templates, incl. rant-visuals), per docs/PLAN.md.
+3. Music overlay round (audio-track schema bump).
+4. Ryan gates still open: project name, deck middleware, MCP posture.
