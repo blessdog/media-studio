@@ -142,11 +142,13 @@ video-asset IRs broke the old single-asset assumption).
    docs/MOTION-GRAPHICS.md): NATIVE in Resolve as CEF-rendered Titles,
    manifest-defined duration, deterministic goToTime — the hyperframes
    bridge confirmed + kinetic typography's natural substrate.
-   Smoke 2026-07-12: Breaking-News example copied to Titles/OGraf/ was NOT
-   insertable via InsertFusionTitleIntoTimeline (no name variant) — OGraf
-   likely scans at STARTUP, unlike .setting live rescan. Next diagnostic:
-   Resolve restart (Ryan-present), then retry insert. Example left
-   installed for that test. (Also: a Python script segfaulted on exit
-   after the failed inserts — API teardown flake, Resolve unharmed.)
+   Smoke 2026-07-13 CONCLUDED: OGraf titles are NOT insertable via
+   InsertFusionTitleIntoTimeline in 21.0.2 — tried raw-dir AND .ograf zip
+   in Titles/OGraf/, before and after graceful restarts, all name
+   variants. PARKED: OGraf authoring waits until the insertion surface is
+   found (one-glance GUI check pending: does an OGraf category appear
+   under Effects→Titles at all?). Fusion .setting remains the graphics
+   substrate. (Side note: a probe script segfaulted on interpreter exit
+   after failed inserts — API teardown flake, Resolve unharmed.)
 3. MCP server install (parallel track, small).
 4. Ryan gates still open: project name, deck middleware, MCP posture.
