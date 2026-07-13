@@ -33,7 +33,7 @@ application, render, delivery, verification.
 | 0 Foundation | Studio license, scripting, smokes | ✅ 2026-07-11 |
 | 1 Story IR + Compiler | schema/, studio/, tools/compile-ir.py, tests 9/9 | ✅ 2026-07-11 (path doctrine: ABSOLUTE paths to all Resolve calls) |
 | 2 Ingest lane | tools/ingest-recording.py: recording → Deepgram + auto-editor → evidence-linked IR → verified timeline | ✅ 2026-07-11 |
-| 3 Assembly Loop v0 + Registry v0 | Claude-in-session co-editing: IR verbs + scene previews + SQLite registry | **IN PROGRESS** — registry scope blessed 2026-07-12: this repo only |
+| 3 Assembly Loop v0 + Registry v0 | conversational co-editing: transcript find + cutaway/retime/remove verbs, versioned timelines shown live in Resolve; SQLite registry | **BUILT 2026-07-12** — exit test pending Ryan's first real session (OBS Hybrid-MP4 recording + live exchange) |
 | 4 Template Library v0 | 3–5 Ryan-approved .setting templates; agent populates only; Anim-Curves doctrine; OGraf investigation | queued |
 | 5 Studio Daemon + Deck | Python HTTP daemon owns Resolve lifecycle + verbs; Stream Deck keys | queued — [RYAN gates: Companion vs custom plugin (rec: Companion); MCP posture (rec: gursky for exploration + daemon verbs)] |
 | 6 Finishing lane | Grade Library (DRX/LUT apply), delivery fan-out, bongpot adapter (video-plan.json seconds → IR frames) | queued |
@@ -58,7 +58,29 @@ creative pass in the GUI. Look via Phase 6 grade + Phase 4 lyric/title
 templates. Delivery fan-out via Phase 6. What stays Ryan's: which image lands
 on which beat, and what the video means.
 
-## Phase 3 drill-down — Assembly Loop v0 + Registry v0 (in progress)
+## Blessed decisions 2026-07-12 (planning dialogue rounds 1–2)
+
+- **Machine-first, GUI pass last.** Co-edit the IR via conversation; every
+  machine change = fresh versioned timeline; Ryan's hands-on GUI edit is the
+  final step and that timeline is never scripted again. No round-trip re-import.
+- **Intake: drag into chat** → agent files it to `<workspace>/media/` +
+  registers it (`studio/intake.py`). Nothing uploads anywhere; a drag hands
+  the agent a disk path.
+- **Recordings stay in `/Users/SSDrive/Movies`** (OBS output; semi-permanent,
+  timelines link there). **OBS switched to Hybrid MP4** 2026-07-12 (Resolve
+  cannot import MKV; backup at basic.ini.bak-premp4) — verify on Ryan's next
+  real recording.
+- **Verdicts live in Resolve**: each compile switches the open project to the
+  new timeline; render only for final/motion-critical checks.
+- **Meme house style: full-frame cutaway**, 3.5s default, voice under. PiP
+  later behind a transform smoke test.
+- **Workspaces: `outputs/projects/<name>/`.** Music overlay: later round
+  (audio-track schema bump). Name: placeholder stays.
+- **Portability doctrine**: AGENTS.md is the harness-neutral operating manual
+  (any agent CLI can run the studio); repo is the memory; cold-start test is
+  a recurring gate.
+
+## Phase 3 drill-down — Assembly Loop v0 + Registry v0 (built 2026-07-12)
 
 *Reframed 2026-07-12 per Ryan's alignment correction. The earlier "Cut Brain
 v0" (one-shot OpenRouter brief→IR) is DEAD as a centerpiece — a one-shot

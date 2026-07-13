@@ -52,8 +52,37 @@ utterances as evidence/markers, all gates green, rendered output verified.
 Modules: `studio/{probe,transcribe,silence,ingest}.py`.
 Transcribe degrades gracefully (missing key → silence-only ingest, warns).
 
+## Phase 3 — Assembly Loop v0 + Registry v0 ✅ built (2026-07-12)
+
+Reframed per Ryan's alignment correction (**copilot, not autopilot** — see
+docs/PLAN.md blessed decisions; one-shot Cut Brain is dead). Shipped:
+
+- **Registry v0**: `studio/registry.py`, SQLite `registry.db` (gitignored,
+  this-repo scope blessed) — assets/transcripts/irs/renders/decisions; both
+  tools write through it. `python -m studio.registry` to inspect. 8/8 tests.
+- **Assembly verbs**: `studio/{moments,edit_ir,intake}.py` +
+  `tools/edit-ir.py` (find/insert-image/retime/remove) — phrase →
+  word-timestamp → record frame; pure IR mutations gated by lint; media
+  filed into `<ws>/media/`; every change recompiles a fresh versioned
+  timeline and SetCurrentTimeline's Resolve to it. 18/18 tests.
+- **Schema v0.2** (additive): image assets as cutaway edits (srcIn=0,
+  srcOut=duration). Verifier now checks EVERY video track (was V1-only).
+- **Smokes**: still PNG rides OTIO import onto V2 natively (no ffmpeg
+  fallback needed); SetCurrentTimeline works (`scripts/smoke_image_overlay.py`).
+- **Proven end-to-end on speech.mp4**: find "key architectural decision" →
+  frame 196 → insert meme 2.5s → render → extracted frames confirm meme
+  pixels at the phrase moment.
+- **AGENTS.md** added (harness-neutral operating manual, portability
+  doctrine); CLAUDE.md slimmed to Ryan-specifics + pointer.
+- **OBS switched to Hybrid MP4** (was MKV — Resolve can't import MKV;
+  backup: basic.ini.bak-premp4). Verify on next real recording.
+- Workspaces moved: `outputs/ingest/` → `outputs/projects/`.
+
 ## Next
 
-1. MCP server install (parallel track, small).
-2. **Phase 3** — Cut Brain v0 + Registry v0 ([RYAN gate: registry scope]).
+1. **Phase 3 exit test**: Ryan's first real session — OBS Hybrid-MP4
+   recording → ingest → live "insert meme where I say X" exchange.
+2. MCP server install (parallel track, small).
 3. Ryan gates still open: project name, deck middleware, MCP posture.
+4. Then per docs/PLAN.md: R3 dialogue before Phase 4 (templates, incl.
+   rant-visuals), music overlay round.
