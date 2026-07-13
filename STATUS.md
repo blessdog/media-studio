@@ -147,10 +147,30 @@ timelines can't satisfy idempotence. Proven: loop-demo voice+music render
 at -1.8 dB max; suites 39/39 + 9/9 --render. Packages 2–4 provisionally
 approved same day (aesthetics pass later).
 
+## Studio Daemon v0 ✅ (2026-07-13) + two hard-won doctrines
+
+`python -m studio.daemon` → 127.0.0.1:8873; verbs shell the same CLIs any
+harness uses; background jobs, logs in outputs/daemon/. Money path PROVEN
+end-to-end: POST record-start → OBS records → POST stop-and-ingest →
+compiled verified timeline in Resolve, zero human clicks.
+Found the hard way en route:
+- **Spaces in media paths break/HANG Resolve's OTIO import** (discriminating
+  test: same 60fps file, space-free hardlink imports perfectly). Fixes:
+  resolve_safe() hardlinks, lint gate, OBS filename format now space-free
+  (set via websocket). 60fps was innocent.
+- **Concurrent fusionscript clients wedge the scripting service** (only a
+  Resolve restart recovers). Daemon probes via short-lived subprocesses
+  behind its job lock.
+- Silent recordings (screen demos) now ingest as one full-length span
+  instead of auto-editor refusing.
+- UTF-8 encoding sweep: all read_text/write_text now explicit (ASCII-locale
+  subprocesses crashed on em-dashes).
+Deck wiring itself still waits on the Companion [RYAN] gate; daemon runs
+manually for now (launchd later).
+
 ## Next
 
-1. **Studio Daemon v0** (Phase 5 core; deck wiring waits on the Companion
-   gate) — then delivery fan-out + bongpot adapter (Phase 6 slices).
+1. Delivery fan-out + bongpot adapter (Phase 6 slices).
 2. Packages 2–4: **podcast-clips v1 AUTHORED + previewed (autonomous loop,
    2026-07-12)** — outputs/previews/ms-pc-{caption,speaker,episode}-preview.mp4
    awaiting Ryan's verdicts. Documentary + broadcast-retro next, same rails.

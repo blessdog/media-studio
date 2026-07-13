@@ -54,6 +54,7 @@ gate failure. Every path handed to Resolve must be ABSOLUTE (doctrine).
 | `tools/make-captions.py <ws> [--native]` | transcript → SRT remapped to the cut timeline; `--native` = Resolve AI subtitles |
 | `tools/ingest-screensage.py <bundle> [--name N]` | ScreenSage bundle → multitrack timeline (voice by loudness, VFR→CFR, camera cut-in asset, click/zoom markers) |
 | `python -m studio.registry [table]` | inspect the cross-session registry (assets/transcripts/irs/renders/decisions) |
+| `python -m studio.daemon` | studio daemon on 127.0.0.1:8873 — GET /status /verbs /jobs; POST /verb/<name> (record-start, stop-and-ingest, ingest-last, ingest-screensage, compile, restart-resolve). Long verbs = background jobs, logs in outputs/daemon/ |
 | `scripts/restart_resolve.py` | ONLY sanctioned way to restart Resolve (graceful save→quit→wait; pkill crashes it) |
 
 Python modules under `studio/` back these verbs; tests under `tests/` are
@@ -62,6 +63,14 @@ plain scripts (`test_compile.py`, `test_registry.py`, `test_assembly.py`).
 ## Hard doctrine (violations fail silently — learned the hard way)
 
 - **Absolute paths to every Resolve API call.** Relative fails silently.
+- **NO SPACES in media paths handed to OTIO import** — Resolve fails/HANGS on
+  percent-encoded URLs (confirmed 2026-07-13). `studio.intake.resolve_safe()`
+  hardlinks a safe name; lint refuses spaced paths on used assets; OBS
+  filename format switched to space-free (websocket-settable).
+- **One fusionscript client at a time.** A long-lived in-process connection
+  concurrent with other clients wedges the scripting service (restart is the
+  only cure). The daemon probes Resolve via short-lived subprocesses behind
+  its job lock; scripts must not linger.
 - **Lint before Resolve, verify artifacts after** — never trust API return
   values or your own reasoning; ffprobe and timeline inspection are truth.
 - Project fps is immutable once a timeline exists → project-per-IR, fps
