@@ -179,6 +179,38 @@ with tempfile.TemporaryDirectory() as td:
     check("expects_audio: false for silent sources",
           not verifymod.expects_audio(silent))
 
+# --- spaced media paths (break Resolve's OTIO import) --------------------------
+with tempfile.TemporaryDirectory() as td:
+    from studio import intake as intakemod
+    spaced = Path(td) / "my clip 01.mp4"
+    subprocess.run(
+        ["ffmpeg", "-y", "-v", "error", "-f", "lavfi",
+         "-i", "color=c=blue:s=320x240:d=1:r=30", str(spaced)], check=True)
+    safe = intakemod.resolve_safe(spaced)
+    check("resolve_safe: hardlinks beside original, space-free",
+          " " not in str(safe) and safe.exists() and spaced.exists())
+    check("resolve_safe: idempotent", intakemod.resolve_safe(spaced) == safe)
+    check("resolve_safe: clean paths pass through",
+          intakemod.resolve_safe(safe) == safe)
+
+    spaced_dir = Path(td) / "My Folder"
+    spaced_dir.mkdir()
+    inner = spaced_dir / "clip.mp4"
+    inner.hardlink_to(safe)
+    dest_dir = Path(td) / "media"
+    safe2 = intakemod.resolve_safe(inner, dest_dir)
+    check("resolve_safe: spaced parent dirs relocate into safe_dir",
+          " " not in str(safe2) and safe2.parent == dest_dir)
+
+    irS, _ = editmod.insert_clip(ir, spaced, record=30, duration_frames=15)
+    errors, _ = lintmod.lint(copy.deepcopy(irS), base)
+    check("lint refuses spaced path on a USED asset",
+          any("space" in e for e in errors))
+    irU = copy.deepcopy(ir)
+    irU["assets"].append({"id": "unusedcam", "path": str(spaced), "kind": "video"})
+    errors, _ = lintmod.lint(copy.deepcopy(irU), base)
+    check("unused asset with spaced path is tolerated", errors == [])
+
 # --- graphics (uses the repo smoke package manifest) --------------------------
 ir9, gid = editmod.insert_graphic(
     ir, "Media Studio Smoke", record=30, duration_frames=60,

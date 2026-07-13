@@ -21,7 +21,7 @@ WS_CONFIG = Path.home() / ("Library/Application Support/obs-studio/"
 
 def main():
     seconds = float(sys.argv[1]) if len(sys.argv) > 1 else 8.0
-    cfg = json.loads(WS_CONFIG.read_text())
+    cfg = json.loads(WS_CONFIG.read_text(encoding="utf-8"))
     cl = obs.ReqClient(host="localhost", port=cfg["server_port"],
                        password=cfg["server_password"], timeout=10)
 

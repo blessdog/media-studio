@@ -27,7 +27,7 @@ def _key():
         return os.environ["DEEPGRAM_API_KEY"]
     env = Path(__file__).resolve().parent.parent / ".env"
     if env.is_file():
-        for line in env.read_text().splitlines():
+        for line in env.read_text(encoding="utf-8").splitlines():
             if line.strip().startswith("DEEPGRAM_API_KEY="):
                 return line.split("=", 1)[1].strip().strip("'\"")
     raise TranscribeError("DEEPGRAM_API_KEY not in env or repo .env")
@@ -75,5 +75,5 @@ def transcribe(media_path, out_path):
     out = {"model": MODEL, "words": words, "utterances": utterances}
     out_path = Path(out_path)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(out, indent=1))
+    out_path.write_text(json.dumps(out, indent=1), encoding="utf-8")
     return out

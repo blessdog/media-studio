@@ -40,6 +40,7 @@ def lint(ir, base_dir):
     if fps.denominator == 1001:
         errors.append(f"warning: drop-frame-ish rate {fps} — v0.1 has no NDF/DF handling; proceed knowingly")
 
+    used = {e["asset"] for e in ir["edits"]}
     assets = {}
     for a in ir["assets"]:
         if a["id"] in assets:
@@ -47,6 +48,12 @@ def lint(ir, base_dir):
             continue
         assets[a["id"]] = a
         p = irmod.asset_path(a, base_dir)
+        if " " in str(p) and a["id"] in used:
+            errors.append(
+                f"asset {a['id']}: path contains a space — Resolve's OTIO "
+                f"import silently fails/hangs on encoded URLs. Use "
+                f"studio.intake.resolve_safe() for a hardlink: {p}")
+            continue
         if not p.is_file():
             errors.append(f"asset {a['id']}: file missing: {p}")
             continue

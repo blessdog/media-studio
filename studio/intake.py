@@ -31,6 +31,34 @@ def _safe_name(path):
     return f"{stem}{path.suffix.lower()}"
 
 
+def resolve_safe(path, safe_dir=None):
+    """Return a space-free path for `path`, hardlinking if needed. Spaces
+    ANYWHERE in a media path break Resolve's OTIO import (confirmed
+    2026-07-13: percent-encoded URLs import False/hang). Originals are never
+    moved — recordings-stay-in-place doctrine.
+
+    If only the filename is spaced, links beside the original; if parent
+    dirs are spaced too, links into `safe_dir` (required then)."""
+    path = Path(path).resolve()
+    if " " not in str(path):
+        return path
+    name = path.name.replace(" ", "_")
+    if " " not in str(path.parent):
+        safe = path.with_name(name)
+    else:
+        if safe_dir is None:
+            raise IntakeError(f"spaced parent dirs need safe_dir: {path}")
+        safe_dir = Path(safe_dir)
+        safe_dir.mkdir(parents=True, exist_ok=True)
+        safe = safe_dir / name
+    if not safe.exists():
+        try:
+            safe.hardlink_to(path)
+        except OSError:
+            shutil.copy2(path, safe)      # cross-device fallback
+    return safe
+
+
 def file_media(src, workspace, name=None):
     """Copy `src` into <workspace>/media/, register it. Returns the new Path."""
     src = Path(src).expanduser().resolve()

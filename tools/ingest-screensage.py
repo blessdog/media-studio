@@ -126,11 +126,14 @@ def main():
     ir = ingestmod.build_ir(name, muxed, meta, timebase, spans, transcript,
                             created_by="ingest-screensage")
 
-    # -- camera track: register as cut-in asset (reference in place) ---------
+    # -- camera track: register as cut-in asset (space-free hardlink; the
+    # bundle's own directories contain spaces, which break OTIO import) ------
     if camera.is_file():
-        cam_meta = probemod.probe(camera)
-        regmod.record_asset(reg, camera, kind="video", probe=cam_meta)
-        ir["assets"].append({"id": "camera", "path": str(camera), "kind": "video"})
+        from studio import intake as intakemod
+        cam_safe = intakemod.resolve_safe(camera, ws / "media")
+        cam_meta = probemod.probe(cam_safe)
+        regmod.record_asset(reg, cam_safe, kind="video", probe=cam_meta)
+        ir["assets"].append({"id": "camera", "path": str(cam_safe), "kind": "video"})
         print(f"camera cut-in asset registered: {camera.name} "
               f"({cam_meta['width']}x{cam_meta['height']} @ {cam_meta['fps']})")
 
@@ -139,7 +142,7 @@ def main():
     added = 0
     clicks = rec_dir / "click_events.json"
     if clicks.is_file():
-        downs = [e for e in json.loads(clicks.read_text())
+        downs = [e for e in json.loads(clicks.read_text(encoding="utf-8"))
                  if e.get("type") == "leftMouseDown"]
         for e in downs:
             rec = momentsmod.src_to_record(
@@ -153,7 +156,7 @@ def main():
             added += 1
     proj_json = bundle / "project.json"
     if proj_json.is_file():
-        data = json.loads(proj_json.read_text())
+        data = json.loads(proj_json.read_text(encoding="utf-8"))
         for sess in data.get("sessions", []):
             for z in sess.get("zoomRanges", []):
                 rec = momentsmod.src_to_record(
@@ -168,7 +171,7 @@ def main():
     print(f"interaction markers: {added}")
 
     ir_path = ws / "story.json"
-    ir_path.write_text(json.dumps(ir, indent=1))
+    ir_path.write_text(json.dumps(ir, indent=1), encoding="utf-8")
     regmod.record_ir(reg, ir, ir_path)
     print(f"IR written: {ir_path}")
 

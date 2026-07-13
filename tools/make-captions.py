@@ -31,7 +31,7 @@ def main():
     if not tp.is_file():
         print(f"FAIL: no transcript.json in {ws}")
         return 1
-    transcript = json.loads(tp.read_text())
+    transcript = json.loads(tp.read_text(encoding="utf-8"))
     cues = capmod.to_cues(transcript)
     if not cues:
         print("FAIL: transcript has no cueable utterances")

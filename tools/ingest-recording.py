@@ -40,6 +40,11 @@ def main():
     if not rec.is_file():
         print(f"FAIL: no such file {rec}")
         return 1
+    from studio import intake as intakemod
+    safe = intakemod.resolve_safe(rec)
+    if safe != rec:
+        print(f"space-free hardlink: {safe.name}")
+        rec = safe
     name = args.name or rec.stem.lower().replace("_", "-").replace(" ", "-")
     ws = ROOT / "outputs" / "projects" / name
     ws.mkdir(parents=True, exist_ok=True)
@@ -69,7 +74,7 @@ def main():
 
     ir = ingestmod.build_ir(name, rec, meta, timebase, spans, transcript)
     ir_path = ws / "story.json"
-    ir_path.write_text(json.dumps(ir, indent=1))
+    ir_path.write_text(json.dumps(ir, indent=1), encoding="utf-8")
     regmod.record_ir(reg, ir, ir_path)
     print(f"IR written: {ir_path}")
 

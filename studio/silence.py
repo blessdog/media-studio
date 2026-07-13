@@ -25,8 +25,17 @@ def loud_spans(media_path, margin=None):
         # auto-editor names the file with its own extension
         candidates = list(Path(td).glob("cuts*"))
         if res.returncode != 0 or not candidates:
+            if "Timeline is empty" in res.stderr:
+                # all-silence recording (screen demo, ambience): keep the
+                # whole take as one span instead of refusing
+                from . import probe as probemod
+                meta = probemod.probe(media_path)
+                num, den = meta["fps"].split("/")
+                frames = int(meta["duration"] * int(num) / int(den))
+                return meta["fps"], [{"record": 0, "srcIn": 0,
+                                      "srcOut": max(frames, 1)}]
             raise RuntimeError(f"auto-editor failed: {res.stderr[-400:]}")
-        v3 = json.loads(candidates[0].read_text())
+        v3 = json.loads(candidates[0].read_text(encoding="utf-8"))
     video_track = (v3.get("v") or [[]])[0]
     spans = [
         {"record": c["start"], "srcIn": c["offset"], "srcOut": c["offset"] + c["dur"]}

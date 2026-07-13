@@ -17,10 +17,10 @@ def load(ir_path):
     """Read + schema-validate an IR file. Returns (ir_dict, base_dir)."""
     ir_path = Path(ir_path).resolve()
     try:
-        ir = json.loads(ir_path.read_text())
+        ir = json.loads(ir_path.read_text(encoding="utf-8"))
     except json.JSONDecodeError as e:
         raise IRError(f"{ir_path.name}: not valid JSON — {e}") from e
-    schema = json.loads(SCHEMA_PATH.read_text())
+    schema = json.loads(SCHEMA_PATH.read_text(encoding="utf-8"))
     validator = jsonschema.Draft202012Validator(schema)
     errors = sorted(validator.iter_errors(ir), key=lambda e: list(e.absolute_path))
     if errors:
