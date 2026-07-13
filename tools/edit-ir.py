@@ -85,7 +85,8 @@ def _gate_write_compile(ws, ir_path, ir, args):
         for e in errors:
             print(f"  {e}")
         return 1
-    ir_path.write_text(json.dumps(irmod._strip_internal(ir), indent=1, encoding="utf-8"))
+    ir_path.write_text(json.dumps(irmod._strip_internal(ir), indent=1),
+                       encoding="utf-8")
     reg = regmod.connect()
     regmod.record_ir(reg, ir, ir_path)
     print(f"lint: green | story.json updated -> timeline {irmod.timeline_name(ir)}")
