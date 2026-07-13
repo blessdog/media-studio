@@ -148,6 +148,16 @@ def v_compile(args):
     return argv
 
 
+def v_deliver(args):
+    ws = args.get("workspace")
+    if not ws:
+        raise ValueError("workspace required")
+    argv = [PY, str(ROOT / "tools" / "deliver.py"), ws]
+    if args.get("presets"):
+        argv += ["--presets", args["presets"]]
+    return argv
+
+
 def v_restart_resolve(args):
     return [PY, str(ROOT / "scripts" / "restart_resolve.py")]
 
@@ -160,6 +170,7 @@ VERBS = {
     "stop-and-ingest": v_stop_and_ingest,
     "ingest-screensage": v_ingest_screensage,
     "compile": v_compile,
+    "deliver": v_deliver,
     "restart-resolve": v_restart_resolve,
 }
 

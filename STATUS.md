@@ -173,9 +173,18 @@ cycles from physical keys produced verified timelines; a third exposed the
 Deepgram-network crash (now degrades to silence-only ingest). Daemon runs
 manually (launchd later); control page at 127.0.0.1:8873 as backup surface.
 
+## Delivery fan-out ✅ (2026-07-13)
+
+`tools/deliver.py <ws>` (+ daemon verb `deliver`): ONE Resolve master render
+→ ffmpeg derivations (vertical 1080x1920 center-crop — reframing is a human
+pass; podcast m4a loudnormed to -16 LUFS) → every output probe+loudness
+verified + registry-recorded. Proven on loop-demo (voice+music+meme+graphic):
+master/vertical/podcast all green, vertical eyeballed.
+
 ## Next
 
-1. Delivery fan-out + bongpot adapter (Phase 6 slices).
+1. Bongpot adapter (last Phase 6 slice), then Phase 7 Scene Forge
+   ([RYAN gate: provider mix + budget]).
 2. Packages 2–4: **podcast-clips v1 AUTHORED + previewed (autonomous loop,
    2026-07-12)** — outputs/previews/ms-pc-{caption,speaker,episode}-preview.mp4
    awaiting Ryan's verdicts. Documentary + broadcast-retro next, same rails.
