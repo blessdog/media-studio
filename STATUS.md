@@ -265,6 +265,17 @@ real generation takes Ryan's per-moment direction. CAVEAT: inserting a
 path (Resolve should conform by time) — first live clip proves or
 disproves; conform step gets added if needed.
 
+## Regrounding (Ryan, 2026-07-13, after slice 2)
+
+Course correction: I proposed filling clown-motel's missing s27 as a forge
+test — WRONG. That lane is abandoned slop (Ryan stopped it deliberately);
+resurrecting it as a test fixture would import bad architecture at the
+foundation. Bongpot integration hard-stops at the adapter; the real
+integration is its own future project (docs/PLAN.md "Bongpot posture").
+Directive: stay regrounded in THIS project's own foundation — finish the
+remaining phase-map items with content-agnostic mechanics and fixture
+material only.
+
 ## Next
 
 1. Slice 3 identity: flux-2 `input_images` reference conditioning

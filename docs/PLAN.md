@@ -36,7 +36,7 @@ application, render, delivery, verification.
 | 3 Assembly Loop v0 + Registry v0 | conversational co-editing: transcript find + cutaway/retime/remove verbs, versioned timelines shown live in Resolve; SQLite registry | ✅ 2026-07-12 — exit test passed on real-scale sample (14-min iPhone recording); OBS Hybrid-MP4 verified machine-to-machine via websocket |
 | 4 Template Library v0 | format packages (news-desk/podcast/documentary/retro), forge+place graphics pipeline, captions, ScreenSage ingest | news-desk ✅ APPROVED + exit test PASSED 2026-07-12; packages 2–4 PROVISIONAL 2026-07-13 (aesthetics pass later); OGraf parked (API-unreachable) |
 | 5 Studio Daemon + Deck | daemon + Companion + Stream Deck XL wired end-to-end | ✅ 2026-07-13 — proven by Ryan's physical presses (2 REC→STOP+INGEST cycles → verified timelines); MCP installed |
-| 6 Finishing lane | Grade Library (DRX/LUT apply), delivery fan-out, bongpot adapter | delivery ✅ + bongpot adapter ✅ 2026-07-13 (proven on clown-motel, 27/47 clips --partial); Grade Library remains — [RYAN gate: author first look in color page, then apply-verbs land] |
+| 6 Finishing lane | Grade Library (DRX/LUT apply), delivery fan-out, bongpot adapter | delivery ✅ + bongpot adapter ✅ 2026-07-13 (mechanics proven; **bongpot integration HARD-STOPS here** — see Bongpot posture below); Grade Library remains — [RYAN gate: author first look in color page, then apply-verbs land] |
 | 7 Scene Forge | stills-first genAI (→I2V), native reference-identity before LoRA, Blender bpy, provenance | gates BLESSED 2026-07-13 (hosted APIs only; per-batch cost approval; contact-sheet curation; all slices in succession); slice 1 stills engine ✅ live-proven; slices 2–4 (I2V, identity, Blender/beat-grid) in progress |
 
 Parallel tracks: MCP server install (cloned at vendor/davinci-resolve-mcp,
@@ -170,6 +170,22 @@ shot), repeatable scenes, alpha overlays; hybrid worth testing =
 Blender-rendered motion → Wan Animate restyle (its video-driving mode).
 Everything lands in Registry with provenance (model, prompt version,
 license). Curation surface = files on disk + Ryan's eyes, not a bespoke UI.
+
+## Bongpot posture — HARD STOP at the adapter (Ryan, 2026-07-13)
+
+The one-way adapter (`tools/ingest-bongpot.py`) is where bongpot
+integration ENDS for now. Ryan's correction, verbatim intent: the
+clown-motel/claymation lane is ABANDONED — "it went off the rails and
+turned into a slop machine"; he stopped there deliberately. Do NOT use
+clown-motel or the claymation material as test fixtures, do NOT generate
+fills for its missing shots, do NOT propose resuming that lane from this
+repo. What was WORKING in bongpot when it worked: THE EAR — Demucs
+(Meta) stems + fine-grained audio analysis + voiceprint speaker ID
+(Merlin/Shazam-style) driving accurate speaker→character attribution.
+A real bongpot×studio integration is its OWN future project with its own
+careful planning dialogue, built around that working core (ink-wash era
+at the earliest, per Ryan) — never a side-effect of pipeline testing
+here. [RYAN gate: whether/when that project opens.]
 
 ## The Prompt Brain — flagged by Ryan 2026-07-13, deliberately deferred
 
