@@ -180,14 +180,24 @@ license). Curation surface = files on disk + Ryan's eyes, not a bespoke UI.
 - Selling any of this (market research in RESEARCH.md Part 5: capped/niche/
   productized or nothing; service-first if ever).
 
-## Session pickup checklist (after reboot)
+## Session pickup checklist (after reboot — updated 2026-07-13)
 
-1. Open Claude Code anywhere under `/Users/SSDrive/projects` (memory loads) or
-   in `media-studio/` (CLAUDE.md loads).
+1. Open Claude Code in `media-studio/` (AGENTS.md + CLAUDE.md load; memory too).
 2. Resolve running + external scripting Local (else `scripts/restart_resolve.py`).
-3. Sanity: `.venv/bin/python tools/compile-ir.py tests/fixtures/golden-ir.json`
-   → COMPILE OK (reused cached timeline).
-4. Continue at Phase 3 (above) — registry gate is blessed; build per drill-down.
+3. **Restart the daemon** (it dies with the session): `.venv/bin/python -m
+   studio.daemon` in the background — deck keys + control page need it.
+   Companion app should be running (menu bar); Elgato app owns the deck.
+4. Sanity: `.venv/bin/python tools/compile-ir.py tests/fixtures/golden-ir.json`
+   → COMPILE OK.
+5. **Continue at the bongpot adapter** (last Phase 6 slice): FIRST read the
+   bongpot repo (`~/projects/bongpot/` — CLAUDE.md, STATUS.md, an actual
+   video-plan.json) per verify-before-assume; then seconds→frames converter →
+   Story IR → finishing timeline (approved Wan clips V1, untouched call audio
+   A1, shot ids/verdicts as markers). ONE-WAY; FFmpeg lane untouched; speaker
+   attribution sacred. Then Phase 7 dialogue ([RYAN gate: provider + budget]).
+   Deferred backlog: launchd for daemon; deck polish (icons, more keys, tiles
+   in Ryan's OBS profile); LAN/auth for control page; kinetic-type templates;
+   captions --native exercise; aesthetics pass on packages 2–4; project name.
 
 ## Key doctrine (hard-won 2026-07-11, full list in STATUS.md)
 
