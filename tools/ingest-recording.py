@@ -41,7 +41,7 @@ def main():
         print(f"FAIL: no such file {rec}")
         return 1
     name = args.name or rec.stem.lower().replace("_", "-").replace(" ", "-")
-    ws = ROOT / "outputs" / "ingest" / name
+    ws = ROOT / "outputs" / "projects" / name
     ws.mkdir(parents=True, exist_ok=True)
 
     meta = probemod.probe(rec)
@@ -98,6 +98,7 @@ def main():
             print(f"  {e}")
         return 1
     print("verify (structure): green")
+    proj.SetCurrentTimeline(tl)
     if args.render:
         rerrs, out = verifymod.verify_render(ir, proj, tl, ws / "render")
         if rerrs:

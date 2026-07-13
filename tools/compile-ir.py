@@ -23,6 +23,8 @@ def main():
     ap.add_argument("ir_file")
     ap.add_argument("--render", action="store_true",
                     help="also render and ffprobe-verify the output")
+    ap.add_argument("--show", action="store_true",
+                    help="switch the open Resolve to the compiled timeline")
     args = ap.parse_args()
 
     try:
@@ -61,6 +63,10 @@ def main():
 
     reg = regmod.connect()
     regmod.record_ir(reg, ir, args.ir_file)
+
+    if args.show:
+        proj.SetCurrentTimeline(timeline)
+        print(f"showing '{timeline.GetName()}' in Resolve")
 
     if args.render:
         rerrors, out = verifymod.verify_render(
