@@ -6,11 +6,13 @@ Key from $DEEPGRAM_API_KEY or the repo .env.
 import json
 import mimetypes
 import os
+import subprocess
 import urllib.error
 import urllib.request
 from pathlib import Path
 
 MODEL = "nova-3"
+AUDIO_SIDECAR_OVER_MB = 50   # bigger media: upload only its audio track
 URL = ("https://api.deepgram.com/v1/listen"
        f"?model={MODEL}&smart_format=true&punctuate=true"
        "&diarize=true&utterances=true")
@@ -31,9 +33,26 @@ def _key():
     raise TranscribeError("DEEPGRAM_API_KEY not in env or repo .env")
 
 
+def _audio_sidecar(media_path, out_path):
+    """Extract the audio track (Deepgram needs nothing else). Stream-copy if
+    possible, transcode to AAC otherwise. Returns the sidecar Path."""
+    audio = Path(out_path).with_name("audio.m4a")
+    copy = subprocess.run(
+        ["ffmpeg", "-y", "-v", "error", "-i", str(media_path), "-vn",
+         "-acodec", "copy", str(audio)], capture_output=True)
+    if copy.returncode != 0:
+        subprocess.run(
+            ["ffmpeg", "-y", "-v", "error", "-i", str(media_path), "-vn",
+             "-c:a", "aac", "-b:a", "128k", str(audio)], check=True)
+    return audio
+
+
 def transcribe(media_path, out_path):
     """POST media to Deepgram; write {words, utterances} to out_path."""
     media_path = Path(media_path).resolve()
+    if media_path.stat().st_size > AUDIO_SIDECAR_OVER_MB * 1024 * 1024:
+        Path(out_path).parent.mkdir(parents=True, exist_ok=True)
+        media_path = _audio_sidecar(media_path, out_path)
     ctype = mimetypes.guess_type(str(media_path))[0] or "application/octet-stream"
     req = urllib.request.Request(
         URL, data=media_path.read_bytes(), method="POST",
