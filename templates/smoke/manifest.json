@@ -1,0 +1,22 @@
+{
+  "package": "smoke",
+  "style": "test fixtures only — never for real videos",
+  "templates": [
+    {
+      "name": "Media Studio Smoke",
+      "file": "media-studio-smoke.setting",
+      "version": 1,
+      "approved": true,
+      "approvalNote": "test-fixture approval (Ryan verdicted the smoke render 2026-07-11); NOT a production look",
+      "inputs": {"StyledText": "the display text"}
+    },
+    {
+      "name": "Smoke Unapproved",
+      "file": "media-studio-smoke.setting",
+      "version": 1,
+      "approved": false,
+      "approvalNote": "deliberately unapproved — exists so tests can prove the lint gate refuses it",
+      "inputs": {"StyledText": "the display text"}
+    }
+  ]
+}

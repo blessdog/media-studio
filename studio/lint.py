@@ -91,5 +91,51 @@ def lint(ir, base_dir):
                     f"track {track}: edits {id1} and {id2} overlap "
                     f"({s2} < {e1})")
 
+    _lint_graphics(ir, errors)
+
     return [e for e in errors if not e.startswith("warning:")], \
            [e for e in errors if e.startswith("warning:")]
+
+
+def _lint_graphics(ir, errors):
+    """Graphics gates: approved templates only, known inputs, no overlaps."""
+    graphics = ir.get("graphics", [])
+    if not graphics:
+        return
+    from . import templates as tmplmod
+    try:
+        library = tmplmod.load_manifests()
+    except Exception as e:
+        errors.append(f"graphics: cannot load template library: {e}")
+        return
+    extent = irmod.extent_frames(ir)
+    seen, spans = set(), []
+    for g in graphics:
+        if g["id"] in seen:
+            errors.append(f"graphic id {g['id']!r} duplicated")
+        seen.add(g["id"])
+        entry = library.get(g["template"])
+        if not entry:
+            errors.append(f"graphic {g['id']}: unknown template {g['template']!r}")
+            continue
+        if not entry.get("approved"):
+            errors.append(
+                f"graphic {g['id']}: template {g['template']!r} is NOT "
+                "approved — Ryan's eyes gate library entry")
+        unknown = set(g.get("inputs", {})) - set(entry.get("inputs", {}))
+        if unknown:
+            errors.append(f"graphic {g['id']}: unknown inputs {sorted(unknown)} "
+                          f"(published: {sorted(entry.get('inputs', {}))})")
+        if g["record"] >= extent:
+            errors.append(f"graphic {g['id']}: record {g['record']} beyond "
+                          f"timeline extent {extent}")
+        dur = min(g.get("duration", tmplmod.MASTER_FRAMES), tmplmod.MASTER_FRAMES)
+        if g.get("duration", 0) > tmplmod.MASTER_FRAMES:
+            errors.append(f"warning: graphic {g['id']}: duration "
+                          f"{g['duration']} capped at {tmplmod.MASTER_FRAMES} "
+                          "(alpha-master limit in v0)")
+        spans.append((g["record"], g["record"] + dur, g["id"]))
+    spans.sort()
+    for (s1, e1, id1), (s2, e2, id2) in zip(spans, spans[1:]):
+        if s2 < e1:
+            errors.append(f"graphics track: {id1} and {id2} overlap ({s2} < {e1})")

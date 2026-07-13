@@ -113,4 +113,66 @@ with tempfile.TemporaryDirectory() as td:
     except editmod.EditError:
         check("negative record raises EditError", True)
 
+    # --- b-roll clip cutaways -------------------------------------------------
+    broll = Path(td) / "broll.mp4"
+    subprocess.run(
+        ["ffmpeg", "-y", "-v", "error", "-f", "lavfi",
+         "-i", "color=c=blue:s=640x480:d=6:r=30", str(broll)], check=True)
+    ir7, eid7 = editmod.insert_clip(ir, broll, record=30, src_in=15,
+                                    duration_frames=60)
+    e7 = next(e for e in ir7["edits"] if e["id"] == eid7)
+    check("insert_clip: srcIn/srcOut honored",
+          e7["srcIn"] == 15 and e7["srcOut"] == 75 and e7["track"] == 2)
+    errors, _ = lintmod.lint(copy.deepcopy(ir7), base)
+    check("b-roll cutaway lints green", errors == [])
+    ir8, eid8 = editmod.insert_clip(ir, broll, record=30, src_in=150,
+                                    duration_frames=60)
+    errors, _ = lintmod.lint(copy.deepcopy(ir8), base)
+    check("b-roll beyond asset length: lint refuses",
+          any("beyond" in e for e in errors))
+
+# --- graphics (uses the repo smoke package manifest) --------------------------
+ir9, gid = editmod.insert_graphic(
+    ir, "Media Studio Smoke", record=30, duration_frames=60,
+    inputs={"StyledText": "HELLO"})
+check("insert_graphic: stamps v0.3 and appends",
+      ir9["irVersion"] == "0.3" and ir9["graphics"][0]["id"] == gid)
+errors, _ = lintmod.lint(copy.deepcopy(ir9), FIXTURES)
+check("approved graphic lints green", errors == [])
+
+ir10, _ = editmod.insert_graphic(ir, "Smoke Unapproved", record=30)
+errors, _ = lintmod.lint(copy.deepcopy(ir10), FIXTURES)
+check("UNAPPROVED template: lint refuses", any("NOT approved" in e for e in errors))
+
+ir11, _ = editmod.insert_graphic(ir, "No Such Template", record=30)
+errors, _ = lintmod.lint(copy.deepcopy(ir11), FIXTURES)
+check("unknown template: lint refuses", any("unknown template" in e for e in errors))
+
+ir12, _ = editmod.insert_graphic(ir, "Media Studio Smoke", record=30,
+                                 inputs={"NotAnInput": "x"})
+errors, _ = lintmod.lint(copy.deepcopy(ir12), FIXTURES)
+check("unknown input key: lint refuses", any("unknown inputs" in e for e in errors))
+
+ir13, _ = editmod.insert_graphic(ir9, "Media Studio Smoke", record=60,
+                                 inputs={"StyledText": "OVERLAP"})
+errors, _ = lintmod.lint(copy.deepcopy(ir13), FIXTURES)
+check("overlapping graphics: lint refuses", any("overlap" in e for e in errors))
+
+ir14 = editmod.remove_graphic(ir9, gid)
+check("remove_graphic drops the list when empty", "graphics" not in ir14)
+
+# --- .setting linter ----------------------------------------------------------
+from studio import templates as tmplmod
+lib = tmplmod.load_manifests()
+check("manifest loads with package tag",
+      lib["Media Studio Smoke"]["package"] == "smoke")
+check("good .setting lints clean",
+      tmplmod.lint_setting(lib["Media Studio Smoke"]["path"]) == [])
+with tempfile.TemporaryDirectory() as td2:
+    bad = Path(td2) / "bad.setting"
+    bad.write_text("{ Tools = ordered() { Template = TextPlus {")
+    errs = tmplmod.lint_setting(bad)
+    check(".setting linter catches unbalanced braces",
+          any("unbalanced" in e for e in errs))
+
 print(f"ASSEMBLY OK ({passed}/{passed})")

@@ -1,13 +1,13 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://media-studio.local/schema/story-ir-0.2.json",
-  "title": "Story IR v0.2",
-  "description": "Versioned, Resolve-independent edit-decision contract. Frame integers everywhere; timing is meaningless without the timebase. v0.2 (additive): image assets as overlay edits — srcIn=0, srcOut=display duration in frames.",
+  "$id": "https://media-studio.local/schema/story-ir-0.3.json",
+  "title": "Story IR v0.3",
+  "description": "Versioned, Resolve-independent edit-decision contract. Frame integers everywhere; timing is meaningless without the timebase. v0.2 (additive): image assets as overlay edits — srcIn=0, srcOut=display duration in frames. v0.3 (additive): graphics — approved Fusion template instances inserted post-import via API (not carried by OTIO).",
   "type": "object",
   "required": ["irVersion", "name", "timebase", "resolution", "assets", "edits"],
   "additionalProperties": false,
   "properties": {
-    "irVersion": { "enum": ["0.1", "0.2"] },
+    "irVersion": { "enum": ["0.1", "0.2", "0.3"] },
     "name": {
       "type": "string",
       "pattern": "^[a-z0-9][a-z0-9-]{1,63}$",
@@ -88,6 +88,30 @@
           "name": { "type": "string", "minLength": 1 },
           "note": { "type": "string" },
           "duration": { "type": "integer", "minimum": 1, "default": 1 }
+        }
+      }
+    },
+    "graphics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "template", "record"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "$ref": "#/$defs/id" },
+          "template": {
+            "type": "string",
+            "minLength": 1,
+            "description": "name of an APPROVED template in the library manifest"
+          },
+          "record": { "type": "integer", "minimum": 0, "description": "timeline frame where the graphic overlay lands" },
+          "duration": { "type": "integer", "minimum": 1, "description": "display frames (capped at the 150-frame alpha master in v0)" },
+          "inputs": {
+            "type": "object",
+            "additionalProperties": { "type": ["string", "number"] },
+            "description": "published-input values populated via SetInput after insertion"
+          },
+          "evidence": { "type": "array", "items": { "type": "string" } }
         }
       }
     },

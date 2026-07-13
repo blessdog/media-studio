@@ -16,6 +16,11 @@ def _find_timeline(proj, name):
     return None
 
 
+def graphics_track(ir):
+    """Graphics live on one dedicated track above all edit tracks."""
+    return max((e.get("track", 1) for e in ir["edits"]), default=1) + 1
+
+
 def compile_ir(ir, base_dir, otio_path):
     """Compile `ir` to a timeline. Returns (project, timeline, was_cached)."""
     app = connect()
@@ -32,6 +37,18 @@ def compile_ir(ir, base_dir, otio_path):
         if tl:
             existing.SetCurrentTimeline(tl)
             return existing, tl, True
+
+    # -- graphics: forge alpha masters FIRST (switches current project) ------
+    masters = {}
+    if ir.get("graphics"):
+        from pathlib import Path
+        from . import templates as tmplmod
+        library = tmplmod.load_manifests()
+        cache = Path(base_dir) / "graphics-cache"
+        for g in ir["graphics"]:
+            masters[g["id"]] = tmplmod.render_master(
+                app, g["template"], g.get("inputs"), float(irmod.fps(ir)),
+                ir["resolution"], cache, library)
 
     # -- fresh project, stamp rate/resolution BEFORE any timeline ------------
     proj = existing or pm.CreateProject(proj_name)
@@ -61,6 +78,15 @@ def compile_ir(ir, base_dir, otio_path):
     for m in ir.get("markers", []):
         tl.AddMarker(start + m["frame"], m["color"], m["name"],
                      m.get("note", ""), m.get("duration", 1))
+
+    # -- graphics: place cached alpha masters as overlays (never via OTIO) ---
+    if masters:
+        from . import templates as tmplmod
+        gtrack = graphics_track(ir)
+        for g in sorted(ir["graphics"], key=lambda g: g["record"]):
+            path, frames = masters[g["id"]]
+            dur = min(g.get("duration", frames), frames)
+            tmplmod.place_overlay(proj, tl, path, g["record"], 0, dur, gtrack)
 
     pm.SaveProject()
     return proj, tl, False

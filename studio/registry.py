@@ -66,6 +66,15 @@ CREATE TABLE IF NOT EXISTS decisions (
     context TEXT,
     created TEXT NOT NULL
 );
+CREATE TABLE IF NOT EXISTS templates (
+    id INTEGER PRIMARY KEY,
+    name TEXT NOT NULL UNIQUE,
+    package TEXT NOT NULL,
+    version INTEGER NOT NULL,
+    approved INTEGER NOT NULL,
+    verdict_note TEXT,
+    updated TEXT NOT NULL
+);
 """
 
 
@@ -125,6 +134,20 @@ def record_render(con, ir, out_path, verified):
         " VALUES (?,?,?,?,?)",
         (irmod.content_hash(ir), irmod.timeline_name(ir),
          str(Path(out_path).resolve()), int(bool(verified)), _now()))
+    con.commit()
+
+
+def record_template(con, name, package, version, approved, verdict_note=None):
+    """Upsert a template's library status (approval flips only on Ryan's eyes)."""
+    con.execute(
+        "INSERT INTO templates (name, package, version, approved, verdict_note, updated)"
+        " VALUES (?,?,?,?,?,?)"
+        " ON CONFLICT(name) DO UPDATE SET"
+        "  package=excluded.package, version=excluded.version,"
+        "  approved=excluded.approved,"
+        "  verdict_note=COALESCE(excluded.verdict_note, verdict_note),"
+        "  updated=excluded.updated",
+        (name, package, version, int(bool(approved)), verdict_note, _now()))
     con.commit()
 
 

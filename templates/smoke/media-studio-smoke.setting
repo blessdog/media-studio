@@ -1,0 +1,35 @@
+{
+	Tools = ordered() {
+		Template = TextPlus {
+			CtrlWZoom = false,
+			Inputs = {
+				GlobalOut = Input { Value = 119, },
+				Width = Input { Value = 1920, },
+				Height = Input { Value = 1080, },
+				UseFrameFormatSettings = Input { Value = 1, },
+				StyledText = Input { Value = "MEDIA STUDIO SMOKE", },
+				Font = Input { Value = "Helvetica", },
+				Style = Input { Value = "Bold", },
+				Size = Input { Value = 0.09, },
+				VerticalJustificationNew = Input { Value = 3, },
+				HorizontalJustificationNew = Input { Value = 3, },
+				Red1 = Input { Value = 1, },
+				Green1 = Input { Value = 0.55, },
+				Blue1 = Input { Value = 0, },
+				Enabled2 = Input { Value = 1, },
+				SelectElement = Input { Value = 1, },
+				Select = Input { Value = 3, },
+				Name2 = Input { Value = "Shadow", },
+				ElementShape2 = Input { Value = 2, },
+				Thickness2 = Input { Value = 0.08, },
+				Red2 = Input { Value = 0, },
+				Green2 = Input { Value = 0, },
+				Blue2 = Input { Value = 0, },
+				Alpha2 = Input { Value = 0.6, },
+				Softness2 = Input { Value = 1, },
+				Offset2 = Input { Value = { 0.004, -0.006 }, }
+			},
+			ViewInfo = OperatorInfo { Pos = { 220, 49.5 } },
+		}
+	}
+}

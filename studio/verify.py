@@ -9,27 +9,37 @@ from . import ir as irmod
 
 
 def verify_timeline(ir, proj, timeline):
-    """Structural checks against the imported timeline, every video track.
+    """Structural checks against the imported timeline, every video track —
+    edits AND graphics (which live on their own dedicated top track).
     Returns error list."""
     errors = []
     start = timeline.GetStartFrame()
     by_track = {}
     for e in ir["edits"]:
-        by_track.setdefault(e.get("track", 1), []).append(e)
+        by_track.setdefault(e.get("track", 1), []).append(
+            {"id": e["id"], "record": e["record"],
+             "dur": e["srcOut"] - e["srcIn"]})
+    if ir.get("graphics"):
+        from .compile import graphics_track
+        from .templates import MASTER_FRAMES
+        gt = graphics_track(ir)
+        for g in ir["graphics"]:
+            by_track.setdefault(gt, []).append(
+                {"id": g["id"], "record": g["record"],
+                 "dur": min(g.get("duration", MASTER_FRAMES), MASTER_FRAMES)})
 
-    for track, edits in sorted(by_track.items()):
+    for track, wants in sorted(by_track.items()):
         items = timeline.GetItemListInTrack("video", track) or []
-        if len(items) != len(edits):
+        if len(items) != len(wants):
             errors.append(
-                f"V{track} clip count {len(items)} != IR edits {len(edits)}")
-        for it, e in zip(items, sorted(edits, key=lambda e: e["record"])):
+                f"V{track} clip count {len(items)} != IR entries {len(wants)}")
+        for it, w in zip(items, sorted(wants, key=lambda w: w["record"])):
             rec = it.GetStart() - start
             dur = it.GetDuration()
-            want_dur = e["srcOut"] - e["srcIn"]
-            if rec != e["record"]:
-                errors.append(f"edit {e['id']}: record {rec} != IR {e['record']}")
-            if dur != want_dur:
-                errors.append(f"edit {e['id']}: duration {dur} != IR {want_dur}")
+            if rec != w["record"]:
+                errors.append(f"{w['id']}: record {rec} != IR {w['record']}")
+            if dur != w["dur"]:
+                errors.append(f"{w['id']}: duration {dur} != IR {w['dur']}")
 
     got_fps = str(timeline.GetSetting("timelineFrameRate"))
     want_fps = float(irmod.fps(ir))

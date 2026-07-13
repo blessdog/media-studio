@@ -21,7 +21,8 @@ def _fps(ir):
 
 
 def _next_id(ir, prefix):
-    used = {e["id"] for e in ir["edits"]} | {a["id"] for a in ir["assets"]}
+    used = ({e["id"] for e in ir["edits"]} | {a["id"] for a in ir["assets"]}
+            | {g["id"] for g in ir.get("graphics", [])})
     n = 0
     while f"{prefix}{n}" in used:
         n += 1
@@ -35,17 +36,22 @@ def _find_edit(ir, edit_id):
     raise EditError(f"no edit {edit_id!r} in IR {ir['name']!r}")
 
 
-def add_image_asset(ir, path):
-    """Register an image asset (idempotent by absolute path). Returns (ir, id)."""
+def _add_asset(ir, path, kind, prefix):
+    """Register an asset (idempotent by absolute path). Returns (ir, id)."""
     ir = copy.deepcopy(ir)
     path = str(Path(path).resolve())
     for a in ir["assets"]:
-        if a["kind"] == "image" and str(Path(a["path"])) == path:
+        if a["kind"] == kind and str(Path(a["path"])) == path:
             return ir, a["id"]
-    aid = _next_id(ir, "img")
-    ir["assets"].append({"id": aid, "path": path, "kind": "image"})
-    ir["irVersion"] = "0.2"
+    aid = _next_id(ir, prefix)
+    ir["assets"].append({"id": aid, "path": path, "kind": kind})
+    if ir["irVersion"] == "0.1":
+        ir["irVersion"] = "0.2"
     return ir, aid
+
+
+def add_image_asset(ir, path):
+    return _add_asset(ir, path, "image", "img")
 
 
 def insert_cutaway(ir, image_path, record, duration_frames=None,
@@ -69,6 +75,66 @@ def insert_cutaway(ir, image_path, record, duration_frames=None,
         edit["evidence"] = list(evidence)
     ir["edits"].append(edit)
     return ir, eid
+
+
+def insert_clip(ir, video_path, record, src_in=0, duration_frames=None,
+                track=CUTAWAY_TRACK, evidence=None):
+    """Place a video cutaway (found b-roll) over the cut at `record`.
+
+    Returns (ir, edit_id). Duration defaults to the cutaway house style;
+    srcIn/duration are frames in the b-roll's own timebase (lint checks
+    bounds via ffprobe).
+    """
+    if duration_frames is None:
+        duration_frames = int(round(CUTAWAY_DEFAULT_SECONDS * _fps(ir)))
+    if duration_frames < 1:
+        raise EditError(f"duration {duration_frames} frames < 1")
+    if record < 0 or src_in < 0:
+        raise EditError(f"record {record} / srcIn {src_in} must be >= 0")
+    ir, aid = _add_asset(ir, video_path, "video", "broll")
+    eid = _next_id(ir, "cut")
+    edit = {"id": eid, "asset": aid, "srcIn": src_in,
+            "srcOut": src_in + duration_frames, "record": record, "track": track}
+    if evidence:
+        edit["evidence"] = list(evidence)
+    ir["edits"].append(edit)
+    return ir, eid
+
+
+def insert_graphic(ir, template, record, duration_frames=None, inputs=None,
+                   evidence=None):
+    """Place an APPROVED library template instance at `record`.
+
+    Returns (ir, graphic_id). The compiler forges/caches the alpha master
+    and overlays it; lint refuses unapproved or unknown templates.
+    """
+    if record < 0:
+        raise EditError(f"record {record} < 0")
+    ir = copy.deepcopy(ir)
+    gid = _next_id(ir, "gfx")
+    g = {"id": gid, "template": template, "record": record}
+    if duration_frames is not None:
+        if duration_frames < 1:
+            raise EditError(f"duration {duration_frames} frames < 1")
+        g["duration"] = duration_frames
+    if inputs:
+        g["inputs"] = dict(inputs)
+    if evidence:
+        g["evidence"] = list(evidence)
+    ir.setdefault("graphics", []).append(g)
+    ir["irVersion"] = "0.3"
+    return ir, gid
+
+
+def remove_graphic(ir, graphic_id):
+    ir = copy.deepcopy(ir)
+    before = len(ir.get("graphics", []))
+    ir["graphics"] = [g for g in ir.get("graphics", []) if g["id"] != graphic_id]
+    if len(ir["graphics"]) == before:
+        raise EditError(f"no graphic {graphic_id!r} in IR {ir['name']!r}")
+    if not ir["graphics"]:
+        del ir["graphics"]
+    return ir
 
 
 def remove_edit(ir, edit_id):
