@@ -1,0 +1,27 @@
+{
+  "package": "podcast-clips",
+  "style": "Lemonhead/Lemon Clips-ish: warm cream text, amber/charcoal bands — matches the Lava Lounge studio warmth",
+  "templates": [
+    {
+      "name": "MS PC Caption",
+      "file": "ms-pc-caption.setting",
+      "version": 1,
+      "approved": false,
+      "inputs": {"StyledText": "punch-in caption text for clips"}
+    },
+    {
+      "name": "MS PC Speaker",
+      "file": "ms-pc-speaker.setting",
+      "version": 1,
+      "approved": false,
+      "inputs": {"StyledText": "speaker name (lower-left card)"}
+    },
+    {
+      "name": "MS PC Episode",
+      "file": "ms-pc-episode.setting",
+      "version": 1,
+      "approved": false,
+      "inputs": {"StyledText": "show + episode lines (use \\n for the second line)"}
+    }
+  ]
+}
