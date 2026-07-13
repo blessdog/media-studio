@@ -1,13 +1,13 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://media-studio.local/schema/story-ir-0.1.json",
-  "title": "Story IR v0.1",
-  "description": "Versioned, Resolve-independent edit-decision contract. Frame integers everywhere; timing is meaningless without the timebase.",
+  "$id": "https://media-studio.local/schema/story-ir-0.2.json",
+  "title": "Story IR v0.2",
+  "description": "Versioned, Resolve-independent edit-decision contract. Frame integers everywhere; timing is meaningless without the timebase. v0.2 (additive): image assets as overlay edits — srcIn=0, srcOut=display duration in frames.",
   "type": "object",
   "required": ["irVersion", "name", "timebase", "resolution", "assets", "edits"],
   "additionalProperties": false,
   "properties": {
-    "irVersion": { "const": "0.1" },
+    "irVersion": { "enum": ["0.1", "0.2"] },
     "name": {
       "type": "string",
       "pattern": "^[a-z0-9][a-z0-9-]{1,63}$",

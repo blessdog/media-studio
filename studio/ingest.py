@@ -6,19 +6,13 @@ results so each piece stays testable and the network stays optional.
 from fractions import Fraction
 from pathlib import Path
 
+from .moments import src_to_record as _src_to_record
+
 MARKER_COLORS = ["Sky", "Mint", "Lemon", "Rose", "Lavender", "Sand"]
 
 
 def _to_frames(seconds, fps):
     return int(round(seconds * fps))
-
-
-def _src_to_record(src_frame, spans):
-    """Map a source frame to its timeline frame via kept spans (None if cut)."""
-    for s in spans:
-        if s["srcIn"] <= src_frame < s["srcOut"]:
-            return s["record"] + (src_frame - s["srcIn"])
-    return None
 
 
 def build_ir(name, recording, meta, timebase, spans, transcript=None, created_by="ingest"):

@@ -1,0 +1,116 @@
+#!/usr/bin/env python3
+"""Assembly-loop gates: moments (phrase -> frame) and edit_ir (IR mutations).
+
+No Resolve required — pure functions + lint against real files.
+
+    .venv/bin/python tests/test_assembly.py
+"""
+import copy
+import json
+import subprocess
+import sys
+import tempfile
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
+from studio import edit_ir as editmod
+from studio import ir as irmod
+from studio import lint as lintmod
+from studio import moments as momentsmod
+
+FIXTURES = Path(__file__).resolve().parent / "fixtures"
+
+passed = 0
+
+
+def check(label, cond):
+    global passed
+    if not cond:
+        print(f"FAIL: {label}")
+        sys.exit(1)
+    passed += 1
+    print(f"  ok: {label}")
+
+
+def w(word, start, punct=None):
+    return {"word": word, "punctuated_word": punct or word,
+            "start": start, "end": start + 0.3}
+
+
+TRANSCRIPT = {"model": "test", "words": [
+    w("the", 1.0), w("fed", 1.3, "Fed"), w("just", 1.6),
+    w("blinked", 1.9, "blinked."), w("and", 3.0), w("markets", 3.3),
+    w("noticed", 3.6), w("the", 8.0), w("fed", 8.3, "Fed"),
+    w("just", 8.6), w("blinked", 8.9, "blinked!"),
+], "utterances": []}
+
+# --- moments.find ------------------------------------------------------------
+hits = momentsmod.find(TRANSCRIPT, "Fed just BLINKED?!")
+check("find: case/punctuation-insensitive, both occurrences",
+      len(hits) == 2 and hits[0]["start"] == 1.3 and hits[1]["start"] == 8.3)
+check("find: hit text uses punctuated words", "blinked." in hits[0]["text"])
+check("find: miss returns empty", momentsmod.find(TRANSCRIPT, "quantitative easing") == [])
+
+# --- moments mapping through the golden IR's spans ---------------------------
+ir, base = irmod.load(FIXTURES / "golden-ir.json")
+check("record_frame: inside first span (src 90 -> rec 30)",
+      momentsmod.record_frame(ir, 90 / 30) == 30)
+check("record_frame: inside second span (src 320 -> rec 140)",
+      momentsmod.record_frame(ir, 320 / 30) == 140)
+check("record_frame: cut region -> None",
+      momentsmod.record_frame(ir, 200 / 30) is None)
+
+# --- edit_ir mutations, gated by the real linter -----------------------------
+with tempfile.TemporaryDirectory() as td:
+    png = Path(td) / "meme.png"
+    subprocess.run(
+        ["ffmpeg", "-y", "-v", "error", "-f", "lavfi",
+         "-i", "color=c=red:s=640x480:d=1", "-frames:v", "1", str(png)],
+        check=True)
+
+    before = copy.deepcopy(ir)
+    ir2, eid = editmod.insert_cutaway(ir, png, record=30)
+    check("insert_cutaway: input IR untouched (pure)", ir == before)
+    edit = next(e for e in ir2["edits"] if e["id"] == eid)
+    check("insert_cutaway: house default 3.5s @30fps = 105 frames",
+          edit["srcOut"] == 105 and edit["track"] == 2 and edit["srcIn"] == 0)
+    check("insert_cutaway: stamps irVersion 0.2", ir2["irVersion"] == "0.2")
+    errors, _ = lintmod.lint(copy.deepcopy(ir2), base)
+    check("insert_cutaway: lints green", errors == [])
+
+    p = Path(td) / "round.json"
+    p.write_text(json.dumps(ir2))
+    irmod.load(p)
+    check("mutated IR passes schema v0.2", True)
+
+    ir3, eid2 = editmod.insert_cutaway(ir2, png, record=60)
+    check("same image twice: one asset, two edits",
+          sum(a["kind"] == "image" for a in ir3["assets"]) == 1)
+    errors, _ = lintmod.lint(copy.deepcopy(ir3), base)
+    check("overlapping cutaways (30+105 > 60): lint refuses",
+          any("overlap" in e for e in errors))
+
+    ir4 = editmod.retime_edit(ir3, eid2, record=150, duration_frames=60)
+    e2 = next(e for e in ir4["edits"] if e["id"] == eid2)
+    check("retime: record + duration applied",
+          e2["record"] == 150 and e2["srcOut"] == 60)
+    errors, _ = lintmod.lint(copy.deepcopy(ir4), base)
+    check("retimed IR lints green", errors == [])
+
+    ir5 = editmod.remove_edit(editmod.remove_edit(ir4, eid), eid2)
+    check("remove: orphaned image asset dropped",
+          not any(a["kind"] == "image" for a in ir5["assets"]))
+
+    ir6, _ = editmod.insert_cutaway(ir2, Path(td) / "nope.png", record=200)
+    errors, _ = lintmod.lint(copy.deepcopy(ir6), base)
+    check("missing image file: lint refuses",
+          any("missing" in e for e in errors))
+
+    try:
+        editmod.insert_cutaway(ir2, png, record=-5)
+        check("negative record raises EditError", False)
+    except editmod.EditError:
+        check("negative record raises EditError", True)
+
+print(f"ASSEMBLY OK ({passed}/{passed})")
