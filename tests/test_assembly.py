@@ -131,6 +131,54 @@ with tempfile.TemporaryDirectory() as td:
     check("b-roll beyond asset length: lint refuses",
           any("beyond" in e for e in errors))
 
+# --- audio spine ---------------------------------------------------------------
+with tempfile.TemporaryDirectory() as td:
+    tone = Path(td) / "tone.m4a"
+    subprocess.run(
+        ["ffmpeg", "-y", "-v", "error", "-f", "lavfi",
+         "-i", "sine=frequency=220:duration=10", "-c:a", "aac", str(tone)],
+        check=True)
+    png = Path(td) / "meme.png"          # earlier block's tempdir is gone
+    subprocess.run(
+        ["ffmpeg", "-y", "-v", "error", "-f", "lavfi",
+         "-i", "color=c=red:s=640x480:d=1", "-frames:v", "1", str(png)],
+        check=True)
+    irA, mid = editmod.add_music(ir, tone, record=30, duration_frames=90)
+    m = next(e for e in irA["edits"] if e["id"] == mid)
+    check("add_music: lands on A2 with duration",
+          m["track"] == 2 and m["srcOut"] - m["srcIn"] == 90)
+    errors, _ = lintmod.lint(copy.deepcopy(irA), base)
+    check("music bed lints green", errors == [])
+
+    # audio track 2 and video track 2 are DIFFERENT lanes — no false overlap
+    irB, _ = editmod.insert_cutaway(irA, png, record=40)
+    errors, _ = lintmod.lint(copy.deepcopy(irB), base)
+    check("audio A2 and video V2 don't false-overlap (lane separation)",
+          errors == [])
+
+    irC, _ = editmod.add_music(irA, tone, record=60, duration_frames=90)
+    errors, _ = lintmod.lint(copy.deepcopy(irC), base)
+    check("overlapping music beds on A2: lint refuses",
+          any("audio track 2" in e and "overlap" in e for e in errors))
+
+    irD, bad = editmod.add_music(ir, tone, record=0, src_in=200,
+                                 duration_frames=200)
+    errors, _ = lintmod.lint(copy.deepcopy(irD), base)
+    check("music beyond file length: lint refuses",
+          any("beyond" in e for e in errors))
+
+    lintmod.lint(irA, base)     # enrich in place, as the CLI flow does
+    rec_asset = next(a for a in irA["assets"] if a["id"] == "a1")
+    check("lint enriches _hasAudio on the recording",
+          rec_asset.get("_hasAudio") is True)
+
+    from studio import verify as verifymod
+    check("expects_audio: true with voice or music", verifymod.expects_audio(irA))
+    silent = {**copy.deepcopy(ir),
+              "assets": [{**a, "_hasAudio": False} for a in ir["assets"]]}
+    check("expects_audio: false for silent sources",
+          not verifymod.expects_audio(silent))
+
 # --- graphics (uses the repo smoke package manifest) --------------------------
 ir9, gid = editmod.insert_graphic(
     ir, "Media Studio Smoke", record=30, duration_frames=60,

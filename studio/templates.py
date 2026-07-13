@@ -119,7 +119,7 @@ def _populate(item, name, inputs):
 def master_key(name, inputs, fps, resolution, version=1):
     canon = json.dumps({"t": name, "i": inputs or {}, "fps": str(fps),
                         "res": [resolution["width"], resolution["height"]],
-                        "v": version}, sort_keys=True)
+                        "v": version, "noaud": 1}, sort_keys=True)
     return hashlib.sha256(canon.encode()).hexdigest()[:12]
 
 
@@ -176,7 +176,9 @@ def render_master(app, name, inputs, fps, resolution, cache_dir,
 
     proj.SetCurrentRenderFormatAndCodec("mov", "ProRes4444")
     proj.SetRenderSettings({"TargetDir": str(cache_dir),
-                            "CustomName": out.stem, "ExportAlpha": True})
+                            "CustomName": out.stem, "ExportAlpha": True,
+                            "ExportAudio": False})   # masters must not drag
+                                                     # silent audio onto A1
     job = proj.AddRenderJob() or proj.AddRenderJob()
     if not job:
         raise TemplateError("forge AddRenderJob failed twice")

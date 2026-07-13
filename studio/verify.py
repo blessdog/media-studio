@@ -14,8 +14,11 @@ def verify_timeline(ir, proj, timeline):
     Returns error list."""
     errors = []
     start = timeline.GetStartFrame()
+    assets = {a["id"]: a for a in ir["assets"]}
     by_track = {}
     for e in ir["edits"]:
+        if assets[e["asset"]]["kind"] == "audio":
+            continue                      # audio lane is verified below
         by_track.setdefault(e.get("track", 1), []).append(
             {"id": e["id"], "record": e["record"],
              "dur": e["srcOut"] - e["srcIn"]})
@@ -41,11 +44,45 @@ def verify_timeline(ir, proj, timeline):
             if dur != w["dur"]:
                 errors.append(f"{w['id']}: duration {dur} != IR {w['dur']}")
 
+    # -- audio lanes: A1 mirrors track-1 video edits; audio assets by track --
+    audio_by_track = {}
+    for e in ir["edits"]:
+        kind = assets[e["asset"]]["kind"]
+        entry = {"id": e["id"], "record": e["record"],
+                 "dur": e["srcOut"] - e["srcIn"]}
+        if kind == "audio":
+            audio_by_track.setdefault(e.get("track", 1), []).append(entry)
+        elif kind == "video" and e.get("track", 1) == 1 and \
+                assets[e["asset"]].get("_hasAudio", True):
+            audio_by_track.setdefault(1, []).append(entry)
+    for track, wants in sorted(audio_by_track.items()):
+        items = timeline.GetItemListInTrack("audio", track) or []
+        # graphics masters are video-only; nothing else should stray here
+        if len(items) != len(wants):
+            errors.append(
+                f"A{track} clip count {len(items)} != IR entries {len(wants)}")
+        for it, w in zip(items, sorted(wants, key=lambda w: w["record"])):
+            rec = it.GetStart() - start
+            if rec != w["record"]:
+                errors.append(f"audio {w['id']}: record {rec} != IR {w['record']}")
+            if it.GetDuration() != w["dur"]:
+                errors.append(f"audio {w['id']}: duration {it.GetDuration()} "
+                              f"!= IR {w['dur']}")
     got_fps = str(timeline.GetSetting("timelineFrameRate"))
     want_fps = float(irmod.fps(ir))
     if got_fps not in (str(want_fps), str(int(want_fps))):
         errors.append(f"timeline fps {got_fps} != IR {want_fps}")
     return errors
+
+
+def expects_audio(ir):
+    """Does this IR imply audible output?"""
+    assets = {a["id"]: a for a in ir["assets"]}
+    return any(
+        assets[e["asset"]]["kind"] == "audio"
+        or (assets[e["asset"]]["kind"] == "video" and e.get("track", 1) == 1
+            and assets[e["asset"]].get("_hasAudio", True))
+        for e in ir["edits"])
 
 
 def verify_render(ir, proj, timeline, render_dir):
@@ -91,4 +128,18 @@ def verify_render(ir, proj, timeline, render_dir):
         errors.append(
             f"render {vstream.get('width')}x{vstream.get('height')} != IR "
             f"{ir['resolution']['width']}x{ir['resolution']['height']}")
+
+    # -- ears: if the IR implies sound, the render must not be silence -------
+    if expects_audio(ir):
+        vol = subprocess.run(
+            ["ffmpeg", "-i", str(out), "-map", "0:a?", "-af", "volumedetect",
+             "-f", "null", "-"], capture_output=True, text=True)
+        import re
+        m = re.search(r"max_volume:\s*(-?[\d.]+)", vol.stderr)
+        if m is None:
+            errors.append("render has NO audio stream but IR implies sound")
+        elif float(m.group(1)) < -70:
+            errors.append(
+                f"render audio is silence (max {m.group(1)} dB) but IR "
+                "implies sound — the mute-timeline bug")
     return errors, str(out)

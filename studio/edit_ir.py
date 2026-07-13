@@ -101,6 +101,32 @@ def insert_clip(ir, video_path, record, src_in=0, duration_frames=None,
     return ir, eid
 
 
+MUSIC_TRACK = 2                 # A2 by convention; A1 belongs to the voice
+
+
+def add_music(ir, audio_path, record=0, src_in=0, duration_frames=None,
+              track=MUSIC_TRACK):
+    """Lay an audio asset (music bed, sfx) on its own audio lane.
+
+    Returns (ir, edit_id). Duration defaults to the remaining timeline
+    extent from `record` (lint clamps against the file's real length).
+    The recording's voice on A1 is untouched — sacred-audio doctrine.
+    """
+    if record < 0 or src_in < 0:
+        raise EditError(f"record {record} / srcIn {src_in} must be >= 0")
+    ir, aid = _add_asset(ir, audio_path, "audio", "music")
+    if duration_frames is None:
+        from . import ir as irmod
+        duration_frames = max(irmod.extent_frames(ir) - record, 1)
+    if duration_frames < 1:
+        raise EditError(f"duration {duration_frames} frames < 1")
+    eid = _next_id(ir, "mus")
+    ir["edits"].append({"id": eid, "asset": aid, "srcIn": src_in,
+                        "srcOut": src_in + duration_frames,
+                        "record": record, "track": track})
+    return ir, eid
+
+
 def insert_graphic(ir, template, record, duration_frames=None, inputs=None,
                    evidence=None):
     """Place an APPROVED library template instance at `record`.

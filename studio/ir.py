@@ -51,9 +51,15 @@ def _strip_internal(obj):
     return obj
 
 
+# Bump when the compiler's OUTPUT for identical IR changes (e.g. the audio
+# spine): same IR must then compile to a NEW timeline, not reuse a stale one.
+COMPILER_EPOCH = 2
+
+
 def content_hash(ir):
-    """Canonical hash of the IR content (identity for idempotence)."""
-    canon = json.dumps(_strip_internal(ir), sort_keys=True, separators=(",", ":"))
+    """Canonical hash of IR content + compiler epoch (identity for idempotence)."""
+    canon = json.dumps({"ir": _strip_internal(ir), "epoch": COMPILER_EPOCH},
+                       sort_keys=True, separators=(",", ":"))
     return hashlib.sha256(canon.encode()).hexdigest()
 
 

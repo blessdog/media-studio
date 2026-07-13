@@ -115,7 +115,7 @@ def main():
     p = sub.add_parser("find", help="locate a spoken phrase; print source + timeline position")
     p.add_argument("phrase")
 
-    for name in ("insert-image", "insert-clip", "insert-graphic",
+    for name in ("insert-image", "insert-clip", "insert-graphic", "add-music",
                  "retime", "remove", "remove-graphic"):
         p = sub.add_parser(name)
         if name == "insert-image":
@@ -124,6 +124,10 @@ def main():
             p.add_argument("video")
             p.add_argument("--src-in", type=float, default=0.0,
                            help="b-roll start point in seconds (default 0)")
+        elif name == "add-music":
+            p.add_argument("audio")
+            p.add_argument("--src-in", type=float, default=0.0,
+                           help="start point inside the track (seconds)")
         elif name == "insert-graphic":
             p.add_argument("template", help="APPROVED library template name")
             p.add_argument("--input", action="append", default=[],
@@ -132,7 +136,7 @@ def main():
                                 "(e.g. --input 'StyledText=THE FED BLINKS')")
         else:
             p.add_argument("edit_id")
-        if name.startswith("insert"):
+        if name.startswith("insert") or name == "add-music":
             p.add_argument("--where", help="spoken phrase to anchor on")
             p.add_argument("--hit", type=int, default=0,
                            help="which phrase occurrence (default first)")
@@ -188,6 +192,20 @@ def main():
             print(f"insert {eid}: {vid.name} at {record} "
                   f"({momentsmod.timecode(record, fps)}) for "
                   f"{d['srcOut'] - d['srcIn']} frames")
+        elif args.cmd == "add-music":
+            record = 0 if not (args.where or args.at or args.record is not None) \
+                else _resolve_record(ir, transcript, args)
+            aud = Path(args.audio).expanduser().resolve()
+            if aud.is_file() and ws not in aud.parents:
+                aud = intakemod.file_media(aud, ws)
+                print(f"filed media: {aud}")
+            dur = int(round(args.dur * fps)) if args.dur else None
+            src_in = int(round(args.src_in * fps))
+            ir, eid = editmod.add_music(ir, aud, record=record, src_in=src_in,
+                                        duration_frames=dur)
+            d = next(e for e in ir["edits"] if e["id"] == eid)
+            print(f"music {eid}: {aud.name} at {record} on A{d['track']} "
+                  f"for {d['srcOut'] - d['srcIn']} frames (voice on A1 untouched)")
         elif args.cmd == "insert-graphic":
             record = _resolve_record(ir, transcript, args)
             inputs = {}

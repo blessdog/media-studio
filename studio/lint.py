@@ -56,6 +56,8 @@ def lint(ir, base_dir):
             continue
         dur = float(probe.get("format", {}).get("duration", 0) or 0)
         a["_frames"] = int(dur * fps) if a["kind"] != "image" else None
+        a["_hasAudio"] = any(s.get("codec_type") == "audio"
+                             for s in probe.get("streams", []))
         if a.get("sha256"):
             actual = _sha256(p)
             if actual and actual != a["sha256"]:
@@ -79,16 +81,17 @@ def lint(ir, base_dir):
             errors.append(
                 f"edit {eid}: srcOut {e['srcOut']} beyond asset {e['asset']} "
                 f"length (~{frames} frames @ {fps} fps)")
+        lane = "audio" if assets[e["asset"]]["kind"] == "audio" else "video"
         track = e.get("track", 1)
-        by_track.setdefault(track, []).append(
+        by_track.setdefault((lane, track), []).append(
             (e["record"], e["record"] + e["srcOut"] - e["srcIn"], eid))
 
-    for track, spans in by_track.items():
+    for (lane, track), spans in by_track.items():
         spans.sort()
         for (s1, e1, id1), (s2, e2, id2) in zip(spans, spans[1:]):
             if s2 < e1:
                 errors.append(
-                    f"track {track}: edits {id1} and {id2} overlap "
+                    f"{lane} track {track}: edits {id1} and {id2} overlap "
                     f"({s2} < {e1})")
 
     _lint_graphics(ir, errors)
