@@ -171,6 +171,19 @@ Blender-rendered motion → Wan Animate restyle (its video-driving mode).
 Everything lands in Registry with provenance (model, prompt version,
 license). Curation surface = files on disk + Ryan's eyes, not a bespoke UI.
 
+## The Prompt Brain — flagged by Ryan 2026-07-13, deliberately deferred
+
+Ryan, on seeing the first live forge batch: the images were fine but "I
+didn't really have any input into what created those... the prompt is what
+creates — that's the creative aspect... getting into the prompt is its own
+brain." A PIVOTAL future area, its own planning dialogue when we get there:
+how Ryan's intent becomes the prompt (his words, reference images, mood
+boards, iterative dialogue — TBD). Until then, doctrine: prompts written by
+agents during pipeline work are FIXTURE MATERIAL (like sample recordings
+were for ingest) — never presented as creative output, and generation for a
+real video always takes its creative direction from Ryan per moment (same
+rule as rant-visuals). Copilot-not-autopilot applies to generation.
+
 ## Deferred / explicitly out of scope until revisited
 
 - Audio-only IR tracks, transitions, retimes (schema bumps when needed).
