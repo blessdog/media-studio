@@ -46,6 +46,7 @@ gate failure. Every path handed to Resolve must be ABSOLUTE (doctrine).
 | `tools/edit-ir.py <ws> insert-image <img> --where "phrase" \| --at M:SS \| --record F [--dur s]` | file image into media/, cutaway edit, lint, recompile, show |
 | `tools/edit-ir.py <ws> insert-clip <video> --where\|--at\|--record [--src-in s] [--dur s]` | found-b-roll video cutaway on the overlay track |
 | `tools/edit-ir.py <ws> insert-graphic <template> --where\|--at\|--record [--dur s] [--input K=V ...]` | APPROVED library template instance (forged alpha master, placed exactly) |
+| `tools/edit-ir.py <ws> add-music <audio> [--where\|--at\|--record] [--src-in s] [--dur s]` | music/sfx bed on its own audio lane (A2+); voice on A1 is sacred |
 | `tools/edit-ir.py <ws> retime <edit-id> [--record F] [--dur s]` | move/stretch an edit, recompile |
 | `tools/edit-ir.py <ws> remove <edit-id>` / `remove-graphic <id>` | remove edit/graphic (+ orphaned asset), recompile |
 | `tools/compile-ir.py <ir.json> [--render] [--show]` | lint → compile → verify (structure; `--render` closes the loop to pixels) |
@@ -70,6 +71,12 @@ plain scripts (`test_compile.py`, `test_registry.py`, `test_assembly.py`).
   full recompile IS the edit mechanism.
 - Deepgram for transcription, never Whisper. Templates/grades: agents apply,
   Ryan authors.
+- **Audio spine (epoch 2)**: track-1 video edits mirror their audio onto A1;
+  video cutaways (V2+) are silent by design; audio assets get audio lanes
+  (A2+ music). Renders are loudness-checked when the IR implies sound —
+  every timeline before 2026-07-13 was silently MUTE; the verifier now has
+  ears. `ir.py COMPILER_EPOCH` must be bumped whenever identical IR would
+  compile differently.
 - Requirements pinned in `requirements.txt`; venv at `.venv/`. Deepgram key
   in `.env` (never commit).
 

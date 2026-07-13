@@ -133,9 +133,25 @@ path is smoked but not yet exercised on a real timeline.
 Fix landed en route: spans_from_ir now keys on the track-1 asset (multi-
 video-asset IRs broke the old single-asset assumption).
 
+## Audio spine ✅ (2026-07-13) — and a confession
+
+**Every timeline compiled before today was MUTE.** emit built video tracks
+only; the verifier had no ears; "verified to pixels" never listened. Caught
+by ground-truthing A1 before building music support (render measured -91 dB).
+Shipped: A1 mirrors track-1 voice frame-exact; cutaways silent by design;
+audio assets on their own lanes (`add-music` verb, A2 beds); forge masters
+render audio-free (cache key salted); verify checks audio lanes structurally
+AND volume-detects renders (silence = red). COMPILER_EPOCH introduced in
+ir.py — bump it whenever identical IR would compile differently, so stale
+timelines can't satisfy idempotence. Proven: loop-demo voice+music render
+at -1.8 dB max; suites 39/39 + 9/9 --render. Packages 2–4 provisionally
+approved same day (aesthetics pass later).
+
 ## Next
 
-1. Packages 2–4: **podcast-clips v1 AUTHORED + previewed (autonomous loop,
+1. **Studio Daemon v0** (Phase 5 core; deck wiring waits on the Companion
+   gate) — then delivery fan-out + bongpot adapter (Phase 6 slices).
+2. Packages 2–4: **podcast-clips v1 AUTHORED + previewed (autonomous loop,
    2026-07-12)** — outputs/previews/ms-pc-{caption,speaker,episode}-preview.mp4
    awaiting Ryan's verdicts. Documentary + broadcast-retro next, same rails.
 2. ~~OGraf investigation~~ DONE 2026-07-12 (report in
