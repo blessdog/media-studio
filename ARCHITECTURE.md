@@ -85,10 +85,11 @@ opportunity later, not a day-one merge.
 ## Open decisions **[RYAN]**
 
 1. **Project name** (media-studio is a placeholder).
-2. **Deck middleware**: Bitfocus Companion (fast, generic HTTP) vs custom Node
-   plugin (live key-state displays). Recommendation: Companion first.
-3. **MCP posture**: adopt gursky's server as-is for exploration + wrap our own
-   deterministic verbs in the daemon (recommendation), or granular-tools-only.
+2. ~~**Deck middleware**~~ BLESSED 2026-07-13: **Bitfocus Companion**
+   (installed 4.3.4; no deck hardware currently — daemon control page is the
+   interim tactile surface).
+3. ~~**MCP posture**~~ SETTLED 2026-07-13: gursky server installed
+   (repo .mcp.json) for exploration; deterministic verbs live in the daemon.
 4. ~~**Registry scope**~~ BLESSED 2026-07-12: **this repo only** (widen later
    only if the split lesson says otherwise).
 5. **Veo/Kling/Wan provider mix and budget** for Scene Forge (deferred to Phase 7).

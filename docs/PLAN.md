@@ -35,7 +35,7 @@ application, render, delivery, verification.
 | 2 Ingest lane | tools/ingest-recording.py: recording → Deepgram + auto-editor → evidence-linked IR → verified timeline | ✅ 2026-07-11 |
 | 3 Assembly Loop v0 + Registry v0 | conversational co-editing: transcript find + cutaway/retime/remove verbs, versioned timelines shown live in Resolve; SQLite registry | ✅ 2026-07-12 — exit test passed on real-scale sample (14-min iPhone recording); OBS Hybrid-MP4 verified machine-to-machine via websocket |
 | 4 Template Library v0 | format packages (news-desk/podcast/documentary/retro), forge+place graphics pipeline, captions, ScreenSage ingest | news-desk ✅ APPROVED + exit test PASSED 2026-07-12; packages 2–4 + OGraf timebox remain |
-| 5 Studio Daemon + Deck | Python HTTP daemon owns Resolve lifecycle + verbs; Stream Deck keys | queued — [RYAN gates: Companion vs custom plugin (rec: Companion); MCP posture (rec: gursky for exploration + daemon verbs)] |
+| 5 Studio Daemon + Deck | daemon ✅ 2026-07-13 (verbs + jobs + control page at 127.0.0.1:8873); Companion BLESSED + installed 2026-07-13 (no deck hardware currently — control page is interim surface); MCP installed 2026-07-13 |
 | 6 Finishing lane | Grade Library (DRX/LUT apply), delivery fan-out, bongpot adapter (video-plan.json seconds → IR frames) | queued |
 | 7 Scene Forge | stills-first genAI (→I2V), native reference-identity before LoRA, Blender bpy, provenance | queued — [RYAN gate: provider mix + budget] |
 
