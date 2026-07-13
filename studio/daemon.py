@@ -194,6 +194,57 @@ def _spawn(verb, argv):
 
 # ── HTTP surface ─────────────────────────────────────────────────────────────
 
+CONTROL_PAGE = """<!DOCTYPE html>
+<html><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Media Studio</title>
+<style>
+ body{background:#14161c;color:#eee;font:16px -apple-system,sans-serif;
+      margin:0;padding:24px;max-width:640px;margin-inline:auto}
+ h1{font-size:18px;letter-spacing:.2em;color:#f90;margin:0 0 16px}
+ .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+ button{padding:26px 10px;font-size:17px;font-weight:700;border:0;
+        border-radius:14px;background:#262a35;color:#eee;cursor:pointer}
+ button:active{transform:scale(.97)}
+ .rec{background:#8c1d1d}.stop{background:#1d5c8c}.warn{background:#5a4a12}
+ #st{margin-top:18px;padding:14px;background:#1b1e26;border-radius:12px;
+     font:13px ui-monospace,monospace;white-space:pre-wrap;color:#9fb}
+</style></head><body>
+<h1>MEDIA STUDIO</h1>
+<div class="grid">
+ <button class="rec"  onclick="verb('record-start')">&#9679; REC</button>
+ <button class="stop" onclick="verb('stop-and-ingest')">&#9632; STOP + INGEST</button>
+ <button onclick="verb('ingest-last')">INGEST LAST</button>
+ <button onclick="verb('ingest-screensage')">INGEST SCREENSAGE</button>
+ <button onclick="refresh()">STATUS</button>
+ <button class="warn" onclick="if(confirm('Restart Resolve?'))verb('restart-resolve')">RESTART RESOLVE</button>
+</div>
+<div id="st">loading&hellip;</div>
+<script>
+async function verb(name){
+  const r = await fetch('/verb/'+name, {method:'POST', body:'{}'});
+  document.getElementById('st').textContent = JSON.stringify(await r.json(), null, 1);
+  setTimeout(refresh, 1500);
+}
+async function refresh(){
+  try{
+    const s = await (await fetch('/status')).json();
+    const j = await (await fetch('/jobs')).json();
+    const last = j.jobs.at(-1);
+    document.getElementById('st').textContent =
+      'OBS: ' + (s.obs.error ? 'unreachable' :
+        (s.obs.recording ? 'RECORDING '+Math.round(s.obs.recordSeconds)+'s'
+                         : 'idle @ '+s.obs.scene)) +
+      '\\nResolve: ' + (s.resolve.project || s.resolve.error || s.resolve.busy) +
+      (s.resolve.timeline ? ' / '+s.resolve.timeline : '') +
+      '\\nLatest: ' + (s.latestRecording||'-').split('/').pop() +
+      (last ? '\\nJob '+last.id+' ('+last.verb+'): '+last.status : '');
+  }catch(e){ document.getElementById('st').textContent = 'daemon unreachable'; }
+}
+refresh(); setInterval(refresh, 5000);
+</script></body></html>"""
+
+
 class Handler(BaseHTTPRequestHandler):
     def _send(self, code, payload):
         body = json.dumps(payload, indent=1).encode()
@@ -207,6 +258,14 @@ class Handler(BaseHTTPRequestHandler):
         pass                              # quiet; jobs have their own logs
 
     def do_GET(self):
+        if self.path in ("/", "/index.html"):
+            body = CONTROL_PAGE.encode()
+            self.send_response(200)
+            self.send_header("Content-Type", "text/html; charset=utf-8")
+            self.send_header("Content-Length", str(len(body)))
+            self.end_headers()
+            self.wfile.write(body)
+            return
         if self.path == "/status":
             return self._send(200, v_status({}))
         if self.path == "/verbs":
