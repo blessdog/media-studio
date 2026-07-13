@@ -135,8 +135,9 @@ video-asset IRs broke the old single-asset assumption).
 
 ## Next
 
-1. Packages 2–4 on the same rails (podcast/clips incl. captions →
-   documentary → broadcast-retro), each ending in preview verdicts.
+1. Packages 2–4: **podcast-clips v1 AUTHORED + previewed (autonomous loop,
+   2026-07-12)** — outputs/previews/ms-pc-{caption,speaker,episode}-preview.mp4
+   awaiting Ryan's verdicts. Documentary + broadcast-retro next, same rails.
 2. ~~OGraf investigation~~ DONE 2026-07-12 (report in
    docs/MOTION-GRAPHICS.md): NATIVE in Resolve as CEF-rendered Titles,
    manifest-defined duration, deterministic goToTime — the hyperframes
