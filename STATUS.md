@@ -302,15 +302,26 @@ live-run on loop-demo (its 5s ambient bed = 1 beat — real-music
 validation awaits Ryan's track). Quantize-to-grid edit verbs come when a
 real music video wants them.
 
+## Course correction closing the session (Ryan, 2026-07-13)
+
+Creation and editing are SEPARATE CONCERNS — the instant record→edit loop
+was testing only. Next session (fresh start): the Stream Deck becomes a
+full production dashboard (scene cuts, takes, live key feedback — REC
+silently no-oped against a crashed OBS today, unacceptable) and material
+accumulates as a CORPUS; ingest is deliberate/batch; editing is its own
+later activity. Full agenda at docs/PLAN.md "NEXT SESSION AGENDA". Also
+today: OBS crashed once mid-session (relaunched clean); the 1.9s
+accidental take lives at outputs/projects/2026-07-13-14-37-50.
+
 ## Next
 
-1. Phase map is BUILT WIDE (Ryan's directive satisfied): all 7 phases have
-   working foundations. Remaining gates are Ryan's: Grade Library (author
-   a look first), Prompt Brain dialogue, bongpot×studio project, project
-   name, aesthetics passes.
-2. Backlog: per-image prompt variation in batches; empirical cost
-   correction from Replicate bills; launchd daemon; deck polish; LAN/auth
-   control page; captions --native exercise; quantize-to-beat edit verbs.
+1. **NEXT SESSION: deck-as-dashboard + corpus workflow** (docs/PLAN.md
+   agenda — open with a planning dialogue, then build).
+2. Ryan-gated: Grade Library (author a look first), Prompt Brain dialogue,
+   bongpot×studio project, project name, aesthetics passes.
+3. Backlog: per-image prompt variation in batches; empirical cost
+   correction from Replicate bills; launchd daemon; LAN/auth control
+   page; captions --native exercise; quantize-to-beat edit verbs.
 2. Packages 2–4: **podcast-clips v1 AUTHORED + previewed (autonomous loop,
    2026-07-12)** — outputs/previews/ms-pc-{caption,speaker,episode}-preview.mp4
    awaiting Ryan's verdicts. Documentary + broadcast-retro next, same rails.

@@ -209,6 +209,33 @@ rule as rant-visuals). Copilot-not-autopilot applies to generation.
 - Selling any of this (market research in RESEARCH.md Part 5: capped/niche/
   productized or nothing; service-first if ever).
 
+## NEXT SESSION AGENDA — Ryan's directive, 2026-07-13 (supersedes item 5 below)
+
+**Two separate concerns, cleanly split: CREATION and EDITING.**
+The record→ingest→edit-each-clip loop this session was pipeline TESTING
+only — Ryan allowed it to prove the plumbing. It is NOT the workflow.
+"You don't create a shot and then go in and edit it."
+
+1. **Creation = corpus building.** Ryan runs live sessions from the
+   Stream Deck — cut shots, scene switches, takes — and material
+   ACCUMULATES (recordings stay in ~/Movies; registry is the corpus
+   index). Ingest becomes a deliberate, later, batchable act — not a
+   reflex after every take. (Implication: the ■ STOP+INGEST key conflates
+   the concerns — expect to split STOP from ingest.)
+2. **The Stream Deck becomes a full production dashboard.** His OBS
+   control-room layout restored and expanded — scene-cut keys (his
+   scenes: Screen+Cam / Lava Lounge / Cam Cutout / Cam / Screen /
+   Starting Soon / Ending), record controls WITH live key feedback
+   (this session he pressed REC against a dead OBS and nothing told him
+   — keys must show state), studio verbs alongside. "It is already its
+   own interface that is underutilized."
+3. **Editing = its own activity**, later, over the corpus — the
+   conversational co-edit loop already built.
+
+START the next session with a plan-through-dialogue round on the deck
+layout + corpus workflow (how Ryan physically uses it), THEN build.
+Companion-config-by-sqlite doctrine is in docs/DECK.md.
+
 ## Session pickup checklist (after reboot — updated 2026-07-13)
 
 1. Open Claude Code in `media-studio/` (AGENTS.md + CLAUDE.md load; memory too).
