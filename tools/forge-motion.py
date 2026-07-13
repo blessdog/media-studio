@@ -50,8 +50,11 @@ def main():
 
     model = forgemod.VIDEO_MODELS[args.model]
     cost = forgemod.estimate_video(args.model)
+    tag = ("CEILING (provider publishes no price — approving the ceiling; "
+           "real cost measured from the bill)" if model.get("estimated")
+           else "verified")
     print(f"clip: ~{model['clip_s']:.0f}s x {model['id']} "
-          f"-> estimated ${cost:.2f}")
+          f"-> estimated ${cost:.2f} {tag}")
     if not args.approve:
         print("AWAITING APPROVAL — nothing spent. Rerun with --approve "
               "after Ryan's go.")

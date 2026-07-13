@@ -31,18 +31,28 @@ MODELS = {
 }
 DEFAULT_MODEL = "qwen-fast"
 
-# I2V models (slice 2). Only models with VERIFIED per-second pricing enter —
-# the approval gate needs deterministic estimates (replicate.com/pricing,
-# checked 2026-07-13; Kling/Seedance/Veo prices unfetchable — revisit).
-# wan-2.1 output length is fixed (~5s, no duration input); supports
-# lora_weights (future identity lane).
+# I2V models (slice 2). Pricing reality (2026-07-13): Replicate publishes
+# NO fetchable per-model video prices; the only two on /pricing
+# (wavespeedai/wan-2.1-i2v-*) have a DEAD backend (every prediction fails
+# E002, data-URI and file-URL alike — do not re-add). So estimates carry an
+# `estimated` flag: the gate prints a CEILING and Ryan approves that
+# ceiling; real cost gets measured from the bill and the table corrected.
+# wan-2.5-i2v-fast: duration input (default 5s), resolution 480p/720p/1080p,
+# optional audio-sync input. fal.ai lists wan-2.5 at $0.05/s; ceiling 2x.
 VIDEO_MODELS = {
-    "wan-480p": {"id": "wavespeedai/wan-2.1-i2v-480p", "cost_per_s": 0.09,
-                 "clip_s": 5.0, "note": "cheap motion tier"},
-    "wan-720p": {"id": "wavespeedai/wan-2.1-i2v-720p", "cost_per_s": 0.25,
-                 "clip_s": 5.0, "note": "quality tier"},
+    "hailuo-fast": {"id": "minimax/hailuo-2.3-fast", "cost_per_s": 0.08,
+                    "estimated": True, "clip_s": 6.0,
+                    "inputs": {"duration": 6, "resolution": "768p"},
+                    "image_key": "first_frame_image",
+                    "note": "default motion tier (768p 6s)"},
+    "wan-fast": {"id": "wan-video/wan-2.5-i2v-fast", "cost_per_s": 0.10,
+                 "estimated": True, "clip_s": 5.0,
+                 "inputs": {"duration": 5, "resolution": "720p"},
+                 "note": "BROKEN 2026-07-13: upstream E002 on every run "
+                         "(shared wan backend; wavespeedai wan-2.1 same) — "
+                         "retest before relying on it"},
 }
-DEFAULT_VIDEO_MODEL = "wan-480p"
+DEFAULT_VIDEO_MODEL = "hailuo-fast"
 BASE = "https://api.replicate.com/v1"
 
 
@@ -129,7 +139,7 @@ def generate_batch(prompt, n, out_dir, model_key=DEFAULT_MODEL,
 
     inputs = {"prompt": prompt, "aspect_ratio": _aspect(width, height)}
     if ref_images:
-        inputs["input_images"] = [_data_uri(p) for p in ref_images]
+        inputs["input_images"] = [_image_input(session, p) for p in ref_images]
 
     paths = []
     for i in range(1, n + 1):
@@ -169,6 +179,20 @@ def _data_uri(path):
     mime = {"png": "image/png", "webp": "image/webp"}.get(
         p.suffix.lstrip(".").lower(), "image/jpeg")
     return f"data:{mime};base64," + base64.b64encode(p.read_bytes()).decode()
+
+
+def _image_input(session, path):
+    """Image as prediction input. Replicate rejects data URIs over ~256KB
+    (E002) — larger files go through the files API and pass as a URL."""
+    p = Path(path)
+    if p.stat().st_size <= 200_000:
+        return _data_uri(p)
+    with open(p, "rb") as f:
+        r = session.post(f"{BASE}/files", files={"content": (p.name, f)},
+                         timeout=120)
+    if r.status_code not in (200, 201):
+        raise ForgeError(f"file upload: HTTP {r.status_code} {r.text[:150]}")
+    return r.json()["urls"]["get"]
 
 
 def contact_sheet(batch_dir, cols=4, thumb_w=480):
@@ -221,9 +245,10 @@ def animate(still, prompt, out_dir, model_key=DEFAULT_VIDEO_MODEL):
 
     session = requests.Session()
     session.headers["Authorization"] = f"Bearer {_token()}"
-    urls = _predict(session, model["id"],
-                    {"image": _data_uri(still), "prompt": prompt},
-                    timeout=900)
+    inputs = dict(model.get("inputs", {}))
+    inputs[model.get("image_key", "image")] = _image_input(session, still)
+    inputs["prompt"] = prompt
+    urls = _predict(session, model["id"], inputs, timeout=900)
     clip = session.get(urls[0], timeout=300)
     clip.raise_for_status()
     out.write_bytes(clip.content)
