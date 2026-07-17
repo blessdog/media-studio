@@ -1,0 +1,1166 @@
+{
+ "sections": [
+  {
+   "section": "Sander van Dijk \u2014 tools accelerate iteration (LANE-B-CREATOR-METHODS.md lines 84-94)",
+   "overall": "minor-issues",
+   "checks": [
+    {
+     "claim": "After Effects remains central, with Illustrator and occasional Cinema 4D",
+     "verdict": "SUPPORTED",
+     "url": "https://schoolofmotion.com/blog/sander-van-dijk-podcast",
+     "note": "Interview discusses After Effects extensively and mentions Illustrator and Cinema 4D. 'Occasional' is the memo's characterization; the interview also names Figma, Photoshop, Premiere, Animate \u2014 AE-centrality is clearly supported."
+    },
+    {
+     "claim": "Van Dijk's own tools link palettes and recall textures/effects/keyframes",
+     "verdict": "SUPPORTED",
+     "url": "https://www.sandervandijk.tv/tools",
+     "note": "Official tools page lists Ray Dynamic Color ('The industry leading Color Palette for AE') and Ray Dynamic Texture ('stores textures, including their layer settings, applied effects, keyframes, expressions and layer styles') \u2014 matches both clauses."
+    },
+    {
+     "claim": "His tools construct repeated paths",
+     "verdict": "PARTIAL",
+     "url": "https://www.sandervandijk.tv/tools",
+     "note": "The third tool is Ouroboros Strokes: 'Create multiple strokes on one single path.' It repeats strokes on one path \u2014 it does not construct or repeat paths. Detail off: strokes vs paths."
+    },
+    {
+     "claim": "Project method: references and styleframes \u2192 animatic/boardamatic as intentionally rough foundation \u2192 sequence and transition tests \u2192 approval \u2192 polish",
+     "verdict": "SUPPORTED",
+     "url": "https://schoolofmotion.com/blog/sander-van-dijk-podcast",
+     "note": "Transcript: 'pull a couple references', 'the blueprint is then just the direct correlation to an animatic or a boardamatic', 'I'll build an animatic in an hour, just really rough... don't name any layers', 'putting the foundation in', tests transitions, 'get some kind of client approval on that, then I can proceed', then polish. Even 'boardamatic' is verbatim from the source."
+    },
+    {
+     "claim": "The tools make thinking and iteration faster; they do not choose the story pulse or final transition",
+     "verdict": "SUPPORTED",
+     "url": "https://schoolofmotion.com/blog/sander-van-dijk-podcast",
+     "note": "First half near-verbatim: 'it's gonna help us think faster, iterate faster... finally figure out the right way that these frames are meant to be put together.' Second clause is the memo's interpretive gloss but consistent with the quote (the human, not the tool, figures out how frames go together)."
+    },
+    {
+     "claim": "Citation https://www.sandervandijk.tv/material-design is an official case study by van Dijk",
+     "verdict": "SUPPORTED",
+     "url": "https://www.sandervandijk.tv/material-design",
+     "note": "Page exists: his case study of the Material Design website launch video (script refinement, design collaboration with The Rivalry, audio with Antfood). Note it does NOT itself cover the animatic workflow or custom tools \u2014 it corroborates his process philosophy generally, so it is a soft citation for this section."
+    }
+   ],
+   "fixes": [
+    "Line 88: change 'construct repeated paths' to 'stack multiple strokes on a single path' \u2014 Ouroboros's official description is 'Create multiple strokes on one single path', which repeats strokes, not paths.",
+    "Optional, line 94: the material-design case study supports his collaboration/script/audio philosophy but says nothing about animatics or custom tools; either scope the citation (e.g. 'case study of his script-to-audio harmonization process') or move it next to a claim it directly backs."
+   ]
+  },
+  {
+   "section": "Ben Marriott \u2014 fundamentals survive the plugins (docs/LANE-B-CREATOR-METHODS.md lines 96-105)",
+   "overall": "sound",
+   "checks": [
+    {
+     "claim": "Published workflow uses After Effects, Illustrator, Ease-Copy, and Duik",
+     "verdict": "SUPPORTED",
+     "url": "https://www.benmarriott.com/mastermotiondesign",
+     "note": "Course page names the plugins verbatim as 'Ease-Copy & Duik-Bassel' (memo's hyphenation matches the source), lists After Effects as primary software, and says 'The workflow-focused lesson will include file setup in Adobe Illustrator'."
+    },
+    {
+     "claim": "Workflow starts from the intended result and works backward through ideas and approved boards",
+     "verdict": "SUPPORTED",
+     "url": "https://elements.envato.com/learn/ben-marriott",
+     "note": "Interview quotes: 'Start with a project you want to replicate and work backward from there' and 'Create storyboards and design concepts early on and get them approved by the client'."
+    },
+    {
+     "claim": "Workflow proceeds through organizing assets, blocking movement and arcs, graph-editor timing, then transitions, rigs, texture",
+     "verdict": "SUPPORTED",
+     "url": "https://www.benmarriott.com/mastermotiondesign",
+     "note": "Course covers 'file organization, blocking animation, animating with arcs', transitions, rigging/character animation, and texture ('Master Texture Without Limits'); Envato interview corroborates file organization and graph-editor timing. 'Polish' is a paraphrase, not a quoted step \u2014 acceptable."
+    },
+    {
+     "claim": "Attributes a major skill improvement to temporarily dropping plugins and learning manual timing; plugins had created a ceiling",
+     "verdict": "SUPPORTED",
+     "url": "https://elements.envato.com/learn/ben-marriott",
+     "note": "Direct quotes: 'I decided to go on what I call a plugin diet for two or three months. I uninstalled my plugins and just did everything inside the graph editor' and 'That inevitably meant there was a ceiling for how good my work could be.' The memo's 'temporarily' matches the stated 2-3 months."
+    },
+    {
+     "claim": "Citation labels: benmarriott.com/mastermotiondesign is an official course; envato page is a first-person profile",
+     "verdict": "SUPPORTED",
+     "note": "Both URLs live. Master Motion Design is taught by Ben Marriott on his own site; the Envato piece is a first-person interview with direct quotes."
+    }
+   ],
+   "fixes": []
+  },
+  {
+   "checks": [
+    {
+     "claim": "Ordinary Folk publishes a four-stage process: Message \u2192 Design \u2192 Animation \u2192 Audio",
+     "verdict": "SUPPORTED",
+     "url": "https://www.ordinaryfolk.co/process",
+     "note": "Page names exactly these four stages in this order."
+    },
+    {
+     "claim": "Design stage chooses among 2D, 3D, vector, cut-out, and hand-drawn treatments and produces sketches/storyboards",
+     "verdict": "SUPPORTED",
+     "url": "https://www.ordinaryfolk.co/process",
+     "note": "Page asks verbatim 'Is it 2D, 3D, Vector, Cut-out, or hand-drawn?' and says the team shares 'sketches and storyboards'."
+    },
+    {
+     "claim": "Animation stage adds nuance, personality, and pixel-level refinement",
+     "verdict": "SUPPORTED",
+     "url": "https://www.ordinaryfolk.co/process",
+     "note": "Page: 'bringing personality and expression to every object' with 'pixel-perfect' attention. 'Nuance' is a fair paraphrase, not a quote."
+    },
+    {
+     "claim": "Sound is considered from the start and composers enter once an animatic exists",
+     "verdict": "SUPPORTED",
+     "url": "https://www.ordinaryfolk.co/process",
+     "note": "Page states sound considerations run from project inception and composers work after the animatic is complete."
+    },
+    {
+     "claim": "JR's documented toolchain includes Animate, Audition, After Effects, Illustrator, and Photoshop",
+     "verdict": "SUPPORTED",
+     "url": "https://www.learnsquared.com/courses/motion-design",
+     "note": "Course page lists exactly these five Adobe applications as required software; instructor is Jorge R. Canedo E. (Jr.canest)."
+    },
+    {
+     "claim": "Limited scripts/expressions and deliberate hand keyframing",
+     "verdict": "PARTIAL",
+     "url": "https://www.learnsquared.com/courses/motion-design",
+     "note": "Hand-keyframing emphasis is on the course page ('Keyframe Animation' lesson, 'delicious keyframes'), but the words script/expression appear nowhere on it. The scripts/expressions caution is corroborated only by an uncited source: lesterbanks.com quotes JR weighing hand-animating vs 'fumble through expressions'."
+    },
+    {
+     "claim": "JR Canest is Ordinary Folk's founder/creative director (implicit in section attribution)",
+     "verdict": "SUPPORTED",
+     "url": "https://www.ordinaryfolk.co/about",
+     "note": "About page lists Jorge R. Canedo E. as 'Owner & Creative Director' and 'our founder and creative director'."
+    }
+   ],
+   "fixes": [
+    "For 'limited scripts/expressions': add citation https://lesterbanks.com/2017/07/jr-canest-shares-amazing-tips-effects/ \u2014 the Learn Squared page never mentions scripts or expressions; the Lesterbanks piece quotes JR weighing whether to hand-animate or 'fumble through expressions'.",
+    "Optionally split the sentence so the five-app toolchain and hand keyframing cite Learn Squared, while the scripts/expressions caution cites the Lesterbanks interview \u2014 currently one citation is doing work it can't support."
+   ],
+   "overall": "minor-issues",
+   "section": "Ordinary Folk / JR Canest \u2014 message before medium (LANE-B-CREATOR-METHODS.md lines 107-118)"
+  },
+  {
+   "section": "Giant Ant \u2014 technique follows the intended feeling (LANE-B-CREATOR-METHODS.md lines 120-130)",
+   "overall": "minor-issues",
+   "checks": [
+    {
+     "claim": "Giant Ant has used Photoshop, Illustrator, Cinema 4D, Maya, Flash, painted backgrounds, and VR-built worlds on projects",
+     "verdict": "UNSUPPORTED",
+     "url": "https://medium.com/thenextgag-interviews/jay-grandin-partner-creative-director-giant-ant-5da2818b330b",
+     "note": "None of the three cited sources name any of these seven tools/techniques. The Medium interview names no production tools at all (only Myspace/Pinterest/Vimeo/YouTube as platforms); a keyword scan of the School of Motion transcript found zero hits for Photoshop, Cinema 4D, Maya, Flash, VR, or 'painted'; the About page lists no tools. A targeted web search across other Grandin interviews (Motion Hatch, WNW Magazine, STASH) found no corroboration either. Reads as fabricated specificity grafted onto the true directional claim ('bizarre and messy mix of techniques' \u2014 Jay's actual phrase in the Medium interview)."
+    },
+    {
+     "claim": "Giant Ant has used After Effects and frame-by-frame drawing (cel animation)",
+     "verdict": "SUPPORTED",
+     "url": "https://schoolofmotion.com/blog/jay-grandin-podcast-podcast",
+     "note": "School of Motion transcript: After Effects is their primary animation tool (plus Apple Motion early on, Duik for rigging), and cel animation is discussed repeatedly \u2014 'What if we take motion graphics and you bring in cell animation to it', now incorporated into 'every single project'."
+    },
+    {
+     "claim": "The studio starts from the intended look and feeling, then works backward to the technique",
+     "verdict": "SUPPORTED",
+     "url": "https://medium.com/thenextgag-interviews/jay-grandin-partner-creative-director-giant-ant-5da2818b330b",
+     "note": "Near-verbatim in the Medium interview: 'No matter what the project, we always like to start with how we want something to look or feel, and work backwards to the technique from there.'"
+    },
+    {
+     "claim": "Its leverage is technical direction and a multi-role team, not one universal automation layer",
+     "verdict": "PARTIAL",
+     "url": "https://schoolofmotion.com/blog/jay-grandin-podcast-podcast",
+     "note": "The multi-role specialized team is well supported: SoM podcast describes hiring dedicated animators (Jorge), illustrator/designer Lucas Brooking, classical animator Henrique Barone \u2014 'a real illustrator, real designer making stuff purposely rather than just having a bunch of animators designing shit as they go'; the About page lists a ~25-person team. But 'technical direction' as the named leverage is the memo's own framing \u2014 no source uses that term, and the 'not one universal automation layer' contrast is inference, not sourced."
+    },
+    {
+     "claim": "Jay Grandin says the work they value required enough time to get it wrong more than once",
+     "verdict": "SUPPORTED",
+     "url": "https://schoolofmotion.com/blog/jay-grandin-podcast-podcast",
+     "note": "Accurate paraphrase of the SoM podcast: '90% of the work that we've made where we feel really proud of it... is stuff that people reference us because we've had a bit of time to sit there and get it wrong a couple times first before we get it right.' Note it is from the School of Motion source, not the Medium interview (which has no such quote)."
+    },
+    {
+     "claim": "Citation labeled 'team' (giantant.ca/about) supports a multi-role team",
+     "verdict": "PARTIAL",
+     "url": "https://www.giantant.ca/about",
+     "note": "Page is live and lists ~25 team members and 'a creative studio, a design shop, an animation house... diverse & tight-knit team', but lists NO roles or titles for anyone \u2014 so it evidences team size/diversity, not the specific multi-role composition; the SoM podcast is the real source for that."
+    }
+   ],
+   "fixes": [
+    "Replace the tool enumeration with what the sources actually support: 'Giant Ant has mixed After Effects, cel/frame-by-frame animation, and what Grandin calls a \"bizarre and messy mix of techniques\" across projects' \u2014 drop Photoshop, Illustrator, Cinema 4D, Maya, Flash, painted backgrounds, and VR-built worlds, or find and cite a source that names them (none of the three cited do).",
+    "Reword 'technical direction and a multi-role team' to 'a team of dedicated specialists \u2014 real illustrators and classical animators, not generalist animators designing as they go' and cite the School of Motion podcast, which is where that claim actually lives; 'technical direction' is not source language.",
+    "Attribute the get-it-wrong paraphrase explicitly to the School of Motion podcast (the '90% of the work we're proud of' quote), since the adjacent Medium citation contains no such statement.",
+    "Keep the giantant.ca/about citation only for team size/diversity; it lists no roles, so don't lean on it for the multi-role composition claim."
+   ]
+  },
+  {
+   "section": "Emanuele Colombo \u2014 constrained systems plus trial and error (/Users/SSDrive/projects/media-studio/docs/LANE-B-CREATOR-METHODS.md lines 132-143)",
+   "overall": "minor-issues",
+   "checks": [
+    {
+     "claim": "Builds simple-shape characters in Illustrator and prepares them for After Effects",
+     "verdict": "SUPPORTED",
+     "url": "https://motiondesign.school/courses/motion-secrets-with-emanuele-colombo/",
+     "note": "Course page: 'with a couple of simple shapes on Illustrator, you can come up with infinite character combinations... we'll learn how to prepare our characters for animation, before passing to After Effects.'"
+    },
+    {
+     "claim": "Plans transitions as morphs or match cuts that can be decomposed into manageable steps",
+     "verdict": "SUPPORTED",
+     "url": "https://motiondesign.school/courses/motion-secrets-with-emanuele-colombo/",
+     "note": "Course has a full transitions lesson covering 'the differences between morphing and match cuts'; search corroboration adds 'breaking down planning a transition between two icons,' supporting the decomposition framing."
+    },
+    {
+     "claim": "Expressions, few-keyframe constructions, and reusable rigs create leverage",
+     "verdict": "PARTIAL",
+     "url": "https://motiondesign.school/courses/motion-secrets-with-emanuele-colombo/",
+     "note": "'Expressions and a few keyframes' is stated nearly verbatim on the course page ('some handy shapes, expressions and a few keyframes'), but 'reusable rigs' appears in neither cited source nor a targeted search; the course covers character preparation, not rigs as a named technique."
+    },
+    {
+     "claim": "Palette / color choices remain a manual craft component",
+     "verdict": "SUPPORTED",
+     "url": "https://motiondesign.school/courses/motion-secrets-with-emanuele-colombo/",
+     "note": "Curriculum includes 'color palettes and... the different color combinations you can build,' plus dedicated character design instruction."
+    },
+    {
+     "claim": "A published raw recording preserved roughly 1.5 hours of unplanned experimentation for one small animation",
+     "verdict": "SUPPORTED",
+     "url": "https://lesterbanks.com/2019/09/watch-emanuele-colombo-animate-a-character-in-ae/",
+     "note": "Article quotes Colombo: 'I didn't really plan anything, that means it's basically one hour and a half of trial and error, wrong tests, aha moment and After Effects bugs.' Exact match on duration and unplanned nature."
+    },
+    {
+     "claim": "Both cited URLs are live and relevant to the claims they anchor",
+     "verdict": "SUPPORTED",
+     "note": "Both fetched successfully on 2026-07-17: lesterbanks page carries the raw-recording claim; motiondesign.school page carries the workflow/tooling claims."
+    }
+   ],
+   "fixes": [
+    "Change 'Expressions, few-keyframe constructions, and reusable rigs create leverage' to 'Handy shapes, expressions, and few-keyframe constructions create leverage' \u2014 the course page says 'some handy shapes, expressions and a few keyframes'; 'reusable rigs' is not stated in either cited source (or cite a separate source if the rigs claim comes from the course video content itself)."
+   ]
+  },
+  {
+   "section": "EJ Hassenfratz \u2014 automate setup, not the teaching decision (LANE-B-CREATOR-METHODS.md:145-159)",
+   "overall": "major-issues",
+   "checks": [
+    {
+     "claim": "Workflow uses naming conventions, reusable assets, non-destructive animation, Takes, render tokens, and batch output",
+     "verdict": "SUPPORTED",
+     "url": "https://schoolofmotion.com/courses/cinema-4d-insider",
+     "note": "Course page (live, taught by Hassenfratz) states: 'clean naming, reusable asset libraries', 'non-destructive animation layers', and 'Master C4D Takes for client revisions: build variations, version and token-name renders, batch output'."
+    },
+    {
+     "claim": "Workflow also uses Python and plugins",
+     "verdict": "UNSUPPORTED",
+     "url": "https://schoolofmotion.com/courses/cinema-4d-insider",
+     "note": "Neither the course page, the podcast interview, nor the course announcement blog mentions Python or plugins in Hassenfratz's workflow; web search surfaced only generic third-party C4D Python resources."
+    },
+    {
+     "claim": "Node Ninja builds Redshift materials from PBR texture folders, assigns correct color spaces and normal handling, and organizes the node graph",
+     "verdict": "SUPPORTED",
+     "url": "https://www.schoolofmotion.com/node-ninja",
+     "note": "Page (live) confirms: identifies maps by filename, sets Raw color space for roughness/metalness/normals, converts DirectX normals to OpenGL, and 'organizes node structure into clean, readable graphs'."
+    },
+    {
+     "claim": "Node Ninja is 'his' (Hassenfratz's) tool",
+     "verdict": "PARTIAL",
+     "url": "https://www.schoolofmotion.com/node-ninja",
+     "note": "The plugin is credited to School of Motion, not to Hassenfratz personally; he presents the tutorial for it and is SoM's Creative Director, but no source calls it his tool."
+    },
+    {
+     "claim": "His creative loop starts from a real design problem, develops a polished visual application, and teaches why the technique matters rather than merely reproducing an effect",
+     "verdict": "SUPPORTED",
+     "url": "https://schoolofmotion.com/blog/ej-hassenfratz-eyedesyn-podcast",
+     "note": "Interview (live, first-person) quotes: 'I don't like to show just the technical thing and not show it in like a real life scenario' and 'don't just copy me just to make the same thing' \u2014 emphasizing the why over replication."
+    },
+    {
+     "claim": "A major course was developed across roughly nine months",
+     "verdict": "UNSUPPORTED",
+     "note": "No cited source contains any development timeline: the podcast interview has no timeframe, the Cinema 4D Insider course page has none, and the course announcement blog (schoolofmotion.com/blog/cavalry-kickstart-cinema-4d-insider-courses) has none. Two targeted web searches found no nine-month figure for any Hassenfratz course. This number is load-bearing (cited as 'useful evidence' for the section's argument) and looks fabricated or misremembered."
+    },
+    {
+     "claim": "All three citation URLs resolve to the described content",
+     "verdict": "SUPPORTED",
+     "note": "All three fetched successfully: the podcast page ('Cinema 4D, The Hassenfratz Effect'), the Cinema 4D Insider course page, and the Node Ninja page all exist and match their link labels."
+    }
+   ],
+   "fixes": [
+    "Delete 'A major course was developed across roughly nine months' or replace with a supportable fact, e.g. 'Cinema 4D Insider is a 4+ hour, six-module professional course' (per https://schoolofmotion.com/courses/cinema-4d-insider) \u2014 no source states any development timeline, and the argument about substantial authored work should not rest on an unsourced number.",
+    "Change 'His Node Ninja tool' to 'School of Motion's free Node Ninja plugin, which Hassenfratz demos' \u2014 the tool page credits School of Motion, not Hassenfratz personally.",
+    "Drop 'Python, and plugins' from the workflow list (keep 'naming conventions, reusable assets, non-destructive animation, Takes, render tokens, batch output', all on the course page) or add a source that documents Python/plugin use in his workflow."
+   ]
+  },
+  {
+   "section": "Jared Owen \u2014 a direct automation-versus-craft answer (LANE-B-CREATOR-METHODS.md lines 163\u2013181)",
+   "overall": "minor-issues",
+   "checks": [
+    {
+     "claim": "Workflow sequence ends: music \u2192 rough render \u2192 family/expert critique \u2192 final render",
+     "verdict": "PARTIAL",
+     "url": "https://www.blendernation.com/2018/11/19/meet-the-artist-jared-owen/",
+     "note": "BlenderNation (corroborated via search; page 403s to fetchers but is live) confirms: music from the YouTube audio library, an OpenGL preview sent to FAMILY AND FRIENDS for feedback, then a final render. 'Expert' critique at this stage is a conflation \u2014 experts are consulted during research (per diginomica), not the rough-render review. Early steps (research \u2192 modeling \u2192 script/voice \u2192 animation \u2192 narration sync) are plausible but only partially verifiable from snippets."
+    },
+    {
+     "claim": "Historically a render took 20\u2013100 hours",
+     "verdict": "SUPPORTED",
+     "url": "https://www.blendernation.com/2018/11/19/meet-the-artist-jared-owen/",
+     "note": "Search snippet of the BlenderNation interview: 'Rendering can take anywhere from 20-100 hours depending on the complexity of the animation.' Direct fetch blocked (403), corroborated via search."
+    },
+    {
+     "claim": "One Apollo series took six months",
+     "verdict": "SUPPORTED",
+     "url": "https://www.blendernation.com/2018/11/19/meet-the-artist-jared-owen/",
+     "note": "Search corroboration: his 3-part Apollo Spacecraft series took 6 months to make."
+    },
+    {
+     "claim": "Current figure is roughly two months per video",
+     "verdict": "SUPPORTED",
+     "url": "https://diginomica.com/telling-3d-stories-about-things-learnings-jared-owen-provide-digital-twins-and-industrial-metaverse",
+     "note": "Direct quote: 'From the beginning of the video to the end of the video, sometimes it'll take me two months.'"
+    },
+    {
+     "claim": "About 200 hours of his own labor per video",
+     "verdict": "UNSUPPORTED",
+     "url": "https://www.youtube.com/watch?v=R1U6rpw7B9k",
+     "note": "Not in diginomica, not in BlenderNation, and searches for 'Jared Owen' + '200 hours' find nothing. The cited YouTube URL is a live vidIQ Podcasts interview ('How Jared Owen Built 4M Subs With Just 100 Videos') whose transcript I could not retrieve \u2014 the figure may live there, but no fetchable source states it."
+    },
+    {
+     "claim": "Now supported by contractors, purchased models, and subject experts",
+     "verdict": "SUPPORTED",
+     "url": "https://diginomica.com/telling-3d-stories-about-things-learnings-jared-owen-provide-digital-twins-and-industrial-metaverse",
+     "note": "Article: he recently started hiring people (did everything himself until last year), purchases 3D models to 'get kind of a leap ahead,' and consults subject-matter experts for research."
+    },
+    {
+     "claim": "Several render machines",
+     "verdict": "SUPPORTED",
+     "url": "https://diginomica.com/telling-3d-stories-about-things-learnings-jared-owen-provide-digital-twins-and-industrial-metaverse",
+     "note": "Search corroboration of the article: early rendering on his older computer 'could sometimes take a week'; 'these days, he has several PCs with better graphic cards.'"
+    },
+    {
+     "claim": "Python and Animation Nodes automate repeated operations",
+     "verdict": "SUPPORTED",
+     "url": "https://www.blendernation.com/2018/11/19/meet-the-artist-jared-owen/",
+     "note": "BlenderNation (via search): uses Python to extend Blender (e.g. animating the 88 hammers of a grand piano) and has adopted the Animation Nodes add-on."
+    },
+    {
+     "claim": "AI-written Blender utilities automate repeated operations",
+     "verdict": "PARTIAL",
+     "url": "https://diginomica.com/telling-3d-stories-about-things-learnings-jared-owen-provide-digital-twins-and-industrial-metaverse",
+     "note": "Source says he has 'started asking AI to suggest scripts, and sometimes it works, and other times it does not' \u2014 experimental and hit-or-miss, not an established automation layer as the memo implies."
+    },
+    {
+     "claim": "Hard part = research, story, making the 3D explanation self-evident",
+     "verdict": "SUPPORTED",
+     "url": "https://diginomica.com/telling-3d-stories-about-things-learnings-jared-owen-provide-digital-twins-and-industrial-metaverse",
+     "note": "Article: 'The hardest part has not been technical. It has been learning how to do better research and tell a better story,' plus emphasis on letting visuals convey meaning rather than narration."
+    },
+    {
+     "claim": "Explicitly warns AI research cannot be trusted without source and expert checks",
+     "verdict": "PARTIAL",
+     "url": "https://diginomica.com/telling-3d-stories-about-things-learnings-jared-owen-provide-digital-twins-and-industrial-metaverse",
+     "note": "Source is actually STRONGER: he found ChatGPT 'just as likely to get important facts right as wrong and was a no-go for now' \u2014 a flat rejection for research, not a use-with-checks caveat. The 'without source and expert checks' framing is the memo's paraphrase."
+    }
+   ],
+   "fixes": [
+    "Line 168-169: remove or re-source 'about 200 hours of his own labor per video' \u2014 no fetchable source states it; if it comes from the vidIQ interview (youtube.com/watch?v=R1U6rpw7B9k), add a timestamp, otherwise keep only the diginomica-confirmed 'sometimes two months'.",
+    "Line 166: change 'family/expert critique' to 'family-and-friends critique' \u2014 BlenderNation says the OpenGL rough goes to family and friends; experts are consulted during the research phase (diginomica), not the render review.",
+    "Line 170-171: soften 'AI-written Blender utilities automate repeated operations' to 'he has begun asking AI to write Blender scripts, with mixed results' \u2014 diginomica says it sometimes works and sometimes does not.",
+    "Line 172-174: tighten the AI-research warning to match the source's stronger stance, e.g. 'he found ChatGPT as likely to get important facts wrong as right and calls it a no-go for research for now' (diginomica).",
+    "Line 176: optionally label the YouTube citation as the vidIQ Podcasts interview 'How Jared Owen Built 4M Subs With Just 100 Videos' so future checkers know what it is."
+   ]
+  },
+  {
+   "section": "Branch Education \u2014 procedural assets inside a laborious build (LANE-B-CREATOR-METHODS.md:182-197)",
+   "overall": "major-issues",
+   "checks": [
+    {
+     "claim": "World's Smallest Devices was fully modeled, rigged, and animated in Blender, with extensive Geometry Nodes",
+     "verdict": "SUPPORTED",
+     "url": "https://blenderartists.org/t/worlds-smallest-devices-blender-project/1389553",
+     "note": "Post states verbatim: 'fully modelled, rigged and animated in Blender' and 'many generative assets (Geometry Nodes) were used in this project.'"
+    },
+    {
+     "claim": "About 45 models were used",
+     "verdict": "SUPPORTED",
+     "url": "https://blenderartists.org/t/worlds-smallest-devices-blender-project/1389553",
+     "note": "Exact quote: 'In total we used 45 models including background objects (human, coin, salt, blood cell, virus, DNA etc.)'"
+    },
+    {
+     "claim": "A purchased-then-modified PCB generator and a procedural ruler were used",
+     "verdict": "SUPPORTED",
+     "url": "https://blenderartists.org/t/worlds-smallest-devices-blender-project/1389553",
+     "note": "PCB generator was purchased and 'slightly modified'; the procedural ruler is described as '1:1 real-world scale that can be easily animated.'"
+    },
+    {
+     "claim": "Manual scene rescaling across orders of magnitude",
+     "verdict": "SUPPORTED",
+     "url": "https://blenderartists.org/t/worlds-smallest-devices-blender-project/1389553",
+     "note": "Artist: transistors 'are measured in nanometres so I had to scale up entire scene at several frames.'"
+    },
+    {
+     "claim": "Collection management to survive render-memory limits",
+     "verdict": "SUPPORTED",
+     "url": "https://blenderartists.org/t/worlds-smallest-devices-blender-project/1389553",
+     "note": "'the best solution was to switch off collections that were already out of camera view... keep your Outliner nice and clean.'"
+    },
+    {
+     "claim": "Founder is Theodore Tablante, interviewed in 2024",
+     "verdict": "SUPPORTED",
+     "url": "https://www.inspiringcomputing.com/2107763/episodes/15238107-animating-engineering-with-teddy-the-mind-behind-branch-education",
+     "note": "Episode page lists guest as Theodore Tablante (S1E15, aired 2024-06-13); LinkedIn corroborates 'Founder at Branch Education.'"
+    },
+    {
+     "claim": "A separate narrator (not the founder) narrates the videos",
+     "verdict": "SUPPORTED",
+     "note": "Corroborated by search (narrator Phil Lee, per Grokipedia's Branch Education article) \u2014 but this fact is NOT in any of the three cited sources' text."
+    },
+    {
+     "claim": "Team as of 2024: one researcher/writer, five animators, a modeler",
+     "verdict": "UNSUPPORTED",
+     "url": "https://www.inspiringcomputing.com/2107763/episodes/15238107-animating-engineering-with-teddy-the-mind-behind-branch-education",
+     "note": "Not in the episode show notes; no transcript is published (checked site page and Buzzsprout canonical page); not on Patreon; two targeted searches found no corroboration. Search summaries name ~4 animator/modeler contributors with lead animator Mike Radjabov handling BOTH modeling and animation \u2014 which does not match a distinct 'five animators + a modeler' split. If accurate, the counts live only in the 55-min audio."
+    },
+    {
+     "claim": "Complex topics can take a full month of source work",
+     "verdict": "UNSUPPORTED",
+     "note": "Not in show notes, Patreon, or any searchable text. Only corroborated related datum: the transistors video was 'in the works for over a year and a half' (different framing)."
+    },
+    {
+     "claim": "Roughly 40 script revisions",
+     "verdict": "UNSUPPORTED",
+     "note": "The number 40 appears in no fetched source and no search result; presumably from the podcast audio, which is unverifiable (no transcript exists)."
+    },
+    {
+     "claim": "About two months of storyboard, model, animation, accuracy, aesthetics, and clarity review",
+     "verdict": "UNSUPPORTED",
+     "note": "No fetched source or search result contains this timeline."
+    },
+    {
+     "claim": "Patreon about page serves as a 'team description'",
+     "verdict": "PARTIAL",
+     "url": "https://www.patreon.com/brancheducation/about",
+     "note": "Page is live but contains NO current team description \u2014 only future goals ('Hire additional animators...', 'Hire an additional researcher and script writer'). It does not support the team-composition sentence it is cited for."
+    }
+   ],
+   "fixes": [
+    "Team counts (1 researcher/writer, 5 animators, 1 modeler, separate narrator): add a timestamp citation into the podcast audio if that is the actual source, or soften to 'a small team of animator/modeler contributors plus a separate professional narrator (Phil Lee)' \u2014 only the narrator and multi-animator facts are corroborated in text, and the lead animator reportedly does both modeling and animation.",
+    "'a full month of source work and roughly 40 script revisions': no text source contains these numbers \u2014 cite an audio timestamp or replace with the corroborated datum that a single complex video (transistors) was 'in the works for over a year and a half.'",
+    "'about two months of storyboard, model, animation, accuracy, aesthetics, and clarity review': cite an audio timestamp or drop the two-month figure and say 'a multi-stage review pass' instead.",
+    "Relabel or replace the Patreon citation: patreon.com/brancheducation/about contains no team description, only hiring aspirations \u2014 either relabel it '(hiring goals)' or replace with a source that actually describes the team (e.g. https://grokipedia.com/page/branch-education, which names the narrator and animators).",
+    "Optional: note in the memo that the founder-interview numbers are sourced from audio with no published transcript, so they cannot be independently verified from text."
+   ]
+  },
+  {
+   "section": "Animagraffs \u2014 private tooling as the solo-studio multiplier (docs/LANE-B-CREATOR-METHODS.md:199-214)",
+   "overall": "minor-issues",
+   "checks": [
+    {
+     "claim": "Jacob O'Neal runs Animagraffs; animagraffs.com/about/ is the official about page",
+     "verdict": "SUPPORTED",
+     "url": "https://animagraffs.com/about/",
+     "note": "About page confirms O'Neal as CEO/Chief Creative Officer of Animagraffs."
+    },
+    {
+     "claim": "The cited YouTube video is a first-person workflow talk on his custom Blender tools",
+     "verdict": "SUPPORTED",
+     "url": "https://www.youtube.com/watch?v=OkadsUTl1Pw",
+     "note": "Video confirmed via search: 'My Custom 3D Tools & Workflow for Creating Animagraffs (Blender)', Animagraffs channel, Dec 2024, 51 min, hands-on coding demos of his custom toolset."
+    },
+    {
+     "claim": "The technicalillustrators.org citation is a first-person production interview",
+     "verdict": "SUPPORTED",
+     "url": "https://technicalillustrators.org/2019/08/animagraffs-by-jacob-oneal/",
+     "note": "2019 interview, first-person answers about his production process."
+    },
+    {
+     "claim": "Base 3D models take 'more than a month' for some subjects",
+     "verdict": "SUPPORTED",
+     "url": "https://technicalillustrators.org/2019/08/animagraffs-by-jacob-oneal/",
+     "note": "Interview verbatim: 'That can take a month or more in itself, especially for more in-depth subjects.'"
+    },
+    {
+     "claim": "He spends 'weeks' on patents, books, and forums",
+     "verdict": "PARTIAL",
+     "url": "https://technicalillustrators.org/2019/08/animagraffs-by-jacob-oneal/",
+     "note": "Sources confirmed (patent drawings, engineer/pilot/mechanic forums, library books) but NO duration is given anywhere fetched \u2014 'weeks' is an unsourced number."
+    },
+    {
+     "claim": "Blender add-ons automate: starter files, collection fades, modifier presets, file-growth reports, material/node cleanup, data-driven labels, script-marker timestamps, headless multi-GPU rendering, preview loops for error detection",
+     "verdict": "PARTIAL",
+     "url": "https://www.youtube.com/watch?v=OkadsUTl1Pw",
+     "note": "Externally verifiable video description confirms only broad categories: specialized modeling tools, blend-file management, a transparency system, efficient rendering workflows, and a custom label system, built over ~2 years. The nine fine-grained items (collection fades, file-growth reports, script markers, headless multi-GPU, preview loops, etc.) presumably live inside the 51-min video and could not be verified; targeted searches for those exact terms found nothing."
+    },
+    {
+     "claim": "Manual camera, keyframe, transparency, label, and sampled-frame review remains after automation",
+     "verdict": "UNSUPPORTED",
+     "note": "Not in the interview, about page, or video description. Plausibly stated in the video itself (which does cover a transparency system and labels as tools), but no fetched source states the manual-review list."
+    },
+    {
+     "claim": "Productions can approach 100,000 frames",
+     "verdict": "UNSUPPORTED",
+     "note": "No fetched source contains any frame count; a targeted search for Animagraffs + '100,000 frames' returned nothing. If it comes from the video, it needs a timestamp citation."
+    }
+   ],
+   "fixes": [
+    "Line 205: change 'spends weeks on patents, books, and forums' to 'starts with deep research across patent drawings, engineer/pilot/mechanic forums, and library books' \u2014 the interview names the sources but gives no duration.",
+    "Lines 201-204: either add a timestamp citation into the video for each tool (e.g. 'youtube.com/watch?v=OkadsUTl1Pw&t=XXXs') or soften the enumeration to the externally verifiable categories: 'modeling tools, blend-file management, a transparency system, rendering workflows, and a custom label system, built over roughly two years'.",
+    "Line 207-208: 'productions that can approach 100,000 frames' \u2014 verify against the video and cite a timestamp, or soften to 'long-form productions spanning tens of thousands of frames'; no fetched source states 100,000.",
+    "Lines 206-208: the 'manual camera, keyframe, transparency, label, and sampled-frame review' list needs an in-video timestamp citation or should be softened to 'substantial manual animation and review work' \u2014 no fetched source states this list."
+   ]
+  },
+  {
+   "section": "Simon Holmedal / Panoply \u2014 proceduralism begins after the metaphor (LANE-B-CREATOR-METHODS.md lines 216-229)",
+   "overall": "minor-issues",
+   "checks": [
+    {
+     "claim": "A variation that had required weeks of manual relinking in Cinema 4D could be reapplied in Houdini in about a second",
+     "verdict": "REFUTED",
+     "url": "https://schoolofmotion.com/blog/simon-holmedal-houdini-podcast",
+     "note": "Transcript says '20 minutes of manual labor linking up stuff' per new mesh in Cinema, 'in Houdini it was just like it takes one second.' The one-second Houdini half is accurate; 'weeks' inflates 20 minutes by ~3 orders of magnitude."
+    },
+    {
+     "claim": "An ESPN package used PDG to ingest information, drive team variants, absorb feedback, support unseen logos, and return for later seasons",
+     "verdict": "PARTIAL",
+     "url": "https://www.sidefx.com/community/nba-finals-panoply/",
+     "note": "Page confirms ESPN 2023 NBA Finals, 'PDG Network to efficiently manage information, respond to feedback, and maintain adaptability,' and a 'Shimmer' aesthetic 'adapting to various shapes, such as the trophy and team logos.' Nothing about logos not yet seen or returning for later seasons \u2014 those two details are unsupported."
+    },
+    {
+     "claim": "Holmedal works as procedurally as possible in Houdini, Redshift, and Nuke",
+     "verdict": "PARTIAL",
+     "url": "https://www.maxon.net/en/article/on-the-edge-of-worlds",
+     "note": "Houdini is supported by all three cited sources. Redshift and Nuke appear in NONE of them; they are true per an uncited Maxon profile of Panoply ('Houdini with Redshift... Nuke Studio for editing and compositing')."
+    },
+    {
+     "claim": "Uses attributes, particles, Vellum, Python, PDG, and reusable solvers",
+     "verdict": "PARTIAL",
+     "url": "https://motionographer.com/2016/05/02/interview-man-vs-machines-simon-holmedal/",
+     "note": "Attributes (School of Motion: storing info on points/primitives), solvers ('building weird solvers in Houdini') and Python (Motionographer proficiencies), and PDG (SideFX page) are supported. Vellum and particles appear in no fetched source."
+    },
+    {
+     "claim": "The pipeline begins with the product or client problem, a visual metaphor, and several days of small R&D/styleframe tests",
+     "verdict": "SUPPORTED",
+     "url": "https://schoolofmotion.com/blog/simon-holmedal-houdini-podcast",
+     "note": "Transcript: briefing \u2192 look at problems \u2192 'we create visual metaphors' \u2192 'a couple of days of exploring different ideas' \u2192 styleframes, then present."
+    },
+    {
+     "claim": "Composition, lighting, hierarchy, edit, and the judgment that a solver is saying the right thing remain handmade",
+     "verdict": "SUPPORTED",
+     "url": "https://schoolofmotion.com/blog/simon-holmedal-houdini-podcast",
+     "note": "Transcript covers weighing composition, light, contrast of detail, saturation, lightness as human judgment. 'Edit' specifically is an extrapolation but a fair paraphrase."
+    }
+   ],
+   "fixes": [
+    "Change 'weeks of manual relinking in Cinema 4D' to 'about 20 minutes of manual relinking per new mesh in Cinema 4D' \u2014 the School of Motion transcript says 20 minutes each time, vs one second in Houdini.",
+    "Drop 'support unseen logos, and return for later seasons' (or soften to 'adapt to team logos and remain flexible through feedback') \u2014 the SideFX page only supports information management, feedback response, adaptability, and a logo-adaptive 'Shimmer' aesthetic.",
+    "Remove 'Vellum' (and optionally 'particles') from the tool list, or add a source that names them \u2014 no cited source mentions either.",
+    "Add https://www.maxon.net/en/article/on-the-edge-of-worlds as a citation for Redshift and Nuke \u2014 the three currently cited sources never mention either tool."
+   ]
+  },
+  {
+   "section": "fern \u2014 medium-confidence role evidence, not a blueprint (LANE-B-CREATOR-METHODS.md:231-243)",
+   "overall": "minor-issues",
+   "checks": [
+    {
+     "claim": "A 2025 fern/Simplicissimus 3D-generalist posting existed at Electrify Video Partners",
+     "verdict": "SUPPORTED",
+     "url": "https://join.com/companies/electrify/14251023-3d-generalist-youtube-channel-fern-and-simplicissimus",
+     "note": "join.com mirror confirms the exact role ('3D Generalist - Youtube Channel -Fern and Simplicissimus', Electrify Video Partners, remote/freelance) with publication date 09.04.2025. The cited LinkedIn URL itself, however, is dead \u2014 see separate check."
+    },
+    {
+     "claim": "The posting required Blender",
+     "verdict": "SUPPORTED",
+     "url": "https://join.com/companies/electrify/14178235-3d-generalist-youtube-channel-fern-and-simplicissimus",
+     "note": "Posting text (search-indexed): 'professional proficiency in Blender' listed under requirements."
+    },
+    {
+     "claim": "The posting treated Unreal Engine 5 as optional",
+     "verdict": "SUPPORTED",
+     "note": "Exact phrasing in the posting: '(optional but valued: Unreal Engine 5)'."
+    },
+    {
+     "claim": "The posting described modeling, texturing, rigging, lighting, animation, and compositing",
+     "verdict": "SUPPORTED",
+     "note": "Verbatim in the posting: 'a solid understanding of modeling, texturing, rigging, lighting, animation, and compositing workflows'. Minor framing nuance: this appears as a required-skills line, not a duties list \u2014 the memo's 'it described' is fair."
+    },
+    {
+     "claim": "The artist collaborates with producers, editors, and motion designers",
+     "verdict": "SUPPORTED",
+     "note": "Verbatim in the posting: 'You'll collaborate closely with producers, editors, and motion designers'."
+    },
+    {
+     "claim": "The Electrify partnership places fern inside a larger production network but does not disclose its per-video method",
+     "verdict": "SUPPORTED",
+     "url": "https://www.electrify.video/news/electrify-expands-into-investigative-journalism-with-partnership-in-leading-documentary-channels",
+     "note": "Announcement confirms partnership with fern, Simplicissimus, and the Unfassbar podcast ('resources and expertise to scale their production capabilities'); it contains no production-method, tool, or workflow details \u2014 exactly as the memo characterizes it."
+    },
+    {
+     "claim": "watchfern.com/jobs is the official studio jobs page (cited as 'official studio site')",
+     "verdict": "SUPPORTED",
+     "url": "https://www.watchfern.com/jobs",
+     "note": "Page resolves and is fern's careers page, but currently lists only a Junior Editor-in-Chief role and names no tools or team roles \u2014 it carries essentially no evidential weight for the section's claims."
+    },
+    {
+     "claim": "Citation health: the LinkedIn URL for the 'archived role' still serves the posting",
+     "verdict": "PARTIAL",
+     "url": "https://de.linkedin.com/jobs/view/3d-generalist-youtube-channel-fern-and-simplicissimus-at-electrify-video-partners-4232714967",
+     "note": "The URL now redirects to a generic LinkedIn '3D Designer jobs in Germany' search page \u2014 the specific posting is gone. Every claim it backed is corroborated by mirrors, so the content is fine but the link is stale."
+    }
+   ],
+   "fixes": [
+    "Replace the dead LinkedIn citation with the join.com mirror https://join.com/companies/electrify/14251023-3d-generalist-youtube-channel-fern-and-simplicissimus and label it '(posting archived; published 09.04.2025)' \u2014 the mirror confirms role/employer/date, though its full description is also archived, so consider additionally saving a web.archive.org snapshot of a mirror before those die too.",
+    "Optional precision tweak: change 'it described modeling, texturing, rigging, lighting, animation, and compositing' to 'it required a solid understanding of modeling, texturing, rigging, lighting, animation, and compositing workflows' \u2014 the six crafts appear in the requirements list, not a duties list."
+   ]
+  },
+  {
+   "section": "Mustard \u2014 a useful handcrafted counterexample (LANE-B-CREATOR-METHODS.md:245-257)",
+   "overall": "minor-issues",
+   "checks": [
+    {
+     "claim": "Mustard gave a 2020 first-person AMA on r/watchnebula",
+     "verdict": "SUPPORTED",
+     "url": "https://www.reddit.com/r/watchnebula/comments/g7vsi5/hey_its_mustard_im_doing_an_ama/",
+     "note": "Post 'Hey it's Mustard! I'm doing an AMA!' by u/MrMustardFromYT, created April 25, 2020 (verified via api.pullpush.io archive of post id g7vsi5 \u2014 reddit.com itself blocks automated fetching, so the URL is live but bot-inaccessible)."
+    },
+    {
+     "claim": "Two-brother pipeline (the two creators are brothers)",
+     "verdict": "PARTIAL",
+     "url": "https://www.reddit.com/r/watchnebula/comments/g7vsi5/hey_its_mustard_im_doing_an_ama/",
+     "note": "'Two-person' is verbatim-supported: 'There are two of us that create these videos. One of us focuses more on the 3D modeling/rendering and I focus more on the research, writing and After Effects production.' But 'brothers' is the off detail: a q=brother search across the archived AMA thread returns zero hits, the Patreon page uses only 'we', and web searches found no public source stating a sibling relationship."
+    },
+    {
+     "claim": "Aircraft are 3D modeled in SketchUp and rendered in Lumion",
+     "verdict": "SUPPORTED",
+     "url": "https://www.reddit.com/r/watchnebula/comments/g7vsi5/hey_its_mustard_im_doing_an_ama/",
+     "note": "AMA verbatim: 'The planes are 3D modeled in sketchup, then rendered in Lumion' (via Pullpush archive)."
+    },
+    {
+     "claim": "Videos are assembled in After Effects",
+     "verdict": "SUPPORTED",
+     "url": "https://www.reddit.com/r/watchnebula/comments/g7vsi5/hey_its_mustard_im_doing_an_ama/",
+     "note": "AMA verbatim: 'the video is all put together in Adobe After Effects'; also 'I focus more on the research, writing and After Effects production.'"
+    },
+    {
+     "claim": "The pipeline relies on licensed media (footage, music)",
+     "verdict": "SUPPORTED",
+     "url": "https://www.patreon.com/MustardChannel/about",
+     "note": "Patreon verbatim: 'licensing rare footage, and licensing unique soundtracks'; funds listed for 'License rare and unique footage' and 'License high-quality audio, photography, and videography'. AMA adds: 'A lack of footage to license can be a huge problem though.'"
+    },
+    {
+     "claim": "Research/writing/modeling/music occupy roughly weeks 1-4; voice/rendering/motion graphics/assembly/revision roughly weeks 4-6",
+     "verdict": "SUPPORTED",
+     "url": "https://www.reddit.com/r/watchnebula/comments/g7vsi5/hey_its_mustard_im_doing_an_ama/",
+     "note": "AMA verbatim: 'Week 1-4: Research, writing, 3D modeling, music selection. Week 4-6: Audio recording, video production, rendering and putting it all together.' 'Revision' is a fair paraphrase of adjacent AMA comments ('6 weeks production time is if everything all works out well... stretched to 7 or even 8 weeks'; 'about draft 25 of a script') though not literally in the week 4-6 list."
+    },
+    {
+     "claim": "Production happens alongside full-time jobs",
+     "verdict": "SUPPORTED",
+     "url": "https://www.reddit.com/r/watchnebula/comments/g7vsi5/hey_its_mustard_im_doing_an_ama/",
+     "note": "AMA verbatim: 'There are two of us that make these videos. We both have full time 9-5 day jobs.'"
+    },
+    {
+     "claim": "A two-week cadence was possible only by accepting a quality loss",
+     "verdict": "SUPPORTED",
+     "url": "https://www.reddit.com/r/watchnebula/comments/g7vsi5/hey_its_mustard_im_doing_an_ama/",
+     "note": "AMA verbatim: 'I could definitely produce a video every two weeks, but you wouldn't want to watch it.'"
+    },
+    {
+     "claim": "Public evidence of custom scripting is thin",
+     "verdict": "SUPPORTED",
+     "url": "https://www.patreon.com/MustardChannel/about",
+     "note": "Editorial assessment consistent with both cited sources: no mention of custom scripting, programming, or code in the AMA answers or the Patreon page; Patreon describes buying stock 3D models and upgrading off-the-shelf animation software."
+    }
+   ],
+   "fixes": [
+    "Change 'two-brother pipeline' to 'two-person pipeline' \u2014 the AMA says only 'There are two of us that create these videos'; no source found calls them brothers.",
+    "Optional: annotate the AMA citation with an archive-accessible mirror (api.pullpush.io/reddit/search/submission/?ids=g7vsi5) since reddit.com blocks non-logged-in and automated readers, making the citation hard to verify as written.",
+    "Optional: soften 'revision' in the weeks-4-6 list to 'overrun weeks' or attribute it separately \u2014 the AMA's verbatim week 4-6 list is 'Audio recording, video production, rendering and putting it all together'; revision/iteration comes from separate comments about 7-8 week overruns and 25 script drafts."
+   ]
+  },
+  {
+   "section": "CodeParade \u2014 engine leverage comes with engine work (LANE-B-CREATOR-METHODS.md lines 266-281)",
+   "overall": "minor-issues",
+   "checks": [
+    {
+     "claim": "Solo-led with specialist contributors for 3D art, writing, and music",
+     "verdict": "PARTIAL",
+     "url": "https://codeparade.itch.io/hyperbolica",
+     "note": "3D artist (Jo\u00e3o Kalva) and composer/sound designer (Phil K. / philmakesnoise, 'Composition and Sound Design') are corroborated; solo-led matches the Q&A's 'my first full-game project'. A WRITING contributor is not corroborated by any fetched source; the Q&A never discusses team structure."
+    },
+    {
+     "claim": "Stack included Unity and Blender, with editor scripts arranging/stretching tiles",
+     "verdict": "SUPPORTED",
+     "url": "https://www.gamedeveloper.com/design/q-a-the-mind-bending-geometry-of-non-euclidean-experiment-hyperbolica-",
+     "note": "Q&A quote: 'The tiles... are just built in Blender... Unity is the one responsible for arranging and stretching them into the space which happens behind the scenes with some scripts.'"
+    },
+    {
+     "claim": "Stack included Blender Python specifically",
+     "verdict": "UNSUPPORTED",
+     "url": "https://www.youtube.com/watch?v=spDA3hPJf6E",
+     "note": "No fetched source names Python. The Q&A even says tiles were built in Blender 'without any special tools', though CodeParade's stated preference for add-ons/plugins to existing editors makes a Python add-on plausible. If this comes from Devlog #5's video content, it needs a timestamp; I could not verify video internals."
+    },
+    {
+     "claim": "Custom shaders/rendering and physics",
+     "verdict": "SUPPORTED",
+     "url": "https://www.gamedeveloper.com/design/q-a-the-mind-bending-geometry-of-non-euclidean-experiment-hyperbolica-",
+     "note": "Q&A: 'the entire rendering pipeline is custom-built (by necessity)'; custom physics also mentioned in the article."
+    },
+    {
+     "claim": "Hot-reloaded dialogue language",
+     "verdict": "PARTIAL",
+     "url": "https://www.youtube.com/watch?v=DlL_20x0QH8",
+     "note": "A custom dialogue scripting language (for ~1000 NPCs) is real, but it is covered in Devlog #7 \u2014 which the section does NOT cite. The 'hot-reloaded' detail is uncorroborated; a third-party reimplementation of the system (github.com/Alexandre-slw/GameDialogSystem) makes no mention of live reload."
+    },
+    {
+     "claim": "Level design happened inside the running game because a flat editor could not display the world correctly",
+     "verdict": "SUPPORTED",
+     "url": "https://www.gamedeveloper.com/design/q-a-the-mind-bending-geometry-of-non-euclidean-experiment-hyperbolica-",
+     "note": "Q&A quote: 'you can't see them all at once in any editor. So most of the level design happens in-game, where I can move around and preview things real-time.'"
+    },
+    {
+     "claim": "Tile reuse and procedural fill of lesser regions to contain content cost",
+     "verdict": "SUPPORTED",
+     "url": "https://www.gamedeveloper.com/design/q-a-the-mind-bending-geometry-of-non-euclidean-experiment-hyperbolica-",
+     "note": "Q&A quote: 'I can fill in less important areas of the level procedurally... it actually minimizes content creation since many tiles can be reused or repurposed.'"
+    },
+    {
+     "claim": "Public devlogs to release span roughly 21 months",
+     "verdict": "SUPPORTED",
+     "url": "https://www.youtube.com/watch?v=zQo_S3yNa2w",
+     "note": "Devlog #1 ('Non-Euclidean Geometry Explained') uploaded June 26, 2020; Steam release March 14, 2022 \u2014 approximately 20.5 months. 'Roughly 21' is fair."
+    },
+    {
+     "claim": "The three cited URLs are live and are what the labels say (Q&A, modeling breakdown, Unity/tooling breakdown)",
+     "verdict": "SUPPORTED",
+     "url": "https://www.youtube.com/watch?v=rBr-0bHQfxc",
+     "note": "Game Developer Q&A is live and matches. rBr-0bHQfxc = 'Pushing Unity To The Limit - Hyperbolica Devlog #6' (Unity/tooling, Sept 2021); spDA3hPJf6E = 'Non-Euclidean 3D Modeling - Hyperbolica Devlog #5' (Jan 19, 2021). Labels match titles."
+    }
+   ],
+   "fixes": [
+    "Contributors: change 'specialist contributors for 3D art, writing, and music' to 'specialist contributors for 3D art (Jo\u00e3o Kalva) and music/sound (Phil K.)' \u2014 drop 'writing' unless it can be verified against the game's in-game credits; no fetched source names a writing contributor.",
+    "Dialogue language: drop 'hot-reloaded' (or timestamp the exact devlog moment that shows live reload) \u2014 the custom dialogue language is confirmed but no source states hot-reloading; write 'a custom dialogue scripting language'.",
+    "Citation gap: add https://www.youtube.com/watch?v=DlL_20x0QH8 ('Dialog System - Hyperbolica Devlog #7') to the source list \u2014 the dialogue-language claim lives there, not in either currently cited video.",
+    "Blender Python: change 'Blender and Blender Python' to 'Blender (plus add-ons/plugins for existing editors)' or cite a Devlog #5 timestamp showing Python scripting \u2014 the Q&A says tiles were built in Blender 'without any special tools'."
+   ]
+  },
+  {
+   "section": "Amit Patel / Red Blob Games \u2014 interactivity is the explanation (LANE-B-CREATOR-METHODS.md lines 283-299)",
+   "overall": "minor-issues",
+   "checks": [
+    {
+     "claim": "Solo interactive explainers combining prose and live diagrams built with D3/Vue, SVG, Canvas, and WebGL",
+     "verdict": "SUPPORTED",
+     "url": "https://www.redblobgames.com/",
+     "note": "Homepage: 'I make interactive visual explanations of math and algorithms'; lists 'using d3.js' (2011-2015), 'using vue.js' (post-2015), and 'Canvas, svg, webgl'. Personal site 'from Amit Patel', no team mentioned."
+    },
+    {
+     "claim": "His abstraction is controls \u2192 input \u2192 algorithm \u2192 output \u2192 visualization",
+     "verdict": "SUPPORTED",
+     "url": "https://www.redblobgames.com/making-of/diagram-structure/",
+     "note": "Page states this pipeline verbatim: 'controls \u2192 input \u2192 algorithm \u2192 output \u2192 visualization', with controls/visualization user-facing and input/algorithm/output behind the scenes."
+    },
+    {
+     "claim": "Builds disposable diagrams with full redraw/recomputation; adds dependencies/caching/abstractions only when measurements justify them",
+     "verdict": "SUPPORTED",
+     "url": "https://www.redblobgames.com/pathfinding/a-star/making-of.html",
+     "note": "A* making-of: 'I just redraw everything. If it's a performance problem, I optimize.' Diagram-structure page: 'Erase everything and draw from scratch! Run the algorithm again each time!... Some of my pages were too slow when I did this, so I had to use more complicated approaches.'"
+    },
+    {
+     "claim": "A major tutorial can take one to five months",
+     "verdict": "SUPPORTED",
+     "url": "https://www.redblobgames.com/pathfinding/a-star/making-of.html",
+     "note": "Exact quote: 'It can take 1 to 5 months to make a tutorial.'"
+    },
+    {
+     "claim": "Exploratory pieces are often deliberately timeboxed to one or two weeks",
+     "verdict": "PARTIAL",
+     "url": "https://www.randroll.com/interview_amit_patel/",
+     "note": "Not stated in any of the four cited URLs. Interview only mentions 'game jam sized projects'; his blog (simblob.blogspot.com, surfaced via search) describes loosely-enforced ~one-week /x/ experiments numbered by year+week ('1942-isometric' = 2019 week 42), with limits he sometimes extends. 'One or two weeks, deliberately timeboxed' overstates the precision and is uncited."
+    },
+    {
+     "claim": "Procgen workflow: make representative output by hand first, define what must always happen / must never happen / may vary, then encode constraints",
+     "verdict": "SUPPORTED",
+     "url": "https://www.randroll.com/interview_amit_patel/",
+     "note": "Interview near-verbatim: 'Make some output by hand first before writing code' and 'Think about what you want to happen every time, what you want to never happen, and what you want to vary.'"
+    },
+    {
+     "claim": "He sketches the teaching sequence; teaching order, examples, hierarchy, and scope remain editorial while automation handles state and interaction",
+     "verdict": "SUPPORTED",
+     "url": "https://www.redblobgames.com/pathfinding/a-star/making-of.html",
+     "note": "'I do a lot on paper... It's not structured at all'; teaching sequence, scope, and example selection described as manual ('It's only through the process of writing that I figure out what I want to write'), while the diagram-structure page shows frameworks/reactivity handling state and redraw."
+    }
+   ],
+   "fixes": [
+    "Soften 'exploratory pieces are often deliberately timeboxed to one or two weeks' to 'small /x/ experiments he tries to limit to roughly a week (loosely enforced; pages are numbered by year and week)' and add a citation to his blog, e.g. https://simblob.blogspot.com/ \u2014 none of the four currently cited URLs states the timebox."
+   ]
+  },
+  {
+   "section": "Inigo Quilez \u2014 procedural pixels still require a painter (docs/LANE-B-CREATOR-METHODS.md lines 301-314)",
+   "overall": "major-issues",
+   "checks": [
+    {
+     "claim": "Shadertoy 4ttSWf is Quilez's editable landscape shader",
+     "verdict": "SUPPORTED",
+     "url": "https://www.shadertoy.com/view/4ttSWf",
+     "note": "Confirmed via search: 'Rainforest' by iq at exactly this URL (raymarched SDF terrain, noise-displaced trees, Shadertoy shader-of-the-week). Page returns 403 to automated fetchers but is live, not dead."
+    },
+    {
+     "claim": "BFld4EBO2RE is the complete landscape build video by Quilez",
+     "verdict": "SUPPORTED",
+     "url": "https://www.youtube.com/watch?v=BFld4EBO2RE",
+     "note": "Title 'I painted a Landscape with Mathematics', Inigo Quilez channel, published 2022-04-10; listed on iquilezles.org/live as 'Painting a Landscape with Maths'."
+    },
+    {
+     "claim": "Workflow: starts from an intended image + analytic surface, layers noise/FBM, lighting, atmosphere, clouds, hand-tuned in real time",
+     "verdict": "SUPPORTED",
+     "url": "https://iquilezles.org/live/",
+     "note": "iquilezles.org/live: 'use maths to art direct the painting of a landscape... formulas needed to do sculpting, surfacing and illumination'; Shadertoy Rainforest description confirms noise displacement + raymarched terrain. Fine-grained layer order lives in the video itself."
+    },
+    {
+     "claim": "The build video is 42 minutes long",
+     "verdict": "UNSUPPORTED",
+     "url": "https://www.youtube.com/watch?v=BFld4EBO2RE",
+     "note": "No fetched source states the runtime; YouTube page fetches were blocked/truncated and no text mirror lists duration. Plausible but unverified \u2014 needs a human to open the video."
+    },
+    {
+     "claim": "The landscape took a couple of days to make",
+     "verdict": "UNSUPPORTED",
+     "note": "No text source states this. Conflation hazard: iquilezles.org/live attributes 'a couple of days' of post-session work to the Greek Temple video, not the landscape. If Quilez says it, it is in the video audio \u2014 needs a timestamp."
+    },
+    {
+     "claim": "Making the explanatory video took two months or more",
+     "verdict": "UNSUPPORTED",
+     "note": "Searched HN threads, iquilezles.org, Twitter/Reddit surfaces, video description (via text proxy \u2014 description contains only technical links, no production-time claims). Not found anywhere in text; presumably an in-video/interview audio statement."
+    },
+    {
+     "claim": "Another video took six months",
+     "verdict": "UNSUPPORTED",
+     "note": "Presumably from the 2h27m Wookash interview audio; no transcript, listing, or discussion thread corroborates the figure. Which video is meant is also unspecified."
+    },
+    {
+     "claim": "F1ax1iJTHFs is a first-person 2025 interview with Quilez",
+     "verdict": "SUPPORTED",
+     "url": "https://www.youtube.com/watch?v=F1ax1iJTHFs",
+     "note": "'Painting with Math | Inigo Quilez', Wookash Podcast, published 2025-05-03, 2:27:45 \u2014 a long-form first-person interview."
+    }
+   ],
+   "fixes": [
+    "Verify the runtime of BFld4EBO2RE by opening the video; if not ~42 min, replace '42-minute build' with the actual runtime, or soften to 'a single recorded build session'.",
+    "For 'took a couple of days' and 'two months or more': add an in-video timestamp citation (BFld4EBO2RE or F1ax1iJTHFs) where Quilez states them, or attribute explicitly: 'Quilez says in the video that...' \u2014 currently no text source supports either figure, and iquilezles.org/live uses 'a couple of days' about a DIFFERENT project (Greek Temple), a likely conflation source.",
+    "'another video took six months' \u2014 cite the Wookash interview with a timestamp and name which video, or drop the specific figure; nothing fetchable corroborates it.",
+    "Name the shader in the memo ('Rainforest', 2016, by iq) so the Shadertoy link is self-describing, and note the video (2022) is a recreation/explanation of a shader originally built in 2016 \u2014 relevant to the 'couple of days' framing.",
+    "The section's thesis sentence ('deterministic image generation may be fast while articulation... remains slow') depends entirely on the three unverified time figures \u2014 until timestamps are added, mark the asymmetry claim as sourced-from-audio rather than established fact."
+   ]
+  },
+  {
+   "section": "Vercidium \u2014 benchmark the representation, handcraft the threshold",
+   "overall": "minor-issues",
+   "checks": [
+    {
+     "claim": "Sector's Edge was built by a two-brother team that split a custom engine (Mitch/Mitchell Robinson) from the models, animation, and painted content (Simon Robinson)",
+     "verdict": "SUPPORTED",
+     "url": "https://gamerant.com/sectors-edge-interview-fps-building-game-design-family-engine-innovations/",
+     "note": "Team's own blurb: 'Sydney-based team of two brothers... Simon has 3D modelled, animated and painted everything you see in game, and Mitch created the game engine.' Note: this fact is NOT in the three cited blog URLs \u2014 support comes from the GameRant interview and press materials."
+    },
+    {
+     "claim": "The engine is custom C#/OpenGL",
+     "verdict": "SUPPORTED",
+     "url": "https://vercidium.com/blog/opengl-particle-systems/",
+     "note": "All three cited posts use C#; the further-optimisations and particle posts explicitly use OpenGL for rendering."
+    },
+    {
+     "claim": "Published method: state a measurable goal, isolate a representative benchmark, change one structural issue at a time, remeasure",
+     "verdict": "SUPPORTED",
+     "url": "https://vercidium.com/blog/voxel-world-optimisations/",
+     "note": "Both voxel posts follow exactly this structure: baseline benchmark (807 chunks / per-chunk average), then individual optimizations (inlining, precalculation, 1D arrays, allocation/GC, buffer changes) each remeasured."
+    },
+    {
+     "claim": "Voxel-meshing pass fell from 5.15 ms to 0.89 ms and then 0.48 ms through algorithm, layout, allocation, and buffer changes",
+     "verdict": "SUPPORTED",
+     "url": "https://vercidium.com/blog/further-voxel-world-optimisations/",
+     "note": "First post: 5.15 ms \u2192 0.89 ms per chunk average; second post: 0.89 ms \u2192 0.48 ms ('54% faster') via memory-layout reordering, heightmaps, precalculation, and buffer/bit-shift changes. Numbers match exactly."
+    },
+    {
+     "claim": "Particle work compared realistic operation/storage combinations and accepted lower precision only when the visual difference was imperceptible",
+     "verdict": "SUPPORTED",
+     "url": "https://vercidium.com/blog/opengl-particle-systems/",
+     "note": "Post benchmarks add/access/remove across class arrays, struct arrays, and linked lists; double\u2192float change justified with 'the reduced precision is not visible to the human eye in-game.'"
+    },
+    {
+     "claim": "The game took about three years to release",
+     "verdict": "PARTIAL",
+     "url": "https://au.linkedin.com/company/vercidium",
+     "note": "Team's own description at the ~2021 open beta: 'spent the past 4 years creating Sector's Edge' \u2014 so roughly four years, not three; and per the Dec 2022 GameRant interview the game was still an open beta at that point. No fetched source says three years."
+    },
+    {
+     "claim": "Extracting the reusable engine later took three weeks and was verified by reinserting it into the game",
+     "verdict": "SUPPORTED",
+     "url": "https://www.patreon.com/vercidium/posts/engine-89442793",
+     "note": "Patreon 'Engine Extraction' post: 3 weeks spent extracting Vercidium Engine parts and implementing them back into Sector's Edge to ensure it still works. NOT in the three cited blog URLs \u2014 support is the Patreon post."
+    },
+    {
+     "claim": "The three cited vercidium.com blog URLs resolve and are correctly matched to their claims",
+     "verdict": "SUPPORTED",
+     "note": "All three fetched successfully: voxel-world-optimisations (5.15\u21920.89), further-voxel-world-optimisations (0.89\u21920.48), opengl-particle-systems (storage/precision comparisons)."
+    }
+   ],
+   "fixes": [
+    "Change 'about three years to release' to 'about four years' (or 'several years of on-and-off full-time work') \u2014 the team's own open-beta blurb says they 'spent the past 4 years creating Sector's Edge', and it was still open beta as of Dec 2022.",
+    "Add a citation for the two-brother team/role split, e.g. https://gamerant.com/sectors-edge-interview-fps-building-game-design-family-engine-innovations/ \u2014 the three cited blog posts never state team composition.",
+    "Add a citation for the three-week engine extraction verified by reinsertion: https://www.patreon.com/vercidium/posts/engine-89442793 ('Engine Extraction') \u2014 this claim is not in any of the three cited blog URLs."
+   ]
+  },
+  {
+   "section": "Lorenzo Drago \u2014 real-time rendering enables performed camera work (LANE-B-CREATOR-METHODS.md:333-345)",
+   "overall": "sound",
+   "checks": [
+    {
+     "claim": "Solo UE5 project recreating Etch\u016b-Daimon Station by environment artist Lorenzo Drago",
+     "verdict": "SUPPORTED",
+     "url": "https://gamesartist.co.uk/etchu-daimon-station/",
+     "note": "Article confirms solo environment 'based on Etch\u016b-Daimon Station in Imizu, Japan, running in Unreal Engine 5'; job title 'Environment Artist'. Minor nuance from the Unreal article: he started on UE4 and switched to UE5 halfway through, but both cited sources themselves frame it as a UE5 project."
+    },
+    {
+     "claim": "Used reference images and camera matching, plus Blender for scale/blockout and modular modeling",
+     "verdict": "SUPPORTED",
+     "url": "https://gamesartist.co.uk/etchu-daimon-station/",
+     "note": "'I ran my main reference image through fSpy and imported it into Blender to create a simple blockout'; discusses separating the scene into modules. Corroborated by 80.lv title 'A Photorealistic Railway Station Made With Camera Matching & UE5'."
+    },
+    {
+     "claim": "Used Substance Painter for texturing",
+     "verdict": "SUPPORTED",
+     "url": "https://gamesartist.co.uk/etchu-daimon-station/",
+     "note": "'low-poly mesh to bake normal maps to Substance 3D Painter'."
+    },
+    {
+     "claim": "Lumen accelerated lighting feedback/iteration",
+     "verdict": "SUPPORTED",
+     "url": "https://gamesartist.co.uk/etchu-daimon-station/",
+     "note": "'Lumen cut out the excessive baking times for Lightmass and allowed me to iterate on lighting faster'."
+    },
+    {
+     "claim": "Used Blueprints",
+     "verdict": "SUPPORTED",
+     "url": "https://gamesartist.co.uk/etchu-daimon-station/",
+     "note": "'This was my first time working with Blueprints' \u2014 also supports the 'learning during production' framing."
+    },
+    {
+     "claim": "VR camera tracking + Take Recorder to manually perform camera takes while seeing the finished world in real time",
+     "verdict": "SUPPORTED",
+     "url": "https://gamesartist.co.uk/etchu-daimon-station/",
+     "note": "Describes a VR tracking solution (via Aiden Wilson tutorials) and 'recording the motion was as simple as hitting Play and starting the Take Recorder'."
+    },
+    {
+     "claim": "Image-sequence rendering and Adobe finishing",
+     "verdict": "SUPPORTED",
+     "url": "https://gamesartist.co.uk/etchu-daimon-station/",
+     "note": "'rendered the project... as a high-resolution image sequence'; Adobe Premiere used to combine audio, color tweaks in After Effects."
+    },
+    {
+     "claim": "Recreated the camera motion in physical space to record matching audio",
+     "verdict": "SUPPORTED",
+     "url": "https://gamesartist.co.uk/etchu-daimon-station/",
+     "note": "'I matched those movements in real life while recording with my real-life camera to obtain the main audio tracks'."
+    },
+    {
+     "claim": "The build took a little over one month, despite learning parts of the stack during production",
+     "verdict": "SUPPORTED",
+     "url": "https://gamesartist.co.uk/etchu-daimon-station/",
+     "note": "Exact quote: 'It took me a little over a month to bring the project to completion'; challenges 'came from getting used to unfamiliar functions and techniques'."
+    },
+    {
+     "claim": "Citation URL: unrealengine.com tech-blog case study",
+     "verdict": "SUPPORTED",
+     "url": "https://www.unrealengine.com/en-US/tech-blog/environment-artist-explains-how-he-created-near-photo-realistic-train-station-using-ue5",
+     "note": "Cited URL returns 403 to automated fetchers (bot-blocking), but the article verifiably exists (en-US variant confirmed via search) and search snippets corroborate its content: Lumen, environment artist, UE5, Etch\u016b-Daimon Station. Not dead \u2014 the locale-less URL redirects for human visitors."
+    }
+   ],
+   "fixes": [
+    "No corrections required. Optional hardening: cite the locale-pinned Unreal URL https://www.unrealengine.com/en-US/tech-blog/environment-artist-explains-how-he-created-near-photo-realistic-train-station-using-ue5 to avoid redirect/bot-403 ambiguity, and optionally note the project began in UE4 and migrated to UE5 mid-production (per the Unreal article)."
+   ]
+  },
+  {
+   "section": "ThinMatrix \u2014 build the minimum system, then add feel (/Users/SSDrive/projects/media-studio/docs/LANE-B-CREATOR-METHODS.md lines 347-361)",
+   "overall": "major-issues",
+   "checks": [
+    {
+     "claim": "ThinMatrix's real name is Karl Wimble and he is a solo developer",
+     "verdict": "SUPPORTED",
+     "url": "https://www.equilinox.com/presskit/",
+     "note": "Press kit lists 'Karl Wimble \u2014 Founder and Developer' and describes 'A solo indie game developer'."
+    },
+    {
+     "claim": "Equilinox took roughly three years",
+     "verdict": "SUPPORTED",
+     "url": "https://www.equilinox.com/presskit/",
+     "note": "Press kit: worked 'full-time on Equilinox for the last three years'; devlogs announced Oct 9, 2015, game released Nov 23, 2018 (~3.1 yrs). Caveat: one secondary summary claims six years total including pre-devlog work."
+    },
+    {
+     "claim": "Equilinox was originally scoped for months",
+     "verdict": "SUPPORTED",
+     "url": "https://youtube.fandom.com/wiki/ThinMatrix",
+     "note": "Fan wiki states development 'was supposed to last only a few months'. Secondary source only \u2014 the press kit does not say this; a devlog or retrospective timestamp would be a stronger citation."
+    },
+    {
+     "claim": "https://www.youtube.com/watch?v=FStOT4pP2tc is a ten-year retrospective",
+     "verdict": "SUPPORTED",
+     "url": "https://www.youtube.com/watch?v=FStOT4pP2tc",
+     "note": "Video confirmed: 'My 10 YEAR Indie Game Development Journey', ThinMatrix, published July 8, 2023."
+    },
+    {
+     "claim": "https://www.youtube.com/watch?v=c18rZoi46kc is a feature-development breakdown",
+     "verdict": "SUPPORTED",
+     "url": "https://www.youtube.com/watch?v=c18rZoi46kc",
+     "note": "Video confirmed: 'Gamedev In-Depth | How I Implement a New Feature', ThinMatrix, Nov 18, 2024. Note: it is about Homegrown (a tree feature), not Equilinox \u2014 the paragraph's Equilinox framing slightly misleads."
+    },
+    {
+     "claim": "The enumerated feature loop (identify feature+dependencies, split into tasks, minimal component and data model, Blender assets and icons, study comparable games, effects and sound, interim 'good enough', then tradeoffs/variants/polish/balance/playtesting/release)",
+     "verdict": "PARTIAL",
+     "url": "https://x.com/ThinMatrix/status/1858582411140829382",
+     "note": "The video is verifiably a filmed every-step feature walkthrough ('I filmed every step of the way... whole process in detail' \u2014 his own tweet), so an explicit loop exists; but no fetched source confirms the individual steps, and no fetched source (incl. press kit, which names only Java/OpenGL) confirms Blender specifically."
+    },
+    {
+     "claim": "Procedural vs crafted split: engine systems, terrain, growth, particles, hot-loaded settings, some icon variants procedural; models, purpose, feel, balance, acceptance thresholds crafted",
+     "verdict": "UNSUPPORTED",
+     "url": "https://www.youtube.com/watch?v=c18rZoi46kc",
+     "note": "No fetched source mentions any of these distinctive details (notably 'hot-loaded settings'). Claim lives only inside the video; unverifiable without a transcript/timestamp. Reads as the memo author's synthesis presented as fact."
+    },
+    {
+     "claim": "His conclusion: use an existing engine unless custom-engine authorship is itself part of the creative purpose (attributed to the ten-year retrospective)",
+     "verdict": "UNSUPPORTED",
+     "url": "https://www.youtube.com/watch?v=FStOT4pP2tc",
+     "note": "This is the section's load-bearing Lane B takeaway and no fetched source states it. Multiple targeted searches found no quote, discussion, or summary corroborating it. Mild tension: he built custom engines for BOTH Equilinox and his current game Homegrown, so a flat existing-engine recommendation needs a direct quote with timestamp. Plausible (the caveated phrasing matches his known stance) but unverified \u2014 not refuted."
+    }
+   ],
+   "fixes": [
+    "Engine-advice conclusion: add a direct quote + timestamp from FStOT4pP2tc, or rephrase as the memo author's inference ('his trajectory suggests...') \u2014 as written it attributes specific advice that no fetchable source corroborates, and he notably kept using a custom engine for Homegrown.",
+    "Procedural/crafted split: add a timestamp in c18rZoi46kc for the terrain/growth/particles/hot-loaded-settings claims, or label the sentence as the author's synthesis of the video rather than ThinMatrix's stated taxonomy.",
+    "Clarify that the feature-development breakdown (c18rZoi46kc) demonstrates the loop on Homegrown (2024), not Equilinox \u2014 currently the paragraph's context implies Equilinox.",
+    "Enumerated loop steps: either verify each step against the video and cite timestamps, or compress to 'a filmed, every-step feature walkthrough (spec \u2192 minimal implementation \u2192 assets \u2192 effects/sound \u2192 polish \u2192 playtest)' to avoid asserting unverified sub-steps.",
+    "'Scoped for months': currently only corroborated by a fan wiki (youtube.fandom.com/wiki/ThinMatrix); cite the first Equilinox devlog (Oct 2015) or the retrospective directly, since the press kit does not contain this claim.",
+    "Blender: not mentioned in the press kit (only Java/OpenGL); if kept, cite a devlog that shows Blender modeling (e.g. his low-poly model posts on thinmatrix.tumblr.com)."
+   ]
+  },
+  {
+   "section": "Diffusion-hybrid leads (Mickmumpitz/Bozesan/Trillo) \u2014 LANE-B-CREATOR-METHODS.md lines 363-389",
+   "overall": "minor-issues",
+   "checks": [
+    {
+     "claim": "Mickmumpitz publishes downloadable ComfyUI graphs for controllable character and video workflows",
+     "verdict": "SUPPORTED",
+     "url": "https://mickmumpitz.ai/posts/free-workflows-113743435?synced=1",
+     "note": "Multiple sources confirm free downloadable ComfyUI workflows for consistent characters, poses, emotions, and character video (Consistent Character Creator versions up to 3.8); corroborated by forum.comfy.org and runcomfy.com listings."
+    },
+    {
+     "claim": "Albert Bozesan has documented two-person work combining Stable Diffusion and Runway with substantial Blender and After Effects work",
+     "verdict": "PARTIAL",
+     "url": "https://albertbozesan.com/",
+     "note": "Two-person work is real (TARMAC, co-created with Robert Sladeczek) and Stable Diffusion + substantial Blender work is well documented (SD ControlNet + Blender tutorials). But no fetched source documents a Runway pairing or After Effects: tarmacshow.com lists the toolkit as Magnific (image/video models) + Blender (custom scene tooling) + DaVinci Resolve, and one source states Storybook Studios' production used no Runway or Pika Labs. He has a LinkedIn post tagged #runway, but nothing documents the SD+Runway+AE production the memo describes. Memo does self-flag this lead as unverified."
+    },
+    {
+     "claim": "Paul Trillo generated roughly 700 Sora clips for The Hardest Part and selected about 55",
+     "verdict": "SUPPORTED",
+     "url": "https://nofilmschool.com/ai-music-video",
+     "note": "No Film School first-person interview states ~700 clips generated, 55-56 used (~10%). Secondary corroboration of LA Times reporting: 55 segments selected and stitched in Adobe Premiere."
+    },
+    {
+     "claim": "Trillo edited for roughly six weeks",
+     "verdict": "PARTIAL",
+     "url": "https://nofilmschool.com/ai-music-video",
+     "note": "Both sources give ~6 weeks as the TOTAL project timeline (prompting, generating ~700 clips, and editing) \u2014 not six weeks of editing alone. Directionally right, attribution of the window to 'editing' is off."
+    },
+    {
+     "claim": "nofilmschool.com/ai-music-video is a first-person process interview with Trillo",
+     "verdict": "SUPPORTED",
+     "url": "https://nofilmschool.com/ai-music-video",
+     "note": "URL is live; it is a direct No Film School interview with Paul Trillo containing first-person quotes about the Sora process."
+    },
+    {
+     "claim": "LA Times URL is a production report on the first major music artist using Sora for a music video",
+     "verdict": "SUPPORTED",
+     "url": "https://www.latimes.com/entertainment-arts/business/story/2024-05-02/first-major-music-artist-uses-openai-sora-to-create-music-video",
+     "note": "Direct fetch is bot-blocked/paywalled, but the article's existence and content are corroborated by multiple secondary sources citing the LA Times interview (700 clips over six weeks, 55 segments, Premiere edit). Citation is valid but not freely fetchable; consider adding an accessible secondary link."
+    }
+   ],
+   "fixes": [
+    "Bozesan line: change 'combining Stable Diffusion and Runway with substantial Blender and After Effects work' to 'combining Stable Diffusion with substantial Blender work' \u2014 his documented two-person project TARMAC (with Robert Sladeczek) lists Magnific + Blender + DaVinci Resolve as the toolkit (tarmacshow.com); no source documents Runway or After Effects in his production work, and one source says Storybook Studios used no Runway/Pika.",
+    "Optionally add citations to the Bozesan bullet: https://albertbozesan.com/ (TARMAC, two-person credit) and https://tarmacshow.com/ (toolkit), since the memo currently cites nothing for the first two bullets.",
+    "Trillo line: change 'edited for roughly six weeks' to 'the whole project \u2014 prompting, generating ~700 clips, and editing \u2014 took roughly six weeks' (No Film School and LA Times both frame six weeks as the total production window).",
+    "LA Times link is paywalled/bot-blocked; keep it but consider adding a freely accessible corroborating link such as https://ars.electronica.art/hope/en/washed-out-the-hardest-part/ (Prix Ars Electronica page)."
+   ]
+  },
+  {
+   "section": "Do-not-adopt-yet + candidate seam (blender-mcp, ComfyUI LTX-2.3) \u2014 LANE-B-CREATOR-METHODS.md lines 454-481",
+   "overall": "minor-issues",
+   "checks": [
+    {
+     "claim": "blender-mcp exists at github.com/ahujasid/blender-mcp and connects Blender to an MCP client",
+     "verdict": "SUPPORTED",
+     "url": "https://github.com/ahujasid/blender-mcp",
+     "note": "Live repo by ahujasid (Siddharth), ~24.4k stars, active. Blender addon socket server + MCP Python server, exactly as characterized."
+    },
+    {
+     "claim": "blender-mcp executes arbitrary Blender Python and is therefore a trust-boundary decision",
+     "verdict": "SUPPORTED",
+     "url": "https://github.com/ahujasid/blender-mcp",
+     "note": "README documents an execute_blender_code tool and warns it 'allows running arbitrary Python code in Blender, which can be powerful but potentially dangerous.'"
+    },
+    {
+     "claim": "There is an OPEN security issue at github.com/ahujasid/blender-mcp/issues/201",
+     "verdict": "PARTIAL",
+     "url": "https://github.com/ahujasid/blender-mcp/issues/201",
+     "note": "Issue #201 exists and is a real security report ('RCE via unsanitized exec() in execute_blender_code', with PoC), but it is CLOSED, not open. The underlying arbitrary-exec surface remains by design per the README, so the substantive point survives; only the word 'open' is wrong."
+    },
+    {
+     "claim": "ComfyUI has an official LTX-2.3 workflow documented at docs.comfy.org/tutorials/video/ltx/ltx-2-3",
+     "verdict": "SUPPORTED",
+     "url": "https://docs.comfy.org/tutorials/video/ltx/ltx-2-3",
+     "note": "Official ComfyUI tutorial for LTX-2.3 (Lightricks audio-video model, natively supported in ComfyUI)."
+    },
+    {
+     "claim": "The LTX-2.3 workflow supports structural control from depth, pose, and edges",
+     "verdict": "SUPPORTED",
+     "url": "https://docs.comfy.org/tutorials/video/ltx/ltx-2-3",
+     "note": "IC-LoRA Union Control section lists exactly these control signals: depth maps, Canny edges, pose skeletons."
+    },
+    {
+     "claim": "Manim offers access to public 3Blue1Brown scene code",
+     "verdict": "SUPPORTED",
+     "url": "https://github.com/3b1b/videos",
+     "note": "Grant Sanderson publishes the Manim scene code for 3Blue1Brown videos (2015-2026). Caveat not in the memo: it is CC BY-NC-SA (non-commercial), which matters if scenes would be reused commercially."
+    },
+    {
+     "claim": "MolecularNodes is a viable Blender tool for the ochem/molecular lane",
+     "verdict": "SUPPORTED",
+     "url": "https://github.com/BradyAJohnston/MolecularNodes",
+     "note": "Real, actively maintained Blender addon for molecular visualization via Geometry Nodes (v4.5.12 released 2026-03-17, 2k+ commits)."
+    }
+   ],
+   "fixes": [
+    "Line 468: change 'open security issue' to 'reported RCE issue, since closed' (issue #201 'RCE via unsanitized exec() in execute_blender_code' is closed) \u2014 and optionally add that the arbitrary-exec tool remains by design per the README, which is the stronger trust-boundary argument anyway.",
+    "Optional, line 461: when citing '3Blue1Brown scene code' add the license caveat \u2014 the 3b1b/videos repo is CC BY-NC-SA (non-commercial), so scene code can inform but not be commercially reused verbatim."
+   ]
+  }
+ ],
+ "failed": 0,
+ "machine": {
+  "findings": [
+   "CONFIRMED: Blender 5.1.2 installed \u2014 /Applications/Blender.app/Contents/MacOS/Blender --version reports exactly 'Blender 5.1.2' (build 2026-05-19)",
+   "CONFIRMED: DaVinci Resolve 21.0.2 installed \u2014 /Applications/DaVinci Resolve/DaVinci Resolve.app exists, CFBundleShortVersionString=21.0.2 (CFBundleVersion 21.0.20004). Note: 'Studio' edition cannot be distinguished from Info.plist (both editions ship as 'DaVinci Resolve.app'; the Licenses dir contains only OSS license texts), so the Studio designation is unverified but not contradicted; the version matches exactly",
+   "CONFIRMED: ComfyUI installed at /Users/SSDrive/ComfyUI but model dirs lack real weights \u2014 models/ totals 48K across 28 subdirs, models/checkpoints/ contains only a zero-byte 'put_checkpoints_here' placeholder, and no file >100M exists anywhere under models/",
+   "CONFIRMED: No Unreal, Unity, or Godot in /Applications \u2014 grep for unreal|unity|godot|'epic games' over ls /Applications returned nothing",
+   "CONFIRMED: manim, MolecularNodes (molecularnodes), and bpy are NOT in the media-studio repo venv \u2014 /Users/SSDrive/projects/media-studio/.venv/bin/python importlib.find_spec reports all three False, site-packages has no matching dirs, and requirements.txt has no matching entries (venv is pip-less/uv-style; python check used as ground truth)",
+   "CONFIRMED: HyperFrames available via npx \u2014 'npx -y hyperframes --version' returned 0.7.61 (and the hyperframes CLI skill suite is installed in this environment)"
+  ],
+  "ok": true
+ },
+ "critic": {
+  "findings": [
+   "MISSING: Andrew Kramer (Video Copilot) \u2014 After Effects VFX/motion tutorials and plugin development (Element 3D, Optical Flares); 160+ free tutorials \u2014 \"Arguably the most influential AE educator ever; every tutorial is a visual explanation of a technique.\"",
+   "MISSING: Corridor Digital (Niko Pueringer) \u2014 Live-action + Unreal Engine + Stable Diffusion vid2vid hybrid ('AI anime') \u2014 \"'Anime Rock Paper Scissors' is the canonical diffusion-hybrid narrative pipeline... they published an hour-long tutorial plus public BTS explaining every stage.\"",
+   "MISSING: Matteo Spinelli (Latent Vision / cubiq / matt3o) \u2014 ComfyUI tech-art explainer; author of IPAdapter Plus custom nodes \u2014 \"Author of the IPAdapter Plus nodes that most identity/style-conditioning video pipelines depend on... directly relevant to media-studio's identity-conditioning lane.\"",
+   "MISSING: Purz (Purz Beats) \u2014 ComfyUI/AnimateDiff motion-graphics educator and live-stream teacher \u2014 \"publishes ComfyUI workflow templates on comfy.org... a pipeline author whose entire output is teaching.\"",
+   "MISSING: Martin Nebelong \u2014 VR/3D sculpting (Dreams, Unbound, Adobe Modeler) amplified by real-time generative AI (Krea, SVD, Gen-2) \u2014 \"documents, shot by shot, hybrid pipelines where a live 3D sculpt drives real-time diffusion... a strong process model for 3D-plus-generative explainer work.\"",
+   "MISSING: Dave Clark (Promise Studios) \u2014 AI narrative shorts (Midjourney + Runway + ElevenLabs + Topaz) scaling to a hybrid AI/VFX/3D studio pipeline \u2014 \"His short 'Borrowing Time' came with a fully documented tool chain... a working reference for a production-grade hybrid pipeline.\" (Note: the doc's single grep hit for 'Promise' is the word 'compromises' at line 277, not this studio.)",
+   "MISSING: Entagma (Moritz Schwind & Manuel Casasola Merkle) \u2014 Houdini procedural-design tutorials and advanced CG explainers \u2014 \"The reference Houdini educator channel: every video is a from-scratch procedural build... that teaches the technique rather than just showing results.\"",
+   "MISSING: Steven Knipping (Applied Houdini) \u2014 Production-grade Houdini FX simulation courses (destruction, pyro, particles, volumes) \u2014 \"ILM senior rigid-body-destruction TD... the canonical example of film-VFX simulation process made teachable.\"",
+   "MISSING: Ten Minute Physics (Matthias M\u00fcller-Fischer) \u2014 Browser-JavaScript physics-simulation explainers (~10 min per technique) \u2014 \"Principal physics researcher at NVIDIA (PBD/XPBD co-inventor)... arguably the purest 'simulation research rendered for lay/practitioner audiences' channel.\"",
+   "MISSING: Sebastian Lague \u2014 Unity/C#/HLSL 'Coding Adventures' \u2014 devlog-style simulation and rendering builds \u2014 \"videos are structured as narrated build logs: each failed attempt, fix, and design decision is shown on screen.\"",
+   "MISSING: Primer (Justin Helps) \u2014 Unity/C#-based agent simulations (evolution, game theory, statistics) with signature blob characters \u2014 \"videos run bespoke simulations to derive conclusions on screen... the closest model for 'write a real sim, then film it' explainer production.\"",
+   "MISSING: Captain Disillusion (Alan Melikdjanian) \u2014 After Effects/Blender VFX-literacy explainers debunking viral videos \u2014 \"The defining VFX-breakdown-as-education channel... his own production pipeline (2 weeks scripting, 4h footage per 2-min video) is unusually well documented.\"",
+   "MISSING: Wren Weichman (Corridor Digital / Corridor Crew) \u2014 Cinema 4D/Houdini VFX breakdowns and 'VFX Artists React' explainer culture \u2014 \"Embodies CG/VFX breakdown culture at scale... Corridor's business model is publishing its own behind-the-scenes for everything it produces.\"",
+   "MISSING: Martijn Steinrucken (The Art of Code) \u2014 Live-coded GLSL/Shadertoy shader tutorials (raymarching, fractals, effects) \u2014 \"Teaches shader math by live-coding effects from a blank Shadertoy tab... simultaneously visual explanation and complete process documentation.\"",
+   "MISSING: Clinton Jones (pwnisher) \u2014 Unreal Engine / Cinema 4D solo cinematic renders and community render challenges \u2014 \"his render-challenge breakdowns and 'how I made this' videos teach lighting, composition, and Unreal workflows... process-forward by format.\"",
+   "NOT-IN-JOURNAL / NO CITATION: 3Blue1Brown \u2014 appears in the doc three times (line 22 correction section, field-map row line 69, Manim discussion line 461) with zero citations anywhere in LANE-B-CREATOR-METHODS.md, and does not appear in this workflow journal or in companion LANE-B-RESEARCH.md. As a famous real creator this is almost certainly an evidence-chain gap inherited from the earlier failed memo rather than a fabrication, but per the journal-or-citation test it is unsupported.",
+   "CONTEXT (not violations): Animagraffs, Jared Owen, Branch Education, fern, and Mustard also do not appear in this journal, but each carries multiple inline citations in the doc (profiles at lines 199, 164, 183, 231, 245 respectively) consistent with the doc's stated resumption of two earlier research streams \u2014 they pass the citation test and are not flagged.",
+   "TALLY: 31 unique discovered creators (32 journal result entries; Inigo Quilez duplicated across agents a9c38d7a and ab949f564). 16 accounted for (profile, field-map row, or explicit discovery-only note); 15 unaccounted for. The doc acknowledges the count ('found 31 people or studios', line 10) but never names the 15 unprofiled discoveries, so a reader cannot tell which leads were dropped. Sources: journal at /Users/SSDrive/.claude/projects/-Users-SSDrive-projects-media-studio/6fd46f1f-f410-4f9a-ab7a-b3b567b82be1/subagents/workflows/wf_d1092b74-07d/journal.jsonl; doc at /Users/SSDrive/projects/media-studio/docs/LANE-B-CREATOR-METHODS.md."
+  ],
+  "ok": false
+ }
+}

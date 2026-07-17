@@ -1,0 +1,341 @@
+[
+ {
+  "name": "Sander van Dijk",
+  "medium": "After Effects motion-design explainer/branding work; workflow-tool author (Ray Dynamic Color, Ouroboros); School of Motion instructor",
+  "why_relevant": "One of the best-known AE animators; his reduced-form design philosophy is explicitly about conveying information and amplifying a message \u2014 directly applicable to visual explanation. Teaches Advanced Motion Methods at School of Motion and speaks on the state of motion-design tooling.",
+  "process_documented": true,
+  "process_sources": [
+   "https://www.schoolofmotion.com/blog/sander-van-dijk-podcast",
+   "https://www.stashmedia.tv/sander-van-dijk-state-motion-design-tools/",
+   "https://motionhatch.com/044-change-your-mindset-and-build-an-intentional-career-w-sander-van-dijk",
+   "https://www.youtube.com/watch?v=Sl9gjN2rMEw"
+  ]
+ },
+ {
+  "name": "Ben Marriott",
+  "medium": "2D After Effects motion design; YouTube tutorial educator (700k+ subs); Master Motion Design course",
+  "why_relevant": "His entire channel is teaching-through-motion: entertaining but explicitly instructional AE breakdowns. Posts behind-the-scenes videos of his own pieces and has discussed his production/curation workflow (heavy scripting, editing, graphics) in interviews.",
+  "process_documented": true,
+  "process_sources": [
+   "https://www.schoolofmotion.com/blog/ben-marriott",
+   "https://motionhatch.com/how-to-use-youtube-to-grow-your-motion-design-business-w-ben-marriott",
+   "https://elements.envato.com/learn/ben-marriott"
+  ]
+ },
+ {
+  "name": "Jorge R. Canedo Estrada (JR Canest) / Ordinary Folk",
+  "medium": "High-end explainer/brand animation studio (After Effects keyframe animation); ex-Giant Ant; founded Ordinary Folk (crypto/tech explainer clients)",
+  "why_relevant": "Ordinary Folk is a flagship explainer-agency: their work makes abstract tech products legible through motion. Studio process is unusually well documented \u2014 a School of Motion course walks through a full project with 3+ hours of process video, plus multiple podcast interviews on how the studio designs for animation.",
+  "process_documented": true,
+  "process_sources": [
+   "https://www.schoolofmotion.com/blog/ordinary-folk-podcast",
+   "https://www.schoolofmotion.com/blog/how-to-design-for-animation-with-ordinary-folk",
+   "https://www.schoolofmotion.com/courses/a-motion-design-masterpiece",
+   "https://www.youtube.com/watch?v=LEtm2enqtEc"
+  ]
+ },
+ {
+  "name": "EJ Hassenfratz (Eyedesyn)",
+  "medium": "Cinema 4D explainer/character 3D; School of Motion 3D creative director and course author; Maxon conference presenter",
+  "why_relevant": "Emmy-winning C4D educator whose output is almost entirely teaching 3D workflows (C4D, Substance, character rigs). Workflow documented across NAB/Cineversity presentations, SOM podcast, and hardware/pipeline case studies.",
+  "process_documented": true,
+  "process_sources": [
+   "https://www.schoolofmotion.com/blog/ej-hassenfratz-eyedesyn-podcast",
+   "https://www.cineversity.com/vidplaytut/nab_2015_ej_hassenfratz_1",
+   "https://www.pugetsystems.com/featured/case-study-with-ej-hassenfratz-from-school-of-motion-264/",
+   "https://medium.com/@hello_40746/5-questions-with-ej-hassenfratz-eyedesyn-da35c9147037"
+  ]
+ },
+ {
+  "name": "Andrew Kramer (Video Copilot)",
+  "medium": "After Effects VFX/motion tutorials and plugin development (Element 3D, Optical Flares); 160+ free tutorials",
+  "why_relevant": "Arguably the most influential AE educator ever; every tutorial is a visual explanation of a technique. Process documented via the Video Copilot Show behind-the-scenes episodes, SOM podcast ep. 100, The Collective Podcast, and Adobe interviews.",
+  "process_documented": true,
+  "process_sources": [
+   "https://schoolofmotion.com/blog/video-copilot-andrew-kramer-podcast",
+   "https://www.thecollectivepodcast.com/151-andrew-kramer/",
+   "https://www.videocopilot.net/blog/2016/07/the-video-copilot-show-is-online/",
+   "https://digitalproduction.com/2019/03/10/video-copilot-live-on-tour-talking-with-andrew-kramer/"
+  ]
+ },
+ {
+  "name": "Jay Grandin (Giant Ant)",
+  "medium": "Story-driven 2D/mixed-media studio animation (Vancouver); explainer and brand-film work; BLEND festival host",
+  "why_relevant": "Giant Ant built its reputation on story-first explainer/brand films; Grandin articulates the studio's phase-gated production process ('client problems are process problems') in depth across podcasts, panels, and the BLEND circuit \u2014 a model for how an explainer pipeline is structured.",
+  "process_documented": true,
+  "process_sources": [
+   "https://www.schoolofmotion.com/blog/jay-grandin-podcast-podcast",
+   "https://motionhatch.com/098-how-giant-ant-became-a-leading-motion-design-studio-jay-grandin",
+   "https://www.commarts.com/features/giant-ant",
+   "https://magazine.workingnotworking.com/magazine/2019/7/24/giant-ant"
+  ]
+ },
+ {
+  "name": "Simon Holmedal",
+  "medium": "Houdini procedural design/abstract simulation; ex-ManvsMachine technical director; FMX and SideFX talk circuit",
+  "why_relevant": "The reference point for Houdini-driven motion design; his FMX 2018 talk breaks down his full workflow from RnD solvers to final production, and SideFX hosts his technical talks. Work itself is abstract rather than explanatory, but his talks are dense procedural teaching material.",
+  "process_documented": true,
+  "process_sources": [
+   "https://vimeo.com/channels/1367802/267864544",
+   "https://www.sidefx.com/learn/talks/author/Simon%20Holmedal/",
+   "https://www.schoolofmotion.com/blog/simon-holmedal-houdini-podcast",
+   "https://motionographer.com/2016/05/02/interview-man-vs-machines-simon-holmedal/"
+  ]
+ },
+ {
+  "name": "Emanuele Colombo",
+  "medium": "2D character/explainer motion design (After Effects, Milan; founder of Antimatter studio); Motion Design School and Skillshare instructor",
+  "why_relevant": "Known for explainer-grade character animation and transitions for Google/IBM/Microsoft; his courses (Motion Secrets, Motion Tricks, 12 Principles of Animation) decompose his exact scene-by-scene animation process, making his craft fully teachable.",
+  "process_documented": true,
+  "process_sources": [
+   "https://motiondesign.school/courses/motion-secrets-with-emanuele-colombo/",
+   "https://www.skillshare.com/en/classes/the-art-of-animation-how-to-create-lifelike-movement/489321939",
+   "https://michellealexisblog.wordpress.com/2019/01/16/interview-1-emanuele-colombo/"
+  ]
+ },
+ {
+  "name": "Mickmumpitz (Mick Mahler)",
+  "medium": "ComfyUI pipeline-author YouTube explainer (Flux/SDXL character pipelines, Wan 2.1 VACE video)",
+  "why_relevant": "Ships free, downloadable ComfyUI workflows (consistent-character creator, actor/creature replacement with Wan 2.1 VACE) and demonstrates each in finished narrative shorts; his videos are themselves step-by-step visual teaching of diffusion-hybrid animation pipelines \u2014 the closest match to 'pipeline author who ships actual videos'.",
+  "process_documented": true,
+  "process_sources": [
+   "https://mickmumpitz.ai/guides/shoot-entire-movies-with-this-free-ai-workflow-comfyui-tutorial",
+   "https://mickmumpitz.ai/guides/create-controllable-characters-for-your-ai-movies-advanced",
+   "https://mickmumpitz.ai/posts/free-workflows-120405048?synced=1"
+  ]
+ },
+ {
+  "name": "Corridor Digital (Niko Pueringer)",
+  "medium": "Live-action + Unreal Engine + Stable Diffusion vid2vid hybrid ('AI anime')",
+  "why_relevant": "'Anime Rock Paper Scissors' is the canonical diffusion-hybrid narrative pipeline: greenscreen actors, Dreambooth-trained character/style models (Vampire Hunter D style), Unreal Engine backgrounds, Resolve deflicker \u2014 and they published an hour-long tutorial plus public BTS explaining every stage. Their breakdown videos function as visual teaching of the technique.",
+  "process_documented": true,
+  "process_sources": [
+   "https://www.beyondgames.biz/33028/corridor-digital-shares-new-artificial-intelligence-workflow-to-create-animation/",
+   "https://www.corridordigital.com/season/61",
+   "https://kotaku.com/anime-rock-paper-scissors-corridor-digital-ai-animation-1850186624"
+  ]
+ },
+ {
+  "name": "Matteo Spinelli (Latent Vision / cubiq / matt3o)",
+  "medium": "ComfyUI tech-art explainer; author of IPAdapter Plus custom nodes",
+  "why_relevant": "Author of the IPAdapter Plus nodes that most identity/style-conditioning video pipelines depend on; his Latent Vision channel is a rigorous 'advanced understanding of ComfyUI' course \u2014 visual explanation of how the diffusion machinery works, not just recipes. Directly relevant to media-studio's identity-conditioning lane.",
+  "process_documented": true,
+  "process_sources": [
+   "https://www.youtube.com/@latentvision/videos",
+   "https://www.youtube.com/watch?v=tRrzTwhFWXc",
+   "https://github.com/cubiq"
+  ]
+ },
+ {
+  "name": "Albert Bozesan (Storybook Studios)",
+  "medium": "Blender 3D + Stable Diffusion/ControlNet hybrid pipeline for narrative series and ads",
+  "why_relevant": "Head of Creative Technology at Munich's Storybook Studios; built cinematic Blender+SD production pipelines for real deliverables ('Space Vets' AI children's animation series, 'The Seeress'), and teaches the workflow via YouTube tutorials, TEDx, Seriencamp conference talks, and Civitai creative sessions \u2014 exactly 'creators mixing 3D renders with generative video' with documented process.",
+  "process_documented": true,
+  "process_sources": [
+   "https://albertbozesan.com/",
+   "https://www.xplr-media.com/en/xplr-magazine/albert-bozesan-von-storybook-studios-ki-verschiebt-die-grenzen-kopie.html",
+   "https://www.ai-portraits.org/blog-creative-direction-industry-story-telling-ft-albert-bozesan-civitai-creative-session-47961"
+  ]
+ },
+ {
+  "name": "Purz (Purz Beats)",
+  "medium": "ComfyUI/AnimateDiff motion-graphics educator and live-stream teacher",
+  "why_relevant": "Motion artist and ML engineer who publishes ComfyUI workflow templates on comfy.org (text-to-video, image-to-video, style transfer, lip sync) and hosts the 'Creative Exploration' live streams teaching ComfyUI end-to-end; his daily-animation practice plus SIGGRAPH-published hands-on ComfyUI workshop make him a pipeline author whose entire output is teaching.",
+  "process_documented": true,
+  "process_sources": [
+   "https://purz.ai/",
+   "https://comfy.org/workflows/purz/",
+   "https://dl.acm.org/doi/10.1145/3721241.3734004"
+  ]
+ },
+ {
+  "name": "Martin Nebelong",
+  "medium": "VR/3D sculpting (Dreams, Unbound, Adobe Modeler) amplified by real-time generative AI (Krea, SVD, Gen-2)",
+  "why_relevant": "20-year illustrator/3D artist who documents, shot by shot, hybrid pipelines where a live 3D sculpt drives real-time diffusion (Krea) and is then upscaled (Magnific) and animated (Stable Video Diffusion, Runway Gen-2); his running public documentation is explicitly about keeping the artist in control of generative tools \u2014 a strong process model for 3D-plus-generative explainer work.",
+  "process_documented": true,
+  "process_sources": [
+   "https://www.linkedin.com/in/martin-nebelong/",
+   "https://www.linkedin.com/posts/martin-nebelong_ai-art-activity-7155558881937522689-4RZH"
+  ]
+ },
+ {
+  "name": "Paul Trillo",
+  "medium": "Generative-video narrative direction (Sora) built on a decade of in-camera VFX short films",
+  "why_relevant": "Directed the first commissioned Sora music video (Washed Out, 'The Hardest Part') and detailed the process publicly \u2014 ~700 generated clips distilled to 55, prompt 'equations' for the infinite dolly shot, leaning into model hallucinations as a storytelling device; his interviews are unusually concrete about selection ratios and prompt engineering for narrative continuity.",
+  "process_documented": true,
+  "process_sources": [
+   "https://nofilmschool.com/ai-music-video",
+   "https://www.forbes.com/sites/charliefink/2024/05/07/openais-sora-brings-directors-10-year-music-video-vision-to-life/",
+   "https://www.rollingstone.com/music/music-features/washed-out-a-i-video-backlash-hardest-part-interview-1235017826/"
+  ]
+ },
+ {
+  "name": "Dave Clark (Promise Studios)",
+  "medium": "AI narrative shorts (Midjourney + Runway + ElevenLabs + Topaz) scaling to a hybrid AI/VFX/3D studio pipeline",
+  "why_relevant": "His short 'Borrowing Time' (personal Black-history narrative) came with a fully documented tool chain \u2014 Midjourney frames, Runway motion, ElevenLabs multi-voice from his own narration, Topaz 4K/frame-rate finishing \u2014 laid out in a long-form podcast interview; as Promise co-founder he now documents custom Python glue between generative models and 3D tools, a working reference for a production-grade hybrid pipeline.",
+  "process_documented": true,
+  "process_sources": [
+   "https://every.to/chain-of-thought/transcript-how-a-hollywood-director-uses-ai-to-make-movies",
+   "https://nofilmschool.com/dave-clark-interview-adobe-max",
+   "https://daveclarkcreative.com/projects"
+  ]
+ },
+ {
+  "name": "Entagma (Moritz Schwind & Manuel Casasola Merkle)",
+  "medium": "Houdini procedural-design tutorials and advanced CG explainers",
+  "why_relevant": "The reference Houdini educator channel: every video is a from-scratch procedural build (growth systems, sims, data-driven design) that teaches the technique rather than just showing results; they also bridge scientific visualization, e.g. interviewing the Barcelona Supercomputing Center's visualization team.",
+  "process_documented": true,
+  "process_sources": [
+   "https://entagma.com/ (tutorials + tech notes + example scene files)",
+   "https://www.youtube.com/watch?v=E7zbEQbgDZA (OFFF HIVE 2026 conference talk on their procedural workflow)",
+   "https://www.sidefx.com/learn/collections/entagma/ (SideFX-hosted collection; 'Nerd Rants' series discusses tooling/workflow decisions)"
+  ]
+ },
+ {
+  "name": "Steven Knipping (Applied Houdini)",
+  "medium": "Production-grade Houdini FX simulation courses (destruction, pyro, particles, volumes)",
+  "why_relevant": "ILM senior rigid-body-destruction TD (Avengers: Endgame, Rise of Skywalker) who teaches the exact production workflows behind blockbuster sims, with in-depth 'why it works' explanations \u2014 the canonical example of film-VFX simulation process made teachable.",
+  "process_documented": true,
+  "process_sources": [
+   "https://www.appliedhoudini.com/about (his own account of the series' production-quality philosophy)",
+   "https://80.lv/articles/houdini-overview-by-steven-knipping (80.lv interview on his path from DreamWorks to ILM and how he builds the lessons)",
+   "https://www.cgcircuit.com/instructor/steven.knipping (instructor profile + course breakdowns)"
+  ]
+ },
+ {
+  "name": "Ten Minute Physics (Matthias M\u00fcller-Fischer)",
+  "medium": "Browser-JavaScript physics-simulation explainers (~10 min per technique)",
+  "why_relevant": "Principal physics researcher at NVIDIA (PBD/XPBD co-inventor, 20+ years of sim research used across games and film) who explains cloth, fluids, soft bodies, and rigid bodies from first principles \u2014 arguably the purest 'simulation research rendered for lay/practitioner audiences' channel.",
+  "process_documented": true,
+  "process_sources": [
+   "https://matthias-research.github.io/pages/tenMinutePhysics/index.html (every episode ships with slides + runnable JavaScript demo source)",
+   "https://github.com/matthias-research (full code for all episodes)",
+   "https://matthias-mueller-fischer.ch/ (research page linking the papers each episode is built on)"
+  ]
+ },
+ {
+  "name": "Sebastian Lague",
+  "medium": "Unity/C#/HLSL 'Coding Adventures' \u2014 devlog-style simulation and rendering builds",
+  "why_relevant": "His fluid-sim, ray-tracing, atmosphere, and ecosystem-simulation videos are structured as narrated build logs: each failed attempt, fix, and design decision is shown on screen, making the videos simultaneously entertainment, explanation, and process documentation.",
+  "process_documented": true,
+  "process_sources": [
+   "https://github.com/SebLague (public source for nearly every video, e.g. the fluid-sim project)",
+   "https://www.youtube.com/playlist?list=PLFt_AvWsXl0ehjAfLFsp1PGaatzAwo0uK (Coding Adventures playlist \u2014 the videos are themselves devlogs of the process)"
+  ]
+ },
+ {
+  "name": "Primer (Justin Helps)",
+  "medium": "Unity/C#-based agent simulations (evolution, game theory, statistics) with signature blob characters",
+  "why_relevant": "Former Khan Academy content creator whose videos run bespoke simulations to derive conclusions on screen rather than merely illustrate them \u2014 the closest model for 'write a real sim, then film it' explainer production; he has hired Unity devs to build his simulation/animation tooling.",
+  "process_documented": true,
+  "process_sources": [
+   "https://github.com/Helpsypoo/PrimerTools (open-source simulation/animation toolset powering the videos)",
+   "https://lironshapira.substack.com/p/justin-helps-primer-on-youtube-is (long-form interview covering his channel and approach)",
+   "https://www.patreon.com/primerlearning (Patreon devlog posts on video production)"
+  ]
+ },
+ {
+  "name": "Captain Disillusion (Alan Melikdjanian)",
+  "medium": "After Effects/Blender VFX-literacy explainers debunking viral videos",
+  "why_relevant": "The defining VFX-breakdown-as-education channel: teaches how compositing, tracking, and sim effects actually work by reverse-engineering fakes; his own production pipeline (2 weeks scripting, 4h footage per 2-min video, per-shot AE treatment) is unusually well documented.",
+  "process_documented": true,
+  "process_sources": [
+   "https://www.youtube.com/watch?v=FcW6rGJUcF4 (Captain Disillusion On How He Makes His Videos)",
+   "https://www.youtube.com/watch?v=OTJTxolrBIw (studio tour and behind-the-scenes)",
+   "https://cgcookie.com/posts/captain-disillusion-interview-blender (CG Cookie interview on his Blender/AE workflow)"
+  ]
+ },
+ {
+  "name": "Inigo Quilez",
+  "medium": "Live-coded SDF/raymarching 'painting with math' \u2014 Shadertoy co-creator",
+  "why_relevant": "Demoscene legend and ex-Pixar engineer who builds photorealistic scenes from pure mathematical formulas on camera, deriving each equation as he goes; his article library is the de-facto textbook of procedural rendering, directly relevant to explaining abstract systems visually.",
+  "process_documented": true,
+  "process_sources": [
+   "https://www.youtube.com/channel/UCdmAhiG8HQDlz8uyekw4ENw (multi-hour recorded live-coding sessions, e.g. Painting a Character with Maths)",
+   "https://open.spotify.com/episode/5OfKEP44EPkBjvBtVUHG11 (Wookash Podcast long-form interview on his process)",
+   "https://iquilezles.org/articles/ (his written articles documenting every technique he uses)"
+  ]
+ },
+ {
+  "name": "Wren Weichman (Corridor Digital / Corridor Crew)",
+  "medium": "Cinema 4D/Houdini VFX breakdowns and 'VFX Artists React' explainer culture",
+  "why_relevant": "Embodies CG/VFX breakdown culture at scale: his 'VFX Artist Reveals/Explains' formats teach how sims (Voronoi fracture destruction, scale, physics) are made, and Corridor's business model is publishing its own behind-the-scenes for everything it produces.",
+  "process_documented": true,
+  "process_sources": [
+   "https://www.pugetsystems.com/podcast/episode-28-workflow-wednesday-live-q-a-with-wren-weichman-vfx-artist-director-at-corridor-digital-1860/ (workflow-focused live Q&A podcast)",
+   "https://www.youtube.com/watch?v=XOXeRNw9XX4 (Blender Guru studio tour + VFX advice with Wren)",
+   "https://www.youtube.com/watch?v=qI7Pf7mGlnI (Voronoi Fracture destruction-sim workflow demo)"
+  ]
+ },
+ {
+  "name": "CodeParade (Hyperbolica)",
+  "medium": "Unity devlog explainers with custom rendering pipeline (non-Euclidean geometry)",
+  "why_relevant": "His Hyperbolica devlog series is game-dev content that doubles as genuinely excellent math explanation \u2014 visualizing hyperbolic and spherical space by walking through the custom engine he built to render it; a model case of a devlog whose visuals teach.",
+  "process_documented": true,
+  "process_sources": [
+   "https://www.gamedeveloper.com/design/q-a-the-mind-bending-geometry-of-non-euclidean-experiment-hyperbolica-",
+   "https://www.floneyyang.com/post/interview-with-codeparade",
+   "https://www.youtube.com/watch?v=spDA3hPJf6E"
+  ]
+ },
+ {
+  "name": "Vercidium",
+  "medium": "Custom C#/OpenGL voxel engine optimization explainers with animated motion graphics",
+  "why_relevant": "His videos visually explain rendering and memory-layout optimizations (greedy meshing, instancing, culling) with unusually clear animated diagrams over real engine footage; a strong example of engine-dev content that teaches graphics programming.",
+  "process_documented": true,
+  "process_sources": [
+   "https://vercidium.com/blog/",
+   "https://vercidium.com/blog/voxel-world-optimisations/",
+   "https://github.com/Vercidium/voxel-mesh-generation"
+  ]
+ },
+ {
+  "name": "Amit Patel (Red Blob Games)",
+  "medium": "Interactive web/WebGL-canvas explainer pages (pathfinding, hex grids, procedural maps)",
+  "why_relevant": "The gold standard for interactive game-algorithm explainers (A*, hexagonal grids, map generation) built around play-with-it diagrams; directly relevant as an interactive-explainer author whose subject matter is game tech.",
+  "process_documented": true,
+  "process_sources": [
+   "https://simblob.blogspot.com/2013/05/guide-to-hexagonal-grids.html",
+   "https://simblob.blogspot.com/",
+   "https://www.redblobgames.com/"
+  ]
+ },
+ {
+  "name": "Lorenzo Drago",
+  "medium": "Unreal Engine 5 solo photoreal cinematic environments (Etch\u016b-Daimon Station)",
+  "why_relevant": "Solo artist whose UE5 train-station walkthrough fooled millions into thinking it was real footage; his breakdowns of camera matching (fSpy), Lumen lighting with real-world brightness values, and VR-tracked handheld camera are a masterclass in solo real-time cinematics.",
+  "process_documented": true,
+  "process_sources": [
+   "https://www.unrealengine.com/tech-blog/environment-artist-explains-how-he-created-near-photo-realistic-train-station-using-ue5",
+   "https://80.lv/articles/a-realistic-railway-station-made-with-camera-matching-ue5",
+   "https://gamesartist.co.uk/etchu-daimon-station/"
+  ]
+ },
+ {
+  "name": "ThinMatrix",
+  "medium": "Java/OpenGL custom-engine indie devlogs and 3D graphics tutorial series",
+  "why_relevant": "Long-running (500+ episode) devlog channel where procedural generation, shaders, and engine features are explained on-screen as they are built; his separate OpenGL 3D game tutorial series is explicitly instructional. The devlogs themselves are the continuous process documentation.",
+  "process_documented": true,
+  "process_sources": [
+   "https://www.youtube.com/@ThinMatrix"
+  ]
+ },
+ {
+  "name": "Martijn Steinrucken (The Art of Code)",
+  "medium": "Live-coded GLSL/Shadertoy shader tutorials (raymarching, fractals, effects)",
+  "why_relevant": "Teaches shader math by live-coding effects from a blank Shadertoy tab, narrating every mathematical decision \u2014 the work is simultaneously visual explanation and complete process documentation, in the Freya/Acerola genre but tutorial-first.",
+  "process_documented": true,
+  "process_sources": [
+   "https://www.youtube.com/@TheArtofCodeIsCool"
+  ]
+ },
+ {
+  "name": "Clinton Jones (pwnisher)",
+  "medium": "Unreal Engine / Cinema 4D solo cinematic renders and community render challenges",
+  "why_relevant": "Ex-Corridor Digital artist whose channel centers on real-time cinematic craft; his render-challenge breakdowns and 'how I made this' videos teach lighting, composition, and Unreal workflows to a huge audience \u2014 process-forward by format. Note: verified only via his own channel BTS content in this pass, not third-party interviews.",
+  "process_documented": true,
+  "process_sources": [
+   "https://www.youtube.com/@pwnisher"
+  ]
+ }
+]

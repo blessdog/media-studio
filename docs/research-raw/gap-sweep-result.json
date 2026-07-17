@@ -1,0 +1,274 @@
+{
+ "question": "Targeted follow-up sweep filling specific coverage holes from a prior research pass on how top-tier explainer animation is produced (prior pass already covered: 3Blue1Brown/manim, Animagraffs' solo Blender pipeline, blender-mcp, ComfyUI LTX-2.3 workflows and IC-LoRA control conditioning, MolecularNodes, ChimeraX \u2014 do NOT re-cover those). The holes to fill, for a solo creator on DaVinci Resolve Studio + Blender + hosted diffusion APIs planning a technical explainer about Monero cryptography: (1) FERN (fern.tv, the YouTube documentary/explainer studio behind 'The Longest Standing Math Problem' etc.) \u2014 any ground truth on their production pipeline: behind-the-scenes, interviews with founder or staff, job postings revealing software (After Effects? Cinema 4D? Blender?), team size/roles, credits analysis; (2) other named studios' actual toolchains: Melodysheep (John Boswell), Rational Animations (do they use Blender?), Posy, Branch Education (their Blender usage is reportedly documented) \u2014 production breakdowns, not fan speculation; (3) real-time/game-engine and WebGL explainers used for teaching: Bartosz Ciechanowski's interactive essays (how are they built?), three.js/WebGL explorable explanations, Unreal/Unity/Godot used for educational animation production, and whether solo creators render explainers out of game engines; (4) how CRYPTOGRAPHY and abstract computer-science/blockchain concepts specifically have been visualized well \u2014 acclaimed visual explanations of public-key crypto, zero-knowledge proofs, blockchain/Bitcoin mechanics (e.g. 3B1B's Bitcoin video approach, distill.pub-style visual explanations, animated crypto explainers), what visual vocabularies they used for keys/signatures/hashes/anonymity sets, and which were considered pedagogically effective; (5) verify these carried-over claims from the prior pass: Kurzgesagt's pipeline is After-Effects-based with ~200 illustrations and >1200 person-hours per 10-minute video; a documented Blender-to-ComfyUI workflow exports depth/outline/color-mask passes as ControlNet conditioning; Remotion plus an AI coding agent is a viable programmatic video lane; Motion Canvas is unmaintained with Canvas Commons as the active fork. Prioritize primary sources: interviews, BTS videos, job listings, official docs, credits.",
+ "summary": "Could not verify any claims \u2014 all 25 verifier panels failed (likely rate-limiting or API errors). This is an infrastructure failure, not a research finding. Raw extracted claims returned below; retry or verify manually.",
+ "findings": [],
+ "refuted": [],
+ "unverified": [
+  {
+   "claim": "fern's 3D production is Blender-based: the studio's own 2025 job posting names professional Blender proficiency as the core software requirement for its 3D Generalist role, with Unreal Engine 5 only an optional bonus (no mention of Cinema 4D, Maya, or Houdini for 3D).",
+   "erroredVotes": 3,
+   "validVotes": 0,
+   "source": "https://join.com/companies/electrify/14178235-3d-generalist-youtube-channel-fern-and-simplicissimus"
+  },
+  {
+   "claim": "fern runs a full traditional 3D pipeline in-house for its explainers and documentaries \u2014 modeling, texturing, rigging, lighting, animation, and compositing \u2014 with 3D elements composited into final video edits as part of mixed-asset projects rather than fully 3D-rendered videos.",
+   "erroredVotes": 3,
+   "validVotes": 0,
+   "source": "https://join.com/companies/electrify/14178235-3d-generalist-youtube-channel-fern-and-simplicissimus"
+  },
+  {
+   "claim": "fern's team structure includes producers, editors, motion designers, and creative leads in addition to 3D artists, and 3D staffing is done via fully remote freelancers with 'work expected to be available very often' \u2014 evidence the studio is a multi-role team, not a solo operation.",
+   "erroredVotes": 3,
+   "validVotes": 0,
+   "source": "https://join.com/companies/electrify/14178235-3d-generalist-youtube-channel-fern-and-simplicissimus"
+  },
+  {
+   "claim": "fern and Simplicissimus's 3D pipeline is Blender-based: the studios' shared 3D Generalist role requires professional Blender proficiency, with Unreal Engine 5 listed only as an optional/valued extra \u2014 Cinema 4D and After Effects are not named as requirements for the 3D role.",
+   "erroredVotes": 3,
+   "validVotes": 0,
+   "source": "https://de.linkedin.com/jobs/view/3d-generalist-youtube-channel-fern-and-simplicissimus-at-electrify-video-partners-4232714967"
+  },
+  {
+   "claim": "fern's team structure separates 3D from 2D/motion work: the 3D Generalist collaborates with distinct producer, editor, and motion-designer roles and is responsible for compositing 3D elements into the final video edits.",
+   "erroredVotes": 3,
+   "validVotes": 0,
+   "source": "https://de.linkedin.com/jobs/view/3d-generalist-youtube-channel-fern-and-simplicissimus-at-electrify-video-partners-4232714967"
+  },
+  {
+   "claim": "Branch Education's 'World's Smallest Devices' video was produced entirely in Blender \u2014 modeling, rigging, and animation \u2014 confirming the studio's reported Blender-based pipeline with first-hand documentation from a team artist.",
+   "erroredVotes": 3,
+   "validVotes": 0,
+   "source": "https://blenderartists.org/t/worlds-smallest-devices-blender-project/1389553"
+  },
+  {
+   "claim": "The post is authored by a Branch Education team member (Mike Radjabov, forum handle hanni5bal), who identifies the work as the studio's own project and links Branch Education's Patreon, YouTube channel, and website, making this primary rather than fan-speculated evidence of their toolchain.",
+   "erroredVotes": 3,
+   "validVotes": 0,
+   "source": "https://blenderartists.org/t/worlds-smallest-devices-blender-project/1389553"
+  },
+  {
+   "claim": "Melodysheep's 'Life Beyond 3' documentary incorporated a 54-second animated shot produced by an external collaborating 3D artist (BlenderNation contributor 'UnknownDino'), indicating John Boswell commissions outside artists rather than producing every shot solo.",
+   "erroredVotes": 3,
+   "validVotes": 0,
+   "source": "https://www.blendernation.com/2021/12/22/life-beyond-3-melodysheep-planetary-shield/"
+  },
+  {
+   "claim": "That Life Beyond 3 shot was created almost entirely inside a single Blender 2.93 project file, placing Blender in Melodysheep's production pipeline at least via this collaborator.",
+   "erroredVotes": 3,
+   "validVotes": 0,
+   "source": "https://www.blendernation.com/2021/12/22/life-beyond-3-melodysheep-planetary-shield/"
+  },
+  {
+   "claim": "Posy (Michiel de Boer) edits and color-grades his YouTube videos in DaVinci Resolve Studio, the same NLE the researching creator uses.",
+   "erroredVotes": 3,
+   "validVotes": 0,
+   "source": "https://michieldb.nl/info/"
+  },
+  {
+   "claim": "3Blue1Brown's Bitcoin video teaches the system through an 'invent it yourself' scaffolding: starting from a communal ledger among friends and progressively adding digital signatures, ledger distribution, and proof-of-work, rather than describing Bitcoin top-down.",
+   "erroredVotes": 3,
+   "validVotes": 0,
+   "source": "https://www.3blue1brown.com/lessons/bitcoin"
+  },
+  {
+   "claim": "The video's visual vocabulary for digital signatures contrasts a consistent handwritten signature with a message-dependent bit string, making the point that a valid digital signature varies per document.",
+   "erroredVotes": 3,
+   "validVotes": 0,
+   "source": "https://www.3blue1brown.com/lessons/bitcoin"
+  },
+  {
+   "claim": "Proof of work is visualized as a concrete 'find leading zeros in the hash' game with explicit probability framing, giving an intuitive picture of mining difficulty.",
+   "erroredVotes": 3,
+   "validVotes": 0,
+   "source": "https://www.3blue1brown.com/lessons/bitcoin"
+  },
+  {
+   "claim": "Brownworth's blockchain demo teaches blockchain mechanics through a scaffolded six-stage progression of interactive sections \u2014 Hash, Block, Blockchain, Distributed, Tokens, Coinbase \u2014 building from a single cryptographic primitive up to a full distributed-ledger model, a structure directly reusable as a visual vocabulary for a Monero explainer.",
+   "erroredVotes": 3,
+   "validVotes": 0,
+   "source": "https://andersbrownworth.com/blockchain/hash"
+  },
+  {
+   "claim": "Its core visual vocabulary for hashing is a live paired input/output widget \u2014 a free-text 'Data' field whose SHA-256 'Hash' output updates in real time \u2014 letting learners directly experience determinism and avalanche behavior rather than being told about it.",
+   "erroredVotes": 3,
+   "validVotes": 0,
+   "source": "https://andersbrownworth.com/blockchain/hash"
+  },
+  {
+   "claim": "The author extended the same interactive vocabulary to public-key cryptography in a second installment covering keys and digital signatures \u2014 evidence that this input/output-widget style scales to the asymmetric-crypto concepts a Monero explainer needs (keys, signatures).",
+   "erroredVotes": 3,
+   "validVotes": 0,
+   "source": "https://andersbrownworth.com/blockchain/hash"
+  },
+  {
+   "claim": "The Animated Elliptic Curve (curves.xargs.org) is built as a hand-coded browser explainer using plain JavaScript with Canvas 2D and requestAnimationFrame \u2014 no game engine, WebGL framework, or animation software \u2014 and its complete source is open on GitHub (syncsynchalt/animated-curves, ~57% JavaScript, 31% CSS, 11.5% HTML), demonstrating that a solo creator can ship an acclaimed interactive crypto explainer entirely in vanilla web tech.",
+   "erroredVotes": 3,
+   "validVotes": 0,
+   "source": "https://curves.xargs.org/"
+  },
+  {
+   "claim": "Its visual vocabulary for elliptic-curve key exchange uses concrete geometric/algebraic depictions: chord lines between curve points for point addition, tangent lines for point doubling, a numerical grid of points over the finite field F61, an animated double-and-add sequence for computing nP, and a step-by-step Alice/Bob exchange \u2014 a reusable vocabulary for visualizing the ECC primitives underlying Monero (which also uses Curve25519-family curves).",
+   "erroredVotes": 3,
+   "validVotes": 0,
+   "source": "https://curves.xargs.org/"
+  },
+  {
+   "claim": "Kurzgesagt's animation pipeline is Adobe After Effects-based, with Cinema 4D only recently added as an experiment (as of Feb 2020) \u2014 verifying the prior pass's 'After-Effects-based pipeline' claim from the studio's own mouth.",
+   "erroredVotes": 3,
+   "validVotes": 0,
+   "source": "https://www.youtube.com/watch?v=uFk0mgljtns"
+  },
+  {
+   "claim": "An average Kurzgesagt video requires about 200 illustrated panels, created in Adobe Illustrator \u2014 verifying the prior pass's '~200 illustrations' claim (source says 'panels', not loose illustrations).",
+   "erroredVotes": 3,
+   "validVotes": 0,
+   "source": "https://www.youtube.com/watch?v=uFk0mgljtns"
+  },
+  {
+   "claim": "A single Kurzgesagt video takes at least ~1,200 person-hours to produce across research, script, illustration, narration, animation, and music \u2014 verifying the prior pass's '>1200 person-hours' figure. (Note: the source says 'a single video', not specifically 'per 10-minute video'.)",
+   "erroredVotes": 3,
+   "validVotes": 0,
+   "source": "https://www.youtube.com/watch?v=uFk0mgljtns"
+  },
+  {
+   "claim": "Remotion's official documentation states that videos can be created purely by prompting an AI coding agent, positioning this as a supported entry path into Remotion \u2014 first-party confirmation that the Remotion + AI coding agent lane is viable, not just community speculation.",
+   "erroredVotes": 3,
+   "validVotes": 0,
+   "source": "https://www.remotion.dev/docs/ai/coding-agents"
+  },
+  {
+   "claim": "Canvas Commons is an explicit community fork of the Motion Canvas project (forked from motion-canvas/motion-canvas on GitHub), partially confirming the carried-over claim that Canvas Commons is the community's continuation fork of Motion Canvas.",
+   "erroredVotes": 3,
+   "validVotes": 0,
+   "source": "https://github.com/canvas-commons/canvas-commons"
+  },
+  {
+   "claim": "Canvas Commons is actively maintained as of late June 2026, with its latest commit on June 27, 2026 and a stream of feature and fix commits (e.g., new 2D animation helpers) in the same week \u2014 supporting the 'active fork' half of the carried-over claim.",
+   "erroredVotes": 3,
+   "validVotes": 0,
+   "source": "https://github.com/canvas-commons/canvas-commons"
+  },
+  {
+   "claim": "The Canvas Commons repository itself makes NO claim that Motion Canvas is unmaintained or abandoned \u2014 the 'Motion Canvas is unmaintained' half of the carried-over claim is not verifiable from this primary source and needs corroboration from the upstream motion-canvas repo or maintainer statements.",
+   "erroredVotes": 3,
+   "validVotes": 0,
+   "source": "https://github.com/canvas-commons/canvas-commons"
+  }
+ ],
+ "sources": [
+  {
+   "url": "https://join.com/companies/electrify/14178235-3d-generalist-youtube-channel-fern-and-simplicissimus",
+   "quality": "primary",
+   "claimCount": 5
+  },
+  {
+   "url": "https://de.linkedin.com/jobs/view/3d-generalist-youtube-channel-fern-and-simplicissimus-at-electrify-video-partners-4232714967",
+   "quality": "primary",
+   "claimCount": 5
+  },
+  {
+   "url": "https://blenderartists.org/t/worlds-smallest-devices-blender-project/1389553",
+   "quality": "primary",
+   "claimCount": 5
+  },
+  {
+   "url": "https://www.patreon.com/posts/behind-scenes-of-32226277",
+   "quality": "unreliable",
+   "claimCount": 0
+  },
+  {
+   "url": "https://www.blendernation.com/2021/12/22/life-beyond-3-melodysheep-planetary-shield/",
+   "quality": "primary",
+   "claimCount": 4
+  },
+  {
+   "url": "https://michieldb.nl/info/",
+   "quality": "primary",
+   "claimCount": 5
+  },
+  {
+   "url": "https://www.patreon.com/ciechanowski",
+   "quality": "primary",
+   "claimCount": 4
+  },
+  {
+   "url": "https://80.lv/articles/how-a-solo-developer-created-a-cold-war-animated-series-with-ue5",
+   "quality": "secondary",
+   "claimCount": 5
+  },
+  {
+   "url": "https://css-tricks.com/bartosz-ciechanowskis-interactive-blog-posts/",
+   "quality": "blog",
+   "claimCount": 4
+  },
+  {
+   "url": "https://en.wikipedia.org/wiki/Explorable_explanation",
+   "quality": "secondary",
+   "claimCount": 5
+  },
+  {
+   "url": "https://www.unrealengine.com/en-US/explainers/virtual-production/how-to-get-started-with-unreal-engine-for-filmmakers",
+   "quality": "primary",
+   "claimCount": 5
+  },
+  {
+   "url": "https://www.3blue1brown.com/lessons/bitcoin",
+   "quality": "primary",
+   "claimCount": 5
+  },
+  {
+   "url": "https://andersbrownworth.com/blockchain/hash",
+   "quality": "primary",
+   "claimCount": 5
+  },
+  {
+   "url": "https://www.monero.how/tutorial-monero-privacy-ring-signatures-stealth-addresses-ringct",
+   "quality": "blog",
+   "claimCount": 5
+  },
+  {
+   "url": "https://curves.xargs.org/",
+   "quality": "primary",
+   "claimCount": 5
+  },
+  {
+   "url": "https://www.youtube.com/watch?v=uFk0mgljtns",
+   "quality": "primary",
+   "claimCount": 5
+  },
+  {
+   "url": "https://10.studio/the-incredible-amount-of-work-behind-kurzgesagts-beautiful-animated-videos/",
+   "quality": "blog",
+   "claimCount": 5
+  },
+  {
+   "url": "https://www.runcomfy.com/comfyui-workflows/ai-rendering-3d-animations-with-blender-and-comfyui",
+   "quality": "secondary",
+   "claimCount": 4
+  },
+  {
+   "url": "https://www.remotion.dev/docs/ai/coding-agents",
+   "quality": "primary",
+   "claimCount": 5
+  },
+  {
+   "url": "https://github.com/canvas-commons/canvas-commons",
+   "quality": "primary",
+   "claimCount": 5
+  },
+  {
+   "url": "https://news.ycombinator.com/item?id=47191103",
+   "quality": "forum",
+   "claimCount": 4
+  }
+ ],
+ "stats": {
+  "angles": 5,
+  "sources": 21,
+  "claims": 95,
+  "verified": 25,
+  "confirmed": 0,
+  "killed": 0,
+  "unverified": 25
+ }
+}

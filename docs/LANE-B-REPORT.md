@@ -442,11 +442,18 @@ Matteo Spinelli's IPAdapter Plus materials (direct Scene Forge relevance);
 
 ## Appendix: raw material locations
 
-- Pass-1 claims dump (102, with quotes): session scratchpad `all-claims.md`
-- Pass-1 / resume / gap-sweep full outputs: session task files
-  `wjitli2cn` / `wt32yluid` / `wevj02z3r` (media-studio session
-  `6fd46f1f`, 2026-07-16/17)
-- Discovery journal (31 creators): workflow `wf_d1092b74-07d/journal.jsonl`
-- Citation-verification results (20 sections, 22 agents): write-on session
-  `0220e86b` task `wbtees887`
-- Working docs: `docs/LANE-B-RESEARCH.md`, `docs/LANE-B-CREATOR-METHODS.md`
+All raw research material is committed in-repo under `docs/research-raw/` —
+agent-agnostic, no session or machine dependency:
+
+- `pass1-all-claims.md` — the 102 pass-1 claims with quote evidence
+- `pass1-result.json` / `pass1-resume-result.json` — confirmed/refuted/
+  unverified claim sets + sources from pass 1 and its resume
+- `gap-sweep-result.json` — the 25 unverified gap-sweep claims + 21 sources
+- `discovery-31-creators.json` — all 31 discovered creators with full
+  discovery notes
+- `citation-verification-verdicts.json` — the 22-agent citation pass: every
+  per-claim verdict and note behind §10's trust ledger
+
+Working docs: `docs/LANE-B-RESEARCH.md`, `docs/LANE-B-CREATOR-METHODS.md`,
+`docs/LANE-B-RESEARCH-BRIEFS.md` (self-contained handoff for external
+agents).
