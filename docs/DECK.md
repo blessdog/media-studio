@@ -1,4 +1,16 @@
-# DECK — Stream Deck XL → Companion → daemon (wired 2026-07-13)
+# DECK — Stream Deck XL → Companion → daemon (wired 2026-07-13) — RETIRED
+
+**RETIRED 2026-07-21.** The Companion chain below is historic: the deck
+surface is now Ryan's own plugin at `~/projects/obs-control-room` (see its
+README). The "Companion XL" Elgato profile is removed (backup:
+`~/Library/Application Support/com.elgato.StreamDeck/ProfilesV3-retired-2026-07-21/`)
+and the Companion app is quit — it had ONE job (deck bridge) and that job
+moved into the plugin. Post-mortem worth remembering: after 7/13 the XL
+sat on the half-blank Companion profile while every later session built
+plugin keys onto the unselected Default Profile — logs said "verified",
+Ryan's eyes saw a dead surface for a week. Ground-truth the INSTRUMENT,
+not the logs. Companion-v5 config-by-database doctrine below kept for
+reference.
 
 The tactile chain, proven live by Ryan's fingers:
 **XL key → Elgato app (Companion Button plugin) → Companion v5 →

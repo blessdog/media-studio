@@ -430,9 +430,15 @@ after layouts stabilize. The keys are mini screens — use them.
    + key-face glyph layer + end-show fix. Built, loaded, OBS-connected
    clean; Ryan's FINGERS NOT YET on the new keys. Fresh-session order:
    finger-verify → HOME nav shell (profiles, with Ryan at the GUI) →
-   icon art pass → retire Companion MEDIA STUDIO page → corpus
-   auto-index lands HERE in the daemon (chapter-aware ingest: read
-   chapters → Story IR markers, skip 'Start').
+   icon art pass → corpus auto-index lands HERE in the daemon
+   (chapter-aware ingest: read chapters → Story IR markers, skip
+   'Start'). 2026-07-21 later: parity keys landed (Mute Mic / Pause
+   Record / Stream toggle, commit 63e10fd there); **Companion MEDIA
+   STUDIO page + "Companion XL" profile RETIRED** — the deck had sat
+   stuck on that half-blank profile since 7/13 while the plugin keys
+   lived unseen on Default Profile (THE blocker, Ryan's photo);
+   post-mortem + backup path in docs/DECK.md. Companion app quit for
+   good; daemon unaffected.
 2. **Authored lane / Monero visualization** (was missing from this file —
    2026-07-17/18 sessions): Lane B research DONE + verified, read
    docs/LANE-B-REPORT.md first; gate 2 (visual references) is the open
