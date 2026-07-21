@@ -313,6 +313,36 @@ later activity. Full agenda at docs/PLAN.md "NEXT SESSION AGENDA". Also
 today: OBS crashed once mid-session (relaunched clean); the 1.9s
 accidental take lives at outputs/projects/2026-07-13-14-37-50.
 
+## Scope reel-in + state-of-instrument demo (2026-07-20)
+
+**Ryan's decision: the studio focuses on THREE instruments — OBS, DaVinci
+Resolve, and Blender — with the Stream Deck as the tactile layer over all
+three.** Hosted-diffusion Scene Forge and other lanes are parked, not
+deleted. (PLAN.md alignment pass pending the next planning dialogue.)
+
+**Demo on real material** (his 2:38 un-ingested 07-13 recording →
+`outputs/projects/state-demo/`, judgment pending his eyes): fresh ingest
+(27 spans, 10 utterances) → three approved news-desk graphics placed by
+spoken phrase → headless Blender orbit-cube cutaway at "Let's bless it" →
+15s music bed on A2 → captions 10/10 cues remapped →
+`state-demo@ea1f0c5a` rendered, all gates green. Hard-won en route:
+
+- **A 24fps Blender mux misconforms on a 60fps timeline via OTIO**: landed
+  rec=286 dur=144, wanted rec=250 dur=180 — the END frame matched exactly,
+  so the conform shortened and right-shifted it. The 24fps hailuo clip had
+  conformed fine on a 60fps timeline (slice 2), so the blender ffmpeg mux
+  is the suspect (timebase?), not mixed-fps generally. Workaround proven:
+  render Blender scenes at timeline fps (`--fps 60`). Root cause unowned.
+- **Verifier false-fail: container duration includes AAC encoder padding**
+  (~70ms past the video stream — 2390 AAC frames × 1024 / 48000). The
+  video stream was frame-exact (3055) all along. verify.py now checks the
+  VIDEO stream duration, the actual frame contract.
+- Gates that held: add-music without --dur lint-failed correctly (15s bed
+  can't span a 51s cut — story.json never written); the alpha-master
+  150-frame cap (2.5s) bit all three graphics (headline wanted 4s, ticker
+  5s — the ticker cuts mid-scroll). That v0 limit is now visible in real
+  use → backlog candidate.
+
 ## Next
 
 1. **NEXT SESSION: deck-as-dashboard + corpus workflow** (docs/PLAN.md
