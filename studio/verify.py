@@ -114,15 +114,18 @@ def verify_render(ir, proj, timeline, render_dir):
 
     probe = subprocess.run(
         ["ffprobe", "-v", "error", "-show_entries",
-         "format=duration:stream=width,height", "-of", "json", str(out)],
+         "format=duration:stream=width,height,duration", "-of", "json", str(out)],
         capture_output=True, text=True)
     meta = json.loads(probe.stdout)
     fps = float(irmod.fps(ir))
     want_dur = irmod.extent_frames(ir) / fps
-    got_dur = float(meta.get("format", {}).get("duration", 0) or 0)
+    vstream = next((s for s in meta.get("streams", []) if s.get("width")), {})
+    # container duration = max of streams, and AAC padding runs the audio
+    # stream ~70ms past the video; the video stream is the frame contract
+    got_dur = float(vstream.get("duration")
+                    or meta.get("format", {}).get("duration", 0) or 0)
     if abs(got_dur - want_dur) > 1.0 / fps + 0.05:
         errors.append(f"render duration {got_dur:.3f}s != IR extent {want_dur:.3f}s")
-    vstream = next((s for s in meta.get("streams", []) if s.get("width")), {})
     if vstream.get("width") != ir["resolution"]["width"] or \
        vstream.get("height") != ir["resolution"]["height"]:
         errors.append(
