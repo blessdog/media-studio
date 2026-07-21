@@ -421,10 +421,16 @@ after layouts stabilize. The keys are mini screens — use them.
 
 ## Next
 
-1. **Deck lane (BLESSED, in progress):** chapter-marker verification →
-   extend obs-control-room (Cam Cutout key, record start/stop, MARK,
-   end-show bug, HOME/profile nav shell + icon system) → retire the
-   Companion MEDIA STUDIO page.
+1. **Deck lane (BLESSED, in progress):** ~~chapter-marker verification~~
+   **PASSED 2026-07-21** (`scripts/verify_record_chapters.py`: OBS 32.1.2
+   ws 5.7.3, CreateRecordChapter → titled chapters in Hybrid MP4 →
+   ffprobe, ~0.2s press latency; OBS auto-adds a 'Start' chapter at 0 —
+   ingest must skip it; test clip: ~/Movies/2026-07-21_10-37-22.mp4).
+   MARK = plugin chapter action, ZERO pipeline code at record time;
+   ingest later reads chapters → Story IR markers. NEXT: build in
+   ~/projects/obs-control-room — Cam Cutout key, record start/stop
+   action, MARK action, end-show bug, HOME/profile nav shell +
+   icon-first art pass → then retire the Companion MEDIA STUDIO page.
 2. **Authored lane / Monero visualization** (was missing from this file —
    2026-07-17/18 sessions): Lane B research DONE + verified, read
    docs/LANE-B-REPORT.md first; gate 2 (visual references) is the open
