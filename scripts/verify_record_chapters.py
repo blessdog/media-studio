@@ -2,12 +2,14 @@
 """Gate test for the MARK-as-chapter design: do OBS chapter markers, dropped
 via obs-websocket during a Hybrid MP4 recording, survive into ffprobe?
 
-    .venv/bin/python scripts/verify_record_chapters.py
+    .venv/bin/python scripts/verify_record_chapters.py           # self-test
+    .venv/bin/python scripts/verify_record_chapters.py <file>    # check a file
 
-Launches OBS if it isn't running. Rolls ~9s, drops two chapters (~3s, ~6s),
-stops, then reads chapters back with ffprobe. Exit 0 = both chapters
-readable (MARK key can be a plugin chapter action; ingest reads chapters).
-Credentials come from OBS's own obs-websocket config; nothing hardcoded.
+Self-test: launches OBS if needed, rolls ~9s, drops two chapters (~3s, ~6s),
+stops, reads them back. File mode: just ffprobes an EXISTING recording (e.g.
+one made from the deck's Mark key) and passes if it holds at least one real
+chapter beyond OBS's automatic 'Start'. Credentials come from OBS's own
+obs-websocket config; nothing hardcoded.
 """
 import json
 import subprocess
@@ -41,7 +43,34 @@ def connect(timeout_s=60):
                        "(a blocking dialog on screen, e.g. Safe Mode?)")
 
 
+def read_chapters(path):
+    probe = subprocess.run(
+        ["ffprobe", "-v", "error", "-print_format", "json",
+         "-show_chapters", path],
+        capture_output=True, text=True, check=True)
+    return json.loads(probe.stdout).get("chapters", [])
+
+
+def check_file(path):
+    if not Path(path).is_file():
+        print(f"FAIL: no such file: {path}")
+        return 1
+    chapters = read_chapters(path)
+    print(f"ffprobe chapters: {len(chapters)}")
+    for c in chapters:
+        print(f"  - start={float(c['start_time']):7.2f}s "
+              f"title={c.get('tags', {}).get('title', '?')!r}")
+    marks = [c for c in chapters
+             if c.get("tags", {}).get("title") != "Start"]  # OBS auto-chapter
+    print(f"PASS: {len(marks)} mark(s) beyond the auto 'Start' chapter"
+          if marks else
+          "FAIL: no chapters beyond the auto 'Start' (were any marks pressed?)")
+    return 0 if marks else 1
+
+
 def main():
+    if len(sys.argv) > 1:
+        return check_file(sys.argv[1])
     if subprocess.run(["pgrep", "-x", "OBS"], capture_output=True).returncode:
         print("OBS not running -> launching")
         subprocess.run(["open", "-a", "OBS"], check=True)
@@ -72,11 +101,7 @@ def main():
         print("FAIL: recording file never appeared")
         return 1
 
-    probe = subprocess.run(
-        ["ffprobe", "-v", "error", "-print_format", "json",
-         "-show_chapters", out],
-        capture_output=True, text=True, check=True)
-    chapters = json.loads(probe.stdout).get("chapters", [])
+    chapters = read_chapters(out)
     print(f"ffprobe chapters: {len(chapters)}")
     for c in chapters:
         print(f"  - start={float(c['start_time']):6.2f}s "
