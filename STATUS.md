@@ -370,11 +370,49 @@ shell-command bridges + Elgato SDK ceiling). **Findings land in
 docs/DECK-ECOSYSTEM.md — REPORT BEFORE BUILD; nothing gets wired until Ryan
 reads it.**
 
+## Deck reel-in + discovery (2026-07-21)
+
+**Ryan's directive:** the deck does ONE thing well — OBS Studio. Resolve
+profiles, daemon-verb keys, multi-surface dashboard: all dropped. Build,
+don't buy: take the official OBS plugin as reference and build our own
+sophistication for his workflow.
+
+**Recon findings (verified on disk):**
+- Official Elgato OBS plugin v3 is installed BUT its files are an
+  encrypted `ELGATO\x01` container — not readable, and we do NOT attempt
+  to crack it (DRM circumvention; also unnecessary: its full action
+  surface is publicly documented and its transport — obs-websocket — is
+  an open protocol this project already speaks).
+- **DISCOVERY: `~/projects/obs-control-room/` is the real foundation.**
+  Ryan's own custom Stream Deck SDK plugin
+  (`com.blessdog.obs-control-room`, TypeScript/Node 24, built Jul 5,
+  live through Jul 13 — logs prove OBS connect/launch cycles). Already
+  does: per-scene keys WITH on-air highlight (6 of his 7 scenes; Cam
+  Cutout missing), Status key (OFFLINE/READY/REC/LIVE + elapsed +
+  dropped-frame %, press-when-dead = cold start), Show Flow state
+  machine (countdown → live → hold-to-end), Screen Picker, Meeting Mode
+  (virtual cam), scripted scene-collection builder, cold-start
+  infrastructure, and documented OBS 32.1.x gotchas (GetSourceScreenshot
+  broken, display-enum hang, NodeJS-dir install gotcha). Known bug in
+  log: `show-flow: end-show failed` (2026-07-13 01:46).
+- media-studio docs never referenced this project (parallel deck efforts,
+  mutually blind — the Companion page rebuilt a worse subset of it).
+  Elgato app 7.4.2, OBS 32.1.2, plugin loads on XL + SD+ + Mobile.
+
+**Proposed build (bless gate — [RYAN]):** revive & extend
+obs-control-room as THE deck surface: add Cam Cutout scene key; add
+record start/stop for corpus creation (Status key already shows REC
+truthfully); add MARK as an OBS chapter-marker action (FIRST verify
+CreateRecordChapter exists on OBS 32.1.2's websocket and chapters
+survive Hybrid MP4 → ffprobe); fix the end-show bug; retire the
+Companion MEDIA STUDIO page. Corpus lane (auto-index + lazy processing)
+unchanged, lands in the daemon as blessed.
+
 ## Next
 
-1. **Deck lane (blocked on report):** read docs/DECK-ECOSYSTEM.md when it
-   lands → Ryan picks the native stack → then build (daemon stop/mark/index
-   verbs are ecosystem-independent and can land alongside).
+1. **Deck lane:** Ryan blesses/corrects the obs-control-room revival plan
+   above → then build there (it's his separate repo; media-studio stays
+   the pipeline).
 2. **Authored lane / Monero visualization** (was missing from this file —
    2026-07-17/18 sessions): Lane B research DONE + verified, read
    docs/LANE-B-REPORT.md first; gate 2 (visual references) is the open
