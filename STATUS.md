@@ -408,11 +408,23 @@ survive Hybrid MP4 → ffprobe); fix the end-show bug; retire the
 Companion MEDIA STUDIO page. Corpus lane (auto-index + lazy processing)
 unchanged, lands in the daemon as blessed.
 
+**Vision addendum (Ryan, 2026-07-21, revival plan BLESSED):** the deck is
+a launcher-based operating surface. A HOME profile with app tiles (OBS
+now; Ableton + soundboard + future apps later); a house-GLYPH key on the
+same corner of every surface (proposed: bottom-right) always returns
+home. Mechanics: Stream Deck profiles + built-in Switch Profile action
+(+ optionally Smart Profiles for focus-follow). Key grammar is
+ICON-FIRST — media-transport glyphs, pictures, per-app color families,
+animation where meaningful (144×144 PNG/GIF/WEBP); text only when
+appropriate. Emoji-rendered PNGs acceptable as v1 art; authored set
+after layouts stabilize. The keys are mini screens — use them.
+
 ## Next
 
-1. **Deck lane:** Ryan blesses/corrects the obs-control-room revival plan
-   above → then build there (it's his separate repo; media-studio stays
-   the pipeline).
+1. **Deck lane (BLESSED, in progress):** chapter-marker verification →
+   extend obs-control-room (Cam Cutout key, record start/stop, MARK,
+   end-show bug, HOME/profile nav shell + icon system) → retire the
+   Companion MEDIA STUDIO page.
 2. **Authored lane / Monero visualization** (was missing from this file —
    2026-07-17/18 sessions): Lane B research DONE + verified, read
    docs/LANE-B-REPORT.md first; gate 2 (visual references) is the open
