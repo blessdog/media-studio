@@ -1,6 +1,6 @@
 # STATUS — where media-studio stands
 
-*Updated 2026-07-11. If this file and the code disagree, the code wins — then
+*Updated 2026-07-20. If this file and the code disagree, the code wins — then
 fix this file.*
 
 ## Done
@@ -343,10 +343,44 @@ spoken phrase → headless Blender orbit-cube cutaway at "Let's bless it" →
   5s — the ticker cuts mid-scroll). That v0 limit is now visible in real
   use → backlog candidate.
 
+## Deck/corpus planning session (2026-07-20) — scope blessed, then ECOSYSTEM PIVOT
+
+Planning dialogue held (per the 7/13 agenda). **Blessed by Ryan:** STOP splits
+from ingest; corpus = automatic FREE indexing (ffprobe metadata → registry
+rows) of every new recording in ~/Movies, with expensive processing (Deepgram
+transcribe + compile) LAZY at edit time; one MARK key (daemon verb records
+recording-file + offset-seconds → becomes timeline markers at processing
+time); honest OBS state on keys; a dead REC key launches OBS instead of
+silently no-oping.
+
+**PIVOT (Ryan, hard correction, same session):** the bespoke Companion
+text-tile approach is REJECTED — flat labeled rectangles are not a deck
+design; the keys are mini LCD screens. Deck layer goes **Elgato-native
+first**: official plugins (OBS), Marketplace profiles + icon packs, real key
+artwork; Companion/bespoke survives ONLY where the ecosystem can't reach
+(studio-daemon verbs like MARK/ingest) and must still look native. This is
+the same adopt-don't-hand-roll doctrine as the MCP-server decision —
+applied late to the deck, at Ryan's cost. Communication corrections from
+the same session live in harness memory (precise app naming, full-paragraph
+planning, questions must carry stakes).
+
+Three web-research briefs dispatched (official OBS plugin + live key state;
+Resolve deck plugins + what editors actually use; icon/artwork practice +
+shell-command bridges + Elgato SDK ceiling). **Findings land in
+docs/DECK-ECOSYSTEM.md — REPORT BEFORE BUILD; nothing gets wired until Ryan
+reads it.**
+
 ## Next
 
-1. **NEXT SESSION: deck-as-dashboard + corpus workflow** (docs/PLAN.md
-   agenda — open with a planning dialogue, then build).
+1. **Deck lane (blocked on report):** read docs/DECK-ECOSYSTEM.md when it
+   lands → Ryan picks the native stack → then build (daemon stop/mark/index
+   verbs are ecosystem-independent and can land alongside).
+2. **Authored lane / Monero visualization** (was missing from this file —
+   2026-07-17/18 sessions): Lane B research DONE + verified, read
+   docs/LANE-B-REPORT.md first; gate 2 (visual references) is the open
+   blocker — Ryan-gated, creative decisions made live; briefs at
+   docs/LANE-B-RESEARCH-BRIEFS.md. Scope reel-in 2026-07-20: OBS + Resolve
+   + Blender only; other lanes parked.
 2. Ryan-gated: Grade Library (author a look first), Prompt Brain dialogue,
    bongpot×studio project, project name, aesthetics passes.
 3. Backlog: per-image prompt variation in batches; empirical cost
