@@ -1,6 +1,6 @@
 # STATUS — where media-studio stands
 
-*Updated 2026-07-20. If this file and the code disagree, the code wins — then
+*Updated 2026-08-01. If this file and the code disagree, the code wins — then
 fix this file.*
 
 ## Done
@@ -472,3 +472,62 @@ after layouts stabilize. The keys are mini screens — use them.
    rec: MCP for exploration/conversational control; our deterministic
    verbs stay the pipeline.
 4. Ryan gates still open: project name, deck middleware, MCP posture.
+
+
+## 2026-08-01 — Deck rebuilt, and four silent failures found by hand
+
+**The correction that reframed the day** (Ryan): *"build not buy" never meant
+"don't look."* It meant study what exists, learn what users love, then build.
+Earlier sessions inverted it and shipped a deck with five dead keys. The survey
+now comes first, always — see `docs/DECK-MARKET-2026-08-01.md` (all 3,681 Elgato
+Marketplace products pulled and ranked; Elgato publishes no ratings, downloads
+are the only metric, stated plainly).
+
+**Scope correction that mattered more:** Ryan **records screen-shares and
+commentary; he is not streaming.** So the whole macOS-missing "pro tier"
+(dropped-frames alarms, instant replay, preview/live tally — BarRaider's OBS
+Tools, 282k downloads, Windows-only) is deliberately **parked**, not chased. It
+is live-broadcast machinery. What serves him instead: monitor-aware screen keys,
+Move-plugin compositions, zoom-to-cursor, character scenes.
+
+**Shipped in `~/projects/obs-control-room`** (commits `a17267d`..`408e77d`):
+- Faces rebuilt on the grammar measured off Elgato's own artwork — state is the
+  whole key's background, identity is the glyph, text only for changing numbers
+  — then given **family colours** (cyan screens / violet camera / blue bracket /
+  amber mark / green mic / red record), luminance-normalised so every family
+  reads with equal weight at the same state.
+- **Layout is data** (`scripts/deck-layout.mjs`) applied by `build-profile.mjs`,
+  with **`check-deck.mjs` as the tripwire** — fails on any key pointing at a
+  missing action, or any action on no key. It found more than the by-hand audit:
+  8 orphans across two devices, and `camera-picker` unreachable too.
+- Screen keys **draw the actual monitor arrangement**, ordered by x-origin, so a
+  third monitor changes the picture instead of making "SCREEN L" lie.
+- The OBS key is a **power button** when OBS is down. Rule it forced: *dim means
+  pressing does nothing; lit means pressing does something.*
+- New looks via the additive `add-look.mjs`: **BRB** and **Me + Float** (camera
+  full-frame, share floating right of centre), plus a **character template** —
+  hand it a background image, get a scene.
+
+**The four silent failures, all found by Ryan's eyes, none by any log:**
+1. Five deck keys pointed at deleted actions (yellow `?`).
+2. The camera pointed at a **previous iPhone** — Continuity IDs are per-phone, so
+   the source rendered 0x0 and the picture-in-picture just wasn't there. Now
+   self-heals on every connect.
+3. The record key **latched recording=true**, missed the stop edge, and every
+   press sent StopRecord to a dead output. Now re-reads OBS per press + 5s
+   reconcile.
+4. Screen capture showed **desktop wallpaper with no windows** — a stale macOS
+   Screen Recording grant (TCC keys on code signature; an OBS update invalidates
+   it while the row still reads "allowed"). It does not go black. Fix is a
+   toggle, not a look. Documented in the obs-control-room README's
+   "When something looks fine but isn't" table.
+
+Every one presented as working and every machine-side check passed. That is the
+standing argument for finger-verification over green checkmarks.
+
+**Not done / next:** Move + obs-shaderfilter + obs-zoom-to-mouse are researched
+and specified but **not installed** (admin/GUI steps, Ryan's call). ZOOM is the
+highest-value missing key for a screen-share workflow. The `$0` ten-minute
+iPhone multicam test in `docs/IPHONE-MULTICAM.md` **still has not been run** —
+verified today that Center Stage survives Continuity Camera into OBS, so camera
+A keeps the follow-shot and any second camera becomes the locked-off wide.
