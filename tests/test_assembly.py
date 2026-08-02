@@ -167,6 +167,44 @@ with tempfile.TemporaryDirectory() as td:
     check("music beyond file length: lint refuses",
           any("beyond" in e for e in errors))
 
+    # --- stems on consecutive lanes (pipeline D, docs/MUSIC-LANE.md) ---
+    stems = []
+    for i, freq in enumerate((110, 220, 440, 880)):
+        s = Path(td) / f"stem{i}.m4a"
+        subprocess.run(
+            ["ffmpeg", "-y", "-v", "error", "-f", "lavfi",
+             "-i", f"sine=frequency={freq}:duration=10", "-c:a", "aac", str(s)],
+            check=True)
+        stems.append(s)
+
+    irS, sids = editmod.add_stems(ir, stems, record=0, duration_frames=90)
+    lanes = [next(e for e in irS["edits"] if e["id"] == i)["track"] for i in sids]
+    check("add_stems: four stems land on A2,A3,A4,A5",
+          lanes == [2, 3, 4, 5] and len(sids) == 4)
+
+    # the whole point: same record, different lanes, no false overlap
+    errors, _ = lintmod.lint(copy.deepcopy(irS), base)
+    check("stems stacked at the same record lint green (lane separation)",
+          errors == [])
+
+    irS2, _ = editmod.add_stems(ir, stems, record=0, duration_frames=90,
+                                first_track=4)
+    lanes2 = [e["track"] for e in irS2["edits"] if e["id"].startswith("mus")]
+    check("add_stems: --first-track shifts the block to A4-A7",
+          lanes2 == [4, 5, 6, 7])
+
+    try:
+        editmod.add_stems(ir, stems, first_track=1)
+        check("add_stems: refuses to write over the voice on A1", False)
+    except editmod.EditError:
+        check("add_stems: refuses to write over the voice on A1", True)
+
+    try:
+        editmod.add_stems(ir, [])
+        check("add_stems: refuses an empty stem list", False)
+    except editmod.EditError:
+        check("add_stems: refuses an empty stem list", True)
+
     lintmod.lint(irA, base)     # enrich in place, as the CLI flow does
     rec_asset = next(a for a in irA["assets"] if a["id"] == "a1")
     check("lint enriches _hasAudio on the recording",

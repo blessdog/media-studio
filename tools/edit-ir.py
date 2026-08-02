@@ -117,7 +117,7 @@ def main():
     p.add_argument("phrase")
 
     for name in ("insert-image", "insert-clip", "insert-graphic", "add-music",
-                 "retime", "remove", "remove-graphic"):
+                 "add-stems", "retime", "remove", "remove-graphic"):
         p = sub.add_parser(name)
         if name == "insert-image":
             p.add_argument("image")
@@ -129,6 +129,17 @@ def main():
             p.add_argument("audio")
             p.add_argument("--src-in", type=float, default=0.0,
                            help="start point inside the track (seconds)")
+            p.add_argument("--track", type=int, default=editmod.MUSIC_TRACK,
+                           help=f"audio lane (default A{editmod.MUSIC_TRACK}; "
+                                f"A1 is the voice and is never written)")
+        elif name == "add-stems":
+            p.add_argument("audio", nargs="+",
+                           help="stem files, one per lane in the order given")
+            p.add_argument("--src-in", type=float, default=0.0,
+                           help="start point inside the stems (seconds)")
+            p.add_argument("--first-track", type=int,
+                           default=editmod.MUSIC_TRACK,
+                           help=f"first audio lane (default A{editmod.MUSIC_TRACK})")
         elif name == "insert-graphic":
             p.add_argument("template", help="APPROVED library template name")
             p.add_argument("--input", action="append", default=[],
@@ -137,7 +148,7 @@ def main():
                                 "(e.g. --input 'StyledText=THE FED BLINKS')")
         else:
             p.add_argument("edit_id")
-        if name.startswith("insert") or name == "add-music":
+        if name.startswith("insert") or name in ("add-music", "add-stems"):
             p.add_argument("--where", help="spoken phrase to anchor on")
             p.add_argument("--hit", type=int, default=0,
                            help="which phrase occurrence (default first)")
@@ -203,10 +214,31 @@ def main():
             dur = int(round(args.dur * fps)) if args.dur else None
             src_in = int(round(args.src_in * fps))
             ir, eid = editmod.add_music(ir, aud, record=record, src_in=src_in,
-                                        duration_frames=dur)
+                                        duration_frames=dur, track=args.track)
             d = next(e for e in ir["edits"] if e["id"] == eid)
             print(f"music {eid}: {aud.name} at {record} on A{d['track']} "
                   f"for {d['srcOut'] - d['srcIn']} frames (voice on A1 untouched)")
+        elif args.cmd == "add-stems":
+            record = 0 if not (args.where or args.at or args.record is not None) \
+                else _resolve_record(ir, transcript, args)
+            stems = []
+            for raw in args.audio:
+                a = Path(raw).expanduser().resolve()
+                if a.is_file() and ws not in a.parents:
+                    a = intakemod.file_media(a, ws)
+                    print(f"filed media: {a}")
+                stems.append(a)
+            dur = int(round(args.dur * fps)) if args.dur else None
+            src_in = int(round(args.src_in * fps))
+            ir, eids = editmod.add_stems(ir, stems, record=record,
+                                         src_in=src_in, duration_frames=dur,
+                                         first_track=args.first_track)
+            for eid, a in zip(eids, stems):
+                d = next(e for e in ir["edits"] if e["id"] == eid)
+                print(f"stem {eid}: {a.name} -> A{d['track']} at {record} "
+                      f"for {d['srcOut'] - d['srcIn']} frames")
+            print(f"{len(eids)} stems on A{args.first_track}"
+                  f"-A{args.first_track + len(eids) - 1} (voice on A1 untouched)")
         elif args.cmd == "insert-graphic":
             record = _resolve_record(ir, transcript, args)
             inputs = {}

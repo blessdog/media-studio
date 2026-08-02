@@ -127,6 +127,38 @@ def add_music(ir, audio_path, record=0, src_in=0, duration_frames=None,
     return ir, eid
 
 
+def add_stems(ir, audio_paths, record=0, src_in=0, duration_frames=None,
+              first_track=MUSIC_TRACK):
+    """Lay a set of stems on CONSECUTIVE audio lanes, one stem per lane.
+
+    Returns (ir, [edit_id, ...]) in the order given, landing on
+    A{first_track}, A{first_track+1}, ... — so four Demucs stems or four
+    SP-404MK2 Multipad exports become A2/A3/A4/A5.
+
+    Why lanes and not a mixdown: with the parts separated you can duck or drop
+    ONE element under narration instead of the whole bed, and beat analysis can
+    run on the drum stem alone (far cleaner onsets than a reverb-heavy mix).
+    A1 stays the voice — sacred-audio doctrine.
+
+    No schema change was needed for this: `track` is already generic and
+    studio/emit.py already routes audio-asset edits by lane index.
+    """
+    if not audio_paths:
+        raise EditError("no stems given")
+    if first_track < MUSIC_TRACK:
+        raise EditError(
+            f"first-track {first_track} would collide with the voice on A1; "
+            f"stems start at A{MUSIC_TRACK}"
+        )
+    ids = []
+    for offset, path in enumerate(audio_paths):
+        ir, eid = add_music(ir, path, record=record, src_in=src_in,
+                            duration_frames=duration_frames,
+                            track=first_track + offset)
+        ids.append(eid)
+    return ir, ids
+
+
 def insert_graphic(ir, template, record, duration_frames=None, inputs=None,
                    evidence=None):
     """Place an APPROVED library template instance at `record`.

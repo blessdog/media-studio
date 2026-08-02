@@ -166,6 +166,37 @@ No code. This is a technique and configuration change, not a build. The single
 biggest friction fix is Session View instead of Arrangement View.
 
 ### D — Track → Video  *(media-studio's actual job)*
+
+> #### ✅ 2 of 3 gaps CLOSED 2026-08-02, and one was a false alarm
+>
+> **`--bpm` — DONE** (`8d2f66c`). `tools/beat-grid.py --bpm 174 [--first-beat S]`
+> computes the grid arithmetically from a known tempo and skips librosa
+> entirely; `beats.json` records `bpmSource` ("declared" vs "librosa").
+> **Measured**: on a synthesised *perfect* 120 BPM click track librosa returns
+> **117.45 BPM** and finds 22 of 24 beats — ~4s of drift across a 3-minute
+> track. Also fixed a pre-existing silent failure: librosa returns `bpm 0.0`
+> with an EMPTY beat list rather than erroring on untrackable material
+> (sustained pads, ambience), which wrote an empty grid while every check
+> passed. It now raises and names `--bpm` as the way out.
+>
+> **"Audio-track schema bump" — NOT NEEDED. The claim below was wrong.**
+> Verified by reading the code, not the plan: `studio/emit.py:32` already routes
+> audio-asset edits by lane index, `studio/edit_ir.py:add_music` already took a
+> `track` argument, and the schema's `track` field was already generic
+> (`integer, minimum 1`). Nothing about the contract had to change, and
+> `COMPILER_EPOCH` stays at **2** — identical IR still compiles identically.
+> `docs/PLAN.md:77` parked a bump the code had already outgrown.
+>
+> What was actually missing was the *CLI surface*. Added `--track` to
+> `add-music` and a new `add-stems` verb laying N stems on consecutive lanes.
+>
+> **Exercised against live Resolve 21.0.2.4**, not mocked: a 4-stem IR compiled
+> to a timeline with **5 audio tracks** — A1 the voice mirrored from V1, A2–A5
+> the four stems, one per lane — `verify: GREEN`. Stems stacked at the same
+> record on different lanes lint green (lane separation holds). 50/50 in
+> `tests/test_assembly.py`.
+>
+> **Remaining gap: the song-shaped workspace front door.**
 ```
 finished track + stems
   → tools/beat-grid.py (--bpm override)                    NEEDS --bpm FLAG

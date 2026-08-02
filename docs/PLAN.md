@@ -74,8 +74,12 @@ on which beat, and what the video means.
   new timeline; render only for final/motion-critical checks.
 - **Meme house style: full-frame cutaway**, 3.5s default, voice under. PiP
   later behind a transform smoke test.
-- **Workspaces: `outputs/projects/<name>/`.** Music overlay: later round
-  (audio-track schema bump). Name: placeholder stays.
+- **Workspaces: `outputs/projects/<name>/`.** ~~Music overlay: later round
+  (audio-track schema bump).~~ **RESOLVED 2026-08-02 — no bump was ever
+  needed.** `emit.py` already routed audio edits by lane, `add_music` already
+  took `track`, the schema's `track` was already generic. Only the CLI surface
+  was missing; `add-stems` now lays N stems on A2,A3,A4… `COMPILER_EPOCH`
+  stays at 2. See docs/MUSIC-LANE.md pipeline D. Name: placeholder stays.
 - **Portability doctrine**: AGENTS.md is the harness-neutral operating manual
   (any agent CLI can run the studio); repo is the memory; cold-start test is
   a recurring gate.

@@ -75,7 +75,8 @@ gate failure. Every path handed to Resolve must be ABSOLUTE (doctrine).
 | `tools/edit-ir.py <ws> insert-image <img> --where "phrase" \| --at M:SS \| --record F [--dur s]` | file image into media/, cutaway edit, lint, recompile, show |
 | `tools/edit-ir.py <ws> insert-clip <video> --where\|--at\|--record [--src-in s] [--dur s]` | found-b-roll video cutaway on the overlay track |
 | `tools/edit-ir.py <ws> insert-graphic <template> --where\|--at\|--record [--dur s] [--input K=V ...]` | APPROVED library template instance (forged alpha master, placed exactly) |
-| `tools/edit-ir.py <ws> add-music <audio> [--where\|--at\|--record] [--src-in s] [--dur s]` | music/sfx bed on its own audio lane (A2+); voice on A1 is sacred |
+| `tools/edit-ir.py <ws> add-music <audio> [--where\|--at\|--record] [--src-in s] [--dur s] [--track N]` | music/sfx bed on its own audio lane (default A2); voice on A1 is sacred |
+| `tools/edit-ir.py <ws> add-stems <audio>... [--first-track N] [--record F] [--dur s]` | N stems onto CONSECUTIVE lanes A2,A3,A4… one per lane — so a single element can be ducked under narration instead of the whole bed, and beat-grid can analyse the drum stem alone. Refuses to write over A1 |
 | `tools/edit-ir.py <ws> retime <edit-id> [--record F] [--dur s]` | move/stretch an edit, recompile |
 | `tools/edit-ir.py <ws> remove <edit-id>` / `remove-graphic <id>` | remove edit/graphic (+ orphaned asset), recompile |
 | `tools/compile-ir.py <ir.json> [--render] [--show]` | lint → compile → verify (structure; `--render` closes the loop to pixels) |
