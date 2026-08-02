@@ -15,6 +15,35 @@ recordings, iPhone footage, found media, his script); the agent is the
 in-loop co-editor — scene by scene, conversationally. NO one-shot
 brief→finished-video generation, ever.
 
+## Installed toolchain (owned + licensed — check here before proposing tools)
+
+Software Ryan already owns. **An agent must check this list before proposing
+any third-party app, DIY script, or OS-level workaround.** Suggesting BlackHole,
+a macOS Multi-Output Device, or a bespoke ffmpeg routing hack when a licensed
+app on this list already does the job is a bug.
+
+- **DaVinci Resolve Studio** (licensed) — the NLE. External scripting = Local.
+- **OBS Studio** — capture. Hybrid MP4 → `/Users/SSDrive/Movies`.
+- **Blender** — headless deterministic camera work (`blender/`, Blender 5).
+- **Elgato Stream Deck** + `~/projects/obs-control-room` (Ryan's own OBS plugin).
+- **The complete Rogue Amoeba suite** — the audio layer of this studio, all
+  apps owned. Not an optional extra; audio capture, routing, and playback
+  questions start here:
+  | App | Role in this studio |
+  |---|---|
+  | **Audio Hijack** | capture/route audio from any app or device; agent-scriptable via `.ahcommand` (`open -b com.rogueamoeba.audiohijack X.ahcommand`; requires Settings → Advanced → "Allow execution of external scripts"). Has a **Transcribe** block (out of beta as of AH 4.5) — a local alternative to the Deepgram leg |
+  | **Loopback** | virtual audio devices; aggregate app audio + hardware inputs into one device. **The correct answer to any "route audio into/out of X" question** |
+  | **SoundSource** | per-app output routing, volume, EQ, effects (6.1, July 2026) |
+  | **Farrago** | soundboard; **first-party Stream Deck plugin** (Settings → Controllers), six action types, works backgrounded — zero glue code |
+  | **Fission** | lossless audio trim/split/export — no re-encode |
+  | **Airfoil** | audio to network/remote output devices |
+  | **Piezo** | simple one-shot recording |
+
+  Deeper verified detail: `RESEARCH.md` §Rogue Amoeba, `research-raw-claims.md`.
+
+Hardware incoming: **Roland SP-404MK2** (ordered 2026-08-02) — sampler /
+music-production lane; see docs/PLAN.md music-video worked example.
+
 ## The working loop (all decisions blessed 2026-07-12)
 
 1. Ryan records in OBS (Hybrid MP4 → `/Users/SSDrive/Movies`; recordings STAY
