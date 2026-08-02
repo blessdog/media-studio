@@ -95,7 +95,15 @@ URL / Internet Archive / local file
   → file to <card>/IMPORT      (blessdog/phase8_sp404/card.py)      BUILT
 ```
 Lives at **`~/projects/blessdog/phase8_sp404/`** per decision 1. Tests:
-`~/projects/blessdog/tests/test_sp404.py`, **26 passing**.
+`~/projects/blessdog/tests/test_sp404.py`, **51 passing**.
+Pushed: `blessdog@c4e0a60` (lane) and `blessdog@839a6c3` (clip-lane fields),
+branch `feat/sound-control`.
+
+**Extended 2026-08-02** with the three clip-lane pointer fields CLIP-LANE.md §7
+required — `source_clip_hash`, `source_in_secs`, `pad` — plus
+`Ledger.from_clip()` / `Ledger.by_pad()` and pad↔MIDI-note conversion. Joins to
+this repo's `registry.db` **by content hash**, so neither repo imports the
+other and decision 1 survives. See CLIP-LANE.md §7.
 
 ```
 python -m phase8_sp404 cards                     # detect inserted card
@@ -250,6 +258,43 @@ answer for traditional DJing. **Do not let this gate pipeline A.**
 ---
 
 ## 4. Why no new Loopback device
+
+> ### ⚠️ AMENDED 2026-08-02 (later the same day) — the devices are OFF, and §4 is VINDICATED
+>
+> Two passes, the first of which was wrong. Recorded in full because the wrong
+> inference is the instructive part.
+>
+> **Pass 1 — the observation (correct).** Enumerated directly from CoreAudio
+> with a Swift probe **[V]**: **none of the four Loopback devices are present**.
+> Not `Loopback Audio`, not `Loopback Audio 2`, not `Ableton OBS mix`, not
+> `Ableton Virtual Out`. `Devices.plist` is stale since **2025-12-21** **[V]**.
+>
+> **Pass 1 — the inference (WRONG).** From "no Loopback plug-in in
+> `/Library/Audio/Plug-Ins/HAL/`" this session concluded Loopback was not
+> installed and could not work. **`com.rogueamoeba.ARK.driver` 13.0.3 IS
+> Loopback's driver** — Rogue Amoeba's shared audio engine, used across the
+> suite, so Loopback never ships a HAL plug-in of its own **[V]**. Absence of a
+> named driver proved nothing.
+>
+> **Pass 2 — ground truth, from Ryan's screen** **[V]**. Loopback is installed,
+> **running** (pid confirmed), and functional. All four devices are simply
+> toggled **Off**, which is why CoreAudio does not publish them. Re-enumerating
+> with the app open still showed none — consistent with Off, not with broken.
+>
+> **§4's diagnosis below is confirmed, not refuted.** `Loopback Audio` displays
+> ⚠️ **"Missing Monitor Device"**, and two of its six monitors — `External
+> Headphones` and `Headphone` — show **"Device Missing"** **[V]**. That is
+> precisely the predicted failure: sixteen dependencies through one channel map,
+> and transient devices (headphones, Bluetooth) vanish. **This is very likely
+> the real "I set it up and shit would break."** The god-object argument stands
+> and the prescription below is unchanged: build small, single-purpose devices.
+>
+> **The one durable lesson:** `verify-by-exercising` cuts both ways. A file read
+> is not ground truth about the machine — but neither is a *negative* inference
+> from an absent file. Enumerate the thing, and when the enumeration disagrees
+> with the user's screen, the screen wins.
+
+
 
 `Loopback Audio` currently references sixteen entries, of which nine are
 hardware or virtual devices that come and go: AirPods Pro (Bluetooth),

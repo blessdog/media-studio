@@ -124,6 +124,31 @@ plain scripts (`test_compile.py`, `test_registry.py`, `test_assembly.py`).
 - Requirements pinned in `requirements.txt`; venv at `.venv/`. Deepgram key
   in `.env` (never commit).
 
+## Version control — a local commit is not a backup
+
+| Repo | Remote | Owns |
+|---|---|---|
+| `media-studio` (this one) | `git@github.com:blessdog/media-studio.git` — **private**, default branch `master` | video: capture → ingest → Story IR → Resolve → delivery |
+| `~/projects/blessdog` | `git@github.com:blessdog/blessdog.git` | music: Ableton control + `phase8_sp404` SP-404MK2 sample lane |
+
+- **Committing is not finishing. Push.** This repo existed for weeks with no
+  remote at all — every commit was one disk failure from gone. When a commit is
+  made, push it; never end a session with a branch ahead of `origin`. Verify by
+  reading the remote (`git log origin/<branch>`), not the local ref.
+- **Check the pushed tree for secrets, not the working directory.**
+  `git ls-tree -r --name-only origin/<branch> | grep -iE '\.env|registry\.db'`
+  is the check that matters. `.gitignore` covers `.env`, `registry.db*`,
+  `outputs/`, `vendor/`, `.venv/` — confirm, don't assume.
+- **Cross-repo work means two pushes.** The music lanes live in `blessdog`
+  (MUSIC-LANE.md decision 1: the boundary is the WAV file). Work that spans
+  both is not shipped until both remotes have it.
+- **The repos never import each other.** They join by **content hash** —
+  `phase8_sp404`'s `LedgerEntry.source_clip_hash` references an asset in this
+  repo's `registry.db`. Keep it that way; a code dependency between them would
+  collapse the boundary.
+- media-studio is **private** — it carries absolute paths, machine layout and
+  business context. Do not make it public without Ryan saying so.
+
 ## Cold-start test (portability gate)
 
 A fresh agent with zero conversation history must be able to run the whole

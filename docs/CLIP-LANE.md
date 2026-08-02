@@ -157,14 +157,40 @@ Bound to a Stream Deck key — Ryan has the hardware and his own plugin at
 `~/projects/obs-control-room` — "record the reel window" becomes one press with
 zero on-screen UI. That is the actual optimisation he asked for.
 
-**Audio routing is the one real prerequisite.** `Computer Audio Input` is
-silent **[V]**. Per the Rogue Amoeba doctrine in `AGENTS.md` the answer is
-Loopback — but `MUSIC-LANE.md` §4 documents that the existing `Loopback Audio`
-device is a **sixteen-entry god object** and the likely cause of "I set it up
-and shit would break". So: **a new, small, single-purpose device** — one
-source (the browser), one monitor (so Ryan still hears it) — sitting alongside
-`Ableton OBS mix` (3 entries) and `Ableton Virtual Out` (2), which are small
-and have never broken. **Nothing existing gets edited.** [RYAN] decision 2.
+**Audio routing is the one real prerequisite.** State established 2026-08-02,
+from CoreAudio and from Ryan's screen **[V]**:
+
+- Loopback is installed, **running**, and functional. `com.rogueamoeba.ARK.driver`
+  13.0.3 is its backing driver (Rogue Amoeba's shared engine — Loopback ships no
+  HAL plug-in of its own, so its absence means nothing).
+- **All four Loopback devices are toggled Off**, which is why CoreAudio
+  publishes none of them: no `Loopback Audio`, no `Ableton OBS mix`, no
+  `Ableton Virtual Out`, no `Loopback Audio 2`.
+- `Loopback Audio` is additionally **broken**: ⚠️ "Missing Monitor Device", with
+  `External Headphones` and `Headphone` both reporting **Device Missing** — the
+  exact god-object failure `MUSIC-LANE.md` §4 predicted.
+- `Computer Audio Input` (`~:AMS2_Aggregate:0`) exists but records **digital
+  silence** (−91 dB measured) because it is wired as a *monitor* of the Off
+  `Loopback Audio` device, and nothing feeds it.
+
+**The plan is therefore the original one: a new, small, single-purpose device.**
+
+| | |
+|---|---|
+| **Name** | `Clip Capture` |
+| **Source** | **Brave Browser** (Ryan's actual browser — note the god device sources *Google Chrome*, which he does not use) |
+| **Monitor** | his current output, so he still hears what he is clipping |
+| **Then** | toggle it **On**, and pass its UID to `screencapture -G` |
+
+Two sources, one monitor — the same shape as `Ableton Virtual Out` (2 entries)
+rather than `Loopback Audio` (16). Nothing existing is edited or switched on.
+
+**Do not write `Devices.plist` directly.** Loopback is running and rewrites that
+file on quit, so an external edit is silently clobbered; and the file being
+stale since 2025-12-21 while four devices exist in the UI proves it is not a
+reliable store to author. Loopback exposes no CLI, no `.sdef`, no AppleScript
+**[V]** — this is four clicks in a GUI Ryan already has open, and that is the
+correct way to do it.
 
 ---
 
@@ -354,8 +380,25 @@ Required by working agreement. Taken seriously:
 
 ## 7. The smallest change that unlocks everything
 
-`phase8_sp404/ledger.py:LedgerEntry` **cannot express this lane today** **[R]**.
-It has `source_url`, `source_path`, `derived_from`, `bank`, `bpm`, `key` — but
+> ### ✅ BUILT 2026-08-02 — `blessdog@839a6c3`
+>
+> All three fields are in `phase8_sp404/ledger.py:LedgerEntry`, defaulted so old
+> ledgers load unchanged. Pads are validated and canonicalised on construction
+> (`a5` → `A5`); negative in-points are rejected; `build.stage_file` validates
+> the pad *before* running ffmpeg so it fails soft and wastes no conversion.
+>
+> Query side for §5: `Ledger.from_clip(hash)` returns everything cut from one
+> clip in in-point order, `Ledger.by_pad("A5")` returns what sits on a pad
+> (later entries win — re-recording a pad replaces it). `pad_to_note` /
+> `note_to_pad` implement the documented Bank A pad 1 = note 48 mapping.
+>
+> **The per-bank MIDI channel layout was deliberately NOT implemented** — the
+> two Roland sources disagree, so `note_to_pad` requires the caller to supply
+> the bank rather than inventing one. Still `[U]`; resolve it with a MIDI
+> monitor on real hardware. Tests: 51 passing.
+
+`phase8_sp404/ledger.py:LedgerEntry` **could not express this lane** **[R]**.
+It had `source_url`, `source_path`, `derived_from`, `bank`, `bpm`, `key` — but
 no way to say *which video this came from*, *where inside it*, or *which pad
 it sits on*. Three fields:
 
