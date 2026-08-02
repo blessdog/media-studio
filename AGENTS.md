@@ -99,6 +99,29 @@ plain scripts (`test_compile.py`, `test_registry.py`, `test_assembly.py`).
 ## Hard doctrine (violations fail silently — learned the hard way)
 
 - **Absolute paths to every Resolve API call.** Relative fails silently.
+- **⚠️ OPEN 2026-08-02 — `ImportTimelineFromFile` fails for ANY path under
+  `/Users/SSDrive`, and succeeds only from `/private/tmp`.** Measured with one
+  identical plain video IR written to four locations, same media, same fps:
+
+  | `.otio` written to | Result |
+  |---|---|
+  | `outputs/projects/` (this repo) | **FAILED** |
+  | repo root | **FAILED** |
+  | `~/Movies` | **FAILED** |
+  | `/private/tmp/...` (scratchpad) | **COMPILED** |
+
+  This is not a code regression — it breaks the repo's own bread-and-butter
+  video IR, the shape STATUS.md records as proven. The signature (whole home
+  directory denied, `/private/tmp` exempt) is macOS **TCC**: Resolve is missing
+  a Files-and-Folders / Full Disk Access grant. **Fix in the GUI** — System
+  Settings → Privacy & Security → **Files and Folders** (or Full Disk Access) →
+  enable **DaVinci Resolve**, then quit and relaunch it
+  (`scripts/restart_resolve.py`; never `pkill`). Jump there with
+  `open "x-apple.systempreferences:com.apple.preference.security?Privacy_AllFiles"`.
+  Same failure class as the OBS Screen-Recording TCC trap in
+  `~/projects/obs-control-room/README.md`: every machine check passes and the
+  call just returns failure. **Until this is granted, the whole compile lane is
+  dead outside /private/tmp — verify before blaming any code change.**
 - **NO SPACES in media paths handed to OTIO import** — Resolve fails/HANGS on
   percent-encoded URLs (confirmed 2026-07-13). `studio.intake.resolve_safe()`
   hardlinks a safe name; lint refuses spaced paths on used assets; OBS
