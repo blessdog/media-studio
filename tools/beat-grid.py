@@ -31,8 +31,20 @@ def main():
     ap.add_argument("--every", type=int, default=4,
                     help="marker every Nth beat (all beats go to beats.json)")
     ap.add_argument("--offset-frames", type=int, default=0)
+    ap.add_argument("--bpm", type=float, default=None,
+                    help="KNOWN tempo (SP-404MK2 / Ableton project tempo). "
+                         "Skips librosa estimation entirely and computes an "
+                         "exact grid — always better than a guess when you "
+                         "have the number")
+    ap.add_argument("--first-beat", type=float, default=0.0,
+                    help="seconds into the audio where beat 1 lands "
+                         "(--bpm only; 0.0 = starts on the downbeat)")
     ap.add_argument("--no-compile", action="store_true")
     args = ap.parse_args()
+
+    if args.first_beat and args.bpm is None:
+        print("FAIL: --first-beat only applies with --bpm")
+        return 1
 
     ws = (ROOT / "outputs" / "projects" / args.workspace) \
         if not Path(args.workspace).is_dir() else Path(args.workspace).resolve()
@@ -43,13 +55,15 @@ def main():
     ir, _ = irmod.load(ir_path)
 
     try:
-        grid = bgmod.analyze(args.audio, ir["timebase"]["fps"])
+        grid = bgmod.analyze(args.audio, ir["timebase"]["fps"],
+                             bpm=args.bpm, first_beat=args.first_beat)
     except bgmod.BeatError as e:
         print(f"FAIL: {e}")
         return 1
     extent = irmod.extent_frames(ir)
     (ws / "beats.json").write_text(json.dumps({
         "audio": str(Path(args.audio).resolve()), "bpm": grid["bpm"],
+        "bpmSource": grid["source"], "firstBeatSecs": args.first_beat,
         "offsetFrames": args.offset_frames, "beats": grid["beats"],
     }, indent=1), encoding="utf-8")
     markers = bgmod.beat_markers(grid["beats"], every=args.every,
@@ -57,8 +71,8 @@ def main():
     ir.setdefault("markers", [])
     ir["markers"] = [m for m in ir["markers"]
                      if not m["name"].startswith("beat ")] + markers
-    print(f"bpm {grid['bpm']} | {len(grid['beats'])} beats -> beats.json | "
-          f"{len(markers)} markers (every {args.every})")
+    print(f"bpm {grid['bpm']} ({grid['source']}) | {len(grid['beats'])} beats "
+          f"-> beats.json | {len(markers)} markers (every {args.every})")
 
     errors, warnings = lintmod.lint(ir, ws)
     for w in warnings:
