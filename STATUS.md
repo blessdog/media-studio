@@ -525,9 +525,61 @@ Move-plugin compositions, zoom-to-cursor, character scenes.
 Every one presented as working and every machine-side check passed. That is the
 standing argument for finger-verification over green checkmarks.
 
-**Not done / next:** Move + obs-shaderfilter + obs-zoom-to-mouse are researched
-and specified but **not installed** (admin/GUI steps, Ryan's call). ZOOM is the
-highest-value missing key for a screen-share workflow. The `$0` ten-minute
-iPhone multicam test in `docs/IPHONE-MULTICAM.md` **still has not been run** —
-verified today that Center Stage survives Continuity Camera into OBS, so camera
-A keeps the follow-shot and any second camera becomes the locked-off wide.
+**Landed after that, same session** (obs-control-room `a17267d`..`8284ce1`):
+- **ZOOM key** — `vendor/obs-zoom-to-mouse.lua`, driven by name over the
+  websocket (`TriggerHotkeyByName`), not by a synthetic keystroke. Patched for
+  OBS 32: `obs_sceneitem_get_info`/`set_info` are gone from the Lua bindings,
+  replaced by the `_info2` forms.
+- **Record bitrate 13.9 → 45 Mbps.** Ryan: "grainy for an HD camera". Measured
+  with ffprobe on the real file, not the config.
+- **`Me + Float`** rebuilt full-bleed: Center Stage centres him in the camera
+  frame, so the share landed on his face and moving the share could never fix
+  it. Shifting the camera frame left puts him at canvas 40% for only 1.22x
+  upscale. A full-height black panel was tried and rejected — "the whole point
+  was so that we didn't have all this black space".
+- **`add-look.mjs screens`** — crops each display to canvas aspect so the 16:10
+  built-in stops letterboxing (measured 125px of pure black each side).
+- **`BRB`** + the **character-scene template** (image in → scene out).
+- **Companion plugin retired.** Deck at 17 keys, `check-deck.mjs` green.
+
+**GetSourceScreenshot works again on OBS 32.2.1** (it returned transparent
+frames on 32.1.x). Compositions are now built by rendering and looking, which is
+how the Center Stage collision was confirmed rather than guessed. This changes
+how every future scene gets built.
+
+## PICK UP HERE (next session)
+
+Read `~/projects/obs-control-room/README.md` — its "State" and "Next" sections
+are current and more specific than this file. Then:
+
+1. **Finger-verify `Me + Float` with Ryan in frame.** The only open question on
+   the deck: does his face clear the floating card? Center Stage had him out of
+   shot on both attempts. Capture with `GetSourceScreenshot` and look.
+2. **Move plugin** — a `.pkg`, needs Ryan's admin password. Gives the animated
+   push-aside for free; no code changes.
+3. **Character scenes** — the template works, waiting on Ryan's images.
+4. **The $0 iPhone multicam test** (`docs/IPHONE-MULTICAM.md`) — written
+   2026-07-21, still never run.
+
+**Then the deck is done and the project moves to Resolve, then Blender.** Ryan
+2026-08-01: "Blender is in a whole different orbit... that's a whole planning
+stage" — do NOT start it without a research-first planning round. Resolve is
+Phases 1-4 built and verified; Blender is `blender/orbit-cube.py` and nothing
+else, i.e. genuinely open.
+
+## The doctrine this session bought (read before touching anything)
+
+**"Build not buy" never meant "don't look."** It means study what exists, learn
+what people love, then build. Inverting it is what produced a deck with five
+dead keys. `docs/DECK-MARKET-2026-08-01.md` is the survey; do that first, always.
+
+**Five silent failures in one day** — dead deck keys, a camera pointed at a
+phone Ryan no longer owns, a record key latched on, a screen capture returning
+only wallpaper, and a Lua script that registered its hotkeys then died on every
+callback. Every one presented as working; every machine-side check passed; all
+five were found by Ryan looking at the actual thing. So: never act on cached
+state, make verifiers **exercise** rather than observe, and render it and look.
+
+**Ryan records screen-shares and commentary; he does not stream.** Broadcast
+features are parked. `docs/DECK-MARKET-2026-08-01.md` §2 explains what was
+deliberately not built and why.
