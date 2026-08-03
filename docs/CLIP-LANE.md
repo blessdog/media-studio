@@ -192,6 +192,198 @@ reliable store to author. Loopback exposes no CLI, no `.sdef`, no AppleScript
 **[V]** — this is four clicks in a GUI Ryan already has open, and that is the
 correct way to do it.
 
+### BUILT + VERIFIED 2026-08-02 ✅
+
+Ryan created `Clip Capture` in Loopback: **Sources** = Brave Browser +
+Pass-Thru → **Output Channels** 1 & 2 → **Monitor** = Realtek USB Audio (so he
+still hears what he clips). Toggled On. `Loopback Audio` left Off and untouched.
+
+- **Published to CoreAudio** **[V]**, 2 in / 2 out, and it is the *only*
+  Loopback device present:
+  `com.rogueamoeba.Loopback::020C0EB0-C6BC-4019-8DEA-FFD14CBB8A00`
+- **Audio reaches the capture** **[V]**. Proven by bandpass, not by eyeballing a
+  level: a 1 kHz tone played in Brave raised the 900–1100 Hz band from
+  **−42.4 dB mean (silent control) to −29.1 dB** — a ~13 dB rise in exactly the
+  tone's band. Both `screencapture -G <uid>` and `ffmpeg -f avfoundation` see it.
+- **A/V durations now agree** **[V]** — 8.050 s video vs 8.045 s audio, against
+  the 1.8 s / 4.0 s split on a *static* region. VFR only bites when nothing
+  moves, which a playing video never does. Normalising to CFR on ingest stays
+  correct, but this is not the hazard it first looked like.
+
+**Gotcha, and it is a real one for sampling** **[V]**: the device captures
+**everything Brave plays**, not just the tab being clipped. A control recording
+with the tone tabs closed still measured **−17.2 dB mean** — other Brave audio,
+flowing constantly. Music in a background tab will bleed into every sample and
+will not be obvious until the chop is on a pad. **Pause other Brave audio before
+clipping**, or give clipping its own browser. Worth a check in the CLIP key.
+
+**Levels are not yet characterised** **[U]**. In-band arithmetic suggests
+roughly +12 dB of gain through the chain, but it cannot be measured cleanly
+while background Brave audio is present. Re-measure against a genuinely silent
+Brave before trusting captured levels — a clipped sample is a ruined sample.
+
+> **Retracted:** an earlier pass in this session claimed automatic gain control,
+> on the evidence that sources 20 dB apart captured at identical levels. That
+> was a **confound, not AGC** — the constant background signal above swamped
+> both tests. The error was declaring a result before running the silent
+> control. Same lesson as `verify-by-exercising`, one level up: **measuring
+> carefully is not the same as measuring the right thing. Run the control.**
+
+---
+
+### Pipeline F — BUILT, then MOVED OUT to `~/projects/rectum` ✅
+
+**This lane no longer lives in media-studio** (Ryan, 2026-08-02). It is its own
+repo, `rectum`, named for `rect` — the unit it operates on. `tools/clip.py`,
+`tools/pickrect.swift` and `tools/audiodevices.swift` were built here, proven
+here, and then moved; **nothing of pipeline F remains in this repo.**
+
+Boundary, following `MUSIC-LANE.md` decision 1: **rectum never imports
+media-studio.** It carries its own probe and ledger; the three repos join on
+`clip_hash`. media-studio registers a clip when it enters an edit, blessdog's
+sample ledger points back with `source_clip_hash` + `source_in_secs`.
+
+```
+cd ~/projects/rectum
+python3 -m rectum displays          # left/right derived from the real arrangement
+python3 -m rectum toggle left       # <- what the Stream Deck key calls
+python3 -m rectum crop <hash>       # propose the video's rectangle
+python3 -m rectum list | search <term>
+```
+
+Deck: the plugin becomes **Control Room**, with an OBS page and a rectum page
+(Ryan, 2026-08-02) — one surface, one layout SSOT, one tripwire. See §3c.
+
+**Exercised end to end** **[V]**: `start` → `status` ("RECORDING rect 'reel' for
+2s") → `stop` → `1280x720 @ 30/1, 5.9s (VFR → CFR 30)`, SHA-256 recorded, WAV
+emitted as **pcm_s16le / 48000 / 2ch** — exactly what the SP-404 imports.
+Ground-truthed rather than trusted: the asset is in `registry.db`, and a frame
+pulled at t=2s shows the real region, not a black rectangle.
+
+**Two bugs found by exercising, neither visible from reading the code:**
+
+1. **`start` hung any caller that captures output.** `screencapture` inherited
+   the parent's stdout, so the pipe stayed open after `clip.py` exited and
+   `subprocess.run(capture_output=True)` blocked forever — it wedged a 120 s
+   smoke test. **This would have frozen the Stream Deck key**, which shells out
+   exactly that way. Fixed with `DEVNULL` on all three streams plus
+   `start_new_session=True`, which also keeps a recording alive if its launcher
+   dies.
+2. **`-v error` silently suppresses `volumedetect`.** The loudness check printed
+   nothing and read as "no audio". A comment in `mean_volume()` now records the
+   trap, because this is the exact check that catches a silent capture.
+
+**Not yet exercised** **[U]**: `pickrect` compiles but has never been *run* — it
+needs a human to drag a box. Its coordinate maths is derived from verified
+facts (global points, top-left origin, primary-screen flip) but derivation is
+not verification. **First real use is a test: draw a box over a known window and
+confirm the capture contains that window.**
+
+**Named `rectum`** (Ryan, 2026-08-02) — `rect` being the unit the whole thing
+operates on. It gets its own Stream Deck page. Repo boundary: see §3c.
+
+**Test material** **[RYAN, 2026-08-02]**:
+- Track for the end-to-end run once the SP arrives —
+  `https://www.youtube.com/watch?v=Fp9xuYeJako`
+- Sampling source, Tyson fight — `https://www.youtube.com/watch?v=nm0OjxUEaSk`.
+  Intended as a **bed**, not a stab: bell, punches, announcer and crowd running
+  under the beat, faded up at chosen moments to build atmosphere. This is the
+  case that forces duration + level envelope into the trigger map (§3b).
+
+---
+
+## 3b. REVISION — record the monitor, find the video afterwards (Ryan, 2026-08-02)
+
+Ryan's redesign, and it is better than the saved-rect model: **stop choosing a
+box before the shot.** One key per monitor, record the whole screen, and let the
+system find the video inside the recording afterwards. You cannot un-crop a
+capture, so capturing everything and deciding later is strictly more optionable.
+It also deletes the one untested component in §3 — the rect picker.
+
+**Premise correction first.** Ryan believed bongpot's ffmpeg Ken Burns /
+zoom-pan work could be reused. It cannot **[V]**: media-studio contains **zero**
+occurrences of `zoompan`, `ken burns` or `cropdetect`; and in bongpot the path
+is *legacy being deliberately retired* — `docs/MEDIA-SYSTEM-PLAN.md:65` "retire
+Ken Burns", `docs/PIPELINE.md:189` "dead weight". It also operated on **still
+images**, a different problem from cropping a screen recording. Nothing to reuse.
+
+**Display mapping, verified by exercising** **[V]**:
+
+| Flag | Display | Ryan's name |
+|---|---|---|
+| `-D 1` | 3456 x 2234 built-in Retina | **RIGHT** (MacBook Pro) |
+| `-D 2` | 1920 x 1080 external | **LEFT** |
+
+No `-D 3` today — the rig is two displays, not three. This matches the existing
+`Screen L` / `Screen R` OBS scene keys, so the deck's mental model already
+exists and the same left/right vocabulary carries over.
+
+### Finding the video: the naive method fails, the right one is exact **[V]**
+
+Tested against ground truth — a 640x360 video (1280x720 device px at 2x) played
+in Brave, full screen recorded, position confirmed by eye from an extracted frame.
+
+**What does NOT work — consecutive-frame differencing.**
+`tblend=all_mode=difference,cropdetect` returned `w:350 h:-2232` — a negative
+height, garbage. Reason: flat regions that do not change between adjacent frames
+contribute nothing, so only the moving *parts* of the picture light up, not the
+picture's extent. A talking head over a static background fails identically.
+`cropdetect` alone is worse still — it finds **black borders**, and a video
+embedded in a browser page has none, so it dutifully returns the whole screen.
+
+**What works — accumulated temporal RANGE over the whole clip.** Sample ~40
+frames, grayscale, quarter scale; per pixel take `max - min` across all frames;
+threshold; keep rows/columns where >2% of pixels changed; bounding box.
+
+```
+DETECTED  x=1100 y=852 w=1280 h=720   aspect=1.778
+EXPECTED  x~1102 y~845 w~1280 h~720   aspect=1.778
+```
+
+Width and height **exact**, origin within 7 px, in well under a second. Over a
+few seconds nearly every pixel of a real video changes at least once, which is
+why the range works where the frame-to-frame delta does not.
+
+**Honest limits — all of these need a human confirm, not blind trust:**
+- **Two moving things = one big box.** An autoplaying sidebar video, an animated
+  ad, or a progress bar outside the player will stretch the bounding box to span
+  both. Mitigation is largest-connected-region rather than raw bbox.
+- **Scrolling during capture destroys it** — the whole page becomes "motion".
+- **A near-static clip** (still image plus audio) has no motion to find.
+- Snap the result to even dimensions (h264) and offer the nearest standard
+  aspect (9:16, 1:1, 16:9), since reels are almost always one of those.
+
+**Therefore the crop is PROPOSED, never silently applied.** It renders a frame
+for Ryan's eyes and he confirms — `copilot, not autopilot`, and his eyes are the
+verdict on anything visual. Auto-crop is mechanical and safe to compute;
+**punch-ins and Ken Burns moves are creative and belong in Resolve with his
+hands on them.** Do not automate the second one.
+
+**Storage.** Full-screen Retina capture ran ~1 MB/s (7.78 MB for 8 s), about
+3.5 GB/hour. Fine per clip, but the full-screen master should be discarded once
+a crop is confirmed, or the library outgrows the disk within weeks.
+
+### Searchable library — what is actually missing
+
+Already there **[V]**: `studio/registry.py` records every clip with a SHA-256,
+and `clip.py` writes a sidecar carrying rect, source URL, note, duration and
+measured loudness. What is missing is not storage, it is **recall**:
+
+- **Transcription on ingest is the whole feature.** Meme clips are mostly
+  speech, so "find the one where he says…" is the only search anyone actually
+  performs. The repo already has a Deepgram leg in `tools/ingest-recording.py`,
+  and Audio Hijack ships a non-beta local **Transcribe** block — either gives
+  full-text search over the library for free.
+- Tags, and the `source_clip_hash` join that already exists on both sides.
+
+### Samples are not all stabs — some are BEDS
+
+From Ryan's Tyson concept: a fight ambience (bell, punches, announcer, crowd)
+running *under* the track, faded up and down to shape atmosphere. That is not a
+one-shot chop, and it changes pipeline G: a trigger map entry needs a
+**duration and a level envelope**, not just an onset. A bed's matching video is
+a long clip under the section, not a stab on a beat. Both kinds must round-trip.
+
 ---
 
 ## 3a. The Stream Deck is the surface (Ryan, 2026-08-02)
