@@ -1,6 +1,6 @@
 # STATUS — where media-studio stands
 
-*Updated 2026-08-02. If this file and the code disagree, the code wins — then
+*Updated 2026-08-02 (evening). If this file and the code disagree, the code wins — then
 fix this file.*
 
 **Remotes (this repo is finally backed up):**
@@ -8,6 +8,17 @@ fix this file.*
 `master`). Music lanes live in `~/projects/blessdog` →
 `git@github.com:blessdog/blessdog.git` (`feat/sound-control`). A local commit is
 not a backup — see AGENTS.md §Version control.
+
+## Next session — 2026-08-03
+
+**Read `docs/HANDOFF-2026-08-03.md` first.** In order: push `rectum` and
+`obs-control-room` to GitHub (**neither has a remote**), verify `rectum crop`
+against a real reel (the one unverified piece), then build the Ableton `.als`
+parse — the trigger map producer that needs no hardware.
+
+**New today:** `~/projects/rectum` — the clipper, its own repo. Records a whole
+monitor with audio, files clips with provenance, proposes a crop. Control Room
+(the Stream Deck plugin) grew a second page for it: LEFT / RIGHT / CROP.
 
 ## Done
 
@@ -624,6 +635,60 @@ card" at `/usr/share/vim/vim91/import` and would have pushed samples into it.
   Resolve: V0/A3, song on A1, stems on A2/A3, 6 markers at frames
   0/60/120/180/240/300 (every 4th beat at 120bpm/30fps = 60 frames).
 
+### Library builder proven on REAL audio (2026-08-02, late)
+
+Until this point `phase8_sp404` had only ever seen synthesised sine waves. Ran
+real commercial tracks through it. **`blessdog@edcf87b`, 55 tests.**
+
+Library now on disk: **10 samples, 476 MB**, staged in
+`~/projects/blessdog/music/sp404/{track,stem}/`, ledger at
+`~/projects/blessdog/music/sp404-library.json`.
+
+| Verified on real material | Result |
+|---|---|
+| 44.1 kHz → SP spec | `pcm_s16le` / 48 kHz / stereo, duration preserved to the microsecond |
+| 9.6-minute track (Innerbloom) | 106 MB — comfortably under the ~176 MB / 16-min ceiling |
+| Source paths with spaces + parentheses | `Sting - Fields Of Gold (Stems)/` handled |
+| Dedupe | re-adding the same track recognised, no second copy |
+| Demucs `stems` verb end-to-end | 4 stems staged, `derived_from: demucs:*`, correctly uniquified to `_2` on name collision |
+| **Loudness MEASURED, not probed** | all files carry real audio; drums stem mean −27 dB with peaks −0.1 dB, the correct signature for percussion |
+
+**The gap the real run exposed: `bpm`/`key` were NEVER populated.** The fields
+existed and all 51 tests passed — because the tests set them by hand. Nothing
+on the `add` path filled them, so a DJ library would have arrived with no
+tempo at all, against decision 3. Fixed with **`--analyze`**, reusing
+`phase5_analyzer.stems._estimate_tempo/_estimate_key` (raw samples, no Demucs
+pass, first 120 s only). Validated against a known quantity: **Dirty Diana →
+129.2 BPM / Gm**, matching its documented tempo and key.
+
+**A second-order bug caught inside that fix.** The drums stem came back as
+**"D#m"**. Percussion has no tonal centre, but the estimator still returns a
+confident-*looking* answer, and the confidence value it hands back was being
+discarded. Measured: full mix 0.606, vocal stem 0.683, **drums stem 0.287**.
+Key is now suppressed below **0.45**; the drums stem reports a tempo and no
+key, which is the honest answer. Recording that guess would have quietly
+corrupted harmonic-mixing decisions months later. `--bpm`/`--key` always win
+over detection.
+
+**Material caveat:** these are commercial reference tracks from the blessdog
+analysis library. Fine as pipeline practice; **samples cut from them must not
+reach published videos.** This is exactly why the Internet Archive lane matters
+more than the Serato route — and why Serato's streaming-recording block
+(MUSIC-LANE §2E) is a feature, not an obstacle.
+
+### Pipeline A — what is still NOT done
+
+- **`push` to a card has never run** — no SD card exists yet. Card layout,
+  `MAX_NAME_LEN = 32`, and IMPORT-subfolder support are all `[U]`.
+- **No backfill path for `bpm`/`key`.** Entries added before `--analyze`
+  (Innerbloom, the 8 stems) have empty tempo, and dedupe correctly refuses a
+  re-add, so there is no way to enrich them. Needs an `analyze` verb that
+  updates existing ledger rows in place.
+- **No `remove` verb.** Nothing can be deleted from the library once staged.
+- **Innerbloom detected 123.0 BPM — unconfirmed.** Needs Ryan's ear or the
+  number from Ableton. This is precisely what `--bpm` exists for.
+- **`add` does not accept a directory**, so a stem folder is four invocations.
+
 ## The trap that cost this session hours (2026-08-02)
 
 **A modal dialog open in Resolve silently breaks scripting**, and the failure
@@ -673,19 +738,56 @@ Day one when it lands, in this order:
    deliberately conservative guess) and whether IMPORT reads subfolders.
 6. **[U] Can you sample while IN DJ mode?** Not answerable from documentation.
 
-### Not blocked — buildable now
+### Not blocked — buildable now, in the order I would do them
 
-- **Pipeline F/G** (`docs/CLIP-LANE.md`) — four open `[RYAN]` decisions, the
-  load-bearing one being whether a new **small, single-purpose** Loopback device
-  may be created. Captured clip audio is silent without it. Nothing existing
-  would be touched. Ryan's stated history is that elaborate Rogue Amoeba setups
-  broke on him, so this is his call, not an implementation detail.
-- **G2 (Ableton `.als` parse)** — no hardware, no routing, testable today.
-  188 `.als` files on disk; they are gzip-compressed XML.
-- **Deck leftovers** (read `~/projects/obs-control-room/README.md` first):
-  finger-verify `Me + Float` with Ryan in frame; the Move plugin `.pkg` needs
-  his admin password; character scenes await his images; the $0 iPhone multicam
-  test (`docs/IPHONE-MULTICAM.md`) written 2026-07-21 has still never been run.
+**1. Finish pipeline A's rough edges (small, mechanical, no decisions).**
+The library builder is proven on real audio but three gaps are known and
+listed under "Pipeline A — what is still NOT done" above:
+   - an `analyze` verb that **updates existing ledger rows in place**, so the
+     9 entries added before `--analyze` can be backfilled (dedupe correctly
+     refuses a re-add, so there is currently no route);
+   - a `remove` verb — nothing can leave the library once staged;
+   - `add` accepting a **directory**, so a stem folder is one call not four.
+
+**2. `[RYAN]` — confirm Innerbloom's tempo.** Detection says 123.0 BPM; that
+is unconfirmed and is exactly what `--bpm` exists for. One number from Ableton
+settles it and validates the detector on a second track.
+
+**3. `[RYAN]` decision, then pipeline F/G** (`docs/CLIP-LANE.md`, four open
+decisions). The load-bearing one: **may a new small, single-purpose Loopback
+device be created?** Captured clip audio is silent without it. Nothing existing
+would be touched. Ryan's stated history is that elaborate Rogue Amoeba setups
+broke on him, so this is his call, not an implementation detail. The other gate
+is whether "know where each sample fires" is genuinely the goal — if the real
+want is just faster clipping, that document ends and the answer is Cmd-Shift-5.
+
+**4. G2 (Ableton `.als` parse)** — no hardware, no routing, testable today.
+188 `.als` files on disk, gzip-compressed XML. `CLIP-LANE.md` recommends this
+first among the F/G work because it needs nothing from anyone.
+
+**5. Deck leftovers** (read `~/projects/obs-control-room/README.md` first):
+finger-verify `Me + Float` with Ryan in frame; the Move plugin `.pkg` needs his
+admin password; character scenes await his images; the $0 iPhone multicam test
+(`docs/IPHONE-MULTICAM.md`) written 2026-07-21 has still never been run.
+
+### Artifacts — where everything lives
+
+| What | Where |
+|---|---|
+| Music lane plan (pipelines A–E) | `docs/MUSIC-LANE.md` |
+| Clip lane plan (pipelines F–G) | `docs/CLIP-LANE.md` |
+| SP-404 library code | `~/projects/blessdog/phase8_sp404/` |
+| SP-404 tests (55) | `~/projects/blessdog/tests/test_sp404.py` |
+| Staged sample library (10, 476 MB) | `~/projects/blessdog/music/sp404/{track,stem}/` |
+| Provenance ledger | `~/projects/blessdog/music/sp404-library.json` |
+| Song front door | `tools/ingest-song.py` |
+| Beat grid (+`--bpm`) | `tools/beat-grid.py`, `studio/beatgrid.py` |
+| Stems onto lanes | `tools/edit-ir.py add-stems`, `studio/edit_ir.py:add_stems` |
+| Owned toolchain + traps | `AGENTS.md` §Installed toolchain, §Hard doctrine |
+
+Commits today — media-studio: `4c9fc42` `f3327f5` `8d2f66c` `1293f64`
+`c9a1c07` `13689a2` `103c939` `5db0b66`. blessdog (`feat/sound-control`):
+`c4e0a60` `839a6c3` `edcf87b`. **Both remotes current.**
 
 **Blender remains genuinely open.** Ryan 2026-08-01: "Blender is in a whole
 different orbit... that's a whole planning stage" — do NOT start it without a
