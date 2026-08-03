@@ -502,6 +502,72 @@ locked workflow is SP loops → Live Session View → arrangement, the finished
 **This is the only producer that can be built and tested right now**, with no
 SP on the desk.
 
+> ### ✅ BUILT 2026-08-03 — `studio/ableton.py`, `tools/als-trigger-map.py`
+>
+> ```
+> .venv/bin/python tools/als-trigger-map.py <project.als> [-o map.json]
+>     [--summary] [--include-session] [--no-hash]
+> ```
+> Emits one entry per **firing**, not per clip. `tests/test_ableton.py`, **38
+> passing** — synthetic fixtures for each trap (a real `.als` is megabytes of
+> licensed factory content), plus real-file gates that skip on a cold checkout.
+>
+> **Correction to the 2026-08-03 handoff.** It said the parse was "buildable now
+> against your thunderdome project." The *parser* was; the *trigger map* was not.
+> `thunderdome.als` is a **mastering set** — one audio clip (the 32:06
+> Thunderdome VHS master) on a track named `Master Test` with EQ Eight +
+> Multiband Dynamics, and **zero played MIDI**. Nothing in it says "sample X
+> fires at 00:42.15." The claim was inferred from a filename and a commit
+> message without opening the file.
+>
+> Real fixture found instead: **`Factory Packs/Chop and Swing/Demo Song/Clean
+> Swing.als`** — 18 tracks, 120 arrangement clips, 82 BPM, **1375 firings over
+> 2m57s**. That is the shape a real trigger map has.
+>
+> **Five traps, each of which produces a plausible-looking map that is silently
+> wrong. All five were found by reading Ryan's own files, not the docs:**
+>
+> 1. **GroovePool clips are not music.** `thunderdome.als`'s only `<MidiClip>`
+>    lives at `LiveSet/GroovePool/Grooves/Groove/Clip` — a swing-timing
+>    template. A naive `root.iter("MidiClip")` emits **16 phantom triggers on
+>    note 36** from a project containing no played MIDI. Only clips reachable
+>    from `Tracks/` count.
+> 2. **Looped clips fire their content more than once.** A 64-beat clip with a
+>    32-beat loop plays its notes twice; the note list holds one copy.
+>    Un-expanded, every repeat is lost.
+> 3. **Values live in `Value=` attributes, not element text.** `findtext()`
+>    returns `""` for every field — so either it raises, or a defaulted `0.0`
+>    silently stacks every clip at the top of the timeline.
+> 4. **Tempo automation breaks beats→seconds.** The conversion is linear
+>    (`60/bpm`); a ramp makes it wrong everywhere downstream. The parser
+>    **refuses** rather than emit a drifting map.
+> 5. **The declared absolute `Path` is frequently fiction.** Factory content
+>    carries Ableton's own build machine (`/Volumes/data/tmp/trunk/...`), and any
+>    set that has moved between machines carries a stale one. Resolution falls
+>    back to `RelativePath` against the project folder, then the Live Pack —
+>    and **verifies `OriginalFileSize`**, because a same-named file of the wrong
+>    size would join to the wrong sample and place the wrong video.
+>
+> **Trap 2 has an evil twin, and the first implementation walked into it.**
+> Expanding loops with a bare modulo folds *every* note into the loop window —
+> but the loop brace selects only the portion that repeats, and notes outside
+> `[LoopStart, LoopEnd)` are silent. On Clean Swing that invented **189 phantom
+> firings** (1564 → 1375 after the fix); on the one genuinely repeating clip,
+> 63 of its 114 notes sit outside the brace. Under-reporting loses picture;
+> this over-reporting places picture where there is no sound. Both directions
+> are gated by tests now.
+>
+> **What is deliberately NOT resolved here.** MIDI firings carry a `note`, not a
+> pad or a sample hash. Resolving a note to a pad needs the bank, and the
+> per-bank channel layout is still **[U]** (§2) — so that join is left to the
+> consumer holding the ledger rather than guessed. Audio firings carry
+> `sample_hash`, the join key to `phase8_sp404`.
+>
+> **Found in passing:** thunderdome's source WAV
+> (`~/Downloads/hardcore.-techno.-vhsri-p/.../..._mastered.wav`) **no longer
+> exists on disk** — the set references a file that is gone. Reported as
+> unresolved rather than silently hashed to nothing.
+
 **G3 — MULTIPAD stems + onset detection  ·  fallback, still reliable** **[D]**
 One `.wav` per pad, each silent except where that pad fires. Onset detection on
 a per-pad stem is a near-trivial problem — unlike correlating a sample against

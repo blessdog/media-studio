@@ -1,24 +1,50 @@
 # STATUS — where media-studio stands
 
-*Updated 2026-08-02 (evening). If this file and the code disagree, the code wins — then
+*Updated 2026-08-03. If this file and the code disagree, the code wins — then
 fix this file.*
 
 **Remotes (this repo is finally backed up):**
 `media-studio` → `git@github.com:blessdog/media-studio.git` (**private**,
-`master`). Music lanes live in `~/projects/blessdog` →
+`master`). `rectum` → `git@github.com:blessdog/rectum.git` (**private**,
+`master`, pushed 2026-08-03). Music lanes live in `~/projects/blessdog` →
 `git@github.com:blessdog/blessdog.git` (`feat/sound-control`). A local commit is
 not a backup — see AGENTS.md §Version control.
+**`obs-control-room` still has NO remote.**
 
-## Next session — 2026-08-03
+## Done 2026-08-03 — pipeline G2, the Ableton trigger map
 
-**Read `docs/HANDOFF-2026-08-03.md` first.** In order: push `rectum` and
-`obs-control-room` to GitHub (**neither has a remote**), verify `rectum crop`
-against a real reel (the one unverified piece), then build the Ableton `.als`
-parse — the trigger map producer that needs no hardware.
+**`studio/ableton.py` + `tools/als-trigger-map.py`**, `tests/test_ableton.py`
+**38 passing**. Reads a `.als` (gzip XML) and emits one entry per sample
+**firing** — `{sample_hash, track_start_secs, duration_secs}`, CLIP-LANE.md §1's
+one artifact. No hardware, no SP on the desk. Full write-up, including all five
+silent-failure traps, in **`docs/CLIP-LANE.md` §4 G2**.
 
-**New today:** `~/projects/rectum` — the clipper, its own repo. Records a whole
-monitor with audio, files clips with provenance, proposes a crop. Control Room
-(the Stream Deck plugin) grew a second page for it: LEFT / RIGHT / CROP.
+```
+.venv/bin/python tools/als-trigger-map.py <project.als> --summary
+```
+
+**The handoff's premise was wrong and is corrected there.** `thunderdome.als` is
+a *mastering set* — one 32:06 audio clip, zero played MIDI — so it holds no
+trigger map to extract. The parser is fine; the fixture was not. Real fixture:
+`Factory Packs/Chop and Swing/Demo Song/Clean Swing.als`, 120 arrangement clips,
+**1375 firings over 2m57s**.
+
+Worth knowing beyond this lane: a bare modulo loop-expansion invented **189
+phantom firings** on that song, because notes outside a clip's loop brace are
+silent. Caught by hand-checking arithmetic against the file, not by any test
+that existed. Both under- and over-reporting are gated now.
+
+## Next session
+
+1. **Verify `rectum crop` against a real reel** — still the one unverified
+   piece. Press LEFT or RIGHT, let it play, press again, then CROP.
+2. **Push `obs-control-room`** — it has no remote.
+3. **G1 (SP-404 SMF export)** when the unit is on the desk; the day-one
+   verification list is CLIP-LANE.md §9.
+
+**New 2026-08-02:** `~/projects/rectum` — the clipper, its own repo. Records a
+whole monitor with audio, files clips with provenance, proposes a crop. Control
+Room (the Stream Deck plugin) grew a second page for it: LEFT / RIGHT / CROP.
 
 ## Done
 
