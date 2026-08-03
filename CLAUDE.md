@@ -6,6 +6,24 @@ only adds what is specific to working with Ryan. Then `STATUS.md` +
 `docs/PLAN.md` for live state and the phase map. The bible lives at
 `../bible/README.md`; judge all architecture against it.
 
+## The gate — run this, do not skip it
+
+```
+make hooks     # once per clone: installs .githooks/pre-commit
+make check     # offline gate — docs contract + unit tests. MUST be green
+make check-live  # adds the two tests that drive Resolve (needs it open)
+```
+
+`make check` includes `tests/test_docs.py`, which fails the build when a tool
+or flag is undocumented in AGENTS.md, when STATUS.md grows past 150 lines, or
+when the gate itself is uninstalled. **Documentation drift is a build failure
+here.** It exists because AGENTS.md silently lost two tools and fourteen flags
+in 24 hours and a session nearly rebuilt work that already existed.
+
+**Artifacts need an owner.** Before creating any file, name its writer, its
+reader, and what fails when it is wrong. If any of the three is blank, do not
+create it — that is how this repo accumulated dead files.
+
 ## Locked decisions (full detail in AGENTS.md + docs/PLAN.md)
 
 - **Copilot, not autopilot** (Ryan, 2026-07-12). He makes the videos; the

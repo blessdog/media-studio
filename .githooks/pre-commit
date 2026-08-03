@@ -1,0 +1,22 @@
+#!/bin/sh
+# The gate. Tracked in-repo so it survives a clone; activated by `make hooks`
+# (git config core.hooksPath .githooks). .git/hooks/ is NOT versioned, which is
+# why the hook lives here instead.
+#
+# Refuses any commit that breaks `make check` — the offline unit tests AND the
+# documentation contract in tests/test_docs.py. Documentation drift is a build
+# failure in this repo, not a discovery three weeks later.
+#
+# Emergency bypass:  git commit --no-verify
+# Using it leaves a broken gate for the next session. Fix it in the same day.
+
+out=$(make check 2>&1) || {
+    printf '%s\n' "$out"
+    printf '\n----------------------------------------------------------------\n'
+    printf 'COMMIT REFUSED — make check failed.\n'
+    printf 'AGENTS.md and STATUS.md are part of this contract: a new tool or\n'
+    printf 'flag must be documented, and STATUS.md must stay a reference.\n'
+    printf 'Bypass with --no-verify only when you know why.\n'
+    exit 1
+}
+exit 0
