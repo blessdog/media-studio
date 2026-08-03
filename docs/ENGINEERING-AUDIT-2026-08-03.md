@@ -1,5 +1,21 @@
 # Media Studio — engineering audit and onboarding guide
 
+> ## ⚠️ FROZEN SNAPSHOT — not a live document
+>
+> Taken at commit `fbeaf06`, 2026-08-03. **It is not maintained and will drift.**
+> It ranks 4th in AGENTS.md §Which document wins; `AGENTS.md` and `STATUS.md`
+> outrank it, and observed behaviour outranks all three.
+>
+> **Read it for one thing: the 13 findings.** Those are reproduced defects, not
+> opinions, and they are the repo's real work queue. Everything above §Findings
+> duplicates AGENTS.md and STATUS.md — prefer those, they are kept current.
+>
+> Status of the findings is tracked in STATUS.md, not here. **P0.7 is partly
+> closed** as of `a78f9be` — there is now one test command (`make check`), pure
+> and Resolve-driving suites are split, and a pre-commit gate runs it.
+> Still open within P0.7: incomplete `requirements.txt`, no `doctor` command,
+> no CI, and fixtures that reference gitignored media.
+
 *Snapshot: 2026-08-03, repository commit `fbeaf06`, branch `master`.*
 
 This document is a current-state engineering handoff for a new contributor. It

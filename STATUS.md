@@ -48,9 +48,19 @@ manual: `AGENTS.md`. Phase map: `docs/PLAN.md`.
 
 ## What is broken or unproven
 
-| | |
+**13 reproduced defects** from the 2026-08-03 audit are the real queue —
+`docs/ENGINEERING-AUDIT-2026-08-03.md` §Findings. The four that bite hardest:
+
+| P0 | |
 |---|---|
-| `make check` red | 12 doc failures fixed 2026-08-03; keep it green |
+| **Wrong media can enter an edit** | `intake.resolve_safe()` reuses an existing underscore-normalised filename without checking content matches. Reproduced. Every later path/duration check still looks plausible |
+| **Mutated IR is not schema-validated** | producers build dicts and call `lint()` directly, skipping JSON Schema. `30/0` passes the fps pattern then divides by zero; an empty IR lints green; removing the last edit can overwrite `story.json` with an invalid one |
+| **The edit source of truth is unbacked** | `outputs/` (~1.4 GB) and `registry.db` are gitignored with no replacement backup. Each mutation overwrites `story.json`; 33 IR rows across 16 paths means past edit decisions are already unreconstructable |
+| **`GetCurrentPage()` is doctrine, not code** | the modal-dialog rule that cost a session is enforced nowhere in production code, and the daemon's single-client lock is not shared with CLIs, other agents, or the MCP server |
+
+| Other | |
+|---|---|
+| Cold-start gaps (P0.7, partly closed) | `make check` exists now; still missing a complete `requirements.txt`, a `doctor` verb, CI, and fixtures that don't reference gitignored media |
 | SP-404 `push` to a card | **never run** — no card, no device on the desk |
 | `bpm`/`key` backfill | 9 ledger entries predate `--analyze`; dedupe refuses a re-add, so there is no route. Needs an `analyze` verb that updates rows in place |
 | No `remove` verb (SP lane) | nothing can leave the library once staged |

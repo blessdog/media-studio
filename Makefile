@@ -26,12 +26,15 @@ OFFLINE := tests/test_docs.py \
 LIVE := tests/test_compile.py \
         tests/test_assembly.py
 
-.PHONY: help check check-live hooks
+.PHONY: help check check-live hooks worktree worktree-list worktree-rm
 
 help:
-	@printf 'make hooks       install the pre-commit gate (once per clone)\n'
-	@printf 'make check       offline gate — docs contract + unit tests\n'
-	@printf 'make check-live  full suite — needs Resolve open, no modal dialog\n'
+	@printf 'make hooks             install the pre-commit gate (once per checkout)\n'
+	@printf 'make check             offline gate — docs contract + unit tests\n'
+	@printf 'make check-live        full suite — needs Resolve open, no modal dialog\n'
+	@printf 'make worktree NAME=x   isolated checkout for a concurrent session\n'
+	@printf 'make worktree-list     show active worktrees\n'
+	@printf 'make worktree-rm NAME=x  remove one\n'
 
 check:
 	@fail=0; for t in $(OFFLINE); do \
@@ -55,3 +58,20 @@ check-live: check
 hooks:
 	@git config core.hooksPath .githooks
 	@printf 'pre-commit gate installed (core.hooksPath=.githooks)\n'
+
+# Concurrent sessions. Two agents in one checkout is how STATUS.md ended up
+# saying pipeline G2 was both done and to-do. One session per worktree.
+# AGENTS.md §Concurrent sessions.
+worktree:
+	@test -n "$(NAME)" || { printf 'usage: make worktree NAME=music\n'; exit 1; }
+	@git worktree add "../media-studio-$(NAME)" -b "lane/$(NAME)"
+	@printf '\nopen the second session in ../media-studio-%s\n' "$(NAME)"
+	@printf 'then run: make hooks   (the gate is per-checkout)\n'
+
+worktree-list:
+	@git worktree list
+
+worktree-rm:
+	@test -n "$(NAME)" || { printf 'usage: make worktree-rm NAME=music\n'; exit 1; }
+	@git worktree remove "../media-studio-$(NAME)"
+	@printf 'removed. branch lane/%s still exists — delete it if merged.\n' "$(NAME)"

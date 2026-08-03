@@ -180,6 +180,45 @@ plain scripts (`test_compile.py`, `test_registry.py`, `test_assembly.py`).
 - media-studio is **private** — it carries absolute paths, machine layout and
   business context. Do not make it public without Ryan saying so.
 
+## Which document wins (truth hierarchy)
+
+This repo holds design proposals, chronological logs, and current code. They do
+not describe the same moment. When two disagree, use this precedence — do NOT
+average conflicting claims:
+
+1. **Observed behaviour, artifacts, code, and tests** — what the software does.
+2. **AGENTS.md** — operating doctrine and safety rules.
+3. **STATUS.md** — current state and pickup point. Capped at 150 lines.
+4. **docs/ENGINEERING-AUDIT-2026-08-03.md** — architecture + risk synthesis,
+   frozen at commit `fbeaf06`. A dated snapshot, not a live document.
+5. **docs/PLAN.md** — phase map and decision history.
+6. **docs/JOURNAL.md** — dated history. Archive; never read in full.
+7. **ARCHITECTURE.md** — a 2026-07-11 *proposal*, not the implementation map.
+8. **RESEARCH.md** and the Lane B reports — research inputs, not runtime truth.
+   Preserve their `[V]/[R]/[U]` confidence labels.
+
+When code and a document disagree: verify the behaviour, fix whichever is
+wrong, and record the correction.
+
+## Concurrent sessions — use a worktree, never share `master`
+
+Two agents editing one checkout is the failure this project keeps hitting. Code
+conflicts announce themselves; **documentation conflicts do not** — both
+sessions write plausible prose and the file quietly disagrees with itself
+(STATUS.md said pipeline G2 was both done and to-do, 776 lines apart).
+
+```
+make worktree NAME=music        # ../media-studio-music on branch lane/music
+cd ../media-studio-music        # open the second Claude session HERE
+make hooks                      # the gate is per-checkout
+...
+git push -u origin lane/music   # merge to master when the lane is done
+make worktree-list / worktree-rm NAME=music
+```
+
+One session per checkout, one branch per lane. `git worktree` shares the object
+store, so this costs disk for the working files only — not a second clone.
+
 ## Cold-start test (portability gate)
 
 A fresh agent with zero conversation history must be able to run the whole
