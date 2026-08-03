@@ -132,6 +132,33 @@ uncompressed, containing `<AudioClip>`, `<MidiClip>`, `<CurrentStart>`,
 
 ---
 
+## 3z. SUPERSEDED — if it has a URL, download it (Ryan, 2026-08-03)
+
+> **`rectum fetch <url>` is now the default way in.** Pipeline F below was
+> scoped to "meme/reel sources that **cannot be downloaded**" (§1). Most can.
+> Measured on a real Instagram reel, same clip both ways:
+>
+> | | `fetch` | `record` (pipeline F) |
+> |---|---|---|
+> | picture | **1080×1920 native** | whatever size it was on screen, re-encoded |
+> | frame rate | CFR already | VFR → must be normalised |
+> | audio | −17.9 dB, that video only | Loopback, captures **all** browser audio |
+> | crop | none — the file **is** the video | detector, foolable by any second motion |
+> | permission | none | screen recording **and** audio capture |
+> | size | 7.6 MB / 27.5 s | ~3.5 GB/hour of full-screen master |
+>
+> It files into the same library with the same `clip_hash`, so §5 and §7 are
+> unchanged — **no schema change was needed**, `source_url` and `kind` already
+> existed. A URL is also better provenance than a screen rectangle.
+>
+> Login-gated posts are fine: it borrows the browser session
+> (`--cookies-from-browser`, default **brave**). Instagram serves VP9, which
+> Resolve will not reliably decode, so anything unplayable is transcoded to
+> h264 and the original dropped — reproducible from `source_url`.
+>
+> **Pipeline F is now the FALLBACK**, for what genuinely cannot be downloaded:
+> DRM, live streams, ephemeral stories. Built in `rectum@7866c52`.
+
 ## 3. Pipeline F — the clipper
 
 ```
@@ -275,10 +302,31 @@ It re-reads the truth before every decision rather than toggling blind.
 > Loopback device (live, correct UID), a wrong CLI verb (`record` is real), and
 > permissions (`kTCCServiceScreenCapture | com.elgato.StreamDeck | 2` — granted).
 >
-> **Still [U]: whether a deck-initiated capture works at all.** Both attempts had
-> the app quit under them inside 30 s, so the path has never been allowed to run
-> clean. The engine itself is fine — the plugin's exact command from a terminal
-> yields a real 1920×1080 clip with measured audio. Plugin logs live at
+> **ROOT CAUSE FOUND, same day — a DENIED permission, not a missing one** **[V]**:
+> ```
+> kTCCServiceAudioCapture | com.elgato.StreamDeck | 0 | 2026-08-03 08:27:53
+> ```
+> `auth_value 0` = explicitly **denied**. A prompt appeared right after the
+> second attempt and was answered "Don't Allow". macOS never asks twice — after
+> a denial it just fails, silently, forever, which is why `screencapture` exited
+> 1 with **empty stderr** and nothing appeared in any log.
+>
+> `-G` does two privileged things at once: records the screen **and** opens a
+> capture device as an audio input. Those are **separate permissions with
+> separate rows**. Screen recording was granted at 08:11:55 (that prompt is what
+> forced the app restarts, which looked like crashes). Audio capture was denied
+> at 08:27:53. Both must be allowed.
+>
+> The service is **`AudioCapture`** ("Screen & System Audio Recording"), *not*
+> `Microphone` — an earlier pass in this session named the wrong one. Cleared
+> with `tccutil reset AudioCapture com.elgato.StreamDeck`, which does not grant
+> anything; it removes the "no" so the system can ask again.
+>
+> **The lesson, and it generalises past this bug:** a denied TCC permission is
+> indistinguishable from a broken program. No error text, no prompt, no log
+> line, non-zero exit. `rectum` now splits the two halves apart on failure by
+> re-running once without `-G`, so the capture says which permission it lost
+> instead of dying mute. Plugin logs:
 > `obs-control-room/plugin/com.blessdog.obs-control-room.sdPlugin/logs/`.
 
 Deck: the plugin becomes **Control Room**, with an OBS page and a rectum page
