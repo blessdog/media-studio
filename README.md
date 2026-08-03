@@ -12,4 +12,5 @@ applying human-authored grades, and scripting delivery. Existing pipelines
 
 - `RESEARCH.md` — the verified ground-truth research this is built on (read first)
 - `ARCHITECTURE.md` — components, contracts, build order, open decisions
+- `docs/ENGINEERING-AUDIT-2026-08-03.md` — current-state architecture, health audit, risks, roadmap, and new-engineer onboarding
 - `docs/INSTALL-DAY.md` — the checklist for the day Resolve Studio lands
