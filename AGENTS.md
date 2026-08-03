@@ -110,14 +110,28 @@ plain scripts (`test_compile.py`, `test_registry.py`, `test_assembly.py`).
   | `~/Movies` | **FAILED** |
   | `/private/tmp/...` (scratchpad) | **COMPILED** |
 
-  This is not a code regression — it breaks the repo's own bread-and-butter
-  video IR, the shape STATUS.md records as proven. The signature (whole home
-  directory denied, `/private/tmp` exempt) is macOS **TCC**: Resolve is missing
-  a Files-and-Folders / Full Disk Access grant. **Fix in the GUI** — System
-  Settings → Privacy & Security → **Files and Folders** (or Full Disk Access) →
-  enable **DaVinci Resolve**, then quit and relaunch it
-  (`scripts/restart_resolve.py`; never `pkill`). Jump there with
+  Reproducible in both orders, and `~/Documents` fails too — a specifically
+  TCC-protected folder. Not a code regression: it breaks the repo's own
+  bread-and-butter video IR, the shape STATUS.md records as proven.
+
+  **CONFIRMED CAUSE — read the TCC database, do not eyeball the GUI:**
+
+  ```
+  sqlite3 "/Library/Application Support/com.apple.TCC/TCC.db" \
+    "select service,client,auth_value from access where client like '%esolve%';"
+  → kTCCServiceSystemPolicyAllFiles|com.blackmagic-design.DaVinciResolve|0
+  ```
+
+  `auth_value` **0 = denied**, 1 = prompt, 2 = allowed. An app LISTED under
+  Privacy & Security has merely *requested* the permission — the list entry
+  looks identical whether the toggle is on or off, which is exactly how this
+  gets misread. The query above is ground truth; the settings pane is not.
+
+  **Fix:** System Settings → Privacy & Security → **Full Disk Access** (its own
+  pane, not Files & Folders) → toggle **DaVinci Resolve ON**, then quit and
+  relaunch (`scripts/restart_resolve.py`; never `pkill`). Jump there with
   `open "x-apple.systempreferences:com.apple.preference.security?Privacy_AllFiles"`.
+  Re-run the sqlite3 query afterwards and require `2` before believing it.
   Same failure class as the OBS Screen-Recording TCC trap in
   `~/projects/obs-control-room/README.md`: every machine check passes and the
   call just returns failure. **Until this is granted, the whole compile lane is
