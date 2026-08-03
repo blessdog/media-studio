@@ -1,7 +1,13 @@
 # STATUS — where media-studio stands
 
-*Updated 2026-08-01. If this file and the code disagree, the code wins — then
+*Updated 2026-08-02. If this file and the code disagree, the code wins — then
 fix this file.*
+
+**Remotes (this repo is finally backed up):**
+`media-studio` → `git@github.com:blessdog/media-studio.git` (**private**,
+`master`). Music lanes live in `~/projects/blessdog` →
+`git@github.com:blessdog/blessdog.git` (`feat/sound-control`). A local commit is
+not a backup — see AGENTS.md §Version control.
 
 ## Done
 
@@ -547,25 +553,143 @@ frames on 32.1.x). Compositions are now built by rendering and looking, which is
 how the Center Stage collision was confirmed rather than guessed. This changes
 how every future scene gets built.
 
+## 2026-08-02 — the music lane, first push to GitHub, and a wrong diagnosis twice
+
+**Hardware trigger:** Ryan ordered a **Roland SP-404MK2** (sampler/DJ). That
+opened a planning round which turned into the music lane. He also corrected a
+standing blind spot: he owns the **complete Rogue Amoeba suite**, and it is a
+core component, not an optional extra.
+
+### The repo is finally backed up
+
+**`media-studio` had NO git remote — it had never been pushed anywhere.** Every
+commit was one disk failure from gone. Now `git@github.com:blessdog/media-studio.git`,
+**private** (it carries absolute paths, machine layout, business context).
+Verified the *pushed* tree carries no `.env`, no `registry.db`, no secrets.
+`AGENTS.md` gained **§Version control**: committing is not finishing, push it;
+verify with `git log origin/<branch>`, not the local ref; cross-repo work means
+two pushes; the repos join by content hash and never import each other.
+
+### Planning docs (read these before touching the music lane)
+
+- **`docs/MUSIC-LANE.md`** — pipelines A–E with verification status on every
+  claim. Includes the Serato findings: Serato DJ Lite IS installed and the
+  SP-404MK2 hardware-unlocks it; Spotify IS supported; **recording is BLOCKED
+  whenever a streaming service is in use** (a licensing term, industry-wide),
+  so samples must come from material Ryan owns. Four effect buses (1–2 per
+  sample, 3–4 master), 5 effects on external input — that is what makes a
+  sampler-DJ hybrid set worth playing.
+- **`docs/CLIP-LANE.md`** — pipelines F (screen-region capture) + G (trigger
+  map), from the parallel session.
+
+### Ryan's decisions
+
+1. **`blessdog/` owns music; media-studio stays video-only.** The boundary is
+   the WAV file; finished tracks/stems cross as registered assets. Preserves
+   the three-software reel-in.
+2. **Library builder first.**
+3. **DJ lane IS in scope, but sampling is primary and must be strong** — "that
+   is gonna be the main way I'm using it."
+
+### Built — `~/projects/blessdog/phase8_sp404/` (51 tests)
+
+`blessdog@c4e0a60` + `@839a6c3`, branch `feat/sound-control`. Source → SP-ready
+WAV library → SD card: `convert.py` (48kHz/16-bit, SP-safe names, 16-min
+guard), `card.py`, `ledger.py`, `build.py`, `cli.py`
+(`cards`/`add`/`stems`/`list`/`push`). Two-step staging so a card is always
+rebuildable from the ledger. **The card path is detected, never assumed** —
+Roland documents the SD layout only as a diagram image. Plus the three
+clip-lane fields CLIP-LANE §7 needed: `source_clip_hash`, `source_in_secs`,
+`pad`, with `from_clip()`/`by_pad()` and pad↔MIDI-note conversion.
+
+Two bugs found by exercising, invisible from reading: `__init__.py` exported a
+function named `convert` that shadowed the `convert` **module**; and card
+detection matched any directory named `import`, so scanning `/Volumes` "found a
+card" at `/usr/share/vim/vim91/import` and would have pushed samples into it.
+
+### Pipeline D complete (media-studio)
+
+- **`--bpm` on `tools/beat-grid.py`** (`8d2f66c`) — declared tempo computes the
+  grid arithmetically, no estimation. **Measured:** on a *perfect* 120 BPM click
+  track librosa returns **117.45** and finds 22 of 24 beats — ~4s drift across a
+  3-minute track. Also fixed a silent failure: librosa returned `bpm 0.0` with an
+  EMPTY beat list on untrackable material and wrote an empty grid.
+- **`add-stems`** (`1293f64`) — N stems onto consecutive lanes A2,A3,A4…
+  **The "audio-track schema bump" was never needed.** `emit.py:32` already
+  routed audio edits by lane, `add_music` already took `track`, the schema's
+  `track` was already generic. `COMPILER_EPOCH` stays at **2**; `docs/PLAN.md:77`
+  corrected in place. Only CLI surface was missing.
+- **`tools/ingest-song.py`** (`c9a1c07`) — song front door. Song whole and uncut
+  on A1, stems on A2+ **each with its own length**, beat grid inline. Verified in
+  Resolve: V0/A3, song on A1, stems on A2/A3, 6 markers at frames
+  0/60/120/180/240/300 (every 4th beat at 120bpm/30fps = 60 frames).
+
+## The trap that cost this session hours (2026-08-02)
+
+**A modal dialog open in Resolve silently breaks scripting**, and the failure
+mimics a filesystem bug convincingly enough that I published a wrong root cause
+**twice** — first as a macOS TCC denial, then as "media under `/Users` cannot be
+imported." Both retracted (`103c939`). With Preferences open,
+`ImportTimelineFromFile` fails and Resolve logs only `Operation canceled`;
+byte-identical files pass then fail minutes apart.
+
+`app.GetCurrentPage()` returns `None` when a modal holds the UI and a page name
+otherwise. **Treat `None` as "every measurement from this session is void."**
+The signal was in hand early and read as a curiosity instead of a stop sign.
+
+With the dialog closed: `tests/test_compile.py` **7/7**, `test_assembly.py`
+**50/50**, and the song lane compiles end to end. Nothing was wrong with the
+code; a staging workaround written mid-investigation was correctly reverted.
+
+Genuinely true and kept: **Resolve's Full Disk Access WAS denied**
+(`auth_value=0`) and did need granting — it simply was not the cause. And TCC
+must be read from the database, because an app is listed in Privacy & Security
+merely for having *requested* a permission and the row looks identical either
+way. `[U]` residue: an `.otio` in `/private/tmp` referencing media under
+`/Users` still fails; no tool produces that split, so it gets no workaround.
+
 ## PICK UP HERE (next session)
 
-Read `~/projects/obs-control-room/README.md` — its "State" and "Next" sections
-are current and more specific than this file. Then:
+**First, before any Resolve work:** `app.GetCurrentPage()` must return a page
+name. If it returns `None`, a modal dialog has the UI and every result you get
+will be garbage. See "The trap that cost this session hours" above.
 
-1. **Finger-verify `Me + Float` with Ryan in frame.** The only open question on
-   the deck: does his face clear the floating card? Center Stage had him out of
-   shot on both attempts. Capture with `GetSourceScreenshot` and look.
-2. **Move plugin** — a `.pkg`, needs Ryan's admin password. Gives the animated
-   push-aside for free; no code changes.
-3. **Character scenes** — the template works, waiting on Ryan's images.
-4. **The $0 iPhone multicam test** (`docs/IPHONE-MULTICAM.md`) — written
-   2026-07-21, still never run.
+### Blocked on hardware — the SP-404MK2 is not here yet
 
-**Then the deck is done and the project moves to Resolve, then Blender.** Ryan
-2026-08-01: "Blender is in a whole different orbit... that's a whole planning
-stage" — do NOT start it without a research-first planning round. Resolve is
-Phases 1-4 built and verified; Blender is `blender/orbit-cube.py` and nothing
-else, i.e. genuinely open.
+Day one when it lands, in this order:
+
+1. **Update firmware FIRST.** v4+ for SMF pattern export, **v5.00+ for Serato**.
+   Updates go on via SD card. Nothing else works until this is done.
+2. **Format the card in the device** (UTILITY → SD CARD → FORMAT) — that is what
+   creates the folder structure `phase8_sp404/card.py` searches for. Then run
+   `python -m phase8_sp404 cards` and confirm it finds the IMPORT folder. Every
+   claim about the card layout is `[U]` until this passes.
+3. Set **SBS Long** (40s skip-back, UTILITY → SYSTEM → MARK Function) and
+   `ROUTING = ExtIn`.
+4. **Point a MIDI monitor at USB and press pad A1** — confirm note 48 and the
+   per-bank channel layout. `note_to_pad()` deliberately makes the caller supply
+   the bank because the two Roland sources disagree; this resolves it.
+5. Confirm the on-device display-name limit (`MAX_NAME_LEN = 32` is a
+   deliberately conservative guess) and whether IMPORT reads subfolders.
+6. **[U] Can you sample while IN DJ mode?** Not answerable from documentation.
+
+### Not blocked — buildable now
+
+- **Pipeline F/G** (`docs/CLIP-LANE.md`) — four open `[RYAN]` decisions, the
+  load-bearing one being whether a new **small, single-purpose** Loopback device
+  may be created. Captured clip audio is silent without it. Nothing existing
+  would be touched. Ryan's stated history is that elaborate Rogue Amoeba setups
+  broke on him, so this is his call, not an implementation detail.
+- **G2 (Ableton `.als` parse)** — no hardware, no routing, testable today.
+  188 `.als` files on disk; they are gzip-compressed XML.
+- **Deck leftovers** (read `~/projects/obs-control-room/README.md` first):
+  finger-verify `Me + Float` with Ryan in frame; the Move plugin `.pkg` needs
+  his admin password; character scenes await his images; the $0 iPhone multicam
+  test (`docs/IPHONE-MULTICAM.md`) written 2026-07-21 has still never been run.
+
+**Blender remains genuinely open.** Ryan 2026-08-01: "Blender is in a whole
+different orbit... that's a whole planning stage" — do NOT start it without a
+research-first planning round. It is `blender/orbit-cube.py` and nothing else.
 
 ## The doctrine this session bought (read before touching anything)
 
