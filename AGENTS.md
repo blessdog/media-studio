@@ -99,69 +99,33 @@ plain scripts (`test_compile.py`, `test_registry.py`, `test_assembly.py`).
 ## Hard doctrine (violations fail silently — learned the hard way)
 
 - **Absolute paths to every Resolve API call.** Relative fails silently.
-- **⚠️ OPEN 2026-08-02 — `ImportTimelineFromFile` fails for ANY path under
-  `/Users/SSDrive`, and succeeds only from `/private/tmp`.** Measured with one
-  identical plain video IR written to four locations, same media, same fps:
-
-  | `.otio` written to | Result |
-  |---|---|
-  | `outputs/projects/` (this repo) | **FAILED** |
-  | repo root | **FAILED** |
-  | `~/Movies` | **FAILED** |
-  | `/private/tmp/...` (scratchpad) | **COMPILED** |
-
-  **The real rule, isolated 2026-08-02: OTIO import fails if the MEDIA lives
-  under `/Users`.** The interchange file's own location matters too but is
-  secondary. Both video and audio media are affected.
-
-  | Case | Result |
-  |---|---|
-  | media in `/private/tmp`, otio in `/private/tmp` | **COMPILES** |
-  | media in `/private/tmp`, otio under `/Users` | FAILS (staging the otio to `/private/tmp` fixes this half) |
-  | media under `/Users` (anywhere), otio staged | **FAILS** |
-
-  Since every real asset lives under `/Users` — recordings in `~/Movies`,
-  workspaces in `outputs/projects/` — **this breaks the whole compile lane**,
-  and staging only the interchange file does not rescue it.
-
-  **Ruled OUT by measurement, do not re-chase these:**
-  - *Not macOS TCC.* All grants read `2` (allowed) in both TCC databases —
-    `kTCCServiceSystemPolicyAllFiles`, `…DocumentsFolder`, `…DownloadsFolder`.
-    Reproduced after granting Full Disk Access and relaunching. (The grant WAS
-    genuinely denied at first — `auth_value=0` — so flipping it was correct and
-    necessary; it simply was not the cause.)
-  - *Not App Sandbox.* Resolve is a direct download: no sandbox entitlement, no
-    `_MASReceipt`, TeamIdentifier 9ZGFBWLSYP.
-  - *Not file permissions or volume.* `/Users/Shared` fails too and is neither
-    TCC-protected nor a different volume (all `/dev/disk3s5`).
-  - *Not malformed URLs.* Emitted `target_url`s are clean `file:///…`, no
-    spaces, no percent-encoding.
-  - *Not the interchange content.* BYTE-IDENTICAL files (same sha) imported
-    back-to-back into one project: `/private/tmp` OK, `/Users/Shared` REFUSED.
-  - *Not general file access.* `MediaStorage.AddItemListToMediaPool()` adds the
-    very same `/Users` file to the media pool successfully. Only the OTIO
-    importer refuses it.
-
-  Resolve's log says only `Import Log (Info) - Operation canceled.`
-
-  **Verify the TCC grant by DATABASE, never by the GUI** — an app is listed
-  under Privacy & Security merely for having *requested* a permission, and the
-  row looks identical whether the toggle is on or off:
+- **A modal dialog open in Resolve silently breaks scripting.** Cost a long
+  investigation 2026-08-02. With the Preferences window open,
+  `ImportTimelineFromFile` returns failure and Resolve logs only
+  `Import Log (Info) - Operation canceled.` Results become erratic and
+  path-dependent in ways that look like a real filesystem bug — the same file
+  passes, then fails, minutes apart. **Before trusting ANY scripting result,
+  check `app.GetCurrentPage()`: it returns a page name ("edit", "color", …)
+  when Resolve is usable and `None` when a modal has the UI.** Treat `None` as
+  "all measurements from this session are void", not as a minor detail.
+  With no dialog open: `tests/test_compile.py` 7/7 and the full song lane
+  compiles. Nothing was wrong with the code.
+- **Resolve needs Full Disk Access, and the settings pane cannot tell you
+  whether it has it.** It was genuinely denied on this machine (`auth_value=0`)
+  and had to be granted. An app is LISTED under Privacy & Security merely for
+  having *requested* a permission, and the row looks identical either way.
+  Verify from the database, never the GUI:
   ```
   sqlite3 "/Library/Application Support/com.apple.TCC/TCC.db" \
     "select service,client,auth_value from access where client like '%esolve%';"
   ```
-  `auth_value`: 0 = denied, 1 = prompt, **2 = allowed**.
-
-  **STATUS.md records this pipeline as proven working 2026-07-13**, so this is
-  an environment regression on this machine (Resolve 21.0.2.4 / macOS 26.5.2),
-  not a code regression. **[RYAN] — root cause still unknown; next candidates
-  are Resolve Preferences → System → **Media Storage** locations, and testing
-  a prior Resolve build.** Do not blame a code change for this.
-  Same failure class as the OBS Screen-Recording TCC trap in
-  `~/projects/obs-control-room/README.md`: every machine check passes and the
-  call just returns failure. **Until this is granted, the whole compile lane is
-  dead outside /private/tmp — verify before blaming any code change.**
+  `auth_value`: 0 = denied, 1 = prompt, **2 = allowed**. Granting it did NOT by
+  itself fix the import failures above — the modal dialog did.
+- **[U] Unresolved residue:** with no dialog open, an interchange file in
+  `/private/tmp` referencing media under `/Users` still fails, while the same
+  media with the `.otio` beside it in the workspace succeeds. No tool produces
+  that split (compile writes `<ws>/story.otio` next to `<ws>/media/`), so it
+  blocks nothing. Do not build a workaround for it without re-measuring first.
 - **NO SPACES in media paths handed to OTIO import** — Resolve fails/HANGS on
   percent-encoded URLs (confirmed 2026-07-13). `studio.intake.resolve_safe()`
   hardlinks a safe name; lint refuses spaced paths on used assets; OBS
