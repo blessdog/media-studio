@@ -25,7 +25,7 @@ manual: `AGENTS.md`. Phase map: `docs/PLAN.md`.
 | `media-studio` | `blessdog/media-studio` (private, `master`) | video: capture → Story IR → Resolve → delivery |
 | `~/projects/blessdog` | `blessdog/blessdog` (`feat/sound-control`) | music: Ableton + `phase8_sp404` SP-404 lane |
 | `~/projects/rectum` | `blessdog/rectum` (private, pushed 2026-08-03) | screen-region clipper |
-| `~/projects/obs-control-room` | **NONE — still unbacked up** | Stream Deck / OBS plugin |
+| `~/projects/obs-control-room` | `blessdog/obs-control-room` (private, pushed 2026-08-03) | Stream Deck / OBS plugin |
 
 ## What works
 
@@ -56,25 +56,26 @@ manual: `AGENTS.md`. Phase map: `docs/PLAN.md`.
 | No `remove` verb (SP lane) | nothing can leave the library once staged |
 | `add` won't take a directory | a stem folder is four invocations |
 | Innerbloom 123.0 BPM | detected, **unconfirmed**. One number from Ableton settles it |
-| `rectum crop` | never verified against a real reel |
-| `obs-control-room` | no git remote |
+| Deck-initiated capture | audio-capture permission was **denied** 2026-08-03 and cleared with `tccutil`; needs one press + Allow. Only affects the *fallback* lane — `rectum fetch` needs no permission |
+| `rectum crop` scrolling / static clips | verified against ground truth (±7 px, survives a second moving region); scrolling-during-capture and no-motion clips still **[U]** |
 | **[U]** `.otio` in `/private/tmp` | referencing media under `/Users` still fails with no dialog open. No tool produces that split, so it blocks nothing — do not build a workaround without re-measuring |
 
 ## Next
 
-1. **Verify `rectum crop` against a real reel** — LEFT or RIGHT, let it play,
-   press again, then CROP.
-2. **Push `obs-control-room`.**
-3. **Finish the SP lane's rough edges** — `analyze` (in-place backfill),
+1. **Pipeline H — the emitter** (`docs/CLIP-LANE.md` §5, "NEW, small"). The
+   trigger map (G2) and the ledger fields (§7) both exist; what is missing is
+   the step that turns `sample_hash + track_start_secs` into video clips on the
+   timeline. Needs no hardware. This is the piece that makes the whole lane pay.
+2. **Finish the SP lane's rough edges** — `analyze` (in-place backfill),
    `remove`, directory-accepting `add`. Small, mechanical, no decisions.
-4. **`[RYAN]`** — confirm Innerbloom's tempo from Ableton.
-5. **`[RYAN]`** — `docs/CLIP-LANE.md` has four open decisions; the load-bearing
+3. **`[RYAN]`** — confirm Innerbloom's tempo from Ableton.
+4. **`[RYAN]`** — `docs/CLIP-LANE.md` has four open decisions; the load-bearing
    one is whether a new small, single-purpose Loopback device may be created
    (captured clip audio is silent without it). Nothing existing gets touched.
-6. **G1 (SP-404 SMF export)** when the unit lands. Day-one list:
+5. **G1 (SP-404 SMF export)** when the unit lands. Day-one list:
    `docs/CLIP-LANE.md` §9 — **firmware first** (v5.00+ for Serato), then format
    the card in the device, then MIDI-monitor pad A1.
-7. **Deck leftovers** — read `~/projects/obs-control-room/README.md` first.
+6. **Deck leftovers** — read `~/projects/obs-control-room/README.md` first.
    Move plugin `.pkg` needs Ryan's admin password; character scenes await his
    images; the $0 iPhone multicam test (`docs/IPHONE-MULTICAM.md`) has still
    never been run.

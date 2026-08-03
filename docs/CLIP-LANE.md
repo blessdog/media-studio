@@ -422,6 +422,33 @@ Width and height **exact**, origin within 7 px, in well under a second. Over a
 few seconds nearly every pixel of a real video changes at least once, which is
 why the range works where the frame-to-frame delta does not.
 
+> ### ✅ VERIFIED 2026-08-03 — against ground truth, and it holds
+>
+> Previously "never verified against a real reel", which had been blocking on
+> Ryan's hands. It did not need them: a screen recording with a **known** answer
+> can be built, by compositing a real downloaded reel into a 1920×1080 frame at
+> a chosen position over a static textured background (a page that is not
+> scrolling). Ground truth is then exact, and the test is repeatable.
+>
+> ```
+> GROUND TRUTH  x=700 y=180 w=405 h=720
+> DETECTED      x=693 y=178 w=426 h=728      dx=-7 dy=-2 dw=+21 dh=+8
+> ```
+>
+> Origin within 7 px, size ~5% generous — it bleeds slightly OUTWARD, which is
+> the right direction to err for a threshold-based bounding box: a crop that
+> keeps a few extra pixels is recoverable, one that clips the picture is not.
+>
+> **The documented failure mode was tested too and did not fire.** With a second
+> moving element added far from the player (an autoplaying sidebar ad, 200×150 at
+> x=1650), the detector reported **2 regions** and still returned the reel —
+> the largest-connected-region ranking does what §3b hoped it would, rather than
+> stretching one box across both.
+>
+> Still untested by this method, because it needs a human: scrolling during
+> capture (the whole page becomes motion), and a near-static clip with no motion
+> to find. Both remain **[U]**.
+
 **Honest limits — all of these need a human confirm, not blind trust:**
 - **Two moving things = one big box.** An autoplaying sidebar video, an animated
   ad, or a progress bar outside the player will stretch the bounding box to span
