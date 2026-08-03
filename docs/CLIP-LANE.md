@@ -246,10 +246,40 @@ sample ledger points back with `source_clip_hash` + `source_in_secs`.
 ```
 cd ~/projects/rectum
 python3 -m rectum displays          # left/right derived from the real arrangement
-python3 -m rectum toggle left       # <- what the Stream Deck key calls
+python3 -m rectum status --json     # <- the deck key reads this before deciding
+python3 -m rectum record left       # then `stop`; `toggle` also exists
 python3 -m rectum crop <hash>       # propose the video's rectangle
 python3 -m rectum list | search <term>
 ```
+
+The deck key calls `status --json` then `record` / `stop` — **not** `toggle`.
+It re-reads the truth before every decision rather than toggling blind.
+
+> **2026-08-03 — the deck path's first real use, and it failed.** Pressing LEFT
+> then RIGHT produced "failed" then "crashes out". One root cause, three
+> presses: `record` spawned the recorder and wrote its lockfile, the Stream Deck
+> app was quit ~30s later (cleanly — exit 0, no crash report), and that took the
+> capture down with it. **The lockfile survived**, so every press afterwards
+> tried to stop a corpse — SIGINT to a dead pid, `ProcessLookupError` swallowed,
+> a 20-second stall, "capture produced no file", forever. One dead recorder
+> became a permanently broken key.
+>
+> Fixed in `rectum@48d0cd3`: a lockfile is no longer evidence (the pid must be
+> alive **and be screencapture** — pids get recycled), `start()` watches the
+> recorder for 1.5 s before claiming success (measured: a bad `-G` device is
+> rejected in 0.36–0.92 s), and **stderr goes to a file rather than `DEVNULL`**,
+> which is why this took archaeology across three log directories instead of one
+> error string.
+>
+> **Three things it was NOT**, each killed by checking rather than assuming: the
+> Loopback device (live, correct UID), a wrong CLI verb (`record` is real), and
+> permissions (`kTCCServiceScreenCapture | com.elgato.StreamDeck | 2` — granted).
+>
+> **Still [U]: whether a deck-initiated capture works at all.** Both attempts had
+> the app quit under them inside 30 s, so the path has never been allowed to run
+> clean. The engine itself is fine — the plugin's exact command from a terminal
+> yields a real 1920×1080 clip with measured audio. Plugin logs live at
+> `obs-control-room/plugin/com.blessdog.obs-control-room.sdPlugin/logs/`.
 
 Deck: the plugin becomes **Control Room**, with an OBS page and a rectum page
 (Ryan, 2026-08-02) — one surface, one layout SSOT, one tripwire. See §3c.
