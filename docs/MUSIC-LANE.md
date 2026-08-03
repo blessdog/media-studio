@@ -95,7 +95,32 @@ URL / Internet Archive / local file
   → file to <card>/IMPORT      (blessdog/phase8_sp404/card.py)      BUILT
 ```
 Lives at **`~/projects/blessdog/phase8_sp404/`** per decision 1. Tests:
-`~/projects/blessdog/tests/test_sp404.py`, **51 passing**.
+`~/projects/blessdog/tests/test_sp404.py`, **55 passing**.
+
+> **PROVEN ON REAL AUDIO 2026-08-02** (`blessdog@edcf87b`) — until then it had
+> only seen synthesised sine waves. 10 samples / 476 MB now staged in
+> `music/sp404/`, ledger at `music/sp404-library.json`. Verified on real
+> commercial tracks: 44.1 kHz → 48 kHz/16-bit conversion, a 9.6-minute track at
+> 106 MB, source paths with spaces and parentheses, dedupe, the Demucs `stems`
+> verb end to end, and **loudness measured rather than probed** (the drums stem
+> reads mean −27 dB with −0.1 dB peaks — the correct percussive signature).
+>
+> Gap the real run exposed: **`bpm`/`key` were never populated** — the fields
+> existed and every test passed because the tests set them by hand. Fixed with
+> `--analyze`. Validated: Dirty Diana → 129.2 BPM / Gm, matching its documented
+> values. A second-order bug was caught inside that fix: a **drums stem
+> returned "D#m"**, because the estimator's confidence value was being
+> discarded. Measured — full mix 0.606, vocals 0.683, drums **0.287** — so key
+> is now suppressed below 0.45 and percussion reports tempo only.
+>
+> **Still not done:** `push` to a card has never run (no card exists); no
+> backfill path for entries added before `--analyze`; no `remove` verb; `add`
+> does not accept a directory. See STATUS.md §"Pipeline A — what is still NOT
+> done".
+>
+> **Material caveat:** the library currently holds commercial reference tracks.
+> Fine as pipeline practice; **samples cut from them must not reach published
+> videos.**
 Pushed: `blessdog@c4e0a60` (lane) and `blessdog@839a6c3` (clip-lane fields),
 branch `feat/sound-control`.
 
