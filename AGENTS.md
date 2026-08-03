@@ -110,28 +110,54 @@ plain scripts (`test_compile.py`, `test_registry.py`, `test_assembly.py`).
   | `~/Movies` | **FAILED** |
   | `/private/tmp/...` (scratchpad) | **COMPILED** |
 
-  Reproducible in both orders, and `~/Documents` fails too — a specifically
-  TCC-protected folder. Not a code regression: it breaks the repo's own
-  bread-and-butter video IR, the shape STATUS.md records as proven.
+  **The real rule, isolated 2026-08-02: OTIO import fails if the MEDIA lives
+  under `/Users`.** The interchange file's own location matters too but is
+  secondary. Both video and audio media are affected.
 
-  **CONFIRMED CAUSE — read the TCC database, do not eyeball the GUI:**
+  | Case | Result |
+  |---|---|
+  | media in `/private/tmp`, otio in `/private/tmp` | **COMPILES** |
+  | media in `/private/tmp`, otio under `/Users` | FAILS (staging the otio to `/private/tmp` fixes this half) |
+  | media under `/Users` (anywhere), otio staged | **FAILS** |
 
+  Since every real asset lives under `/Users` — recordings in `~/Movies`,
+  workspaces in `outputs/projects/` — **this breaks the whole compile lane**,
+  and staging only the interchange file does not rescue it.
+
+  **Ruled OUT by measurement, do not re-chase these:**
+  - *Not macOS TCC.* All grants read `2` (allowed) in both TCC databases —
+    `kTCCServiceSystemPolicyAllFiles`, `…DocumentsFolder`, `…DownloadsFolder`.
+    Reproduced after granting Full Disk Access and relaunching. (The grant WAS
+    genuinely denied at first — `auth_value=0` — so flipping it was correct and
+    necessary; it simply was not the cause.)
+  - *Not App Sandbox.* Resolve is a direct download: no sandbox entitlement, no
+    `_MASReceipt`, TeamIdentifier 9ZGFBWLSYP.
+  - *Not file permissions or volume.* `/Users/Shared` fails too and is neither
+    TCC-protected nor a different volume (all `/dev/disk3s5`).
+  - *Not malformed URLs.* Emitted `target_url`s are clean `file:///…`, no
+    spaces, no percent-encoding.
+  - *Not the interchange content.* BYTE-IDENTICAL files (same sha) imported
+    back-to-back into one project: `/private/tmp` OK, `/Users/Shared` REFUSED.
+  - *Not general file access.* `MediaStorage.AddItemListToMediaPool()` adds the
+    very same `/Users` file to the media pool successfully. Only the OTIO
+    importer refuses it.
+
+  Resolve's log says only `Import Log (Info) - Operation canceled.`
+
+  **Verify the TCC grant by DATABASE, never by the GUI** — an app is listed
+  under Privacy & Security merely for having *requested* a permission, and the
+  row looks identical whether the toggle is on or off:
   ```
   sqlite3 "/Library/Application Support/com.apple.TCC/TCC.db" \
     "select service,client,auth_value from access where client like '%esolve%';"
-  → kTCCServiceSystemPolicyAllFiles|com.blackmagic-design.DaVinciResolve|0
   ```
+  `auth_value`: 0 = denied, 1 = prompt, **2 = allowed**.
 
-  `auth_value` **0 = denied**, 1 = prompt, 2 = allowed. An app LISTED under
-  Privacy & Security has merely *requested* the permission — the list entry
-  looks identical whether the toggle is on or off, which is exactly how this
-  gets misread. The query above is ground truth; the settings pane is not.
-
-  **Fix:** System Settings → Privacy & Security → **Full Disk Access** (its own
-  pane, not Files & Folders) → toggle **DaVinci Resolve ON**, then quit and
-  relaunch (`scripts/restart_resolve.py`; never `pkill`). Jump there with
-  `open "x-apple.systempreferences:com.apple.preference.security?Privacy_AllFiles"`.
-  Re-run the sqlite3 query afterwards and require `2` before believing it.
+  **STATUS.md records this pipeline as proven working 2026-07-13**, so this is
+  an environment regression on this machine (Resolve 21.0.2.4 / macOS 26.5.2),
+  not a code regression. **[RYAN] — root cause still unknown; next candidates
+  are Resolve Preferences → System → **Media Storage** locations, and testing
+  a prior Resolve build.** Do not blame a code change for this.
   Same failure class as the OBS Screen-Recording TCC trap in
   `~/projects/obs-control-room/README.md`: every machine check passes and the
   call just returns failure. **Until this is granted, the whole compile lane is
