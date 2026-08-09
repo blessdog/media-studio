@@ -6,5 +6,10 @@ node_modules/
 *.local
 .DS_Store
 __pycache__/
-vendor/
+# Vendored trees are external checkouts and stay out of the repo — EXCEPT
+# pysion, which is a pinned source dependency the build genuinely needs.
+# `vendor/` alone cannot be negated (git will not descend into an excluded
+# directory), so the contents are excluded and pysion is re-included.
+vendor/*
+!vendor/pysion/
 .venv/

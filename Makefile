@@ -19,7 +19,8 @@ OFFLINE := tests/test_docs.py \
            tests/test_bongpot.py \
            tests/test_forge.py \
            tests/test_forge4.py \
-           tests/test_registry.py
+           tests/test_registry.py \
+           tests/test_theme_binding.py
 
 # Live tests drive Resolve. AGENTS.md §Hard doctrine: if GetCurrentPage()
 # returns None a modal dialog holds the UI and every result is void.

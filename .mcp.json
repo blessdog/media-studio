@@ -1,9 +1,9 @@
 {
   "mcpServers": {
     "davinci-resolve": {
-      "command": "/Users/SSDrive/projects/media-studio/vendor/davinci-resolve-mcp/venv/bin/python",
+      "command": "/Users/SSDrive/projects/mediaStudio/media-studio/vendor/davinci-resolve-mcp/venv/bin/python",
       "args": [
-        "/Users/SSDrive/projects/media-studio/vendor/davinci-resolve-mcp/src/server.py"
+        "/Users/SSDrive/projects/mediaStudio/media-studio/vendor/davinci-resolve-mcp/src/server.py"
       ],
       "env": {
         "RESOLVE_SCRIPT_API": "/Library/Application Support/Blackmagic Design/DaVinci Resolve/Developer/Scripting",

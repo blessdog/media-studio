@@ -1,0 +1,42 @@
+{
+  "name": "ink-wash",
+  "version": 1,
+  "description": "Sumi-e ink on aged paper. Ink is never pure black and never fully opaque; it stains the plate rather than sitting on it, so merge_mode is Multiply and edges are broken by texture rather than antialiased clean.",
+  "tokens": {
+    "ink": [
+      0.055,
+      0.048,
+      0.052,
+      1.0
+    ],
+    "ink_mid": [
+      0.24,
+      0.22,
+      0.21,
+      1.0
+    ],
+    "paper": [
+      0.902,
+      0.871,
+      0.804,
+      1.0
+    ],
+    "alert": [
+      0.706,
+      0.176,
+      0.114,
+      1.0
+    ],
+    "merge_mode": "Multiply",
+    "ink_opacity": 0.88,
+    "stroke_weight": 0.004,
+    "edge_softness": 0.014,
+    "texture_strength": 0.42,
+    "texture_scale": 6.5,
+    "bleed": 0.01,
+    "font_face": "Georgia",
+    "font_style": "Regular",
+    "font_size": 0.055,
+    "hold_frames": 3
+  }
+}

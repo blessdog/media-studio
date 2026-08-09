@@ -1,0 +1,424 @@
+<title>A Compiler for Explainer Film</title>
+
+<style>
+  :root {
+    --ground:      #F5F4F2;
+    --ground-2:    #EDEBE7;
+    --ink:         #12100F;
+    --graphite:    #6B6862;
+    --hairline:    #D6D2CA;
+    --paper:       #E6DECD;
+    --paper-edge:  #CFC4AC;
+    --cinnabar:    #B42D1D;
+    --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+    --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+    --measure: 66ch;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ground:     #141312;
+      --ground-2:   #1D1B19;
+      --ink:        #E8E4DC;
+      --graphite:   #9A948A;
+      --hairline:   #302D29;
+      --paper:      #D8CFBB;
+      --paper-edge: #8A8070;
+      --cinnabar:   #E0553F;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground:     #141312;
+    --ground-2:   #1D1B19;
+    --ink:        #E8E4DC;
+    --graphite:   #9A948A;
+    --hairline:   #302D29;
+    --paper:      #D8CFBB;
+    --paper-edge: #8A8070;
+    --cinnabar:   #E0553F;
+  }
+  :root[data-theme="light"] {
+    --ground:     #F5F4F2;
+    --ground-2:   #EDEBE7;
+    --ink:        #12100F;
+    --graphite:   #6B6862;
+    --hairline:   #D6D2CA;
+    --paper:      #E6DECD;
+    --paper-edge: #CFC4AC;
+    --cinnabar:   #B42D1D;
+  }
+
+  body {
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 17px;
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: var(--measure); margin: 0 auto; padding: 0 24px; }
+  .bleed { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+  /* The machine speaks in mono; the film speaks in Georgia. Every label,
+     figure and node name is mono. Every sentence is serif. */
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--graphite);
+  }
+
+  header { padding: 88px 0 40px; }
+  h1 {
+    font-size: clamp(34px, 6vw, 54px);
+    line-height: 1.06;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+    margin-top: 18px;
+  }
+  .standfirst {
+    font-size: clamp(19px, 2.4vw, 22px);
+    line-height: 1.5;
+    color: var(--graphite);
+    margin-top: 20px;
+    text-wrap: pretty;
+  }
+
+  section { padding: 34px 0; }
+  h2 {
+    font-size: 25px;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    margin-bottom: 14px;
+    text-wrap: balance;
+  }
+  h3 {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--graphite);
+    margin-bottom: 8px;
+  }
+  p { margin-bottom: 16px; text-wrap: pretty; }
+  p:last-child { margin-bottom: 0; }
+  strong { font-weight: 700; }
+  em { font-style: italic; }
+  code, .m { font-family: var(--mono); font-size: 0.86em; }
+
+  hr {
+    border: 0;
+    border-top: 1px solid var(--hairline);
+    margin: 12px 0;
+  }
+
+  /* ---- the pipeline band: full flow, mono, artifact passing between ---- */
+  .flow-band { background: var(--ground-2); border-block: 1px solid var(--hairline); padding: 44px 0; margin: 34px 0; }
+  .flow-scroll { overflow-x: auto; padding-bottom: 6px; }
+  .flow {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(168px, 1fr));
+    gap: 0;
+    min-width: 860px;
+  }
+  .stage { border-left: 1px solid var(--hairline); padding: 0 16px; }
+  .stage:first-child { border-left: 0; padding-left: 0; }
+  .stage-n {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em;
+    color: var(--cinnabar);
+  }
+  .stage-name {
+    font-family: var(--mono); font-size: 13px; font-weight: 600;
+    margin: 8px 0 4px; letter-spacing: -0.01em;
+  }
+  .stage-tool { font-family: var(--mono); font-size: 11px; color: var(--graphite); }
+  .stage-body { font-size: 14.5px; line-height: 1.5; margin-top: 12px; color: var(--ink); }
+  .handoff {
+    font-family: var(--mono); font-size: 10.5px; color: var(--graphite);
+    margin-top: 14px; padding-top: 10px; border-top: 1px dashed var(--hairline);
+  }
+  .handoff b { color: var(--ink); font-weight: 600; }
+
+  /* ---- measured figures ---- */
+  .figs {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 26px 20px; margin: 22px 0 6px;
+  }
+  .fig-n {
+    font-family: var(--mono); font-size: 27px; letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums; display: block;
+  }
+  .fig-l { font-size: 14px; line-height: 1.4; color: var(--graphite); margin-top: 4px; }
+
+  /* ---- the determinism proof ---- */
+  .proof { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin: 20px 0; }
+  @media (max-width: 560px) { .proof { grid-template-columns: 1fr; } }
+  .plate {
+    background: var(--paper); border: 1px solid var(--paper-edge);
+    padding: 16px; color: #12100F;
+  }
+  .plate .m { font-size: 11px; color: #5B5346; letter-spacing: 0.06em; }
+  .cells {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 3px;
+    margin-top: 10px; width: 108px;
+  }
+  .cell { aspect-ratio: 1; background: transparent; }
+  .cell.on { background: #12100F; }
+
+  /* ---- gates ---- */
+  .gate { border-left: 2px solid var(--hairline); padding: 2px 0 2px 16px; margin-bottom: 18px; }
+  .gate.caught { border-left-color: var(--cinnabar); }
+  .gate-h { font-family: var(--mono); font-size: 12.5px; font-weight: 600; margin-bottom: 4px; }
+  .gate p { font-size: 15px; margin-bottom: 0; }
+
+  /* ---- status ---- */
+  table { border-collapse: collapse; width: 100%; font-size: 15px; }
+  th, td { text-align: left; padding: 9px 10px 9px 0; border-bottom: 1px solid var(--hairline); vertical-align: top; }
+  th { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--graphite); font-weight: 400; }
+  td.s { font-family: var(--mono); font-size: 11.5px; white-space: nowrap; }
+  .built { color: var(--ink); }
+  .next  { color: var(--graphite); }
+
+  .note {
+    font-size: 14.5px; color: var(--graphite); border-top: 1px solid var(--hairline);
+    padding-top: 16px; margin-top: 8px;
+  }
+  footer { padding: 40px 0 80px; }
+</style>
+
+<header class="wrap">
+  <div class="eyebrow">Media Studio &middot; Pipeline Brief &middot; August 2026</div>
+  <h1>A compiler for explainer film.</h1>
+  <p class="standfirst">
+    The picture is generated. The explanation is compiled. They meet inside a
+    professional compositor — which is why the result can be beautiful and
+    exact at the same time.
+  </p>
+</header>
+
+<section class="wrap">
+  <h2>The problem with generated video</h2>
+  <p>
+    Generative video is good at spectacle and bad at argument. Ask a model for
+    sixteen identical envelopes and it returns eight different ones. That is
+    fatal for explanation, because explanation depends on <em>sameness</em>:
+    this is the same coin as before, this bar is exactly twice that one, this
+    mark matches that mark. A model that re-imagines every frame cannot promise
+    any of it.
+  </p>
+  <p>
+    Conventional motion graphics solve exactness and lose the picture — they
+    look like slide decks. Hand animation solves both and costs a studio.
+  </p>
+</section>
+
+<section class="wrap">
+  <h2>The insight</h2>
+  <p>
+    <strong>Separate the beautiful from the exact.</strong> Every frame has two
+    jobs, and they want opposite tools. The world — texture, light, atmosphere
+    — should be generated, because that is what diffusion is genuinely
+    exceptional at. The mechanism — the thing the viewer is supposed to
+    <em>learn</em> — should be compiled from code, because code can guarantee
+    what a model cannot.
+  </p>
+  <p>
+    Then composite them in DaVinci Resolve's Fusion, a node-based compositor
+    that shipped in Hollywood VFX before Blackmagic bought it. Not a wrapper
+    around it. Inside it, driven by its own scripting API.
+  </p>
+  <p>
+    Each visual recipe names the renderer it wants — a hosted image API, a
+    hosted node graph, or our own rented GPU — so the expensive question
+    ("where does this run?") is a line of configuration rather than a rewrite.
+    That seam is what lets cheap exploration and heavy generation share one
+    pipeline.
+  </p>
+</section>
+
+<div class="flow-band">
+  <div class="bleed">
+    <div class="eyebrow" style="margin-bottom:20px">The pipeline &middot; each stage hands a typed artifact to the next</div>
+    <div class="flow-scroll">
+      <div class="flow">
+        <div class="stage">
+          <div class="stage-n">01</div>
+          <div class="stage-name">Script</div>
+          <div class="stage-tool">film.json</div>
+          <div class="stage-body">The film as structured beats — one source of truth for text, timing and which visual each moment needs.</div>
+          <div class="handoff">→ <b>80 beats</b></div>
+        </div>
+        <div class="stage">
+          <div class="stage-n">02</div>
+          <div class="stage-name">Plates</div>
+          <div class="stage-tool">hosted API · or own GPU</div>
+          <div class="stage-body">The painted world. Generated stills carry 100% of the visual identity and none of the motion. Each recipe names its own renderer.</div>
+          <div class="handoff">→ <b>81 stills</b></div>
+        </div>
+        <div class="stage">
+          <div class="stage-n">03</div>
+          <div class="stage-name">Compile</div>
+          <div class="stage-tool">Python → .comp</div>
+          <div class="stage-body">Components emit Fusion node graphs. Structure from code; every colour and edge read from a theme file.</div>
+          <div class="handoff">→ <b>node graph</b> + hash</div>
+        </div>
+        <div class="stage">
+          <div class="stage-n">04</div>
+          <div class="stage-name">Composite</div>
+          <div class="stage-tool">Resolve · headless</div>
+          <div class="stage-body">The graph attaches to the plate, so ink multiplies <em>into</em> the paper instead of sitting on top of it.</div>
+          <div class="handoff">→ <b>timeline</b></div>
+        </div>
+        <div class="stage">
+          <div class="stage-n">05</div>
+          <div class="stage-name">Deliver</div>
+          <div class="stage-tool">Resolve Deliver</div>
+          <div class="stage-body">Master render, then platform cuts. The long film is the deliverable; shorts are cut from it.</div>
+          <div class="handoff">→ <b>film</b> + shorts</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="wrap">
+  <h2>Why this is defensible</h2>
+  <p>
+    The mark below is a pure function of a seed. Compile it twice with the same
+    seed and you get a byte-identical node graph; compile with a different seed
+    and you get a different mark. The film's entire security argument — <em>the
+    same coin always leaves the same trace, and a different coin cannot</em> —
+    is therefore enforced by the code that draws it, not promised in a prompt.
+  </p>
+  <div class="proof">
+    <div class="plate">
+      <div class="m">SEED 4471 · graph d61dab1c</div>
+      <div class="cells">
+        <div class="cell"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div>
+        <div class="cell"></div><div class="cell"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div>
+        <div class="cell"></div><div class="cell"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div>
+        <div class="cell on"></div><div class="cell on"></div><div class="cell"></div><div class="cell on"></div><div class="cell on"></div>
+        <div class="cell on"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+      </div>
+    </div>
+    <div class="plate">
+      <div class="m">SEED 9182 · graph a8d466f1</div>
+      <div class="cells">
+        <div class="cell on"></div><div class="cell"></div><div class="cell"></div><div class="cell on"></div><div class="cell"></div>
+        <div class="cell"></div><div class="cell on"></div><div class="cell"></div><div class="cell on"></div><div class="cell on"></div>
+        <div class="cell on"></div><div class="cell"></div><div class="cell on"></div><div class="cell"></div><div class="cell"></div>
+        <div class="cell"></div><div class="cell on"></div><div class="cell"></div><div class="cell on"></div><div class="cell"></div>
+        <div class="cell"></div><div class="cell"></div><div class="cell on"></div><div class="cell"></div><div class="cell"></div>
+      </div>
+    </div>
+  </div>
+  <p>
+    The two share 6 of 25 cells — distinguishable at a glance, which is the
+    pedagogical requirement. No diffusion model can offer that guarantee, and
+    no template library can either.
+  </p>
+  <p>
+    The second moat is <strong>the look is data.</strong> Palette, edge
+    softness, ink opacity, bleed and blend mode live in one theme file;
+    components read tokens and are structurally forbidden from containing a
+    colour. Changing the entire film's visual identity is one file. A test
+    proves it by compiling every component against a deliberately hostile
+    second theme and failing if the output doesn't change.
+  </p>
+</section>
+
+<section class="wrap">
+  <h2>Verification is the product</h2>
+  <p>
+    The expensive failure in an automated pipeline is not a crash. It is a run
+    that reports success and produces something subtly wrong, because every
+    downstream stage then carries the error forward and the final result looks
+    plausible. Three gates exist specifically to make that impossible.
+  </p>
+
+  <div class="gate">
+    <div class="gate-h">Graph manifest</div>
+    <p>Every tool, value, connection and keyframe is hashed before export and
+    re-read after import, then compared field by field. Counting nodes is not
+    enough — the count can match while the wiring is wrong.</p>
+  </div>
+  <div class="gate">
+    <div class="gate-h">Motion &amp; localisation</div>
+    <p>The render must actually move, in the window the component declared, in
+    the region it declared, while leaving the rest of the plate intact. A
+    static shape fails. A full-frame wash fails. A composite that replaced the
+    plate instead of staining it fails.</p>
+  </div>
+  <div class="gate">
+    <div class="gate-h">Exact environment</div>
+    <p>Product, version, project and timeline are all asserted before any
+    measurement is trusted.</p>
+  </div>
+  <div class="gate caught">
+    <div class="gate-h">What this already caught</div>
+    <p>Importing a composition silently discards the nodes that connect it to
+    the picture. The first round-trip returned all 18 nodes with correct names
+    and types — and rendered <em>nothing</em>, because the input was dangling
+    and there was no output node. A node-count check passes that. The manifest
+    gate did not.</p>
+  </div>
+</section>
+
+<section class="wrap">
+  <h2>What it produces, and what it costs to run</h2>
+  <div class="figs">
+    <div><span class="fig-n">12.5</span><div class="fig-l">frames per second compositing, measured end&#8209;to&#8209;end</div></div>
+    <div><span class="fig-n">~18<span style="font-size:16px"> min</span></span><div class="fig-l">to composite a 9½-minute film, projected from that rate</div></div>
+    <div><span class="fig-n">≤$1.20<span style="font-size:16px">/hr</span></span><div class="fig-l">hard ceiling on rented GPU, enforced in code; idle costs nothing</div></div>
+    <div><span class="fig-n">×N</span><div class="fig-l">throughput scales by renting N boxes and sharding work across them</div></div>
+  </div>
+  <p>
+    <strong>We rent the compute rather than the output.</strong> Heavy
+    generation runs on GPUs rented by the hour from a spot marketplace — the
+    tooling searches for capacity under a price cap, refuses unreliable hosts,
+    cycles automatically past dead ones, and destroys the box when the work is
+    done, at which point billing stops. Scaling up is renting more boxes; the
+    job shards across them over one tunnel each.
+  </p>
+  <p class="note">
+    Compositing throughput is measured on one workstation with no render farm.
+    Generation cost is hourly compute, not per-asset vendor pricing, so the
+    figure that actually governs unit economics is the <em>re-roll multiplier</em>
+    — how many candidates are generated per frame that ships. That number is not
+    yet instrumented on this lane, and any per-film cost quoted before it is
+    should be read as a floor rather than an estimate.
+  </p>
+</section>
+
+<section class="wrap">
+  <h2>Status, honestly</h2>
+  <table>
+    <thead>
+      <tr><th>Component</th><th>State</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="built">Compiler: Python → Fusion node graphs, with keyframes and arbitrary wiring</td><td class="s built">built</td></tr>
+      <tr><td class="built">Theme layer + the test that enforces style-independence</td><td class="s built">built</td></tr>
+      <tr><td class="built">Component contract, registry, tracked human-approval records</td><td class="s built">built</td></tr>
+      <tr><td class="built">Full round-trip: compile → import → render, verified in pixels</td><td class="s built">built</td></tr>
+      <tr><td class="built">Plate library for the first film</td><td class="s built">81 stills</td></tr>
+      <tr><td class="next">Reusable component library</td><td class="s next">2 of 10</td></tr>
+      <tr><td class="next">Verification gates wired into one command</td><td class="s next">in progress</td></tr>
+      <tr><td class="next">Full-film assembly from script to timeline</td><td class="s next">next</td></tr>
+    </tbody>
+  </table>
+  <p class="note">
+    The first title is a 9½-minute film explaining how a privacy currency
+    prevents double-spending. It is the proving ground, not the product — the
+    product is the pipeline that made it, and the tenth component is as reusable
+    as the first.
+  </p>
+</section>
+
+<footer class="wrap">
+  <hr>
+  <div class="eyebrow">
+    Figures marked measured were taken on DaVinci Resolve Studio 21.0.4.5, running headless.
+  </div>
+</footer>

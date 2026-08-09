@@ -1,0 +1,26 @@
+{
+  "name": "contrast-probe",
+  "version": 1,
+  "description": "NOT A SHIPPING LOOK. A permanent test fixture whose only job is to be maximally unlike ink-wash in every token, so tests/test_theme_binding.py can prove a component actually reads the theme it is handed. Deleting this file after one run destroys the proof for every future run — it stays. Every value here is deliberately the opposite of ink-wash: bright where ink-wash is dark, hard where it is soft, Screen where it is Multiply.",
+  "tokens": {
+    "ink": [0.98, 0.31, 0.02, 1.0],
+    "ink_mid": [0.99, 0.72, 0.15, 1.0],
+    "paper": [0.02, 0.03, 0.09, 1.0],
+    "alert": [0.11, 0.94, 0.53, 1.0],
+
+    "merge_mode": "Screen",
+    "ink_opacity": 0.31,
+
+    "stroke_weight": 0.019,
+    "edge_softness": 0.0,
+    "texture_strength": 0.0,
+    "texture_scale": 41.0,
+    "bleed": 0.0,
+
+    "font_face": "Courier New",
+    "font_style": "Bold",
+    "font_size": 0.11,
+
+    "hold_frames": 1
+  }
+}

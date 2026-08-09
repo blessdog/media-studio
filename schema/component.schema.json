@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://media-studio.local/schema/component-1.json",
+  "title": "Fusion Component Spec v1",
+  "description": "The durable component contract. This — not the .comp or .setting file — is what everything else contracts against. Fusion's serialization format is Blackmagic's, undocumented and version-drifting; a compiled .comp is build output, like a .o file. When Resolve changes that format, one emitter changes and every component declared here survives. `consumes` and `motion` are not documentation: the theme-binding test and verification gate 2 are generated from them, so a wrong declaration fails the build rather than misleading a reader.",
+  "type": "object",
+  "required": ["name", "version", "route", "consumes", "params", "motion"],
+  "additionalProperties": false,
+  "properties": {
+    "name": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]{1,31}$",
+      "description": "kebab-case, named for what it DOES, never how it looks. `callout`, not `ink-callout`."
+    },
+    "version": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Bump on any change to structure, params or motion. Bumping invalidates every approval record keyed to the old version."
+    },
+    "description": { "type": "string" },
+    "route": {
+      "enum": [1, 2],
+      "description": "1 = compiled to an alpha master and placed on an overlay track (recurring, text-bearing graphics; cached by content hash). 2 = comp attached directly to the plate clip, so MediaIn1 is the plate and the component can mask, displace and multiply INTO it. Route decides which form of verification gate 2 applies."
+    },
+    "consumes": {
+      "type": "array",
+      "items": { "type": "string" },
+      "uniqueItems": true,
+      "description": "Theme tokens this component reads. Enforced BOTH ways by tests/test_theme_binding.py: changing a listed token must change the compiled graph (catches a component that ignores the theme and hardcodes), and changing an unlisted one must not (catches undeclared coupling)."
+    },
+    "params": {
+      "type": "object",
+      "description": "Typed parameters the caller supplies per instance.",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["type"],
+        "additionalProperties": false,
+        "properties": {
+          "type": { "enum": ["number", "integer", "string", "boolean", "point", "region", "seed"] },
+          "description": { "type": "string" },
+          "default": {},
+          "minimum": { "type": "number" },
+          "maximum": { "type": "number" },
+          "required": { "type": "boolean", "default": false }
+        }
+      }
+    },
+    "duration": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "How the component behaves when its clip is trimmed. Route 1 components must use anim-curves so a trim stretches the motion instead of clipping it (docs/MOTION-GRAPHICS.md); Route 2 comps are bound to one clip's duration and may use fixed keyframes.",
+      "properties": {
+        "mode": { "enum": ["anim-curves", "fixed"] },
+        "minFrames": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "motion": {
+      "type": "array",
+      "description": "Declared motion windows. Gate 2 is GENERATED from this: inside a window the rendered inter-frame delta must exceed a floor, outside every window it must be about zero, and changed pixels must fall inside `region`. An empty array declares a component that never moves, and gate 2 will then require that it never moves.",
+      "items": {
+        "type": "object",
+        "required": ["from", "to", "region"],
+        "additionalProperties": false,
+        "properties": {
+          "label": { "type": "string" },
+          "from": { "type": "number", "minimum": 0, "description": "frame, or fraction of duration when duration.mode is anim-curves" },
+          "to": { "type": "number", "minimum": 0 },
+          "region": {
+            "type": "array",
+            "items": { "type": "number", "minimum": 0, "maximum": 1 },
+            "minItems": 4,
+            "maxItems": 4,
+            "description": "[x0, y0, x1, y1] in normalised frame coordinates. The changed-pixel bounding box must sit inside this. A component that declares the full frame [0,0,1,1] is asserting it legitimately repaints everything, and should say so deliberately."
+          },
+          "minAreaFraction": { "type": "number", "minimum": 0, "maximum": 1, "default": 0.0002 },
+          "maxAreaFraction": { "type": "number", "minimum": 0, "maximum": 1, "default": 1.0 }
+        }
+      }
+    }
+  }
+}
