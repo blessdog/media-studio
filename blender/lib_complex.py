@@ -34,7 +34,20 @@ TM = {
 BRIL_RESIDUES = list(range(1001, 1107))   # 5MZP: cytochrome b562 fusion in ICL3
 SCFV16_CHAIN = "E"                        # 6VMS: stabilising antibody fragment
 
-MEMBRANE_HALF_THICKNESS = 15.7            # A, from the OPM DUM planes of BOTH files
+MEMBRANE_HALF_THICKNESS = 15.7            # A, from the OPM DUM planes of 5MZP and 6VMS.
+                                          # 5G53's own OPM slab is 16.8 A -- depositions
+                                          # disagree by 1.1 A. One bilayer is chosen, and
+                                          # every protomer is aligned to it (see align_z).
+
+# Adenylyl cyclase 5 (UniProt O95622), fetched 2026-09-01. Twelve TM helices in
+# two cassettes, and two cytoplasmic catalytic domains that form the pseudo-
+# heterodimeric active site. AC5 is itself a membrane protein: it sits IN the
+# same bilayer as the receptors, not underneath it -- only its catalytic core
+# hangs into the cytoplasm. That is what "pre-coupled" looks like in space.
+TM_AC5 = {1: (196, 216), 2: (242, 262), 3: (268, 288), 4: (299, 319),
+          5: (325, 345), 6: (374, 394), 7: (770, 790), 8: (792, 812),
+          9: (836, 856), 10: (910, 930), 11: (935, 955), 12: (984, 1004)}
+CATALYTIC_AC5 = [(469, 596), (1071, 1210)]   # C1a and C2a, both cytoplasmic
 ANGSTROM = 0.01                           # Molecular Nodes world scale: 1 BU = 100 A
 
 
@@ -127,8 +140,11 @@ SPACING = 38.0   # A, centre-to-centre. CHOSEN (class A GPCR bundle diameter),
                  # not measured -- the interfaces give direction, not distance.
 
 CHAIN = [
-    ("A2A_ext", "A2A", "5mzp_opm_clean.pdb", None),
-    ("A2A_int", "A2A", "5mzp_opm_clean.pdb", None),
+    # A2A_ext carries Gs/olf, so it uses 5G53 (A2A + engineered Gs) rather than
+    # 5MZP, which has no G protein at all. A2A_int keeps 5MZP because that is
+    # the structure with caffeine in the pocket.
+    ("A2A_ext", "A2A", "5g53_opm_clean.pdb", "A"),
+    ("A2A_int", "A2A", "5mzp_opm_clean.pdb", "A"),
     ("D2_int",  "D2",  "6vms_opm_clean.pdb", "R"),
     ("D2_ext",  "D2",  "6vms_opm_clean.pdb", "R"),
 ]
@@ -160,10 +176,20 @@ def solve(asset_dir):
             cursor = cursor + heading * SPACING
 
     centre = np.mean([p["axis_xy"] for p in placed], axis=0)
-    for p, f in zip(placed, frames):
+    for p, f, (name, receptor, fname, chain) in zip(placed, frames, CHAIN):
         p["axis_xy"] = p["axis_xy"] - centre
-        loc = location_for(f, p["theta"], p["axis_xy"])
-        p["location_A"] = loc
+        x, y, _ = location_for(f, p["theta"], p["axis_xy"])
+        # Depositions disagree slightly about where the bilayer sits: measured
+        # 2026-09-01, D2's TM z-centroid is 3.4 A below A2A's, and 5G53's OPM
+        # slab is 1.1 A thicker than 5MZP's. There is ONE membrane, so every
+        # protomer's TM bundle is pulled onto a common z=0 rather than trusting
+        # four separate fits to agree.
+        pos, rid = read_ca(f"{asset_dir}/{fname}", chain=chain)
+        tm = np.zeros(len(rid), bool)
+        for lo, hi in TM[receptor].values():
+            tm |= (rid >= lo) & (rid <= hi)
+        p["tm_z_centroid"] = float(pos[tm][:, 2].mean())
+        p["location_A"] = (x, y, -p["tm_z_centroid"])
     return placed
 
 
@@ -182,3 +208,126 @@ if __name__ == "__main__":
     span = max(np.linalg.norm(a["axis_xy"] - b["axis_xy"])
                for a in ps for b in ps)
     print(f"\ntetramer longest span: {span:.1f} A")
+
+
+# --- orienting a structure that OPM does not carry --------------------------
+#
+# OPM has no entry for AC5 (8SL3 returns 404; the deposited model also stops at
+# residue 1042 and is missing the C2a catalytic domain entirely), so the
+# full-length AlphaFold model AF-O95622 is used and must be oriented here.
+#
+# The method is the standard one and is checkable: each TM helix's axis is its
+# first principal component; the membrane normal is the leading eigenvector of
+# the scatter matrix of those axes, which is sign-invariant and so does not care
+# that consecutive helices run in opposite directions. The sign is then fixed by
+# the one piece of topology that is not ambiguous -- the catalytic domains are
+# cytoplasmic, so the normal points away from them.
+
+def _helix_axis(ca):
+    c = ca - ca.mean(axis=0)
+    return np.linalg.svd(c, full_matrices=False)[2][0]
+
+
+def membrane_normal(positions, res_ids, tm_ranges, cyto_ranges):
+    axes = []
+    for lo, hi in tm_ranges.values():
+        m = (res_ids >= lo) & (res_ids <= hi)
+        if m.sum() >= 5:
+            axes.append(_helix_axis(positions[m]))
+    axes = np.asarray(axes)
+    scatter = axes.T @ axes                      # sign-invariant
+    n = np.linalg.eigh(scatter)[1][:, -1]
+    n /= np.linalg.norm(n)
+
+    tm = np.zeros(len(res_ids), bool)
+    for lo, hi in tm_ranges.values():
+        tm |= (res_ids >= lo) & (res_ids <= hi)
+    cyto = np.zeros(len(res_ids), bool)
+    for lo, hi in cyto_ranges:
+        cyto |= (res_ids >= lo) & (res_ids <= hi)
+    if cyto.sum() and np.dot(n, positions[cyto].mean(0) - positions[tm].mean(0)) > 0:
+        n = -n                                   # normal points extracellular
+    return n, len(axes)
+
+
+def rotation_to_z(n):
+    """Rotation matrix taking unit vector n onto +Z (Rodrigues)."""
+    z = np.array([0.0, 0.0, 1.0])
+    v = np.cross(n, z)
+    s, c = np.linalg.norm(v), float(np.dot(n, z))
+    if s < 1e-9:
+        return np.eye(3) if c > 0 else np.diag([1.0, -1.0, -1.0])
+    vx = np.array([[0, -v[2], v[1]], [v[2], 0, -v[0]], [-v[1], v[0], 0]])
+    return np.eye(3) + vx + vx @ vx * ((1 - c) / s ** 2)
+
+
+def orient_report(pdb_path, tm_ranges, cyto_ranges, chain=None):
+    """Orient a structure to the membrane and MEASURE how well it worked.
+
+    Returns the transform plus the fraction of TM alpha-carbons that land inside
+    the bilayer slab. A membrane protein that is correctly oriented puts nearly
+    all of them there; a number well under ~0.85 means the normal is wrong and
+    the result must not be rendered.
+    """
+    pos, rid = read_ca(pdb_path, chain=chain)
+    n, n_helices = membrane_normal(pos, rid, tm_ranges, cyto_ranges)
+    R = rotation_to_z(n)
+    rot = pos @ R.T
+    tm = np.zeros(len(rid), bool)
+    for lo, hi in tm_ranges.values():
+        tm |= (rid >= lo) & (rid <= hi)
+    dz = -rot[tm][:, 2].mean()
+    inside = np.abs(rot[tm][:, 2] + dz) <= MEMBRANE_HALF_THICKNESS
+    return {"R": R, "dz": float(dz), "normal": n, "n_helices": n_helices,
+            "tm_in_slab": float(inside.mean()), "n_tm_ca": int(tm.sum())}
+
+
+def place_ac5(asset_dir, protomers, clearance=9.0):
+    """Find where AC5 sits in the membrane relative to the tetramer.
+
+    AC5 is a membrane protein, so it goes IN the bilayer beside the receptors,
+    with its catalytic core in the cytoplasm -- not floating underneath. The
+    model requires it to be reachable by the G proteins on BOTH external
+    protomers, which sit at opposite ends of the rhombus, so it is pushed out
+    perpendicular to the long axis just far enough to stop clashing.
+
+    Distance is searched, not chosen: the returned offset is the smallest one
+    whose closest TM alpha-carbon approach to any receptor clears `clearance`.
+    """
+    r = orient_report(f"{asset_dir}/ac5_af_confident.pdb", TM_AC5, CATALYTIC_AC5)
+    pos, rid = read_ca(f"{asset_dir}/ac5_af_confident.pdb")
+    tm = np.zeros(len(rid), bool)
+    for lo, hi in TM_AC5.values():
+        tm |= (rid >= lo) & (rid <= hi)
+    ac5_tm = (pos @ r["R"].T)[tm]
+    ac5_tm[:, 2] += r["dz"]
+
+    recep = []
+    for p in protomers:
+        rp, rr = read_ca(f"{asset_dir}/{p['file']}", chain=p["chain"])
+        m = np.zeros(len(rr), bool)
+        for lo, hi in TM[p["receptor"]].values():
+            m |= (rr >= lo) & (rr <= hi)
+        q = _rot2_many(rp[m][:, :2], p["theta"])
+        recep.append(np.column_stack([q[:, 0] + p["location_A"][0],
+                                      q[:, 1] + p["location_A"][1]]))
+    recep = np.vstack(recep)
+
+    long_axis = protomers[-1]["axis_xy"] - protomers[0]["axis_xy"]
+    perp = np.array([-long_axis[1], long_axis[0]])
+    perp /= np.linalg.norm(perp)
+
+    for d in np.arange(20.0, 140.0, 2.0):
+        c = perp * d
+        gap = np.min(np.linalg.norm(
+            ac5_tm[:, None, :2] + c - recep[None, :, :], axis=2))
+        if gap >= clearance:
+            return {**r, "offset_xy": (float(c[0]), float(c[1])),
+                    "distance_A": float(d), "closest_approach_A": float(gap)}
+    raise RuntimeError("no clash-free AC5 placement found out to 140 A")
+
+
+def _rot2_many(v, theta):
+    c, s = np.cos(theta), np.sin(theta)
+    return np.column_stack([c * v[:, 0] - s * v[:, 1],
+                            s * v[:, 0] + c * v[:, 1]])
