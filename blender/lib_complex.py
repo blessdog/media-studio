@@ -331,3 +331,47 @@ def _rot2_many(v, theta):
     c, s = np.cos(theta), np.sin(theta)
     return np.column_stack([c * v[:, 0] - s * v[:, 1],
                             s * v[:, 0] + c * v[:, 1]])
+
+
+# --- putting a ligand from one structure into another structure's pocket ----
+
+def read_hetatm(path, resname):
+    """All atoms of one ligand -> (positions Nx3, element symbols)."""
+    pos, el = [], []
+    for line in open(path):
+        if line.startswith("HETATM") and line[17:20].strip() == resname:
+            pos.append((float(line[30:38]), float(line[38:46]), float(line[46:54])))
+            el.append(line[76:78].strip() or line[12:16].strip()[0])
+    return np.asarray(pos), el
+
+
+def superpose(mobile_path, target_path, receptor, mobile_chain=None,
+              target_chain=None):
+    """Kabsch superposition on shared TM alpha-carbons.
+
+    Standard algorithm (Kabsch 1976), three lines of SVD -- not reimplemented
+    out of NIH, but because pulling in a structural-bioinformatics dependency to
+    rotate one 24-atom ligand is a worse trade than the SVD itself.
+
+    Used to put a ligand solved in ONE structure into the pocket of another:
+    adenosine is only resolved in 2YDO, caffeine only in 5MZP, and the story
+    needs both competing for the SAME site. Returns the transform plus the RMSD,
+    which is the check -- two structures of the same receptor should land well
+    under 2 A, and anything above that means the correspondence is wrong.
+    """
+    mp, mr = read_ca(mobile_path, chain=mobile_chain)
+    tp, tr = read_ca(target_path, chain=target_chain)
+    tm = set()
+    for lo, hi in TM[receptor].values():
+        tm |= set(range(lo, hi + 1))
+    shared = sorted(tm & set(mr.tolist()) & set(tr.tolist()))
+    mi = {r: i for i, r in enumerate(mr.tolist())}
+    ti = {r: i for i, r in enumerate(tr.tolist())}
+    P = mp[[mi[r] for r in shared]]
+    Q = tp[[ti[r] for r in shared]]
+    pc, qc = P.mean(0), Q.mean(0)
+    U, S, Vt = np.linalg.svd((P - pc).T @ (Q - qc))
+    d = np.sign(np.linalg.det(Vt.T @ U.T))
+    R = Vt.T @ np.diag([1.0, 1.0, d]) @ U.T
+    rmsd = float(np.sqrt((((P - pc) @ R.T - (Q - qc)) ** 2).sum(1).mean()))
+    return {"R": R, "t": qc - R @ pc, "rmsd": rmsd, "n_shared": len(shared)}
