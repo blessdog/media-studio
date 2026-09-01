@@ -3,7 +3,7 @@
 
 # media-studio — STATE
 
-*Generated 2026-09-01 13:16 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
+*Generated 2026-09-01 13:49 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
 
 ## What is open
 
@@ -41,6 +41,9 @@ VERDICTS — measured, and SCOPED; check the scope before reusing
 *From git. The full narrative lives in `docs/journal/`; commit subjects are written as search bait, so `git log --grep` is the index.*
 
 ```
+2026-09-01  f93e437  journal 2026-09-01: the caffeine complex, and the gate that refuses or-gates
+2026-09-01  30caeb3  mechanism scene: adenosine and caffeine measured into the SAME pocket, 1.8 A apart
+2026-09-01  f37f3f2  STATE regenerated: molecular lane lands, knowledge store opens with two claims
 2026-09-01  0aaf02d  AC5 pre-coupled, Gs on the external A2A, and the AlphaFold spaghetti culled
 2026-09-01  fc364fd  STATE regenerated: the unpushed warning clears, master is remote
 2026-09-01  f7f89bb  STATE regenerated: the tracked status layer picks up its own first commit
@@ -50,14 +53,11 @@ VERDICTS — measured, and SCOPED; check the scope before reusing
 2026-09-01  1da4369  molecular lane: Molecular Nodes renders headless without giving up --factory-startup
 2026-09-01  28a7114  molecular lane research: A2A-D2 heterotetramer + AC5, verified PDB parts list, Molecular Nodes is the tool
 2026-08-18  232a3d5  README journey: install-day gauntlet, Story IR contract, the gate that made tests real
-2026-08-08  7aca2d9  chore: WIP safety snapshot before backup setup
-2026-08-03  565ffb4  concurrency + doc authority: worktrees instead of two agents on master, and one truth hierarchy
-2026-08-03  a6ff854  crop VERIFIED against ground truth, obs-control-room backed up, and the emitter is next
 ```
 
 ### ⚠ UNPUSHED
 
-**1 commit(s) ahead of `origin/master`.** Committed is not the same as safe — a commit that has not left this machine has the durability of the disk it is on.
+**4 commit(s) ahead of `origin/master`.** Committed is not the same as safe — a commit that has not left this machine has the durability of the disk it is on.
 
 ```
 git push origin master
@@ -67,6 +67,7 @@ git push origin master
 
 ```
  M STATE.md
+ M blender/tetramer-mechanism.py
 ```
 
 *Uncommitted is not learned. Commit at the moment of learning.*
