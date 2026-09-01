@@ -13,6 +13,14 @@ from pathlib import Path
 
 BLENDER = Path("/Applications/Blender.app/Contents/MacOS/Blender")
 
+# Add-ons enabled explicitly on the command line rather than inherited from the
+# user's preferences. --factory-startup skips preferences, which is what makes a
+# render a pure function of the scene script -- and is also why an add-on
+# installed through the UI is invisible here. --addons restores exactly the ones
+# we declare, so the enabled set is versioned in this file instead of depending
+# on what someone clicked in Blender last month. Determinism is kept, not traded.
+ADDONS = ("bl_ext.blender_org.molecularnodes",)
+
 
 class BlenderError(RuntimeError):
     pass
@@ -40,6 +48,7 @@ def render_scene(scene_script, out_path, frames=48, fps=24,
     tmp = Path(tempfile.mkdtemp(prefix="ms-blender-"))
     try:
         cmd = [str(binary()), "--background", "--factory-startup",
+               "--addons", ",".join(ADDONS),
                "--python", str(scene_script), "--",
                str(tmp / "frame_"), str(frames), str(fps),
                str(width), str(height), *[str(a) for a in extra]]
