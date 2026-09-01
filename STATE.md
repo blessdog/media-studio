@@ -3,7 +3,7 @@
 
 # media-studio — STATE
 
-*Generated 2026-09-01 14:17 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
+*Generated 2026-09-01 17:23 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
 
 ## What is open
 
@@ -41,6 +41,7 @@ VERDICTS — measured, and SCOPED; check the scope before reusing
 *From git. The full narrative lives in `docs/journal/`; commit subjects are written as search bait, so `git log --grep` is the index.*
 
 ```
+2026-09-01  1477658  STATE regenerated: mechanism render and evidence land
 2026-09-01  81919d5  evidence: mechanism beat contact sheet and assembled tetramer still
 2026-09-01  f41c2d5  mechanism legibility: oversized ligands, gated markers, and a camera that travels
 2026-09-01  a133e54  STATE regenerated: mechanism scene and journal land
@@ -52,12 +53,11 @@ VERDICTS — measured, and SCOPED; check the scope before reusing
 2026-09-01  f7f89bb  STATE regenerated: the tracked status layer picks up its own first commit
 2026-09-01  ff23af9  STATE.md generated for media-studio: the status layer lands in the repo
 2026-09-01  8b98857  knowledge store: the tetramer is a rhombus, and scaffolds never go on screen
-2026-09-01  109eb1d  tetramer assembled: measured interface geometry says the complex is a rhombus, not a line
 ```
 
 ### ⚠ UNPUSHED
 
-**7 commit(s) ahead of `origin/master`.** Committed is not the same as safe — a commit that has not left this machine has the durability of the disk it is on.
+**8 commit(s) ahead of `origin/master`.** Committed is not the same as safe — a commit that has not left this machine has the durability of the disk it is on.
 
 ```
 git push origin master
