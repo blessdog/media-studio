@@ -120,7 +120,10 @@ def blob(name, loc, radius, material):
     return o
 
 
-def ligand(name, positions, material, radius=1.5):
+LIGAND_RADIUS = 3.4   # A. NOT van der Waals -- legibility, chosen.
+
+
+def ligand(name, positions, material, radius=LIGAND_RADIUS):
     """One sphere per heavy atom, parented to an empty that can be animated."""
     bpy.ops.object.empty_add(location=(0, 0, 0))
     root = bpy.context.object
@@ -194,7 +197,7 @@ gap = np.linalg.norm(adn_local.mean(0) - cff_local.mean(0))
 print(f"adenosine/caffeine centroid separation {gap:.1f} A -- same pocket")
 
 pocket = world(a2a_int, adn_local.mean(0))
-above = (pocket[0], pocket[1], pocket[2] + 90 * A)
+above = (pocket[0], pocket[1], pocket[2] + 42 * A)
 
 adn = ligand("adenosine", adn_local, M_ADEN)
 cff = ligand("caffeine", cff_local, M_CFF)
@@ -216,8 +219,13 @@ key_loc(adn, 1, above); key_loc(adn, t, above)
 key_loc(cff, 1, above); key_loc(cff, t, above)
 key_emit(M_PULSE, 1, 0.0); key_emit(M_PULSE, t, 0.0)
 key_emit(M_DOPA, 1, 6.0); key_emit(M_DOPA, t, 6.0)
-key_scale(dopa, 1, 1.0); key_scale(dopa, t, 1.0)
 key_loc(pulse, 1, pocket); key_loc(pulse, t, pocket)
+# Both markers are anchored to coordinates the assembled complex defines, so
+# before assembly they would hang in empty space asserting a site that is not
+# there yet. Scaled to nothing until the protomers arrive.
+key_scale(dopa, 1, 0.001); key_scale(dopa, t - F(0.25), 0.001)
+key_scale(dopa, t, 1.0)
+key_scale(pulse, 1, 0.001); key_scale(pulse, t, 0.001)
 
 # adenosine lands
 t2 = t + T_ADEN
@@ -227,6 +235,10 @@ key_loc(adn, t2, pocket)
 t3 = t2 + T_CROSS
 key_emit(M_PULSE, t2, 0.0)
 key_emit(M_PULSE, t2 + F(0.15), 9.0)
+key_scale(pulse, t2, 0.001)
+key_scale(pulse, t2 + F(0.15), 1.0)
+key_scale(pulse, t3, 1.0)
+key_scale(pulse, t3 + F(0.12), 0.001)
 key_loc(pulse, t2, pocket)
 key_loc(pulse, t2 + T_CROSS // 2, mid)
 key_loc(pulse, t3, dopa_at)
@@ -255,24 +267,31 @@ print(f"beat sheet: assembled@{assembled} adenosine@{t2} crossed@{t3} "
       f"caffeine@{t4} restored@{t5} of {total} frames")
 
 # --- membrane, framing, light ----------------------------------------------
-memb = mat("memb", (0.28, 0.32, 0.46), rough=0.9, alpha=0.045)
+memb = mat("memb", (0.28, 0.32, 0.46), rough=0.9, alpha=0.03)
 for z in (+lc.MEMBRANE_HALF_THICKNESS, -lc.MEMBRANE_HALF_THICKNESS):
-    bpy.ops.mesh.primitive_plane_add(size=9.0, location=(0, 0, z * A))
+    bpy.ops.mesh.primitive_plane_add(size=40.0, location=(0, 0, z * A))
     bpy.context.object.data.materials.append(memb)
 
 bpy.context.scene.frame_set(total)
 bpy.context.view_layer.update()
 dg = bpy.context.evaluated_depsgraph_get()
+STRUCTURAL = set(ORDER) | {"AC5"}
 pts = []
 for o in scene.objects:
-    if o.type != "MESH" or "Plane" in o.name:
+    if o.type != "MESH" or o.name.split(".")[0] not in STRUCTURAL:
         continue
     ev = o.evaluated_get(dg)
     if ev.data and len(ev.data.vertices):
         pts += [o.matrix_world @ v.co for v in ev.data.vertices]
+if not pts:
+    raise RuntimeError("framing found no structural geometry -- check names: "
+                       + ", ".join(sorted(o.name for o in scene.objects)))
 xs = [p.x for p in pts]; ys = [p.y for p in pts]; zs = [p.z for p in pts]
 centre = ((min(xs) + max(xs)) / 2, (min(ys) + max(ys)) / 2, (min(zs) + max(zs)) / 2)
 radius = max(max(xs) - min(xs), max(ys) - min(ys), max(zs) - min(zs)) / 2
+print(f"framing on {len(pts)} verts of {len(STRUCTURAL)} structures: "
+      f"extent {(max(xs)-min(xs))/A:.0f} x {(max(ys)-min(ys))/A:.0f} x "
+      f"{(max(zs)-min(zs))/A:.0f} A, radius {radius/A:.0f} A")
 
 scene.world = bpy.data.worlds.new("w")
 scene.world.use_nodes = True
@@ -301,6 +320,13 @@ cam.matrix_parent_inverse = pivot.matrix_world.inverted()
 cam.data.lens = LENS
 cam.constraints.new("TRACK_TO").target = pivot
 scene.camera = cam
+
+WIDE = cam.location.copy()
+CLOSE = WIDE * 0.62
+for frame, where in ((1, WIDE), (assembled, WIDE), (t2, CLOSE), (t4, CLOSE),
+                     (t5, WIDE)):
+    cam.location = where
+    cam.keyframe_insert("location", frame=frame)
 
 bpy.context.preferences.edit.keyframe_new_interpolation_type = "BEZIER"
 pivot.rotation_euler = (0, 0, -0.35)
