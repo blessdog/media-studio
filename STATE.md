@@ -3,7 +3,7 @@
 
 # media-studio — STATE
 
-*Generated 2026-09-01 13:49 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
+*Generated 2026-09-01 14:17 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
 
 ## What is open
 
@@ -41,6 +41,9 @@ VERDICTS — measured, and SCOPED; check the scope before reusing
 *From git. The full narrative lives in `docs/journal/`; commit subjects are written as search bait, so `git log --grep` is the index.*
 
 ```
+2026-09-01  81919d5  evidence: mechanism beat contact sheet and assembled tetramer still
+2026-09-01  f41c2d5  mechanism legibility: oversized ligands, gated markers, and a camera that travels
+2026-09-01  a133e54  STATE regenerated: mechanism scene and journal land
 2026-09-01  f93e437  journal 2026-09-01: the caffeine complex, and the gate that refuses or-gates
 2026-09-01  30caeb3  mechanism scene: adenosine and caffeine measured into the SAME pocket, 1.8 A apart
 2026-09-01  f37f3f2  STATE regenerated: molecular lane lands, knowledge store opens with two claims
@@ -50,14 +53,11 @@ VERDICTS — measured, and SCOPED; check the scope before reusing
 2026-09-01  ff23af9  STATE.md generated for media-studio: the status layer lands in the repo
 2026-09-01  8b98857  knowledge store: the tetramer is a rhombus, and scaffolds never go on screen
 2026-09-01  109eb1d  tetramer assembled: measured interface geometry says the complex is a rhombus, not a line
-2026-09-01  1da4369  molecular lane: Molecular Nodes renders headless without giving up --factory-startup
-2026-09-01  28a7114  molecular lane research: A2A-D2 heterotetramer + AC5, verified PDB parts list, Molecular Nodes is the tool
-2026-08-18  232a3d5  README journey: install-day gauntlet, Story IR contract, the gate that made tests real
 ```
 
 ### ⚠ UNPUSHED
 
-**4 commit(s) ahead of `origin/master`.** Committed is not the same as safe — a commit that has not left this machine has the durability of the disk it is on.
+**7 commit(s) ahead of `origin/master`.** Committed is not the same as safe — a commit that has not left this machine has the durability of the disk it is on.
 
 ```
 git push origin master
@@ -67,7 +67,6 @@ git push origin master
 
 ```
  M STATE.md
- M blender/tetramer-mechanism.py
 ```
 
 *Uncommitted is not learned. Commit at the moment of learning.*
