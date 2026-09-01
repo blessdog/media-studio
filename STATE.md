@@ -3,7 +3,7 @@
 
 # media-studio — STATE
 
-*Generated 2026-09-01 12:49 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
+*Generated 2026-09-01 13:04 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
 
 ## What is open
 
@@ -41,6 +41,7 @@ VERDICTS — measured, and SCOPED; check the scope before reusing
 *From git. The full narrative lives in `docs/journal/`; commit subjects are written as search bait, so `git log --grep` is the index.*
 
 ```
+2026-09-01  f7f89bb  STATE regenerated: the tracked status layer picks up its own first commit
 2026-09-01  ff23af9  STATE.md generated for media-studio: the status layer lands in the repo
 2026-09-01  8b98857  knowledge store: the tetramer is a rhombus, and scaffolds never go on screen
 2026-09-01  109eb1d  tetramer assembled: measured interface geometry says the complex is a rhombus, not a line
@@ -52,16 +53,9 @@ VERDICTS — measured, and SCOPED; check the scope before reusing
 2026-08-03  a6ff854  crop VERIFIED against ground truth, obs-control-room backed up, and the emitter is next
 2026-08-03  2dec08b  CLIP-LANE: download beats filming, and the deck's silent failure was a DENIED audio-capture permission
 2026-08-03  f0203d8  the gate: nothing ran the tests, so nothing enforced anything — make check + pre-commit hook, and STATUS.md split into a 102-line reference
-2026-08-03  9f9c6cb  docs: engineering audit + onboarding guide (parallel session 2026-08-03, was uncommitted)
 ```
 
-### ⚠ UNPUSHED
-
-**5 commit(s) ahead of `origin/master`.** Committed is not the same as safe — a commit that has not left this machine has the durability of the disk it is on.
-
-```
-git push origin master
-```
+*Remote: `https://github.com/blessdog/media-studio.git` — `master` is pushed.*
 
 ### Uncommitted
 
@@ -74,6 +68,8 @@ git push origin master
 ?? blender/assets/pdb/8sl3.cif
 ?? blender/assets/pdb/8sl3.pdb
 ?? blender/assets/pdb/ac5_af.pdb
+?? blender/assets/pdb/ac5_af_confident.pdb
+?? blender/assets/pdb/prep-alphafold.py
 ```
 
 *Uncommitted is not learned. Commit at the moment of learning.*
