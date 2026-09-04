@@ -22,7 +22,7 @@ the dopamine marker at D2. No dopamine-bound D2 structure exists to borrow from
 (6VMS carries no ligand), so it is anchored to Asp114 -- the conserved TM3
 aspartate that binds the ligand amine -- and never pretends to be coordinates.
 
-Run via studio/blender.py (headless, --factory-startup + --addons).
+Run via tools/forge-blender.py (headless, --factory-startup + --addons).
 """
 import math
 import sys
@@ -33,15 +33,17 @@ import numpy as np
 from mathutils import Matrix
 import bl_ext.blender_org.molecularnodes as mn
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
-import lib_complex as lc
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "blender"))
+import complex as cx
+import lib_membrane as mb
 
 frames_pattern, frames, fps, width, height = \
     sys.argv[sys.argv.index("--") + 1:][:5]
 frames, fps, width, height = int(frames), int(fps), int(width), int(height)
 
-ASSETS = str(Path(__file__).resolve().parent / "assets" / "pdb")
-A = lc.ANGSTROM
+ASSETS = cx.STRUCTURES
+A = cx.ANGSTROM
 
 # --- beat sheet, in frames at the requested fps ----------------------------
 def F(sec):
@@ -135,11 +137,11 @@ def ligand(name, positions, material, radius=LIGAND_RADIUS):
     return root
 
 
-protomers = lc.solve(ASSETS)
+protomers = cx.solve(ASSETS)
 by_name = {p["name"]: p for p in protomers}
 
 # --- AC5 first: it is already there ----------------------------------------
-ac5 = lc.place_ac5(ASSETS, protomers)
+ac5 = cx.place_ac5(ASSETS, protomers)
 m = mn.Molecule.load(f"{ASSETS}/ac5_af_confident.pdb", name="AC5")
 m.add_style(mn.StyleCartoon(quality=2, peptide_thickness=0.6),
             selection=mn.MoleculeSelector().is_peptide(), material=M_AC5)
@@ -155,7 +157,7 @@ for i, name in enumerate(ORDER):
     p = by_name[name]
     mol = mn.Molecule.load(f"{ASSETS}/{p['file']}", name=name)
     if p["receptor"] == "A2A":
-        sel = mn.MoleculeSelector().chain_id(p["chain"]).not_res_id(lc.BRIL_RESIDUES)
+        sel = mn.MoleculeSelector().chain_id(p["chain"]).not_res_id(cx.BRIL_RESIDUES)
         material = M_A2A
     else:
         sel = mn.MoleculeSelector().chain_id(p["chain"])
@@ -188,11 +190,11 @@ assembled = max(arrive_end.values()) + T_SETTLE
 
 # --- ligands, placed by superposition --------------------------------------
 a2a_int = by_name["A2A_int"]
-sup = lc.superpose(f"{ASSETS}/2ydo_opm_clean.pdb", f"{ASSETS}/{a2a_int['file']}",
-                   "A2A", mobile_chain="A", target_chain=a2a_int["chain"])
+sup = mb.superpose(f"{ASSETS}/2ydo_opm_clean.pdb", f"{ASSETS}/{a2a_int['file']}",
+                   cx.TM["A2A"], mobile_chain="A", target_chain=a2a_int["chain"])
 print(f"2YDO->5MZP RMSD {sup['rmsd']:.2f} A over {sup['n_shared']} CAs")
-adn_local = lc.read_hetatm(f"{ASSETS}/2ydo_opm_clean.pdb", "ADN")[0] @ sup["R"].T + sup["t"]
-cff_local = lc.read_hetatm(f"{ASSETS}/{a2a_int['file']}", "CFF")[0]
+adn_local = mb.read_hetatm(f"{ASSETS}/2ydo_opm_clean.pdb", "ADN")[0] @ sup["R"].T + sup["t"]
+cff_local = mb.read_hetatm(f"{ASSETS}/{a2a_int['file']}", "CFF")[0]
 gap = np.linalg.norm(adn_local.mean(0) - cff_local.mean(0))
 print(f"adenosine/caffeine centroid separation {gap:.1f} A -- same pocket")
 
@@ -204,7 +206,7 @@ cff = ligand("caffeine", cff_local, M_CFF)
 
 # dopamine marker: schematic, anchored to D2 Asp114 (conserved TM3 aspartate)
 d2_int = by_name["D2_int"]
-pos, rid = lc.read_ca(f"{ASSETS}/{d2_int['file']}", chain=d2_int["chain"])
+pos, rid = mb.read_ca(f"{ASSETS}/{d2_int['file']}", chain=d2_int["chain"])
 asp114 = pos[np.argmin(np.abs(rid - 114))]
 dopa_at = world(d2_int, asp114)
 dopa = blob("dopamine-response", dopa_at, 5.0 * A, M_DOPA)
@@ -268,7 +270,7 @@ print(f"beat sheet: assembled@{assembled} adenosine@{t2} crossed@{t3} "
 
 # --- membrane, framing, light ----------------------------------------------
 memb = mat("memb", (0.28, 0.32, 0.46), rough=0.9, alpha=0.03)
-for z in (+lc.MEMBRANE_HALF_THICKNESS, -lc.MEMBRANE_HALF_THICKNESS):
+for z in (+cx.MEMBRANE_HALF_THICKNESS, -cx.MEMBRANE_HALF_THICKNESS):
     bpy.ops.mesh.primitive_plane_add(size=40.0, location=(0, 0, z * A))
     bpy.context.object.data.materials.append(memb)
 

@@ -5,7 +5,7 @@ OPM appends rows of DUM "atoms" marking the two hydrophobic boundary planes.
 They are not chemistry and biotite rejects the file because of them
 ('' cannot be parsed into a number). Their ONLY payload is the membrane
 half-thickness, which is already recorded as a measured constant in
-blender/lib_complex.py (MEMBRANE_HALF_THICKNESS = 15.7 A, identical in both
+jobs/caffeine/complex.py (MEMBRANE_HALF_THICKNESS = 15.7 A, identical in both
 5MZP and 6VMS). Nothing is lost by dropping them here.
 
     python3 prep-opm.py            # rewrites *_opm.pdb -> *_opm_clean.pdb

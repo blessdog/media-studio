@@ -10,14 +10,14 @@ Beats 3-5 and 7 of the caffeine explainer, in one scene:
 
 PRIOR ART: Molecular Nodes builds all molecular geometry. OPM supplies membrane
 orientation for the receptors. UniProt supplies TM helix ranges. blender/
-lib_complex.py answers only what those cannot: relative placement, and the
+jobs/caffeine/complex.py answers only what those cannot: relative placement, and the
 membrane normal for AC5 (which OPM has no entry for).
 
 SCAFFOLDS HIDDEN, because they are not in a striatal neuron:
   5MZP residues 1001-1106  bRIL (cytochrome b562) fusion in ICL3
   6VMS chain E             scFv16 stabilising antibody fragment
 
-Run via studio/blender.py (headless, --factory-startup + --addons).
+Run via tools/forge-blender.py (headless, --factory-startup + --addons).
 """
 import math
 import sys
@@ -28,15 +28,17 @@ import numpy as np
 from mathutils import Matrix
 import bl_ext.blender_org.molecularnodes as mn
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
-import lib_complex as lc
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "blender"))
+import complex as cx
+import lib_membrane as mb
 
 frames_pattern, frames, fps, width, height = \
     sys.argv[sys.argv.index("--") + 1:][:5]
 frames, fps, width, height = int(frames), int(fps), int(width), int(height)
 
-ASSETS = str(Path(__file__).resolve().parent / "assets" / "pdb")
-A = lc.ANGSTROM
+ASSETS = cx.STRUCTURES
+A = cx.ANGSTROM
 
 bpy.ops.wm.read_homefile(use_empty=True)
 scene = bpy.context.scene
@@ -65,11 +67,11 @@ M_AC5 = mat("ac5", (0.72, 0.40, 0.90))          # the cyclase they converge on
 M_CFF = mat("cff", (1.0, 0.93, 0.45), rough=0.15, emit=2.5)   # caffeine
 
 # --- the four protomers ----------------------------------------------------
-protomers = lc.solve(ASSETS)
+protomers = cx.solve(ASSETS)
 for p in protomers:
     mol = mn.Molecule.load(f"{ASSETS}/{p['file']}", name=p["name"])
     if p["receptor"] == "A2A":
-        sel = mn.MoleculeSelector().chain_id(p["chain"]).not_res_id(lc.BRIL_RESIDUES)
+        sel = mn.MoleculeSelector().chain_id(p["chain"]).not_res_id(cx.BRIL_RESIDUES)
         material = M_A2A
     else:
         sel = mn.MoleculeSelector().chain_id(p["chain"])
@@ -98,7 +100,7 @@ for p in protomers:
     o.location = tuple(v * A for v in p["location_A"])
 
 # --- AC5, in the same membrane, already there ------------------------------
-ac5 = lc.place_ac5(ASSETS, protomers)
+ac5 = cx.place_ac5(ASSETS, protomers)
 print(f"AC5 placed {ac5['distance_A']:.0f} A off-axis; closest approach "
       f"{ac5['closest_approach_A']:.1f} A; TM in slab {ac5['tm_in_slab']*100:.0f}%")
 mol = mn.Molecule.load(f"{ASSETS}/ac5_af.pdb", name="AC5")
@@ -115,7 +117,7 @@ bpy.context.view_layer.update()
 # Wide enough that its edges leave frame: a membrane reads as a plane, and a
 # plane you can see the corners of reads as a floating card.
 memb = mat("memb", (0.28, 0.32, 0.46), rough=0.9, alpha=0.045)
-for z in (+lc.MEMBRANE_HALF_THICKNESS, -lc.MEMBRANE_HALF_THICKNESS):
+for z in (+cx.MEMBRANE_HALF_THICKNESS, -cx.MEMBRANE_HALF_THICKNESS):
     bpy.ops.mesh.primitive_plane_add(size=9.0, location=(0, 0, z * A))
     bpy.context.object.data.materials.append(memb)
 

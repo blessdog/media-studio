@@ -5,11 +5,11 @@ per-element colouring are ALL done by Molecular Nodes (Brady Johnston,
 bl_ext.blender_org.molecularnodes, v4.5.x, MDAnalysis/biotite backed). Nothing
 here parses a coordinate file or builds molecular geometry by hand -- this
 script only stages, lights and moves a camera. See
-docs/MOLECULAR-LANE-RESEARCH-2026-09-01.md for the tools rejected and why
+jobs/caffeine/research.md for the tools rejected and why
 (ChimeraX->glTF: frozen geometry; CHARMM-GUI: precision the audience never
 cashes in).
 
-Structure is PINNED in blender/assets/pdb/5mzp.cif (2.1 A, X-ray), not fetched,
+Structure is PINNED in jobs/caffeine/structures/5mzp.cif (2.1 A, X-ray), not fetched,
 so the render is reproducible offline and does not depend on RCSB uptime.
 
 WHY THE bRIL SELECTION: 5MZP entity 1 is "Adenosine receptor A2a, Soluble
@@ -22,6 +22,7 @@ Run via studio/blender.py (headless, --factory-startup + --addons).
 """
 import math
 import sys
+from pathlib import Path
 
 import bpy
 import bl_ext.blender_org.molecularnodes as mn
@@ -30,13 +31,13 @@ frames_pattern, frames, fps, width, height = \
     sys.argv[sys.argv.index("--") + 1:][:5]
 frames, fps, width, height = int(frames), int(fps), int(width), int(height)
 
-ROOT = "/Users/SSDrive/projects/mediaStudio/media-studio"
 BRIL = list(range(1001, 1107))
 
 bpy.ops.wm.read_homefile(use_empty=True)
 scene = bpy.context.scene
 
-mol = mn.Molecule.load(f"{ROOT}/blender/assets/pdb/5mzp.cif")
+mol = mn.Molecule.load(str(Path(__file__).resolve().parent.parent
+                     / "structures" / "5mzp.cif"))
 
 # the receptor itself: seven transmembrane helices, bRIL fusion excluded
 mol.add_style(

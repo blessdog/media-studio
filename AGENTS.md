@@ -24,7 +24,11 @@ app on this list already does the job is a bug.
 
 - **DaVinci Resolve Studio** (licensed) — the NLE. External scripting = Local.
 - **OBS Studio** — capture. Hybrid MP4 → `/Users/SSDrive/Movies`.
-- **Blender** — headless deterministic camera work (`blender/`, Blender 5).
+- **Blender 5.2 LTS** + **Molecular Nodes** — headless deterministic camera
+  work and structural-biology visuals (`blender/`). The add-on is enabled by
+  `--addons` in `studio/blender.py`, NOT by dropping `--factory-startup`:
+  renders stay a pure function of the scene script and the enabled set is
+  versioned rather than inherited from someone's UI preferences.
 - **Elgato Stream Deck** + `~/projects/obs-control-room` (Ryan's own OBS plugin).
 - **The complete Rogue Amoeba suite** — the audio layer of this studio, all
   apps owned. Not an optional extra; audio capture, routing, and playback
@@ -89,7 +93,7 @@ gate failure. Every path handed to Resolve must be ABSOLUTE (doctrine).
 | `tools/ingest-bongpot.py <call-dir> [--partial] [--clips D] [--audio MP3] [--name N] [--fps 30] [--size WxH] [--no-compile] [--render]` | bongpot video-plan → finishing timeline: shots conformed to V1 (scale/crop/fps/last-frame-pad to the exact window), untouched call audio on A1, shot ids/speakers/verdicts as colored markers (Red=missing/reject, Yellow=rework, Green=approved, Sky=unreviewed). ONE-WAY read of the bongpot repo; fails closed on missing clips unless `--partial` |
 | `tools/forge-stills.py <ws> "<prompt>" [--n 8] [--model qwen-fast\|flux-2] [--ref img] [--size 1920x1080] [--no-open] [--pick 2,7,11] [--batch NAME] [--approve]` | genAI stills batch → `<ws>/forge/batch-NN/` + numbered contact sheet opened in Preview; Ryan answers with winner numbers (`--pick 2,7,11`). **SPEND GATE: never pass `--approve` without Ryan approving that batch's printed cost in conversation** |
 | `tools/forge-motion.py <ws> <still> "<motion prompt>" [--model wan-480p\|wan-720p] [--no-open] [--approve]` | animate a curated still (I2V) → `<ws>/forge/motion/<still>-mNN.mp4` + provenance sidecar, probed + opened. Same SPEND GATE as forge-stills ($0.45/clip 480p, $1.25 720p). Motion prompt = Ryan's per-moment direction (prompt-brain doctrine) |
-| `tools/forge-blender.py <ws> <scene\|name> [--frames 48] [--fps 24] [--size 960x540] [--no-open]` | deterministic camera work: headless Blender renders a repo `blender/` scene script → PNG seq → ffmpeg mux → `<ws>/forge/blender/`. FREE/local, no spend gate. Blender 5 has no video export — scenes emit PNG sequences |
+| `tools/forge-blender.py <ws> <scene\|name> [--frames 48] [--fps 24] [--size 960x540] [--no-open]` | deterministic camera work: headless Blender renders a scene script — a bare name resolves in repo `blender/`, or pass a path (e.g. `jobs/caffeine/scenes/tetramer.py`) → PNG seq → ffmpeg mux → `<ws>/forge/blender/`. FREE/local, no spend gate. Blender 5 has no video export — scenes emit PNG sequences |
 | `tools/beat-grid.py <ws> <audio> [--every 4] [--offset-frames 0] [--bpm B] [--first-beat S] [--no-compile]` | music → librosa beat analysis → ALL beats in `<ws>/beats.json` (candidate cut grid) + Purple marker every Nth beat, recompiled + shown. Which cut lands on which beat stays Ryan's call. **`--bpm` is a KNOWN tempo and skips librosa entirely** — measured, librosa returns 117.45 on a synthesised perfect 120 BPM click and finds 22 of 24 beats; `--first-beat` is where beat 1 lands in seconds |
 | `tools/als-trigger-map.py <project.als> [-o out.json] [--include-session] [--no-hash] [--summary]` | pipeline G2 — Ableton `.als` (gzip XML) → one entry per sample FIRING (`sample_hash`, `track_start_secs`, `duration_secs`), so the video a sample was cut from can land in sync. Arrangement clips only unless `--include-session`; `sample_hash` joins to blessdog's `phase8_sp404` ledger. Free/local, no hardware |
 | `python -m studio.registry [table]` | inspect the cross-session registry (assets/transcripts/irs/renders/decisions) |
@@ -98,6 +102,34 @@ gate failure. Every path handed to Resolve must be ABSOLUTE (doctrine).
 
 Python modules under `studio/` back these verbs; tests under `tests/` are
 plain scripts (`test_compile.py`, `test_registry.py`, `test_assembly.py`).
+
+## Jobs vs. the studio (added 2026-09-02)
+
+**This repo is the studio, not the films.** A capability that any future video
+could use belongs to the studio; everything specific to one film belongs to that
+film's job folder. Ryan, on finding the caffeine work scattered across the repo
+root: *"it should have its own subfolder, don't you think?"*
+
+    jobs/<job>/          TRACKED. One film. README.md is its brief — what it is,
+                         the narration, the shot list, what works and what does
+                         not. Plus its own scenes/, source assets, evidence/,
+                         and any spec module only it needs.
+    outputs/projects/<n>/ GITIGNORED. Render workspace: story.json, media/,
+                         forge/ intermediates. Bulk pixels, regenerable.
+
+The split test is **"would a second film want this?"** For the molecular lane it
+put `blender/lib_membrane.py` (membrane orientation, interface faces, Kabsch
+superposition — no molecule knows its name) and `blender/prep-opm.py` /
+`blender/prep-alphafold.py` in the studio, while the A2A/D2/AC5 helix tables,
+the arrangement and the scaffolds to hide went to `jobs/caffeine/complex.py`.
+
+Why it matters beyond tidiness: before the split, `blender/tetramer.py` sat
+beside `blender/orbit-cube.py`, a generic fixture. A second molecular video had
+nowhere to go and would have copied half a library to get started.
+
+**Never blanket-gitignore `jobs/`.** Text, scripts, JSON, source structures and
+curated evidence are tracked by default; only bulk pixel intermediates are
+ignored, and those live in `outputs/`.
 
 ## Hard doctrine (violations fail silently — learned the hard way)
 

@@ -3,7 +3,7 @@
 
 # media-studio — STATE
 
-*Generated 2026-09-01 17:23 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
+*Generated 2026-09-04 09:16 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
 
 ## What is open
 
@@ -41,6 +41,7 @@ VERDICTS — measured, and SCOPED; check the scope before reusing
 *From git. The full narrative lives in `docs/journal/`; commit subjects are written as search bait, so `git log --grep` is the index.*
 
 ```
+2026-09-01  ab2e9a6  STATE regenerated after caffeine lane session
 2026-09-01  1477658  STATE regenerated: mechanism render and evidence land
 2026-09-01  81919d5  evidence: mechanism beat contact sheet and assembled tetramer still
 2026-09-01  f41c2d5  mechanism legibility: oversized ligands, gated markers, and a camera that travels
@@ -52,12 +53,11 @@ VERDICTS — measured, and SCOPED; check the scope before reusing
 2026-09-01  fc364fd  STATE regenerated: the unpushed warning clears, master is remote
 2026-09-01  f7f89bb  STATE regenerated: the tracked status layer picks up its own first commit
 2026-09-01  ff23af9  STATE.md generated for media-studio: the status layer lands in the repo
-2026-09-01  8b98857  knowledge store: the tetramer is a rhombus, and scaffolds never go on screen
 ```
 
 ### ⚠ UNPUSHED
 
-**8 commit(s) ahead of `origin/master`.** Committed is not the same as safe — a commit that has not left this machine has the durability of the disk it is on.
+**9 commit(s) ahead of `origin/master`.** Committed is not the same as safe — a commit that has not left this machine has the durability of the disk it is on.
 
 ```
 git push origin master
@@ -67,6 +67,32 @@ git push origin master
 
 ```
  M STATE.md
+D  blender/lib_complex.py
+R  blender/assets/pdb/prep-alphafold.py -> blender/prep-alphafold.py
+RM blender/assets/pdb/prep-opm.py -> blender/prep-opm.py
+R  docs/evidence/caffeine/2026-09-01-mechanism-beats.png -> jobs/caffeine/evidence/2026-09-01-mechanism-beats.png
+R  docs/evidence/caffeine/2026-09-01-tetramer-assembled.png -> jobs/caffeine/evidence/2026-09-01-tetramer-assembled.png
+R  docs/MOLECULAR-LANE-RESEARCH-2026-09-01.md -> jobs/caffeine/research.md
+RM blender/a2a-caffeine-probe.py -> jobs/caffeine/scenes/a2a-caffeine-probe.py
+RM blender/tetramer-mechanism.py -> jobs/caffeine/scenes/tetramer-mechanism.py
+RM blender/tetramer.py -> jobs/caffeine/scenes/tetramer.py
+R  blender/assets/pdb/2ydo_opm.pdb -> jobs/caffeine/structures/2ydo_opm.pdb
+R  blender/assets/pdb/2ydo_opm_clean.pdb -> jobs/caffeine/structures/2ydo_opm_clean.pdb
+R  blender/assets/pdb/5g53_opm.pdb -> jobs/caffeine/structures/5g53_opm.pdb
+R  blender/assets/pdb/5g53_opm_clean.pdb -> jobs/caffeine/structures/5g53_opm_clean.pdb
+R  blender/assets/pdb/5mzp.cif -> jobs/caffeine/structures/5mzp.cif
+R  blender/assets/pdb/5mzp_opm.pdb -> jobs/caffeine/structures/5mzp_opm.pdb
+R  blender/assets/pdb/5mzp_opm_clean.pdb -> jobs/caffeine/structures/5mzp_opm_clean.pdb
+R  blender/assets/pdb/6vms.cif -> jobs/caffeine/structures/6vms.cif
+R  blender/assets/pdb/6vms_opm.pdb -> jobs/caffeine/structures/6vms_opm.pdb
+R  blender/assets/pdb/6vms_opm_clean.pdb -> jobs/caffeine/structures/6vms_opm_clean.pdb
+R  blender/assets/pdb/8sl3.cif -> jobs/caffeine/structures/8sl3.cif
+R  blender/assets/pdb/8sl3.pdb -> jobs/caffeine/structures/8sl3.pdb
+R  blender/assets/pdb/ac5_af.pdb -> jobs/caffeine/structures/ac5_af.pdb
+R  blender/assets/pdb/ac5_af_confident.pdb -> jobs/caffeine/structures/ac5_af_confident.pdb
+?? blender/lib_membrane.py
+?? jobs/caffeine/README.md
+?? jobs/caffeine/complex.py
 ```
 
 *Uncommitted is not learned. Commit at the moment of learning.*
