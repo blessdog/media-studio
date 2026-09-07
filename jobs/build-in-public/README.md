@@ -74,7 +74,8 @@ Rendering needs Studio on both machines and a shared project library), so the
 Story IR renders with ffmpeg: staged stream copies of only the windows the
 cut uses, piped over ssh into ffmpeg on the mini, concatenated there, pulled
 back. The three-recording proof came back frame-identical to a local ffmpeg
-control (2139 frames both). One frame at each of the 19 cut points of the
+control (2139 frames both). The full cut: 34 runs, 147 seconds on the mini,
+17578 frames exactly as the IR says, 144 MB at crf 20, verified green. One frame at each of the 19 cut points of the
 Resolve render, labelled with its source and note:
 
 ![one frame at each cut point](evidence/cut-points-19.png)
