@@ -39,6 +39,32 @@ order, each with a note. Nineteen cuts became a 9.5-minute rough cut,
 rendered and opened. One cut failed because its window fell entirely inside
 stripped silence; the tool refuses rather than emitting an empty cut.
 
+## Then the machine ran out
+
+Ryan, mid-session, with Activity Monitor open: 13.5 of 16 GB used, Resolve
+at 2.4 GB, swap in use. *"It's stressing out this machine. There's a project
+one directory up called OneMachine that allows you to offload work to my
+Mac Mini… so we can render everything there. That thing is just sitting
+idle."* OneMachine turned out to be research, not code: a 2026-08-08 report
+whose worked example is literally a Media Studio render, and whose verdict
+is that the mini is a job runner, not more compute.
+
+Measured the mini before building: M1, 8 GB with ~60 MB free, 7.3 GB of
+disk, no Resolve, ffmpeg 8.1.2 and tmux, a Monero node and the JobHard
+gateway resident. Resolve's Remote Rendering needs Studio on both machines,
+a shared Postgres project library and identical media paths. Out by
+measurement. What the mini can do is ffmpeg, and a straight-cut timeline is
+trims plus concat.
+
+Four mechanisms surfaced on the way, each now in the code or the store:
+`-t` under `-copyts` measures against the source clock (a 262-byte staged
+file); four-decimal trim durations keep an extra frame on half the segments
+(21 frames over 56); runs that merge across gaps in one recording stage
+16 GB from a 33-minute clip; and an mp4 without faststart cannot be piped.
+The shape that survived: stage locally, pipe each run over ssh into ffmpeg
+on the mini, concat there, pull back. Nothing staged touches the mini's
+disk. Proof cut: 25 s on the mini, frame-identical to the local control.
+
 ## Mechanism
 
 The IR was designed as a tagged list of edits over a list of assets rather

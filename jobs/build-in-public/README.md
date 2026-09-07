@@ -56,10 +56,28 @@ apps (Rant Recorder, Write), and out on "come on now, brother".
     .venv/bin/python tools/ingest-session.py --name build-in-public-cut \
         --cuts jobs/build-in-public/cuts.json --render
 
-First run: 19 cuts, 327 edits, 9.5 minutes, timeline
-`build-in-public-cut@0cdd0666`, render verified for duration, size and
-loudness. The whole-session concat (every recording, in date order) is
+Current: 19 cuts, 330 edits, 9.8 minutes, timeline
+`build-in-public-cut@21504a88` (cut ends snapped to utterance ends; the
+first pass clipped closing sentences), render verified for duration, size
+and loudness. The whole-session concat (every recording, in date order) is
 `build-in-public@e6a374f9`, 976 edits, 39.5 minutes, for scrubbing.
+
+## Where it renders
+
+Rendering the cut in Resolve put this MacBook (16 GB) at memory pressure, so
+the render lane moved to the Mac mini the same afternoon:
+
+    .venv/bin/python tools/render-ir.py build-in-public-cut --on mini
+
+Resolve cannot go there (8 GB, no Resolve, 7 GB of disk; Resolve's Remote
+Rendering needs Studio on both machines and a shared project library), so the
+Story IR renders with ffmpeg: staged stream copies of only the windows the
+cut uses, piped over ssh into ffmpeg on the mini, concatenated there, pulled
+back. The three-recording proof came back frame-identical to a local ffmpeg
+control (2139 frames both). One frame at each of the 19 cut points of the
+Resolve render, labelled with its source and note:
+
+![one frame at each cut point](evidence/cut-points-19.png)
 
 ## Verdicts Ryan owes
 
@@ -67,9 +85,13 @@ loudness. The whole-session concat (every recording, in date order) is
   Left out of the cut; it is the most alive footage in the session and also
   the most profane. In, out, or a separate short.
 - **The power-washer interruption** (01 at 0:57–1:39). Left out. Blooper or reel.
-- **Recording 10's music.** The cut uses only 7:00–8:54 of it; check the
-  render for *Sun King* bleeding under the voice before anything ships.
-- **Order and length.** 9.5 minutes is long for a first build-in-public
+- **Recording 10's music.** The cut uses only 7:00–8:52 of it, and the cut
+  point frame shows Apple Music playing *Sun Arise* on screen at that moment.
+  Measured on that window: the recording's four OBS audio streams peak at
+  −7.2, −7.2, −14.8 and −8.8 dB, so the music is not confined to one stream
+  the timeline could drop. Either the cut loses that moment or the audio is
+  replaced.
+- **Order and length.** 9.8 minutes is long for a first build-in-public
   video; the caffeine block (cuts 4–11) is 5 of those minutes.
 
 ## What does not work yet

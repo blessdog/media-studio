@@ -28,18 +28,25 @@ total.
 What works instead: a straight-cut timeline is trims + concat, which ffmpeg
 does with bounded memory. The tool stages keyframe-padded stream copies of
 only the windows the cut uses (no decode, `-copyts` so a seek on the staged
-file lands on the same frame as the original), ships them with rsync at
-~100 MB/s, encodes one run at a time under tmux at nice 10, deletes each
-staged file as it encodes, refuses when the mini lacks disk, pulls the mp4
-back and removes its own directory. The proof cut: 0.92 GB shipped in 24 s,
-encoded in 15 s, frame count and duration identical to the local control.
+file lands on the same frame as the original, faststart so the file can be
+piped), then pipes each staged run over ssh straight into ffmpeg on the mini
+at nice 10, so nothing staged is written to the mini's disk; the disk gate
+counts only the encoded runs plus the concat copy. It concats there, pulls
+the mp4 back and removes its own directory. The MacBook stays awake to feed
+the pipe. The proof cut: 5 runs, 1.28 GB staged, 25 s on the mini, frame
+count and duration identical to the local control.
 
-Two mechanisms that bit on the way and are now in the code:
+Four mechanisms that bit on the way and are now in the code:
 - `-t` with `-copyts` measures against the SOURCE clock, so a window at
   1605 s stopped before its first packet (a 262-byte file). Use `-to`.
 - `trim=duration=` at four decimals rounds 0.966667 up to 0.9667 and keeps
   one extra frame on half the segments (21 frames over 56). Use
   `start=`/`end=` at six decimals.
+- Runs that merge across gaps in one recording stage the whole span: eight
+  cuts from a 33-minute clip became one 31-minute window, 16 GB. Runs split
+  at gaps over 5 s.
+- An mp4 whose moov atom is at the end cannot be demuxed from a pipe. Stage
+  with `-movflags +faststart`.
 
 Not covered by this verdict: overlays (V2+), graphics, grades, music lanes.
 Those still render through Resolve on this machine.
