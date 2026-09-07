@@ -90,6 +90,20 @@ def _window(src, start_f, end_f):
     return out
 
 
+def _split_utterances(base, start_s, end_s):
+    """Utterances the window cuts through, as 'start-end \"text\"' strings.
+    A cut that ends mid-sentence passes every structural check and still
+    sounds wrong; this is the only place that knows."""
+    tp = Path(base) / "transcript.json"
+    if not tp.is_file():
+        return []
+    out = []
+    for u in json.loads(tp.read_text(encoding="utf-8")).get("utterances", []):
+        if (u["start"] < start_s < u["end"]) or (u["start"] < end_s < u["end"]):
+            out.append(f"{u['start']:.1f}-{u['end']:.1f} \"{u['text'][:50]}\"")
+    return out
+
+
 def build_session_ir(name, sources, gap_frames=0, created_by="ingest-session"):
     """sources: [(label, ir_dict, base_dir)] or [(label, ir, base, (start_f, end_f))].
     Returns (session_ir, sources_map)."""
@@ -182,6 +196,11 @@ def main():
             window = (int(round(float(c.get("start", 0)) * fps)),
                       int(round(float(c["end"]) * fps)) if "end" in c
                       else max(e["srcOut"] for e in ir["edits"]))
+        if window is not None:
+            for w in _split_utterances(base, window[0] / irmod.fps(ir),
+                                       window[1] / irmod.fps(ir)):
+                print(f"  warning: {p.parent.name} window {c.get('start', 0)}-"
+                      f"{c['end']}s splits an utterance {w}")
         loaded.append((p.parent.name, ir, base, window, c.get("note", "")))
         print(f"source: {p.parent.name}  "
               f"{'whole' if window is None else str(c.get('start', 0)) + '-' + str(c.get('end', 'end')) + 's'}"
