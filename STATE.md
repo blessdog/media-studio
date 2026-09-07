@@ -3,7 +3,7 @@
 
 # media-studio — STATE
 
-*Generated 2026-09-07 17:02 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
+*Generated 2026-09-07 17:19 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
 
 ## What is open
 
@@ -26,7 +26,7 @@ Every `kind: open` claim in the store. These are PLANS, not specs — `proven: f
 The full index. Query it before choosing any technique — `find-technique.py "<your situation>"` — rather than reading it. Every claim declares the questions that must find it, and `check-retrieval.py` asserts they do.
 
 ```
-KNOWLEDGE — 7 live claims: 7 from this project (/Users/SSDrive/projects/mediaStudio/media-studio/knowledge), 0 universal (~/.claude/knowledge/store)
+KNOWLEDGE — 8 live claims: 8 from this project (/Users/SSDrive/projects/mediaStudio/media-studio/knowledge), 0 universal (~/.claude/knowledge/store)
 Query before choosing any technique:  python3 ~/.claude/knowledge/bin/find-technique.py "<your situation>"
 
 LAWS — absolute, no exceptions
@@ -37,6 +37,7 @@ VERDICTS — measured, and SCOPED; check the scope before reusing
   · the-mini-renders-the-story-ir-with-ffmpeg-not-resolve straight-cut timelines (track-1 edits only) rendered from a workspace's story.json; the Ma
 
 REFUTED — already tried, do NOT retry
+  ✗ an-rsync-remote-path-with-a-space-arrives-as-two-arguments rsync hands the remote path to the remote login shell as text, the shell word-splits it, and the far
   ✗ auto-editor-multi-input-drops-inputs-from-v3-export on the v3 export path the first input is consumed as the templateFile (stream rotation and attachmen
 
 OPEN — plans, NOT specs. proven: false. Do not build against these.
@@ -58,6 +59,7 @@ OPEN — plans, NOT specs. proven: false. Do not build against these.
 *From git. The full narrative lives in `docs/journal/`; commit subjects are written as search bait, so `git log --grep` is the index.*
 
 ```
+2026-09-07  2dfdc60  STATE regenerated: render lane on the mini proven on the full cut
 2026-09-07  94fa24d  evidence: Resolve render vs mini render, same frame at 9:30, levels identical
 2026-09-07  4bdc9c8  build-in-public: the full cut renders on the mini in 147 s, frame-exact
 2026-09-07  3bf65a4  ffrender: a local render reaps its encoded runs, the stage reaps itself
@@ -69,21 +71,15 @@ OPEN — plans, NOT specs. proven: false. Do not build against these.
 2026-09-07  dbf8be8  jobs/build-in-public: brief, story map, 19-cut rough cut and contact sheet
 2026-09-07  23f89e7  ingest-session --cuts: the rough cut is a readable cut list, not a Resolve project
 2026-09-07  2faabfd  ingest-session: several ingested recordings become one session timeline
-2026-09-04  546ac21  jobs/caffeine: the film gets its own folder, the studio keeps the machinery
 ```
 
-### ⚠ UNPUSHED
-
-**1 commit(s) ahead of `origin/master`.** Committed is not the same as safe — a commit that has not left this machine has the durability of the disk it is on.
-
-```
-git push origin master
-```
+*Remote: `https://github.com/blessdog/media-studio.git` — `master` is pushed.*
 
 ### Uncommitted
 
 ```
  M STATE.md
+?? knowledge/an-rsync-remote-path-with-a-space-arrives-as-two-arguments.md
 ```
 
 *Uncommitted is not learned. Commit at the moment of learning.*
