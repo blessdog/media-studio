@@ -170,9 +170,11 @@ def render_local(ir, base_dir, work_dir, out_path):
     runs = plan(ir, base_dir)
     for r in runs:
         r["origin"] = 0.0
+    import shutil
     script = Path(work_dir) / "render-local.sh"
     script.write_text(write_script(runs, work_dir, str(out_path), staged=False))
     _run(["zsh", str(script)])
+    shutil.rmtree(Path(work_dir) / "enc", ignore_errors=True)   # scaffolding, regenerable
     return runs
 
 
