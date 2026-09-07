@@ -3,7 +3,7 @@
 
 # media-studio — STATE
 
-*Generated 2026-09-07 16:58 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
+*Generated 2026-09-07 17:02 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
 
 ## What is open
 
@@ -58,6 +58,10 @@ OPEN — plans, NOT specs. proven: false. Do not build against these.
 *From git. The full narrative lives in `docs/journal/`; commit subjects are written as search bait, so `git log --grep` is the index.*
 
 ```
+2026-09-07  94fa24d  evidence: Resolve render vs mini render, same frame at 9:30, levels identical
+2026-09-07  4bdc9c8  build-in-public: the full cut renders on the mini in 147 s, frame-exact
+2026-09-07  3bf65a4  ffrender: a local render reaps its encoded runs, the stage reaps itself
+2026-09-07  97e31e4  STATE regenerated: session lane, cut list, and the mini render lane land
 2026-09-07  614a7fe  build-in-public brief and journal: the render lane moves to the mini, music bleed measured
 2026-09-07  33f2c13  render-ir --on mini: pipe each staged run over ssh, nothing staged lands on the mini
 2026-09-07  a904225  render-ir: the Story IR renders with ffmpeg, here or on the Mac mini
@@ -66,15 +70,11 @@ OPEN — plans, NOT specs. proven: false. Do not build against these.
 2026-09-07  23f89e7  ingest-session --cuts: the rough cut is a readable cut list, not a Resolve project
 2026-09-07  2faabfd  ingest-session: several ingested recordings become one session timeline
 2026-09-04  546ac21  jobs/caffeine: the film gets its own folder, the studio keeps the machinery
-2026-09-01  ab2e9a6  STATE regenerated after caffeine lane session
-2026-09-01  1477658  STATE regenerated: mechanism render and evidence land
-2026-09-01  81919d5  evidence: mechanism beat contact sheet and assembled tetramer still
-2026-09-01  f41c2d5  mechanism legibility: oversized ligands, gated markers, and a camera that travels
 ```
 
 ### ⚠ UNPUSHED
 
-**4 commit(s) ahead of `origin/master`.** Committed is not the same as safe — a commit that has not left this machine has the durability of the disk it is on.
+**1 commit(s) ahead of `origin/master`.** Committed is not the same as safe — a commit that has not left this machine has the durability of the disk it is on.
 
 ```
 git push origin master
