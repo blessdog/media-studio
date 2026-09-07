@@ -3,14 +3,22 @@
 
 # media-studio — STATE
 
-*Generated 2026-09-04 09:16 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
+*Generated 2026-09-07 16:58 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
 
 ## What is open
 
 Every `kind: open` claim in the store. These are PLANS, not specs — `proven: false`. Do not build against one without a verdict.
 
 ```
-(none)
+? docs-story-ir-md-is-cited-by-status-md-and-agent   (2026-09-07)
+    docs/STORY-IR.md is cited by STATUS.md and AGENTS.md but does not exist
+    why: the Story IR contract is documented only in schema/story-ir.schema.json and docstrings; a cold agent fol
+? edit-ir-find-does-not-work-on-a-multi-recording-   (2026-09-07)
+    edit-ir find does not work on a multi-recording session workspace
+    why: moments.spans_from_ir raises 'need asset_id' when track 1 references more than one asset, so a session w
+? obs-camera-isolates-in-movies-iso-are-an-untouch   (2026-09-07)
+    OBS camera isolates in movies/iso are an untouched multicam B-roll lane
+    why: Six *-cam.mp4 isolates (Sept 5 and 7 sessions, one 15GB with no matching program recording) exist beside
 ```
 
 ## What this project knows
@@ -18,7 +26,7 @@ Every `kind: open` claim in the store. These are PLANS, not specs — `proven: f
 The full index. Query it before choosing any technique — `find-technique.py "<your situation>"` — rather than reading it. Every claim declares the questions that must find it, and `check-retrieval.py` asserts they do.
 
 ```
-KNOWLEDGE — 2 live claims: 2 from this project (/Users/SSDrive/projects/mediaStudio/media-studio/knowledge), 0 universal (~/.claude/knowledge/store)
+KNOWLEDGE — 7 live claims: 7 from this project (/Users/SSDrive/projects/mediaStudio/media-studio/knowledge), 0 universal (~/.claude/knowledge/store)
 Query before choosing any technique:  python3 ~/.claude/knowledge/bin/find-technique.py "<your situation>"
 
 LAWS — absolute, no exceptions
@@ -26,6 +34,15 @@ LAWS — absolute, no exceptions
 
 VERDICTS — measured, and SCOPED; check the scope before reusing
   · gpcr-interface-faces-are-90-degrees-apart Class A GPCR heteromers assembled from real coordinates, specifically the A2AR-D2R heterot
+  · the-mini-renders-the-story-ir-with-ffmpeg-not-resolve straight-cut timelines (track-1 edits only) rendered from a workspace's story.json; the Ma
+
+REFUTED — already tried, do NOT retry
+  ✗ auto-editor-multi-input-drops-inputs-from-v3-export on the v3 export path the first input is consumed as the templateFile (stream rotation and attachmen
+
+OPEN — plans, NOT specs. proven: false. Do not build against these.
+  ? docs-story-ir-md-is-cited-by-status-md-and-agent Why it matters: the Story IR contract is documented only in schema/story-ir.schema.json an
+  ? edit-ir-find-does-not-work-on-a-multi-recording- Why it matters: moments.spans_from_ir raises 'need asset_id' when track 1 references more 
+  ? obs-camera-isolates-in-movies-iso-are-an-untouch Why it matters: Six -cam.mp4 isolates (Sept 5 and 7 sessions, one 15GB with no matching pr
 ```
 
 ## Where the work stands
@@ -41,23 +58,23 @@ VERDICTS — measured, and SCOPED; check the scope before reusing
 *From git. The full narrative lives in `docs/journal/`; commit subjects are written as search bait, so `git log --grep` is the index.*
 
 ```
+2026-09-07  614a7fe  build-in-public brief and journal: the render lane moves to the mini, music bleed measured
+2026-09-07  33f2c13  render-ir --on mini: pipe each staged run over ssh, nothing staged lands on the mini
+2026-09-07  a904225  render-ir: the Story IR renders with ffmpeg, here or on the Mac mini
+2026-09-07  5dee4da  rough cut: cut ends snap to utterance ends, tool warns when a window splits a sentence
+2026-09-07  dbf8be8  jobs/build-in-public: brief, story map, 19-cut rough cut and contact sheet
+2026-09-07  23f89e7  ingest-session --cuts: the rough cut is a readable cut list, not a Resolve project
+2026-09-07  2faabfd  ingest-session: several ingested recordings become one session timeline
+2026-09-04  546ac21  jobs/caffeine: the film gets its own folder, the studio keeps the machinery
 2026-09-01  ab2e9a6  STATE regenerated after caffeine lane session
 2026-09-01  1477658  STATE regenerated: mechanism render and evidence land
 2026-09-01  81919d5  evidence: mechanism beat contact sheet and assembled tetramer still
 2026-09-01  f41c2d5  mechanism legibility: oversized ligands, gated markers, and a camera that travels
-2026-09-01  a133e54  STATE regenerated: mechanism scene and journal land
-2026-09-01  f93e437  journal 2026-09-01: the caffeine complex, and the gate that refuses or-gates
-2026-09-01  30caeb3  mechanism scene: adenosine and caffeine measured into the SAME pocket, 1.8 A apart
-2026-09-01  f37f3f2  STATE regenerated: molecular lane lands, knowledge store opens with two claims
-2026-09-01  0aaf02d  AC5 pre-coupled, Gs on the external A2A, and the AlphaFold spaghetti culled
-2026-09-01  fc364fd  STATE regenerated: the unpushed warning clears, master is remote
-2026-09-01  f7f89bb  STATE regenerated: the tracked status layer picks up its own first commit
-2026-09-01  ff23af9  STATE.md generated for media-studio: the status layer lands in the repo
 ```
 
 ### ⚠ UNPUSHED
 
-**9 commit(s) ahead of `origin/master`.** Committed is not the same as safe — a commit that has not left this machine has the durability of the disk it is on.
+**4 commit(s) ahead of `origin/master`.** Committed is not the same as safe — a commit that has not left this machine has the durability of the disk it is on.
 
 ```
 git push origin master
@@ -67,32 +84,6 @@ git push origin master
 
 ```
  M STATE.md
-D  blender/lib_complex.py
-R  blender/assets/pdb/prep-alphafold.py -> blender/prep-alphafold.py
-RM blender/assets/pdb/prep-opm.py -> blender/prep-opm.py
-R  docs/evidence/caffeine/2026-09-01-mechanism-beats.png -> jobs/caffeine/evidence/2026-09-01-mechanism-beats.png
-R  docs/evidence/caffeine/2026-09-01-tetramer-assembled.png -> jobs/caffeine/evidence/2026-09-01-tetramer-assembled.png
-R  docs/MOLECULAR-LANE-RESEARCH-2026-09-01.md -> jobs/caffeine/research.md
-RM blender/a2a-caffeine-probe.py -> jobs/caffeine/scenes/a2a-caffeine-probe.py
-RM blender/tetramer-mechanism.py -> jobs/caffeine/scenes/tetramer-mechanism.py
-RM blender/tetramer.py -> jobs/caffeine/scenes/tetramer.py
-R  blender/assets/pdb/2ydo_opm.pdb -> jobs/caffeine/structures/2ydo_opm.pdb
-R  blender/assets/pdb/2ydo_opm_clean.pdb -> jobs/caffeine/structures/2ydo_opm_clean.pdb
-R  blender/assets/pdb/5g53_opm.pdb -> jobs/caffeine/structures/5g53_opm.pdb
-R  blender/assets/pdb/5g53_opm_clean.pdb -> jobs/caffeine/structures/5g53_opm_clean.pdb
-R  blender/assets/pdb/5mzp.cif -> jobs/caffeine/structures/5mzp.cif
-R  blender/assets/pdb/5mzp_opm.pdb -> jobs/caffeine/structures/5mzp_opm.pdb
-R  blender/assets/pdb/5mzp_opm_clean.pdb -> jobs/caffeine/structures/5mzp_opm_clean.pdb
-R  blender/assets/pdb/6vms.cif -> jobs/caffeine/structures/6vms.cif
-R  blender/assets/pdb/6vms_opm.pdb -> jobs/caffeine/structures/6vms_opm.pdb
-R  blender/assets/pdb/6vms_opm_clean.pdb -> jobs/caffeine/structures/6vms_opm_clean.pdb
-R  blender/assets/pdb/8sl3.cif -> jobs/caffeine/structures/8sl3.cif
-R  blender/assets/pdb/8sl3.pdb -> jobs/caffeine/structures/8sl3.pdb
-R  blender/assets/pdb/ac5_af.pdb -> jobs/caffeine/structures/ac5_af.pdb
-R  blender/assets/pdb/ac5_af_confident.pdb -> jobs/caffeine/structures/ac5_af_confident.pdb
-?? blender/lib_membrane.py
-?? jobs/caffeine/README.md
-?? jobs/caffeine/complex.py
 ```
 
 *Uncommitted is not learned. Commit at the moment of learning.*
