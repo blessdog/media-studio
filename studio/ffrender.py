@@ -20,8 +20,8 @@ Shape of the job:
            filter graph never buffers more than a few frames.
   concat   the concat demuxer over the run files, stream copy.
 
-Remote mode ships stage/ + a shell script to the mini with rsync, runs it
-under tmux at nice 10 with a disk-space precondition, polls, and pulls the
+Remote mode stages locally, pipes each staged run over ssh straight into
+ffmpeg on the mini at nice 10 (nothing staged lands there), concats, and pulls the
 result back. Nothing on the mini is touched except ~/render/<name>/, which
 is removed afterwards.
 """
@@ -36,6 +36,7 @@ from . import ir as irmod
 PAD_SECONDS = 2.5           # > one OBS GOP (measured 1.97 s), so the keyframe before the window is inside the copy
 REMOTE_ROOT = "render"      # under $HOME on the mini
 DISK_MARGIN_GB = 2.0
+RUN_GAP_SECONDS = 5.0       # a bigger gap in the same asset starts a new run, so staging copies only what the cut uses (measured: without this, eight cuts from one 33-min recording staged 16 GB)
 X264 = ["-c:v", "libx264", "-preset", "veryfast", "-crf", "20", "-pix_fmt", "yuv420p",
         "-r", "30", "-video_track_timescale", "30000"]
 AAC = ["-c:a", "aac", "-b:a", "160k", "-ar", "48000", "-ac", "2"]
@@ -68,7 +69,8 @@ def plan(ir, base_dir):
     runs = []
     for e in edits:
         seg = (e["srcIn"] / fps, (e["srcOut"] - e["srcIn"]) / fps)
-        if runs and runs[-1]["asset"] == e["asset"] and e["srcIn"] >= runs[-1]["last_out"]:
+        if runs and runs[-1]["asset"] == e["asset"] and \
+                0 <= (e["srcIn"] - runs[-1]["last_out"]) / fps <= RUN_GAP_SECONDS:
             runs[-1]["segs"].append(seg)
         else:
             runs.append({"asset": e["asset"], "path": str(assets[e["asset"]]), "segs": [seg]})
@@ -95,7 +97,7 @@ def stage(runs, stage_dir):
             # (measured: a 262-byte file for a window at 1605 s).
             _run(["ffmpeg", "-y", "-v", "error", "-ss", f"{w0:.3f}", "-i", r["path"],
                   "-to", f"{w1:.3f}", "-map", "0:v:0", "-map", "0:a:0",
-                  "-c", "copy", "-copyts", str(out)])
+                  "-c", "copy", "-copyts", "-movflags", "+faststart", str(out)])
         fmt = _probe(out, "format=start_time,duration")["format"]
         if "start_time" not in fmt or out.stat().st_size < 4096:
             raise RenderError(f"staging {out.name} produced no media for window {w0:.1f}-{w1:.1f}s of {r['path']}")
@@ -187,43 +189,45 @@ def remote_free_gb(host):
 
 
 def render_remote(ir, base_dir, work_dir, out_path, host="mini", name=None, log=print):
+    """Stage locally, then for each run pipe the staged file over ssh straight
+    into ffmpeg on the far side. Nothing staged is written on the mini: its
+    peak disk is the encoded runs plus the concat copy (~0.5x the stage),
+    which is what lets a 7 GB-free machine render a 6 GB stage. Costs: the
+    MacBook must stay awake to feed the pipe (no tmux detach)."""
+    import shutil
     work_dir = Path(work_dir)
     name = name or ir["name"]
     runs = stage(plan(ir, base_dir), work_dir / "stage")
     stage_bytes = sum((work_dir / "stage" / r["file"]).stat().st_size for r in runs)
-    # staged files are removed as each run encodes, so the peak is the stage
-    # itself plus the encoded runs (~0.3x at crf 20) plus the concat copy
-    need_gb = stage_bytes / 1e9 * 1.6 + DISK_MARGIN_GB
+    need_gb = stage_bytes / 1e9 * 0.6 + DISK_MARGIN_GB
     free_gb = remote_free_gb(host)
     log(f"stage: {len(runs)} runs, {stage_bytes / 1e9:.2f} GB; {host} has {free_gb:.1f} GB free, "
-        f"needs {need_gb:.1f}")
+        f"needs ~{need_gb:.1f} (encoded runs + concat copy + margin)")
     if free_gb < need_gb:
         raise RenderError(f"{host} has {free_gb:.1f} GB free, render needs ~{need_gb:.1f} GB — refusing")
 
     remote_dir = f"{REMOTE_ROOT}/{name}"
-    script = work_dir / "render-remote.sh"
-    script.write_text(write_script(runs, None, f"{name}.mp4", staged=True))
-    _ssh(host, f"mkdir -p ~/{remote_dir}")
+    _ssh(host, f"rm -rf ~/{remote_dir} && mkdir -p ~/{remote_dir}/enc")
     t0 = time.time()
-    _run(["rsync", "-a", "--partial", str(work_dir / "stage"), str(script),
-          f"{host}:{remote_dir}/"], timeout=3600)
-    log(f"shipped in {time.time() - t0:.0f}s")
-
-    _ssh(host, f"cd ~/{remote_dir} && rm -f DONE FAILED && tmux new-session -d -s render-{name} "
-               f"'(nice -n 10 zsh render-remote.sh > render.log 2>&1 && touch DONE) || touch FAILED'")
-    t0 = time.time()
-    while True:
-        time.sleep(15)
-        state = _ssh(host, f"cd ~/{remote_dir} && ls DONE FAILED 2>/dev/null; tail -1 render.log").stdout
-        if "DONE" in state.split():
-            break
-        if "FAILED" in state.split():
-            tail = _ssh(host, f"tail -20 ~/{remote_dir}/render.log").stdout
-            raise RenderError(f"remote render failed:\n{tail}")
-        log(f"  {host}: {state.strip().splitlines()[-1] if state.strip() else '...'}  ({time.time() - t0:.0f}s)")
+    concat_lines = []
+    for i, r in enumerate(runs):
+        cmd = _encode_cmd(r, "pipe:0", f"enc/run{i:03d}.mp4", r["origin"])
+        remote = f"cd ~/{remote_dir} && nice -n 10 " + " ".join(shlex.quote(c) for c in cmd)
+        with open(work_dir / "stage" / r["file"], "rb") as fh:
+            res = subprocess.run(["ssh", "-o", "BatchMode=yes", host, f"zsh -lc {shlex.quote(remote)}"],
+                                 stdin=fh, capture_output=True, text=True, timeout=3600)
+        if res.returncode != 0:
+            raise RenderError(f"run {i} failed on {host}: {res.stderr[-400:]}")
+        concat_lines.append(f"file 'enc/run{i:03d}.mp4'")
+        log(f"  run {i + 1}/{len(runs)} encoded on {host}  ({time.time() - t0:.0f}s)")
+    concat = "\n".join(concat_lines) + "\n"
+    _ssh(host, f"cd ~/{remote_dir} && printf {shlex.quote(concat)} > concat.txt && "
+               f"ffmpeg -y -v error -f concat -safe 0 -i concat.txt -c copy {shlex.quote(name + '.mp4')}",
+         timeout=1800)
     log(f"encoded on {host} in {time.time() - t0:.0f}s")
 
     Path(out_path).parent.mkdir(parents=True, exist_ok=True)
     _run(["rsync", "-a", "--partial", f"{host}:{remote_dir}/{name}.mp4", str(out_path)], timeout=3600)
-    _ssh(host, f"rm -rf ~/{remote_dir}")     # only the directory this call created
+    _ssh(host, f"rm -rf ~/{remote_dir}")           # only the directory this call created
+    shutil.rmtree(work_dir / "stage", ignore_errors=True)   # scaffolding, regenerable
     return runs
