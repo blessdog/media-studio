@@ -72,16 +72,22 @@ Measured live over stdio while the third-party server was also connected
 (`resolvemcp-smoke-transcript.txt`).
 
 One caveat: `--dump-tools` reported "Resolve is not running" while the process
-was up, and the `.mcpb` wrapper caches that dump at startup. The wrapper's
-instructions can therefore lie about state; the live handshake does not.
-**VERIFIED**.
+was up. **VERIFIED**. The `.mcpb` wrapper caches that dump at startup, so its
+instructions could lie about state where the live handshake does not.
+**Inferred from reading `server/index.js`**, not observed through Claude Desktop.
+
+A second copilot channel, unchecked: 21.1 adds presentation markers with
+annotations, replies and status. Whether `GetMarkers()` exposes the annotation
+text and replies is not in the stub's marker type as read. **UNVERIFIED**;
+check with `search_scripting_api("annotation|reply")` before assuming.
 
 ### Scripting changes (from the installed `CHANGELOG.md`)
 
-- Python 2 dropped. External scripting now requires Studio. **VERIFIED**
-  (changelog; README line "Advanced scripting now requires DaVinci Resolve
-  Studio" is REPORTED via Newsshooter). This studio has Studio, so nothing
-  breaks.
+- Python 2 dropped, and a built-in Python now serves the script menu and
+  console. **VERIFIED** (changelog). The free edition lost Python scripting,
+  including in-app. **REPORTED** (CineD, Newsshooter); the installed changelog
+  does not say it. External scripting was already Studio-only (RESEARCH.md,
+  verified July). This studio has Studio, so nothing changes here.
 - "Overloaded function signatures are deprecated": the dict-returning forms
   (`GetItemsInTrack`, `GetClips`, `GetRenderJobs`, `GetRenderPresets`,
   `AddItemsToMediaPool`, `GetSubFolders`, `GetFlags`, ...) are deprecated in
