@@ -1,0 +1,24 @@
+initialize -> {"jsonrpc": "2.0", "id": 1, "result": {"protocolVersion": "2024-11-05", "capabilities": {"tools": {}, "resources": {}, "logging": {}}, "serverInfo": {"name": "davinci_resolve", "version": "21.1"}, "instructions": "DaVinci Resolve Studio 21.1 is running. Call the `run_script` tool to run scripts, `search_scripting_api` to find the types and functions covering a topic, `get_scripting_api` to fetch scripting API stubs and `get_scripting_docs` to fetch developer documentation. ALWAYS call `get_whats_new` to learn about features and changes you are not aware of. DaVinci Resolve adds major features 
+status -> {"jsonrpc": "2.0", "id": 2, "result": {"content": [{"type": "text", "text": "{\"running\": true, \"version\": \"21.1\"}"}]}}
+run_script -> {"jsonrpc": "2.0", "id": 3, "result": {"content": [{"type": "text", "text": "{\"result\": {\"page\": \"media\", \"version\": \"21.1.0.14\", \"project\": \"Untitled Project\", \"timeline\": null, \"timelines\": 0}}"}]}}
+sandbox os -> {"jsonrpc": "2.0", "id": 4, "result": {"content": [{"type": "text", "text": "{\"error\": \"Traceback (most recent call last):\\n  File \\\"<script>\\\", line 1, in <module>\\n    import os\\n  File \\\"<string>\\\", line 49, in _sandbox_hook\\n    raise PermissionError(f'import not allowed: {args[0]}')\\nPermissionError: import not allowed: os\\n\"}"}]}}
+search -> {"jsonrpc": "2.0", "id": 5, "result": {"content": [{"type": "text", "text": "{\"content\": [{\"type\": \"text\", \"mimeType\": \"text/plain\", \"text\": \"DaVinciResolveScript.pyi\\n  class MediaPoolItem # A clip in the media pool. See README.md section 'Looking up Project and Clip properties'.\\n    def GetTranscription(self, useNestedClipTranscription=False) -> Transcription # Returns transcription data for the media pool item if available.\\nCall `get_scripting_api` with `types` to get the full declaration of any of the types above.\"}]}"}]}}
+2026-09-09 17:42:29,223 | DEBUG | read_message:
+{
+    "jsonrpc": "2.0",
+    "id": 1,
+    "method": "initialize",
+    "params": {
+        "protocolVersion": "2024-11-05",
+        "capabilities": {},
+        "clientInfo": {
+            "name": "smoke",
+            "version": "0"
+        }
+    }
+}
+2026-09-09 17:42:29,223 | DEBUG | write_message:
+{
+    "jsonrpc": "2.0",
+    "id": 1,
+    "result":

@@ -1,0 +1,93 @@
+{
+  "manifest_version": "0.3",
+  "name": "davinci-resolve",
+  "display_name": "DaVinci Resolve Studio",
+  "version": "1.0",
+  "description": "Spend more time being creative by automating repetitive tasks with Claude and DaVinci Resolve",
+  "long_description": "The DaVinci Resolve Studio MCP server saves you time by automating repetitive actions in the different pages, or creating new tools and looks, that can be saved and reused when you need them.\n\nKey capabilities:\n\\- Automate repetitive actions in the different pages via Resolve's scripting engine\n\\- Generate and modify custom LUTs and DCTLs (color transforms) from a simple description\n\\- Save your favorite workflows as reusable scripts that can be triggered on demand\n\nSetup:\nThe DaVinci Resolve MCP server runs locally on your device. It is only active when both Claude desktop and DaVinci Resolve Studio are running. You will need DaVinci Resolve Studio installed and kept up to date.",
+  "author": {
+    "name": "Blackmagic Design",
+    "url": "https://www.blackmagicdesign.com"
+  },
+  "homepage": "https://www.blackmagicdesign.com",
+  "icon": "icon.png",
+  "tools": [
+    {
+      "name": "launch_resolve",
+      "description": "Launch DaVinci Resolve and wait for it to be ready. Timeout is 60 secs."
+    },
+    {
+      "name": "get_resolve_status",
+      "description": "Check whether DaVinci Resolve is currently running and reachable."
+    },
+    {
+      "name": "get_whats_new",
+      "description": "Returns DaVinci Resolve changelog entries. Use to learn about features and changes introduced after your training cutoff."
+    },
+    {
+      "name": "get_scripting_api",
+      "description": "Returns Python Stubs (.pyi) of the latest scripting API (version 21.1), for use in the `run_script` tool. The stubs may reference additional documentation sections that can be obtained with `get_scripting_docs`."
+    },
+    {
+      "name": "search_scripting_api",
+      "description": "Searches the scripting API stubs and returns the matching types and functions with their descriptions, so the whole stub does not have to be fetched with `get_scripting_api`. The `pattern` is a regular expression matched case-insensitively against the names of types, functions, constants and dict fields, and against their descriptions, e.g. \"marker\", \"GetSetting\", \"COMPOSITE_\"."
+    },
+    {
+      "name": "run_script",
+      "description": "Execute a sandboxed Python 3.14 script with access to the DaVinciResolveScript API. Use `get_scripting_api`/`search_scripting_api` tools to obtain latest API. NEVER use for tasks unrelated to interacting with DaVinci Resolve. The sandbox blocks filesystem, network and process access: `os`, `sys`, `pathlib`, `shutil`, etc. are unavailable, use `run_script_unsafe` if the task needs them. The Resolve object is pre-injected as variable `resolve`, and the current Project as `project`. Set `result` to return structured data. Any print() output is also captured."
+    },
+    {
+      "name": "run_script_unsafe",
+      "description": "Execute a sand-boxed Python 3.14 script with access to the DaVinciResolveScript API AND full system access (filesystem, network, subprocess). Use `get_scripting_api` tool to get current API definition (.pyi). NEVER use when `run_script` can be used instead. ONLY use when the script genuinely needs OS access (e.g. reading/writing media files, running ffmpeg).NEVER use for tasks unrelated to interacting with DaVinci Resolve. The Resolve object is pre-injected as variable `resolve`, and the current Project as `project`. Set `result` to return structured data. Any print() output is also captured."
+    },
+    {
+      "name": "get_scripting_docs",
+      "description": "Returns DaVinci Resolve developer documentation, in full or a single section. Covers detail that does not fit in the API stubs returned by `get_scripting_api`."
+    },
+    {
+      "name": "list_dctls",
+      "description": "List DCTL files (.dctl) recursively in the LUTs dir (/Library/Application Support/Blackmagic Design/DaVinci Resolve/LUT)."
+    },
+    {
+      "name": "list_luts",
+      "description": "List LUT files (.3dl, .cube, .dat, .lut, .olut) recursively in the LUTs dir (/Library/Application Support/Blackmagic Design/DaVinci Resolve/LUT)."
+    },
+    {
+      "name": "update_dctl",
+      "description": "Write or overwrite a .dctl file in /Library/Application Support/Blackmagic Design/DaVinci Resolve/LUT/MCP. Before being written the file is compiled to check for errors. Use `get_scripting_docs` with document \"DCTLReadme.txt\" for the DCTL syntax reference and built-in functions."
+    },
+    {
+      "name": "delete_dctl",
+      "description": "Delete a .dctl file from /Library/Application Support/Blackmagic Design/DaVinci Resolve/LUT/MCP."
+    },
+    {
+      "name": "delete_lut",
+      "description": "Delete a LUT file from /Library/Application Support/Blackmagic Design/DaVinci Resolve/LUT/MCP."
+    },
+    {
+      "name": "generate_lut",
+      "description": "Generate a .cube 3D LUT by evaluating a Python transform function on every lattice point. File is written to /Library/Application Support/Blackmagic Design/DaVinci Resolve/LUT/MCP."
+    }
+  ],
+  "license": "Proprietary",
+  "compatibility": {
+    "platforms": [
+      "darwin",
+      "win32",
+      "linux"
+    ],
+    "runtimes": {
+      "node": ">=18.0.0"
+    }
+  },
+  "server": {
+    "type": "node",
+    "entry_point": "server/index.js",
+    "mcp_config": {
+      "command": "node",
+      "args": [
+        "${__dirname}/server/index.js"
+      ]
+    }
+  }
+}

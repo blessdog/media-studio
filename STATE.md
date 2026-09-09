@@ -3,7 +3,7 @@
 
 # media-studio — STATE
 
-*Generated 2026-09-07 17:19 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
+*Generated 2026-09-07 17:25 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
 
 ## What is open
 
@@ -59,6 +59,7 @@ OPEN — plans, NOT specs. proven: false. Do not build against these.
 *From git. The full narrative lives in `docs/journal/`; commit subjects are written as search bait, so `git log --grep` is the index.*
 
 ```
+2026-09-07  23b2ee2  knowledge: an rsync remote path with a space arrives at openrsync as two arguments; STATE regenerated
 2026-09-07  2dfdc60  STATE regenerated: render lane on the mini proven on the full cut
 2026-09-07  94fa24d  evidence: Resolve render vs mini render, same frame at 9:30, levels identical
 2026-09-07  4bdc9c8  build-in-public: the full cut renders on the mini in 147 s, frame-exact
@@ -70,16 +71,20 @@ OPEN — plans, NOT specs. proven: false. Do not build against these.
 2026-09-07  5dee4da  rough cut: cut ends snap to utterance ends, tool warns when a window splits a sentence
 2026-09-07  dbf8be8  jobs/build-in-public: brief, story map, 19-cut rough cut and contact sheet
 2026-09-07  23f89e7  ingest-session --cuts: the rough cut is a readable cut list, not a Resolve project
-2026-09-07  2faabfd  ingest-session: several ingested recordings become one session timeline
 ```
 
-*Remote: `https://github.com/blessdog/media-studio.git` — `master` is pushed.*
+### ⚠ UNPUSHED
+
+**1 commit(s) ahead of `origin/master`.** Committed is not the same as safe — a commit that has not left this machine has the durability of the disk it is on.
+
+```
+git push origin master
+```
 
 ### Uncommitted
 
 ```
  M STATE.md
-?? knowledge/an-rsync-remote-path-with-a-space-arrives-as-two-arguments.md
 ```
 
 *Uncommitted is not learned. Commit at the moment of learning.*
