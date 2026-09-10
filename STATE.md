@@ -3,7 +3,7 @@
 
 # media-studio — STATE
 
-*Generated 2026-09-09 18:58 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
+*Generated 2026-09-09 18:59 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
 
 ## What is open
 
@@ -67,6 +67,7 @@ OPEN — plans, NOT specs. proven: false. Do not build against these.
 *From git. The full narrative lives in `docs/journal/`; commit subjects are written as search bait, so `git log --grep` is the index.*
 
 ```
+2026-09-09  6df5e46  STATE regenerated after summer-reel open
 2026-09-09  6805624  STATE regenerated: summer-reel full-frame, sha256 bookmark
 2026-09-09  99d9958  knowledge: bookmark, every ingest tool should write asset sha256 so a reconform is a new timeline
 2026-09-09  0930ad5  summer-reel: landscape clips fill the frame with a centre crop; asset sha256 in the IR so a reconform is a new timeline, not a cached one
@@ -78,18 +79,9 @@ OPEN — plans, NOT specs. proven: false. Do not build against these.
 2026-09-09  e1ebe26  research: Resolve 21.1 native MCP server measured live, 14 tools, run_script sandbox; 20 new scripting APIs mapped to studio gaps
 2026-09-07  23b2ee2  knowledge: an rsync remote path with a space arrives at openrsync as two arguments; STATE regenerated
 2026-09-07  2dfdc60  STATE regenerated: render lane on the mini proven on the full cut
-2026-09-07  94fa24d  evidence: Resolve render vs mini render, same frame at 9:30, levels identical
 ```
 
 *Remote: `https://github.com/blessdog/media-studio.git` — `master` is pushed.*
-
-### Uncommitted
-
-```
- M STATE.md
-```
-
-*Uncommitted is not learned. Commit at the moment of learning.*
 
 ---
 

@@ -1,4 +1,4 @@
-# summer-reel — ten iPhone clips, one 30-second vertical reel
+# summer-reel — ten iPhone clips, one 30-second widescreen reel
 
 **What it is.** The first job cut after Resolve 21.1 landed (2026-09-09).
 Ryan dragged ten clips out of Photos and said *"lets test it out … lets make
@@ -21,13 +21,14 @@ once the terminal was granted Photos access. Route recorded in the store as
 
 ## The cut
 
-`cuts.json` is the edit: `{source, start, beats, note}` in cut order, start in
-source seconds, length in beats on an 80 BPM grid (the SP-404 in clip four
+`cuts.json` is the edit: `{source, start, beats, y, note}` in cut order, start
+in source seconds, length in beats on an 80 BPM grid, `y` the vertical centre
+of the 16:9 window cut from a portrait source (0 top, 1 bottom) (the SP-404 in clip four
 reads "80", so that is the reel's tempo). At 30 fps a beat is 22.5 frames,
 so beat counts are even and every cut lands on an integer frame.
-`build.py` conforms each source to one 720×1280 30 fps stream, full frame:
-portrait by scaling, landscape scaled to fill and centre-cropped, audio to
-−18 LUFS, then
+`build.py` conforms each source to one 1280×720 30 fps widescreen stream,
+full frame: landscape sources native, portrait sources scaled to width and
+cropped to the 16:9 window at `y`, audio to −18 LUFS, then
 writes `outputs/projects/summer-reel/story.json` and compiles it.
 
 The ten in-points, in order:
@@ -42,9 +43,9 @@ The ten in-points, in order:
 | 3 | 4 | SP-404 | display reads 80 |
 | 4 | 4 | shooting gallery | DANGER |
 | 5 | 4 | coaster | car at the top, then the drop |
-| 6 | 2 | cave | ceiling (landscape, centre crop) |
-| 7 | 2 | elk painting | the bull (landscape, centre crop) |
-| 8 | 6 | concert | singer close-up (landscape, centre crop) |
+| 6 | 2 | cave | ceiling (landscape, native) |
+| 7 | 2 | elk painting | the bull (landscape, native) |
+| 8 | 6 | concert | singer close-up (landscape, native) |
 | 9 | 8 | bear | at the liquor store, the punchline |
 
 40 beats, 900 frames, 30.00 s. Natural sound only; no music bed was added
@@ -53,9 +54,10 @@ call. `edit-ir.py <ws> add-music` is the verb when he names one.
 
 ## What was measured
 
-- **Timeline** `summer-reel@f8b0bab9` (current; `@058a7a33` was the blurred-fill
-  version, `@b9996010` the swapped one): lint green, structure verify green,
-  shown in Resolve at 720×1280 30 fps.
+- **Timeline** `summer-reel@471f0165` (current, widescreen; the vertical
+  versions `@f8b0bab9`, `@058a7a33` and the swapped `@b9996010` remain in the
+  library): lint green, structure verify green, shown in Resolve at 1280×720
+  30 fps.
 - **Native MCP server** (`mcp-readback.py`, output in
   `evidence/mcp-readback.txt`): `run_script` read the timeline back item by
   item and matched the IR exactly (10 video items, 10 audio items, 900
@@ -65,8 +67,8 @@ call. `edit-ir.py <ws> add-music` is the verb when he names one.
   `GetNormalizeAudioModes` listed 14 modes. The IR-compiled timeline was not
   touched; the trial copy is there for Ryan to look at and delete.
 - **Render on the mini** (`render-ir.py --on mini`): ten runs encoded in
-  7 s, `outputs/projects/summer-reel/render/summer-reel-mini.mp4`, 900
-  frames, 720×1280, −18.3 LUFS integrated, verify green.
+  seconds, `outputs/projects/summer-reel/render/summer-reel-mini.mp4`, 900
+  frames, 1280×720, verify green.
 
 ## What went wrong
 
@@ -78,10 +80,15 @@ before compile, which is what `evidence/cut-points-10.png` now is.
 
 ## Verdicts
 
-**Given, 2026-09-09:** the first version put the three landscape clips over a
-blurred fill of themselves. Ryan: *"Can you not make a full screen video?
-They're all crappily cropped in."* Landscape clips now scale to fill and
-centre-crop. The reconform exposed a real defect: the IR hash did not see
+**Given, 2026-09-09, twice.** The first version was 9:16 vertical with the
+three landscape clips over a blurred fill. Ryan: *"Can you not make a full
+screen video? They're all crappily cropped in."* Read as "fill the vertical
+frame", it was rebuilt with a centre crop. Wrong reading. Ryan: *"That's not
+full screen … video player resolution, YouTube … the one where it's long
+that goes across the entire screen."* Full screen means 16:9. The reel is now
+1280×720 widescreen, the sources' native ceiling; portrait clips are cropped
+to a 16:9 window placed per cut so the face, the dog, the coaster car and
+the bear stay in frame. The first reconform exposed a real defect: the IR hash did not see
 media content, so the recompile reused the cached timeline over changed
 files. `build.py` now writes each conformed file's sha256 into the asset,
 which makes a reconform a new timeline.
