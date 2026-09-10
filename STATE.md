@@ -3,7 +3,7 @@
 
 # media-studio — STATE
 
-*Generated 2026-09-07 17:25 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
+*Generated 2026-09-09 18:11 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
 
 ## What is open
 
@@ -26,15 +26,19 @@ Every `kind: open` claim in the store. These are PLANS, not specs — `proven: f
 The full index. Query it before choosing any technique — `find-technique.py "<your situation>"` — rather than reading it. Every claim declares the questions that must find it, and `check-retrieval.py` asserts they do.
 
 ```
-KNOWLEDGE — 8 live claims: 8 from this project (/Users/SSDrive/projects/mediaStudio/media-studio/knowledge), 0 universal (~/.claude/knowledge/store)
+KNOWLEDGE — 10 live claims: 10 from this project (/Users/SSDrive/projects/mediaStudio/media-studio/knowledge), 0 universal (~/.claude/knowledge/store)
 Query before choosing any technique:  python3 ~/.claude/knowledge/bin/find-technique.py "<your situation>"
 
 LAWS — absolute, no exceptions
   · hide-the-crystallography-scaffolds: A deposited structure contains parts that exist only so the structure could be
 
+PROCEDURES — the routes that are currently believed
+  · photos-library-originals-come-down-with-osxphotos answers how-to-get-a-photos-library-video-into-the-studio   (sibling: none)
+
 VERDICTS — measured, and SCOPED; check the scope before reusing
   · gpcr-interface-faces-are-90-degrees-apart Class A GPCR heteromers assembled from real coordinates, specifically the A2AR-D2R heterot
   · the-mini-renders-the-story-ir-with-ffmpeg-not-resolve straight-cut timelines (track-1 edits only) rendered from a workspace's story.json; the Ma
+  · the-native-resolve-mcp-server-works-over-stdio DaVinci Resolve Studio 21.1.0.14 on this MacBook (macOS 26), external scripting = Local, R
 
 REFUTED — already tried, do NOT retry
   ✗ an-rsync-remote-path-with-a-space-arrives-as-two-arguments rsync hands the remote path to the remote login shell as text, the shell word-splits it, and the far
@@ -59,6 +63,11 @@ OPEN — plans, NOT specs. proven: false. Do not build against these.
 *From git. The full narrative lives in `docs/journal/`; commit subjects are written as search bait, so `git log --grep` is the index.*
 
 ```
+2026-09-09  fc960df  journal: Resolve 21.1 native MCP measured, summer reel cut on an 80 BPM grid, the cave-concert mislabel
+2026-09-09  25ee701  summer-reel: ten Photos clips to a 30 s vertical reel on an 80 BPM grid; native ResolveMCP reads the timeline back and trials a dissolve on a duplicate; rendered on the mini
+2026-09-09  117d47c  research: Resolve 21.1 report retags the free-edition scripting change as REPORTED, the installed changelog does not say it
+2026-09-09  f33a5ed  knowledge: the native Resolve MCP server works over stdio (verdict, scoped to 21.1.0.14 with a ten-second overlap)
+2026-09-09  e1ebe26  research: Resolve 21.1 native MCP server measured live, 14 tools, run_script sandbox; 20 new scripting APIs mapped to studio gaps
 2026-09-07  23b2ee2  knowledge: an rsync remote path with a space arrives at openrsync as two arguments; STATE regenerated
 2026-09-07  2dfdc60  STATE regenerated: render lane on the mini proven on the full cut
 2026-09-07  94fa24d  evidence: Resolve render vs mini render, same frame at 9:30, levels identical
@@ -66,20 +75,9 @@ OPEN — plans, NOT specs. proven: false. Do not build against these.
 2026-09-07  3bf65a4  ffrender: a local render reaps its encoded runs, the stage reaps itself
 2026-09-07  97e31e4  STATE regenerated: session lane, cut list, and the mini render lane land
 2026-09-07  614a7fe  build-in-public brief and journal: the render lane moves to the mini, music bleed measured
-2026-09-07  33f2c13  render-ir --on mini: pipe each staged run over ssh, nothing staged lands on the mini
-2026-09-07  a904225  render-ir: the Story IR renders with ffmpeg, here or on the Mac mini
-2026-09-07  5dee4da  rough cut: cut ends snap to utterance ends, tool warns when a window splits a sentence
-2026-09-07  dbf8be8  jobs/build-in-public: brief, story map, 19-cut rough cut and contact sheet
-2026-09-07  23f89e7  ingest-session --cuts: the rough cut is a readable cut list, not a Resolve project
 ```
 
-### ⚠ UNPUSHED
-
-**1 commit(s) ahead of `origin/master`.** Committed is not the same as safe — a commit that has not left this machine has the durability of the disk it is on.
-
-```
-git push origin master
-```
+*Remote: `https://github.com/blessdog/media-studio.git` — `master` is pushed.*
 
 ### Uncommitted
 
