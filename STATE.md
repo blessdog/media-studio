@@ -3,7 +3,7 @@
 
 # media-studio — STATE
 
-*Generated 2026-09-09 18:41 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
+*Generated 2026-09-09 18:58 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
 
 ## What is open
 
@@ -67,6 +67,7 @@ OPEN — plans, NOT specs. proven: false. Do not build against these.
 *From git. The full narrative lives in `docs/journal/`; commit subjects are written as search bait, so `git log --grep` is the index.*
 
 ```
+2026-09-09  6805624  STATE regenerated: summer-reel full-frame, sha256 bookmark
 2026-09-09  99d9958  knowledge: bookmark, every ingest tool should write asset sha256 so a reconform is a new timeline
 2026-09-09  0930ad5  summer-reel: landscape clips fill the frame with a centre crop; asset sha256 in the IR so a reconform is a new timeline, not a cached one
 2026-09-09  7e0c067  STATE regenerated: summer-reel job, native ResolveMCP verdict, osxphotos procedure
@@ -78,7 +79,6 @@ OPEN — plans, NOT specs. proven: false. Do not build against these.
 2026-09-07  23b2ee2  knowledge: an rsync remote path with a space arrives at openrsync as two arguments; STATE regenerated
 2026-09-07  2dfdc60  STATE regenerated: render lane on the mini proven on the full cut
 2026-09-07  94fa24d  evidence: Resolve render vs mini render, same frame at 9:30, levels identical
-2026-09-07  4bdc9c8  build-in-public: the full cut renders on the mini in 147 s, frame-exact
 ```
 
 *Remote: `https://github.com/blessdog/media-studio.git` — `master` is pushed.*
