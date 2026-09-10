@@ -5,8 +5,8 @@ conflict-key: how-does-an-agent-reach-resolve-over-mcp
 status: live
 supersedes: []
 verified-on: 2026-09-09
-scope: DaVinci Resolve Studio 21.1.0.14 on this MacBook (macOS 26), external scripting = Local, Resolve already open; measured with the vendored samuelgursky server also connected for about ten seconds of overlap. Says nothing about a long shared session, and nothing about `File > Setup AI Assistants`, which was not run.
-evidence: docs/research-raw/resolve-21.1/resolvemcp-smoke-transcript.txt (initialize, get_resolve_status, run_script returned page/project/version, sandbox refused `import os`); docs/research-raw/resolve-21.1/resolvemcp-dump-tools.json (the 14 tools); docs/RESOLVE-21.1-AGENTIC.md
+scope: DaVinci Resolve Studio 21.1.0.14 on this MacBook (macOS 26), external scripting = Local, Resolve already open; measured with the vendored samuelgursky server also connected, first for ten seconds, then for a two-call session on the summer-reel project. Says nothing about a long shared session, and nothing about `File > Setup AI Assistants`, which was not run.
+evidence: docs/research-raw/resolve-21.1/resolvemcp-smoke-transcript.txt (initialize, get_resolve_status, run_script returned page/project/version, sandbox refused `import os`); docs/research-raw/resolve-21.1/resolvemcp-dump-tools.json (the 14 tools); jobs/summer-reel/mcp-readback.py + jobs/summer-reel/README.md (read back a compiled 10-edit timeline item by item, DuplicateTimeline + AddTransition on the copy, GetNormalizeAudioModes); docs/RESOLVE-21.1-AGENTIC.md
 asked-as:
   - does DaVinci Resolve 21.1 have a built-in MCP server
   - how do I connect Claude Code to Resolve natively
@@ -35,6 +35,8 @@ entries into `~/.claude.json`, `~/.codex/config.toml`
 `~/.grok/config.toml`; Claude Desktop gets the `.mcpb` extension bundle. None
 of that was run here; `.mcp.json` still names the vendored samuelgursky server
 because replacing it is a locked decision Ryan owns (CLAUDE.md).
+
+Second measurement, same day, on `summer-reel@b9996010`: `run_script` read the compiled timeline back item by item (10 items, 900 frames, 10 markers, matching the Story IR exactly), `DuplicateTimeline` + `AddTransition({type:'Cross Dissolve', category:'simple', position:'start', duration:20})` returned a 20-frame transition item on the copy, and `GetNormalizeAudioModes` listed 14 modes. The IR-compiled timeline was left untouched.
 
 Related: [[the-mini-renders-the-story-ir-with-ffmpeg-not-resolve]],
 [[obs-camera-isolates-in-movies-iso-are-an-untouch]] (21.1's multicam APIs

@@ -1,0 +1,136 @@
+#!/usr/bin/env python3
+"""summer-reel: ten iPhone clips -> one vertical reel on an 80 BPM grid.
+
+    .venv/bin/python jobs/summer-reel/build.py [--no-compile] [--no-conform]
+
+Reads jobs/summer-reel/cuts.json ({source, start, beats, note} in cut order,
+start in SOURCE seconds, beats on the 80 BPM grid, even counts only so a beat
+pair is an integer 45 frames at 30 fps), conforms every used source to one
+vertical 720x1280 30 fps H.264 stream with loudness-normalised audio, writes
+the Story IR to outputs/projects/summer-reel/story.json and compiles it.
+
+PRIOR ART: the conform is ffmpeg (scale/crop/gblur/overlay/fps/loudnorm);
+studio/bongpot.py normalize_clip does the crop-to-fill variant for bongpot
+shots. This job needs blurred-fill for landscape clips, which that helper
+does not do. Second film that wants it: move the conform into studio/.
+"""
+import argparse
+import json
+import subprocess
+import sys
+from fractions import Fraction
+from pathlib import Path
+
+REPO = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(REPO))
+
+JOB = Path(__file__).resolve().parent
+SOURCES = REPO / "outputs" / "intake" / "summer-clips"
+WS = REPO / "outputs" / "projects" / "summer-reel"
+NAME = "summer-reel"
+FPS = Fraction(30, 1)
+BPM = 80
+W, H = 720, 1280
+FRAMES_PER_BEAT = FPS * 60 / BPM          # 22.5 at 30 fps, hence even beats only
+TARGET_LUFS = -18.0
+
+
+def probe(path):
+    out = subprocess.run(
+        ["ffprobe", "-v", "error", "-select_streams", "v:0",
+         "-show_entries", "stream=width,height:stream_side_data=rotation",
+         "-of", "json", str(path)], capture_output=True, text=True, check=True).stdout
+    s = json.loads(out)["streams"][0]
+    rot = 0
+    for sd in s.get("side_data_list", []):
+        rot = int(sd.get("rotation", 0)) or rot
+    w, h = s["width"], s["height"]
+    if rot in (90, -90, 270):
+        w, h = h, w
+    return w, h
+
+
+def conform(src, dst):
+    """One vertical 720x1280 stream. Portrait sources scale; landscape sources
+    sit over a blurred, filled copy of themselves. Audio to -18 LUFS."""
+    w, h = probe(src)
+    if h >= w:
+        vf = f"scale={W}:{H},fps=30,setsar=1"
+    else:
+        vf = (f"split[bg][fg];"
+              f"[bg]scale={W}:{H}:force_original_aspect_ratio=increase,"
+              f"crop={W}:{H},gblur=sigma=30[bgb];"
+              f"[fg]scale={W}:-2[fgs];"
+              f"[bgb][fgs]overlay=(W-w)/2:(H-h)/2,fps=30,setsar=1")
+    subprocess.run(
+        ["ffmpeg", "-y", "-v", "error", "-i", str(src),
+         "-filter_complex" if h < w else "-vf", vf,
+         "-af", f"loudnorm=I={TARGET_LUFS}:TP=-1.5:LRA=11",
+         "-c:v", "libx264", "-preset", "fast", "-crf", "18", "-pix_fmt", "yuv420p",
+         "-r", "30", "-video_track_timescale", "30000",
+         "-c:a", "aac", "-ar", "48000", "-ac", "2", "-b:a", "192k",
+         "-movflags", "+faststart", str(dst)], check=True)
+
+
+def build_ir(cuts):
+    assets, edits, markers = [], [], []
+    seen = {}
+    record = 0
+    for i, c in enumerate(cuts):
+        if c["beats"] % 2:
+            raise SystemExit(f"cut {i}: beats must be even at {BPM} BPM / {FPS} fps")
+        aid = seen.get(c["source"])
+        if aid is None:
+            aid = f"c{len(seen)}"
+            seen[c["source"]] = aid
+            assets.append({"id": aid, "path": f"media/{c['source']}.mp4", "kind": "video"})
+        frames = int(c["beats"] * FRAMES_PER_BEAT)
+        src_in = int(round(c["start"] * FPS))
+        edits.append({"id": f"e{i}", "asset": aid, "srcIn": src_in,
+                      "srcOut": src_in + frames, "record": record, "track": 1})
+        markers.append({"frame": record, "color": "Purple",
+                        "name": f"cut {i}", "note": c["note"]})
+        record += frames
+    return {
+        "irVersion": "0.1",
+        "name": NAME,
+        "timebase": {"fps": f"{FPS.numerator}/{FPS.denominator}"},
+        "resolution": {"width": W, "height": H},
+        "assets": assets,
+        "edits": edits,
+        "markers": markers,
+        "provenance": {"generator": "summer-reel-build", "createdBy": "jobs/summer-reel/build.py"},
+    }, record
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--no-compile", action="store_true")
+    ap.add_argument("--no-conform", action="store_true", help="media/ already conformed")
+    args = ap.parse_args()
+
+    cuts = json.loads((JOB / "cuts.json").read_text())
+    (WS / "media").mkdir(parents=True, exist_ok=True)
+    for src_name in dict.fromkeys(c["source"] for c in cuts):
+        src = SOURCES / f"{src_name}.MOV"
+        dst = WS / "media" / f"{src_name}.mp4"
+        if args.no_conform and dst.exists():
+            continue
+        if not src.exists():
+            raise SystemExit(f"missing source: {src}")
+        print(f"conform {src.name} -> {dst.relative_to(REPO)}", file=sys.stderr)
+        conform(src, dst)
+
+    ir, total = build_ir(cuts)
+    ir_path = WS / "story.json"
+    ir_path.write_text(json.dumps(ir, indent=1))
+    print(f"IR: {ir_path} | {len(ir['edits'])} edits, {total} frames = {total / FPS:.2f}s "
+          f"= {total / FRAMES_PER_BEAT:.0f} beats at {BPM} BPM")
+    if args.no_compile:
+        return 0
+    return subprocess.run([str(REPO / ".venv/bin/python"), str(REPO / "tools/compile-ir.py"),
+                           str(ir_path), "--show"]).returncode
+
+
+if __name__ == "__main__":
+    sys.exit(main())
