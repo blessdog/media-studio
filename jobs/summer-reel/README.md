@@ -25,8 +25,9 @@ once the terminal was granted Photos access. Route recorded in the store as
 source seconds, length in beats on an 80 BPM grid (the SP-404 in clip four
 reads "80", so that is the reel's tempo). At 30 fps a beat is 22.5 frames,
 so beat counts are even and every cut lands on an integer frame.
-`build.py` conforms each source to one 720×1280 30 fps stream, portrait by
-scaling, landscape over a blurred fill of itself, audio to −18 LUFS, then
+`build.py` conforms each source to one 720×1280 30 fps stream, full frame:
+portrait by scaling, landscape scaled to fill and centre-cropped, audio to
+−18 LUFS, then
 writes `outputs/projects/summer-reel/story.json` and compiles it.
 
 The ten in-points, in order:
@@ -41,9 +42,9 @@ The ten in-points, in order:
 | 3 | 4 | SP-404 | display reads 80 |
 | 4 | 4 | shooting gallery | DANGER |
 | 5 | 4 | coaster | car at the top, then the drop |
-| 6 | 2 | cave | ceiling (landscape, blurred fill) |
-| 7 | 2 | elk painting | the bull (landscape, blurred fill) |
-| 8 | 6 | concert | singer close-up (landscape, blurred fill) |
+| 6 | 2 | cave | ceiling (landscape, centre crop) |
+| 7 | 2 | elk painting | the bull (landscape, centre crop) |
+| 8 | 6 | concert | singer close-up (landscape, centre crop) |
 | 9 | 8 | bear | at the liquor store, the punchline |
 
 40 beats, 900 frames, 30.00 s. Natural sound only; no music bed was added
@@ -52,7 +53,8 @@ call. `edit-ir.py <ws> add-music` is the verb when he names one.
 
 ## What was measured
 
-- **Timeline** `summer-reel@058a7a33`: lint green, structure verify green,
+- **Timeline** `summer-reel@f8b0bab9` (current; `@058a7a33` was the blurred-fill
+  version, `@b9996010` the swapped one): lint green, structure verify green,
   shown in Resolve at 720×1280 30 fps.
 - **Native MCP server** (`mcp-readback.py`, output in
   `evidence/mcp-readback.txt`): `run_script` read the timeline back item by
@@ -74,9 +76,16 @@ Caught by extracting the actual in-point frames, not by any check. The lesson
 for the front door: a cut list should carry the in-point frame as evidence
 before compile, which is what `evidence/cut-points-10.png` now is.
 
-## Verdicts Ryan owes
+## Verdicts
 
-Every row in the table. Beyond the rows: whether landscape clips get the
-blurred fill or a centre crop; whether the dissolve into the bear (on the
-trial copy) is wanted, which would make transitions a Story IR field;
-which track, if any, goes under it.
+**Given, 2026-09-09:** the first version put the three landscape clips over a
+blurred fill of themselves. Ryan: *"Can you not make a full screen video?
+They're all crappily cropped in."* Landscape clips now scale to fill and
+centre-crop. The reconform exposed a real defect: the IR hash did not see
+media content, so the recompile reused the cached timeline over changed
+files. `build.py` now writes each conformed file's sha256 into the asset,
+which makes a reconform a new timeline.
+
+**Owed:** every row in the table; whether the dissolve into the bear (on the
+trial copy) is wanted, which would make transitions a Story IR field; which
+track, if any, goes under it.

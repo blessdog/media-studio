@@ -15,6 +15,7 @@ shots. This job needs blurred-fill for landscape clips, which that helper
 does not do. Second film that wants it: move the conform into studio/.
 """
 import argparse
+import hashlib
 import json
 import subprocess
 import sys
@@ -35,36 +36,15 @@ FRAMES_PER_BEAT = FPS * 60 / BPM          # 22.5 at 30 fps, hence even beats onl
 TARGET_LUFS = -18.0
 
 
-def probe(path):
-    out = subprocess.run(
-        ["ffprobe", "-v", "error", "-select_streams", "v:0",
-         "-show_entries", "stream=width,height:stream_side_data=rotation",
-         "-of", "json", str(path)], capture_output=True, text=True, check=True).stdout
-    s = json.loads(out)["streams"][0]
-    rot = 0
-    for sd in s.get("side_data_list", []):
-        rot = int(sd.get("rotation", 0)) or rot
-    w, h = s["width"], s["height"]
-    if rot in (90, -90, 270):
-        w, h = h, w
-    return w, h
-
-
 def conform(src, dst):
-    """One vertical 720x1280 stream. Portrait sources scale; landscape sources
-    sit over a blurred, filled copy of themselves. Audio to -18 LUFS."""
-    w, h = probe(src)
-    if h >= w:
-        vf = f"scale={W}:{H},fps=30,setsar=1"
-    else:
-        vf = (f"split[bg][fg];"
-              f"[bg]scale={W}:{H}:force_original_aspect_ratio=increase,"
-              f"crop={W}:{H},gblur=sigma=30[bgb];"
-              f"[fg]scale={W}:-2[fgs];"
-              f"[bgb][fgs]overlay=(W-w)/2:(H-h)/2,fps=30,setsar=1")
+    """One vertical 720x1280 stream, full frame. Portrait sources scale;
+    landscape sources scale to fill and centre-crop (Ryan, 2026-09-09, on the
+    blurred-fill version: "crappily cropped in ... make a full screen video").
+    Audio to -18 LUFS."""
+    vf = (f"scale={W}:{H}:force_original_aspect_ratio=increase,"
+          f"crop={W}:{H},fps=30,setsar=1")
     subprocess.run(
-        ["ffmpeg", "-y", "-v", "error", "-i", str(src),
-         "-filter_complex" if h < w else "-vf", vf,
+        ["ffmpeg", "-y", "-v", "error", "-i", str(src), "-vf", vf,
          "-af", f"loudnorm=I={TARGET_LUFS}:TP=-1.5:LRA=11",
          "-c:v", "libx264", "-preset", "fast", "-crf", "18", "-pix_fmt", "yuv420p",
          "-r", "30", "-video_track_timescale", "30000",
@@ -83,7 +63,11 @@ def build_ir(cuts):
         if aid is None:
             aid = f"c{len(seen)}"
             seen[c["source"]] = aid
-            assets.append({"id": aid, "path": f"media/{c['source']}.mp4", "kind": "video"})
+            rel = f"media/{c['source']}.mp4"
+            # sha256 makes the conform part of the IR's identity: a reconformed
+            # file at the same path is a NEW timeline, never a cached one.
+            assets.append({"id": aid, "path": rel, "kind": "video",
+                           "sha256": hashlib.sha256((WS / rel).read_bytes()).hexdigest()})
         frames = int(c["beats"] * FRAMES_PER_BEAT)
         src_in = int(round(c["start"] * FPS))
         edits.append({"id": f"e{i}", "asset": aid, "srcIn": src_in,
