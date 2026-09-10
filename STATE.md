@@ -3,7 +3,7 @@
 
 # media-studio — STATE
 
-*Generated 2026-09-09 18:11 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
+*Generated 2026-09-09 18:41 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
 
 ## What is open
 
@@ -16,6 +16,9 @@ Every `kind: open` claim in the store. These are PLANS, not specs — `proven: f
 ? edit-ir-find-does-not-work-on-a-multi-recording-   (2026-09-07)
     edit-ir find does not work on a multi-recording session workspace
     why: moments.spans_from_ir raises 'need asset_id' when track 1 references more than one asset, so a session w
+? every-ingest-and-build-tool-should-write-sha256-   (2026-09-09)
+    Every ingest and build tool should write sha256 into IR assets, so reconformed media at the same path compiles
+    why: measured 2026-09-09 on summer-reel: after reconforming three clips in place, compile-ir reported 'reused
 ? obs-camera-isolates-in-movies-iso-are-an-untouch   (2026-09-07)
     OBS camera isolates in movies/iso are an untouched multicam B-roll lane
     why: Six *-cam.mp4 isolates (Sept 5 and 7 sessions, one 15GB with no matching program recording) exist beside
@@ -26,7 +29,7 @@ Every `kind: open` claim in the store. These are PLANS, not specs — `proven: f
 The full index. Query it before choosing any technique — `find-technique.py "<your situation>"` — rather than reading it. Every claim declares the questions that must find it, and `check-retrieval.py` asserts they do.
 
 ```
-KNOWLEDGE — 10 live claims: 10 from this project (/Users/SSDrive/projects/mediaStudio/media-studio/knowledge), 0 universal (~/.claude/knowledge/store)
+KNOWLEDGE — 11 live claims: 11 from this project (/Users/SSDrive/projects/mediaStudio/media-studio/knowledge), 0 universal (~/.claude/knowledge/store)
 Query before choosing any technique:  python3 ~/.claude/knowledge/bin/find-technique.py "<your situation>"
 
 LAWS — absolute, no exceptions
@@ -47,6 +50,7 @@ REFUTED — already tried, do NOT retry
 OPEN — plans, NOT specs. proven: false. Do not build against these.
   ? docs-story-ir-md-is-cited-by-status-md-and-agent Why it matters: the Story IR contract is documented only in schema/story-ir.schema.json an
   ? edit-ir-find-does-not-work-on-a-multi-recording- Why it matters: moments.spans_from_ir raises 'need asset_id' when track 1 references more 
+  ? every-ingest-and-build-tool-should-write-sha256- Why it matters: measured 2026-09-09 on summer-reel: after reconforming three clips in plac
   ? obs-camera-isolates-in-movies-iso-are-an-untouch Why it matters: Six -cam.mp4 isolates (Sept 5 and 7 sessions, one 15GB with no matching pr
 ```
 
@@ -63,6 +67,9 @@ OPEN — plans, NOT specs. proven: false. Do not build against these.
 *From git. The full narrative lives in `docs/journal/`; commit subjects are written as search bait, so `git log --grep` is the index.*
 
 ```
+2026-09-09  99d9958  knowledge: bookmark, every ingest tool should write asset sha256 so a reconform is a new timeline
+2026-09-09  0930ad5  summer-reel: landscape clips fill the frame with a centre crop; asset sha256 in the IR so a reconform is a new timeline, not a cached one
+2026-09-09  7e0c067  STATE regenerated: summer-reel job, native ResolveMCP verdict, osxphotos procedure
 2026-09-09  fc960df  journal: Resolve 21.1 native MCP measured, summer reel cut on an 80 BPM grid, the cave-concert mislabel
 2026-09-09  25ee701  summer-reel: ten Photos clips to a 30 s vertical reel on an 80 BPM grid; native ResolveMCP reads the timeline back and trials a dissolve on a duplicate; rendered on the mini
 2026-09-09  117d47c  research: Resolve 21.1 report retags the free-edition scripting change as REPORTED, the installed changelog does not say it
@@ -72,9 +79,6 @@ OPEN — plans, NOT specs. proven: false. Do not build against these.
 2026-09-07  2dfdc60  STATE regenerated: render lane on the mini proven on the full cut
 2026-09-07  94fa24d  evidence: Resolve render vs mini render, same frame at 9:30, levels identical
 2026-09-07  4bdc9c8  build-in-public: the full cut renders on the mini in 147 s, frame-exact
-2026-09-07  3bf65a4  ffrender: a local render reaps its encoded runs, the stage reaps itself
-2026-09-07  97e31e4  STATE regenerated: session lane, cut list, and the mini render lane land
-2026-09-07  614a7fe  build-in-public brief and journal: the render lane moves to the mini, music bleed measured
 ```
 
 *Remote: `https://github.com/blessdog/media-studio.git` — `master` is pushed.*
