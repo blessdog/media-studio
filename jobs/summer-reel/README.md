@@ -21,14 +21,14 @@ once the terminal was granted Photos access. Route recorded in the store as
 
 ## The cut
 
-`cuts.json` is the edit: `{source, start, beats, y, note}` in cut order, start
-in source seconds, length in beats on an 80 BPM grid, `y` the vertical centre
-of the 16:9 window cut from a portrait source (0 top, 1 bottom) (the SP-404 in clip four
+`cuts.json` is the edit: `{source, start, beats, note}` in cut order, start in
+source seconds, length in beats on an 80 BPM grid (the SP-404 in clip four
 reads "80", so that is the reel's tempo). At 30 fps a beat is 22.5 frames,
 so beat counts are even and every cut lands on an integer frame.
-`build.py` conforms each source to one 1280×720 30 fps widescreen stream,
-full frame: landscape sources native, portrait sources scaled to width and
-cropped to the 16:9 window at `y`, audio to −18 LUFS, then
+`build.py` conforms each source to one 1280×720 30 fps widescreen stream
+showing the whole picture: landscape sources native, portrait sources at full
+height in the middle with the sides filled by a blurred stretch of the same
+frame, nothing cropped, audio to −18 LUFS, then
 writes `outputs/projects/summer-reel/story.json` and compiles it.
 
 The ten in-points, in order:
@@ -54,9 +54,9 @@ call. `edit-ir.py <ws> add-music` is the verb when he names one.
 
 ## What was measured
 
-- **Timeline** `summer-reel@471f0165` (current, widescreen; the vertical
-  versions `@f8b0bab9`, `@058a7a33` and the swapped `@b9996010` remain in the
-  library): lint green, structure verify green, shown in Resolve at 1280×720
+- **Timeline** `summer-reel@6c1ef127` (current: widescreen, whole picture;
+  `@471f0165` was the cropped widescreen, `@f8b0bab9` and `@058a7a33` the
+  vertical versions, `@b9996010` the swapped cut, all still in the library): lint green, structure verify green, shown in Resolve at 1280×720
   30 fps.
 - **Native MCP server** (`mcp-readback.py`, output in
   `evidence/mcp-readback.txt`): `run_script` read the timeline back item by
@@ -85,10 +85,13 @@ three landscape clips over a blurred fill. Ryan: *"Can you not make a full
 screen video? They're all crappily cropped in."* Read as "fill the vertical
 frame", it was rebuilt with a centre crop. Wrong reading. Ryan: *"That's not
 full screen … video player resolution, YouTube … the one where it's long
-that goes across the entire screen."* Full screen means 16:9. The reel is now
-1280×720 widescreen, the sources' native ceiling; portrait clips are cropped
-to a 16:9 window placed per cut so the face, the dog, the coaster car and
-the bear stay in frame. The first reconform exposed a real defect: the IR hash did not see
+that goes across the entire screen."* Full screen means 16:9. Rebuilt as
+1280×720 widescreen with portrait clips cropped to a 16:9 window. Wrong
+again. Ryan: *"widescreen. youre just cropping in the shots show the full
+video. start over with the full video."* Third build: 1280×720 widescreen,
+nothing cropped, portrait clips whole at full height with the sides filled
+from a blur of the same frame, landscape clips native. That is the current
+reel. The first reconform exposed a real defect: the IR hash did not see
 media content, so the recompile reused the cached timeline over changed
 files. `build.py` now writes each conformed file's sha256 into the asset,
 which makes a reconform a new timeline.

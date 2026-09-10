@@ -3,17 +3,15 @@
 
     .venv/bin/python jobs/summer-reel/build.py [--no-compile] [--no-conform]
 
-Reads jobs/summer-reel/cuts.json ({source, start, beats, y, note} in cut order,
-start in SOURCE seconds, y the vertical centre of the 16:9 crop window for
-portrait sources, beats on the 80 BPM grid, even counts only so a beat
+Reads jobs/summer-reel/cuts.json ({source, start, beats, note} in cut order,
+start in SOURCE seconds, beats on the 80 BPM grid, even counts only so a beat
 pair is an integer 45 frames at 30 fps), conforms every used source to one
 widescreen 1280x720 30 fps H.264 stream with loudness-normalised audio, writes
 the Story IR to outputs/projects/summer-reel/story.json and compiles it.
 
-PRIOR ART: the conform is ffmpeg (scale/crop/fps/loudnorm); studio/bongpot.py
-normalize_clip does the same crop-to-fill for bongpot shots but always centres
-the window. This job needs the window placed per cut. Second film that wants
-it: move the conform into studio/ with the y parameter.
+PRIOR ART: the conform is ffmpeg (scale/gblur/overlay/fps/loudnorm).
+studio/bongpot.py normalize_clip crops to fill; this job must NOT crop.
+Second film that wants whole-picture-in-widescreen: move it into studio/.
 """
 import argparse
 import hashlib
@@ -37,17 +35,19 @@ FRAMES_PER_BEAT = FPS * 60 / BPM          # 22.5 at 30 fps, hence even beats onl
 TARGET_LUFS = -18.0
 
 
-def conform(src, dst, y=0.5):
-    """One 1280x720 widescreen stream, full frame. Landscape sources are
-    native; portrait sources scale to width and crop a 16:9 window whose
-    vertical centre is `y` (0 = top, 1 = bottom), set per cut in cuts.json so
-    the face, the dog or the coaster car stays in frame. Ryan, 2026-09-09:
-    "the one where it's long that goes across the entire screen."
-    Audio to -18 LUFS."""
-    vf = (f"scale={W}:{H}:force_original_aspect_ratio=increase,"
-          f"crop={W}:{H}:(iw-ow)/2:(ih-oh)*{y},fps=30,setsar=1")
+def conform(src, dst):
+    """One 1280x720 widescreen stream showing the WHOLE source picture.
+    Landscape sources are native. Portrait sources stand at full height in
+    the middle, the sides filled with a blurred stretch of the same frame.
+    Nothing is cropped (Ryan, 2026-09-09: "youre just cropping in the shots
+    show the full video. start over with the full video"). Audio to -18 LUFS."""
+    vf = (f"split[bg][fg];"
+          f"[bg]scale={W}:{H}:force_original_aspect_ratio=increase,"
+          f"crop={W}:{H},gblur=sigma=40[bgb];"
+          f"[fg]scale={W}:{H}:force_original_aspect_ratio=decrease[fgs];"
+          f"[bgb][fgs]overlay=(W-w)/2:(H-h)/2,fps=30,setsar=1")
     subprocess.run(
-        ["ffmpeg", "-y", "-v", "error", "-i", str(src), "-vf", vf,
+        ["ffmpeg", "-y", "-v", "error", "-i", str(src), "-filter_complex", vf,
          "-af", f"loudnorm=I={TARGET_LUFS}:TP=-1.5:LRA=11",
          "-c:v", "libx264", "-preset", "fast", "-crf", "18", "-pix_fmt", "yuv420p",
          "-r", "30", "-video_track_timescale", "30000",
@@ -98,7 +98,6 @@ def main():
 
     cuts = json.loads((JOB / "cuts.json").read_text())
     (WS / "media").mkdir(parents=True, exist_ok=True)
-    y_of = {c["source"]: c.get("y", 0.5) for c in cuts}
     for src_name in dict.fromkeys(c["source"] for c in cuts):
         src = SOURCES / f"{src_name}.MOV"
         dst = WS / "media" / f"{src_name}.mp4"
@@ -107,7 +106,7 @@ def main():
         if not src.exists():
             raise SystemExit(f"missing source: {src}")
         print(f"conform {src.name} -> {dst.relative_to(REPO)}", file=sys.stderr)
-        conform(src, dst, y_of[src_name])
+        conform(src, dst)
 
     ir, total = build_ir(cuts)
     ir_path = WS / "story.json"
