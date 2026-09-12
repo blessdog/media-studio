@@ -3,7 +3,7 @@
 
 # media-studio — STATE
 
-*Generated 2026-09-12 15:11 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
+*Generated 2026-09-12 15:48 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
 
 ## What is open
 
@@ -22,6 +22,9 @@ Every `kind: open` claim in the store. These are PLANS, not specs — `proven: f
 ? every-ingest-and-build-tool-should-write-sha256-   (2026-09-09)
     Every ingest and build tool should write sha256 into IR assets, so reconformed media at the same path compiles
     why: measured 2026-09-09 on summer-reel: after reconforming three clips in place, compile-ir reported 'reused
+? img-0883-built-in-camera-prores-log-is-likely-ap   (2026-09-12)
+    IMG_0883 (built-in Camera ProRes Log) is likely Apple Log, not Apple Log 2: its colour primaries tag is bt2020
+    why: The log render Ryan judged unimpressive may have used the wrong input transform; the claim a-print-lut-n
 ? obs-camera-isolates-in-movies-iso-are-an-untouch   (2026-09-07)
     OBS camera isolates in movies/iso are an untouched multicam B-roll lane
     why: Six *-cam.mp4 isolates (Sept 5 and 7 sessions, one 15GB with no matching program recording) exist beside
@@ -32,7 +35,7 @@ Every `kind: open` claim in the store. These are PLANS, not specs — `proven: f
 The full index. Query it before choosing any technique — `find-technique.py "<your situation>"` — rather than reading it. Every claim declares the questions that must find it, and `check-retrieval.py` asserts they do.
 
 ```
-KNOWLEDGE — 19 live claims: 19 from this project (/Users/SSDrive/projects/mediaStudio/media-studio/knowledge), 0 universal (~/.claude/knowledge/store)
+KNOWLEDGE — 20 live claims: 20 from this project (/Users/SSDrive/projects/mediaStudio/media-studio/knowledge), 0 universal (~/.claude/knowledge/store)
 Query before choosing any technique:  python3 ~/.claude/knowledge/bin/find-technique.py "<your situation>"
 
 LAWS — absolute, no exceptions
@@ -62,6 +65,7 @@ OPEN — plans, NOT specs. proven: false. Do not build against these.
   ? docs-story-ir-md-is-cited-by-status-md-and-agent Why it matters: the Story IR contract is documented only in schema/story-ir.schema.json an
   ? edit-ir-find-does-not-work-on-a-multi-recording- Why it matters: moments.spans_from_ir raises 'need asset_id' when track 1 references more 
   ? every-ingest-and-build-tool-should-write-sha256- Why it matters: measured 2026-09-09 on summer-reel: after reconforming three clips in plac
+  ? img-0883-built-in-camera-prores-log-is-likely-ap Why it matters: The log render Ryan judged unimpressive may have used the wrong input tran
   ? obs-camera-isolates-in-movies-iso-are-an-untouch Why it matters: Six -cam.mp4 isolates (Sept 5 and 7 sessions, one 15GB with no matching pr
 ```
 
@@ -78,6 +82,9 @@ OPEN — plans, NOT specs. proven: false. Do not build against these.
 *From git. The full narrative lives in `docs/journal/`; commit subjects are written as search bait, so `git log --grep` is the index.*
 
 ```
+2026-09-12  228abe3  film_mini.py: one iPhone log clip, two film emulations rendered by Resolve on the Mac mini (Kodak 2383 print fed Cineon log; Film Look Creator in DaVinci Wide Gamut)
+2026-09-12  511eec5  STATE regenerated
+2026-09-12  b6cc168  knowledge: bookmark, IMG_0883 is likely Apple Log not Apple Log 2 (bt2020 primaries, built-in Camera app); re-verify input space and re-render
 2026-09-12  992e47e  STATE regenerated: Film Look Creator on the mini
 2026-09-12  ecc6e66  Film Look Creator renders IMG_0888 on the Mac mini through a Fusion comp: OFX tool FilmLook, image input Source, 49 s
 2026-09-12  87209d4  STATE regenerated: Resolve 21.1 on the mini awaiting activation
@@ -87,9 +94,6 @@ OPEN — plans, NOT specs. proven: false. Do not build against these.
 2026-09-12  bbd7d53  knowledge: Resolve 21.1 installer needs 14.1 GB on the startup disk; the mini's Resolve folder links to BleSSD
 2026-09-12  3a50a88  STATE regenerated: print LUT Cineon correction, NTSC rates, ExportLUT claim
 2026-09-12  e5aa773  knowledge: Resolve ExportLUT bakes the node grade, not colour management; Hald lattice bake unsettled
-2026-09-12  4bfdd6a  correction: Kodak 2383 print LUTs take Cineon log input; the first iPhone render fed them display Rec.709
-2026-09-12  6b708f6  23.976 and 29.97 footage compile: project rate stamped as Resolve's NDF menu string via ir.resolve_rate
-2026-09-12  7afb94d  STATE regenerated: iPhone Apple Log 2 rendered with Kodak 2383 print
 ```
 
 *Remote: `https://github.com/blessdog/media-studio.git` — `master` is pushed.*
