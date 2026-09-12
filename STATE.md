@@ -3,7 +3,7 @@
 
 # media-studio — STATE
 
-*Generated 2026-09-12 16:12 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
+*Generated 2026-09-12 16:57 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
 
 ## What is open
 
@@ -32,7 +32,7 @@ Every `kind: open` claim in the store. These are PLANS, not specs — `proven: f
 The full index. Query it before choosing any technique — `find-technique.py "<your situation>"` — rather than reading it. Every claim declares the questions that must find it, and `check-retrieval.py` asserts they do.
 
 ```
-KNOWLEDGE — 20 live claims: 20 from this project (/Users/SSDrive/projects/mediaStudio/media-studio/knowledge), 0 universal (~/.claude/knowledge/store)
+KNOWLEDGE — 21 live claims: 21 from this project (/Users/SSDrive/projects/mediaStudio/media-studio/knowledge), 0 universal (~/.claude/knowledge/store)
 Query before choosing any technique:  python3 ~/.claude/knowledge/bin/find-technique.py "<your situation>"
 
 LAWS — absolute, no exceptions
@@ -51,6 +51,7 @@ VERDICTS — measured, and SCOPED; check the scope before reusing
   · resolve-21-1-installer-needs-14-gb-on-the-startup-disk DaVinci_Resolve_Studio_21.1_Mac.dmg ("Install Resolve 21.1.pkg", 11 GB) on macOS; the Mac 
   · resolve-exportlut-bakes-the-node-grade-not-colour-management Resolve Studio 21.1.0, TimelineItem.ExportLUT(EXPORT_LUT_65PTCUBE) on a clip in a davinciY
   · resolve-ntsc-rates-compile-as-non-drop-frame-strings Resolve Studio 21.1.0 through studio.compile (OTIO import); 30000/1001 measured on IMG_088
+  · resolve-stoprendering-returns-before-the-render-stops Resolve Studio 21.1.0 on the Mac mini, stopping a Fusion CineFocus render started through 
   · the-mini-renders-the-story-ir-with-ffmpeg-not-resolve straight-cut timelines (track-1 edits only) rendered from a workspace's story.json; the Ma
   · the-native-resolve-mcp-server-works-over-stdio DaVinci Resolve Studio 21.1.0.14 on this MacBook (macOS 26), external scripting = Local, R
 
@@ -79,6 +80,11 @@ OPEN — plans, NOT specs. proven: false. Do not build against these.
 *From git. The full narrative lives in `docs/journal/`; commit subjects are written as search bait, so `git log --grep` is the index.*
 
 ```
+2026-09-12  c6f8c64  knowledge: Resolve StopRendering returns before the render stops; CreateProject returns None until the modal clears
+2026-09-12  3462eef  film_mini, stack_mini: wait for Resolve to be free before touching a project; StopRendering returns before the render stops
+2026-09-12  82054e5  film_mini: --size WxH so a 4K clip renders at 4K (80 Mbps limit at 4K)
+2026-09-12  fbaa4b8  stack_mini: Resolve output blanking is a percent per edge, not pixels; 138 blanked the whole letterbox render, 2.39:1 is 12.81
+2026-09-12  e8f3504  STATE regenerated: IMG_0004 pro-finish variants rendering on the mini
 2026-09-12  d4738ac  knowledge: Final Cut Camera HEVC log is Apple Log 2 at about 223 MB/min (IMG_0004); ResolveFX available to Fusion scripting on the mini, with CineFocus and NoiseReduction input IDs
 2026-09-12  1928129  stack_mini.py: pro-finish test variants on an iPhone log clip, rendered by Resolve on the Mac mini (print, letterbox, denoise, CineFocus, full stack, Film Look Creator)
 2026-09-12  85ee356  knowledge: mark the IMG_0883 Apple Log bookmark superseded in the archive
@@ -86,11 +92,6 @@ OPEN — plans, NOT specs. proven: false. Do not build against these.
 2026-09-12  39dc0cf  STATE regenerated: IMG_0891 two emulations on the mini
 2026-09-12  228abe3  film_mini.py: one iPhone log clip, two film emulations rendered by Resolve on the Mac mini (Kodak 2383 print fed Cineon log; Film Look Creator in DaVinci Wide Gamut)
 2026-09-12  511eec5  STATE regenerated
-2026-09-12  b6cc168  knowledge: bookmark, IMG_0883 is likely Apple Log not Apple Log 2 (bt2020 primaries, built-in Camera app); re-verify input space and re-render
-2026-09-12  992e47e  STATE regenerated: Film Look Creator on the mini
-2026-09-12  ecc6e66  Film Look Creator renders IMG_0888 on the Mac mini through a Fusion comp: OFX tool FilmLook, image input Source, 49 s
-2026-09-12  87209d4  STATE regenerated: Resolve 21.1 on the mini awaiting activation
-2026-09-12  49bc6f0  knowledge: Resolve 21.1 installer followed the /Applications symlink and upgraded in place on BleSSD; mini needs Studio activation and External scripting before scripts reach it
 ```
 
 *Remote: `https://github.com/blessdog/media-studio.git` — `master` is pushed.*
