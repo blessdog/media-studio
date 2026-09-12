@@ -216,6 +216,76 @@
       "license": "Blackmagic Design, ships with Resolve",
       "input": "Cineon Film Log, Rec.709 primaries",
       "output": "Rec.709 Gamma 2.4"
+    },
+    {
+      "id": "thatcher-black-point",
+      "role": "black point lift on a smooth curve (the fade); expects a LINEAR image",
+      "kind": "dctl",
+      "url": "https://raw.githubusercontent.com/blessdog/utility-dctls/693bf813b42178a3f993bd529450ac7d433ebac3/Effects/Black%20Point.dctl",
+      "source_page": "https://github.com/blessdog/utility-dctls",
+      "dest": "thatcher/Black Point.dctl",
+      "install": "thatcher",
+      "sha256": "6ed885077fe48c88ac80523e8a3745d7dc90f77d980a894a734660aa5aaa9456",
+      "license": "MIT (LICENSE-utility-dctls beside it)",
+      "upstream": "blessdog/utility-dctls @ 693bf81 (fork, identical to thatcherfreeman/utility-dctls)",
+      "input": "scene linear",
+      "output": "see role"
+    },
+    {
+      "id": "thatcher-clamp",
+      "role": "clamp, step 1 of the README film pipeline (Clamp 0+)",
+      "kind": "dctl",
+      "url": "https://raw.githubusercontent.com/blessdog/utility-dctls/693bf813b42178a3f993bd529450ac7d433ebac3/Operations/Clamp.dctl",
+      "source_page": "https://github.com/blessdog/utility-dctls",
+      "dest": "thatcher/Clamp.dctl",
+      "install": "thatcher",
+      "sha256": "52a81b68e397a0fbc815ee1bc4b4d648d478eb8bf3fff52a03251c309ee03f18",
+      "license": "MIT (LICENSE-utility-dctls beside it)",
+      "upstream": "blessdog/utility-dctls @ 693bf81 (fork, identical to thatcherfreeman/utility-dctls)",
+      "input": "any",
+      "output": "see role"
+    },
+    {
+      "id": "thatcher-multiplication",
+      "role": "gain; step 3 printer lights and step 5 white gain of the README film pipeline",
+      "kind": "dctl",
+      "url": "https://raw.githubusercontent.com/blessdog/utility-dctls/693bf813b42178a3f993bd529450ac7d433ebac3/Operations/Multiplication%20Function.dctl",
+      "source_page": "https://github.com/blessdog/utility-dctls",
+      "dest": "thatcher/Multiplication Function.dctl",
+      "install": "thatcher",
+      "sha256": "9ed1fce607987ce15e79806bdb1ccd7b0164c853e58f245d757b9534288d7a5b",
+      "license": "MIT (LICENSE-utility-dctls beside it)",
+      "upstream": "blessdog/utility-dctls @ 693bf81 (fork, identical to thatcherfreeman/utility-dctls)",
+      "input": "any",
+      "output": "see role"
+    },
+    {
+      "id": "thatcher-dwg-to-linear",
+      "role": "DaVinci Intermediate to scene linear, DWG primaries",
+      "kind": "dctl",
+      "url": "https://raw.githubusercontent.com/thatcherfreeman/dwg-transforms/22f2134e5b2f62a8508ebe02f77f2691d4794d8a/RCM%20ODTs/DWG%20to%20Linear.dctl",
+      "source_page": "https://github.com/thatcherfreeman/dwg-transforms",
+      "dest": "thatcher/DWG to Linear.dctl",
+      "install": "thatcher",
+      "sha256": "78231496a9fa7b8faff7c844e13362454a02886367ae8c60d2abce520ad17384",
+      "license": "repo has no LICENSE file; published openly on GitHub",
+      "upstream": "thatcherfreeman/dwg-transforms @ 22f2134",
+      "input": "DaVinci Intermediate / DWG",
+      "output": "see role"
+    },
+    {
+      "id": "thatcher-linear-to-bt1886",
+      "role": "display encoding, step 6 of the README film pipeline",
+      "kind": "dctl",
+      "url": "https://raw.githubusercontent.com/thatcherfreeman/dwg-transforms/22f2134e5b2f62a8508ebe02f77f2691d4794d8a/RCM%20ODTs/Linear%20to%20BT1886.dctl",
+      "source_page": "https://github.com/thatcherfreeman/dwg-transforms",
+      "dest": "thatcher/Linear to BT1886.dctl",
+      "install": "thatcher",
+      "sha256": "09d87afc72c2ed87c32f92ccba2e65caa7ac3c712c87bf368ccd9d4e686ebe24",
+      "license": "repo has no LICENSE file; published openly on GitHub",
+      "upstream": "thatcherfreeman/dwg-transforms @ 22f2134",
+      "input": "scene linear",
+      "output": "see role"
     }
   ]
 }
