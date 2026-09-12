@@ -3,7 +3,7 @@
 
 # media-studio — STATE
 
-*Generated 2026-09-12 17:36 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
+*Generated 2026-09-12 17:53 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
 
 ## What is open
 
@@ -82,21 +82,29 @@ OPEN — plans, NOT specs. proven: false. Do not build against these.
 *From git. The full narrative lives in `docs/journal/`; commit subjects are written as search bait, so `git log --grep` is the index.*
 
 ```
+2026-09-12  744a155  knowledge: what each utility-dctls knob measurably does on IMG_0006 (print gamma, print D max, Black Point, grains per pixel, halation)
+2026-09-12  ab68a3a  evidence: IMG_0006 knob ladder, print contrast / print D max / Black Point fade / halation / grain each turned down and up
+2026-09-12  c93e2c0  film-look-mini: knob ladder recipes generated from rich-halation-grain-400 (contrast, black depth, fade, glow, grain)
+2026-09-12  73bb116  film-look-mini: lower-grain recipes (400 and 1600 grains per pixel) and a knob ladder that shows each look setting turned down and up
+2026-09-12  8579802  state: regenerated after the utility-dctls film pipeline session
+2026-09-12  8f2b645  ledger: IMG_0006 full utility-dctls chain rendered on the mini in 265 s, render frame matches the still
 2026-09-12  6d3573c  journal: film emulation from the utility-dctls library, the grey frame that lied, and speckles on the teal bowl
 2026-09-12  e5a76fb  film-look-mini: Clamp 0+ after Halation stops speckles on saturated teal; gamma-2.4 grey frame holds 0.18 at code 125 through every utility-dctls recipe
 2026-09-12  f43b143  knowledge: utility-dctls Film Curve chain in Resolve matches its published math within 1 code; a still's Input Gamma cannot be scripted and decodes as gamma 2.4
 2026-09-12  a1ab3bf  film-look-mini: grey test frame encoded with the Rec.709 camera curve, since Resolve 21.1 scripting refuses every Input Gamma on a PNG still
 2026-09-12  3353bad  film-look-mini: utility-dctls film pipeline in the Fusion comp, recipes by DCTL setting name, printer-lights gain solved offline to hold 0.18
 2026-09-12  4984374  ledger: Film Look Creator hand-tuning stopped at Ryan's redirect to his utility-dctls fork; README film pipeline is next
-2026-09-12  39477a4  grade-library: Black Point, Clamp, Multiplication, DWG to Linear, Linear to BT1886 from Ryan's utility-dctls fork and dwg-transforms, for the README film pipeline
-2026-09-12  cd03bc1  evidence: IMG_0895 Film Look Creator tuned for richness and a light fade, glow down (halation 0.08, bloom 0.05), fade 0.285 threshold 0.2
-2026-09-12  4975c8d  ledger: print plus Film Look Creator texture oversaturates (154) with filmLookBlend 0; Ryan wants richness, depth and a light fade instead of the print
-2026-09-12  068df81  evidence: IMG_0895 contact sheet, Kodak 2383 print vs Film Look Creator vs print with FLC texture at three glow levels
-2026-09-12  0dbd901  flc_tune.py: Kodak 2383 print with Film Look Creator texture on top (combo timeline), and any FLC input set by name for stills or renders
-2026-09-12  775c799  evidence: IMG_0895 Film Look Creator contrast 1.25 vs eased 1.15, same 30 s frame
 ```
 
 *Remote: `https://github.com/blessdog/media-studio.git` — `master` is pushed.*
+
+### Uncommitted
+
+```
+ M STATE.md
+```
+
+*Uncommitted is not learned. Commit at the moment of learning.*
 
 ---
 
