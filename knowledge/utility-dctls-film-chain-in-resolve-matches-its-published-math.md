@@ -13,7 +13,7 @@ asked-as:
   - how do I apply Thatcher Freeman utility DCTLs by script
   - does the Film Curve DCTL chain hold mid grey in Resolve
   - DCTL settings in a Fusion comp have generic slot names
-evidence: jobs/film-look-mini/scratch-dctl run2 grey stills, measured against film_chain.py; mini log /Volumes/BleSSD/media-studio/img-0006/dctl/run2.log
+evidence: grey stills on the mini at /Volumes/BleSSD/media-studio/img-0006/dctl/, measured against film_chain.py; mini log /Volumes/BleSSD/media-studio/img-0006/dctl/run2.log
 ---
 
 **Wire each DCTL as a `ofx.com.blackmagicdesign.resolvefx.DCTL` tool in the clip's
@@ -43,8 +43,21 @@ Grey patches, measured display code (predicted):
 | rich (neg γ0.6, print γ2.8, Dmax 3.2) | 13 (13) | 29 (29) | 99 (99) | 203 (203) |
 | rich + Film Grain negative | 24 (25) | 28 (28) | 92 (92) | 226 (225) |
 
-The grey frame reached the chain as gamma-2.4-decoded values, not 0.18, hence 99
-rather than 125; see [[resolve-scripting-cannot-set-input-gamma-on-a-still]].
-Clamp's default also clamps at 1.0, so recipes switch `Clamp Max` off.
+That table came from a frame whose values reached the chain gamma-2.4-decoded
+(0.18 arrived as 0.1167), and the predictions above are at those delivered values;
+see [[resolve-scripting-cannot-set-input-gamma-on-a-still]]. Re-run with the
+gamma-2.4 fixture: the no-chain control put 0.18 at code 125 and every recipe held
+0.18 at 125, all nine patches within 1 code of the model.
+
+Two clamps matter:
+- Clamp's default also clamps at 1.0, so recipes switch `Clamp Max` off.
+- **Put a Clamp 0+ after Halation.** Its red-shift matrix pushed IMG_0006's
+  saturated teal below zero, and the negative Film Curve logged that into white
+  and black speckles: 872 speckle pixels on the bowl, 0 without Halation, 0 again
+  with the second clamp. Film Grain clamps its own input, so its recipe showed 3.
+
+Halation at `Reflection exposure lost` -5 (default -3) is invisible on IMG_0006:
+against the same chain without it, mean difference 0.035 display codes and 129 of
+2,073,600 pixels moved by more than 2 codes. A visible glow needs a value nearer the default.
 
 Related: [[film-look-creator-renders-on-the-mini-through-a-fusion-comp]].

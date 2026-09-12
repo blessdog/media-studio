@@ -128,7 +128,7 @@
    ]
   },
   "rich-halation": {
-   "why": "rich plus Halation on the negative side, reflection 5 stops down (default 3) to keep glow low.",
+   "why": "rich plus Halation on the negative side, reflection 5 stops down (default 3) to keep glow low. A second Clamp 0+ follows Halation: without it, saturated teal went negative after the red-shift matrix and the negative Film Curve logged it into speckles (872 speckle pixels on IMG_0006's bowl vs 0 without halation, 2026-09-12).",
    "stages": [
     {
      "dctl": "Clamp",
@@ -145,6 +145,15 @@
      "params": {
       "Reflection exposure lost": -5.0,
       "Red Shift Correction": 2
+     }
+    },
+    {
+     "dctl": "Clamp",
+     "role": "clamp 0+ after halation",
+     "params": {
+      "Min Clamp": 0.0,
+      "Clamp Min": 1,
+      "Clamp Max": 0
      }
     },
     {
@@ -199,7 +208,7 @@
    ]
   },
   "rich-halation-grain": {
-   "why": "rich-halation with Film Grain as the negative, which outputs the negative's transmittance itself (README: one instance per stock), so it replaces the negative Film Curve.",
+   "why": "rich-halation with Film Grain as the negative, which outputs the negative's transmittance itself (README: one instance per stock), so it replaces the negative Film Curve. A second Clamp 0+ follows Halation: without it, saturated teal went negative after the red-shift matrix and the negative Film Curve logged it into speckles (872 speckle pixels on IMG_0006's bowl vs 0 without halation, 2026-09-12).",
    "stages": [
     {
      "dctl": "Clamp",
@@ -216,6 +225,15 @@
      "params": {
       "Reflection exposure lost": -5.0,
       "Red Shift Correction": 2
+     }
+    },
+    {
+     "dctl": "Clamp",
+     "role": "clamp 0+ after halation",
+     "params": {
+      "Min Clamp": 0.0,
+      "Clamp Min": 1,
+      "Clamp Max": 0
      }
     },
     {
