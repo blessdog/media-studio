@@ -36,7 +36,7 @@ application, render, delivery, verification.
 | 3 Assembly Loop v0 + Registry v0 | conversational co-editing: transcript find + cutaway/retime/remove verbs, versioned timelines shown live in Resolve; SQLite registry | ✅ 2026-07-12 — exit test passed on real-scale sample (14-min iPhone recording); OBS Hybrid-MP4 verified machine-to-machine via websocket |
 | 4 Template Library v0 | format packages (news-desk/podcast/documentary/retro), forge+place graphics pipeline, captions, ScreenSage ingest | news-desk ✅ APPROVED + exit test PASSED 2026-07-12; packages 2–4 PROVISIONAL 2026-07-13 (aesthetics pass later); OGraf parked (API-unreachable) |
 | 5 Studio Daemon + Deck | daemon + Companion + Stream Deck XL wired end-to-end | ✅ 2026-07-13 — proven by Ryan's physical presses (2 REC→STOP+INGEST cycles → verified timelines); MCP installed |
-| 6 Finishing lane | Grade Library (DRX/LUT apply), delivery fan-out, bongpot adapter | delivery ✅ + bongpot adapter ✅ 2026-07-13 (mechanics proven; **bongpot integration HARD-STOPS here** — see Bongpot posture below); Grade Library remains — [RYAN gate: author first look in color page, then apply-verbs land] |
+| 6 Finishing lane | Grade Library (DRX/LUT apply), delivery fan-out, bongpot adapter | delivery ✅ + bongpot adapter ✅ 2026-07-13 (mechanics proven; **bongpot integration HARD-STOPS here** — see Bongpot posture below); Grade Library: gate OPENED by Ryan's spec 2026-09-12 (`docs/CINEMATIC-PIPELINE.md`); free assets fetched + installed (`grades/film-look/`); cinematic lane build plan below; the base `.drx` still needs the first footage |
 | 7 Scene Forge | stills-first genAI (→I2V), native reference-identity before LoRA, Blender bpy, provenance | ✅ ALL SLICES 2026-07-13, each live-proven: 1 stills engine; 2 I2V (hailuo; clip landed on a real timeline); 3 identity (flux-2 input_images held a fixture character across 3 scenes); 4 Blender headless lane + beat grid. Gates: hosted-only, per-batch cost approval, contact sheets. Prompt Brain = deferred Ryan-gated dialogue |
 
 Parallel tracks: MCP server install (cloned at vendor/davinci-resolve-mcp,
@@ -156,6 +156,30 @@ quirk: first `AddRenderJob` in a fresh project can no-op → retry guard.
 timeline with approved Wan clips on V1 + untouched call audio on A1 + shot
 IDs/verdicts as markers. FFmpeg lane stays the deterministic default;
 nothing writes back to bongpot.
+
+### Cinematic lane (Osmo Action 5 Pro) — build plan, 2026-09-12
+
+Spec: `docs/CINEMATIC-PIPELINE.md` (Ryan's, LOCKED items are decisions).
+VERIFY ledger: `docs/CINEMATIC-PIPELINE-VERIFY.md`. Grade assets:
+`grades/film-look/`. Every step below reuses a studio module rather than
+adding a parallel one; the only new code is the Osmo-specific assertions,
+the grade-apply verb and the report.
+
+| Step | Verb / module | Reuses | Done when |
+|---|---|---|---|
+| 1 Ingest + assert | `tools/ingest-osmo.py <clips...> --name N [--no-compile]` | `studio.intake.file_media` (copy, space-free), `studio.probe` (extended with codec, pix_fmt, bit depth), `studio.ingest.build_ir` shape, `studio.lint`, `studio.compile` | originals copied read-only into `outputs/projects/<name>/media/`; `manifest.json` per clip (file, sha256, duration, fps, codec, pix_fmt, bits, resolution, ISO if tagged); a clip failing hevc / 10-bit / 3840×2160 / 24 or 23.976 is FLAGGED in the manifest and excluded from the IR, never silently imported; passing clips become one full-length edit each on V1 of a Story IR; compiled to a Resolve project stamped fps + 4K + `davinciYRGB` + Rec.709 / Gamma 2.4 |
+| 2 Apply base grade | `tools/apply-grade.py <ws> --drx <file> [--timeline-drx <file>] [--mode 0]` | `studio.resolve.connect`, `Graph.ApplyGradeFromDRX`, `Timeline.GetNodeGraph` | every V1 clip in the workspace's timeline carries the `.drx`; result verified by `GetToolsInNode` / `GetLUT` per clip, not by the call's return value; `<ws>/grade-report.md` lists applied, skipped, failed; the forum-reported post-DRX crash is measured on 21.1 and the tool orders calls accordingly |
+| 3 Render by preset | `tools/deliver.py <ws> --resolve-preset osmo-4k-h265` | `studio.delivery.render_master`, `LoadRenderPreset`, `AddRenderJob` retry guard | one master rendered via the named Resolve preset, probed (4K, fps = timeline, hevc), loudness-checked when the IR implies sound |
+| 4 Report | written by steps 1 and 2 | | `<ws>/report.md`: clips imported, clips flagged and why, clips awaiting the human pass (all of them, by design) |
+| 5 First-footage validation | spec §9, human + agent | | the six §9 items ticked in the VERIFY ledger; `.drx`, render preset and ffprobe assertions locked |
+
+Blocked on the camera, not on code: the base `.drx` (Ryan authors it on the
+hero shot), the Resolve render preset (saved once in the GUI, then loaded by
+name), whether the file is 24.000 or 23.976. **Known constraint found while
+planning:** `studio.lint` currently REFUSES a 1001-denominator rate (it lists
+"drop-frame-ish rate" under errors). If the camera writes 23.976, that lint
+line must become a warning before step 1 can compile, and the project rate
+must be stamped `'23.976'`.
 
 ## Phase 7 drill-down — Scene Forge
 
