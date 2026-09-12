@@ -31,17 +31,25 @@ def _run(cmd):
     return res
 
 
-def render_master(proj, timeline, out_dir, timeout=600):
-    """Render the timeline to <out_dir>/<timeline>-master.mp4 via Resolve."""
+def render_master(proj, timeline, out_dir, timeout=600, preset=None):
+    """Render the timeline to <out_dir>/<timeline>-master.<ext> via Resolve.
+
+    preset: a named Resolve render preset (tools/render-preset.py) decides
+    format, codec, size and colour tags; without one the v0 default is H264 mp4.
+    """
     out_dir = Path(out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
-    name = f"{timeline.GetName().replace('@', '-')}-master"
-    existing = out_dir / f"{name}.mp4"
-    if existing.is_file():
-        return existing                       # renders are content-addressed
+    name = f"{timeline.GetName().replace('@', '-').replace('+', '-')}-master"
+    existing = sorted(p for p in out_dir.glob(f"{name}.*") if p.is_file())
+    if existing:
+        return existing[-1]                   # renders are content-addressed
                                               # via the timeline hash in name
     proj.SetCurrentTimeline(timeline)
-    proj.SetCurrentRenderFormatAndCodec("mp4", "H264")
+    if preset:
+        if not proj.LoadRenderPreset(preset):
+            raise DeliveryError(f"LoadRenderPreset({preset!r}) failed; have {proj.GetRenderPresetList()}")
+    else:
+        proj.SetCurrentRenderFormatAndCodec("mp4", "H264")
     proj.SetRenderSettings({"TargetDir": str(out_dir), "CustomName": name})
     job = proj.AddRenderJob() or proj.AddRenderJob()
     if not job:

@@ -30,6 +30,10 @@ def main():
     ap.add_argument("workspace")
     ap.add_argument("--presets", default=",".join(delmod.PRESETS),
                     help=f"comma list of: {', '.join(delmod.PRESETS)} (default all)")
+    ap.add_argument("--timeline", default=None,
+                    help="render this named timeline in the workspace's project (a human-finished one) instead of the compiled IR timeline")
+    ap.add_argument("--resolve-preset", default=None,
+                    help="render the master through this named Resolve render preset (tools/render-preset.py)")
     ap.add_argument("--open", action="store_true",
                     help="reveal the delivery folder when done")
     args = ap.parse_args()
@@ -53,7 +57,17 @@ def main():
         return 1
 
     proj, tl, cached = compmod.compile_ir(ir, ws, ws / "story.otio")
-    verrs = verifymod.verify_timeline(ir, proj, tl)
+    if args.timeline:
+        # a human-finished timeline (e.g. the apply-grade duplicate after the
+        # per-shot pass) is rendered as-is: no structural verify against the IR
+        named = [proj.GetTimelineByIndex(i) for i in range(1, proj.GetTimelineCount() + 1)]
+        named = [t for t in named if t and t.GetName() == args.timeline]
+        if not named:
+            print(f"FAIL: no timeline named {args.timeline!r} in project {proj.GetName()!r}")
+            return 1
+        tl = named[0]
+        print(f"timeline: {tl.GetName()} (named, rendered as-is)")
+    verrs = [] if args.timeline else verifymod.verify_timeline(ir, proj, tl)
     if verrs:
         print("VERIFY FAIL (structure):")
         for e in verrs:
@@ -65,7 +79,7 @@ def main():
     expect_audio = verifymod.expects_audio(ir)
     reg = regmod.connect()
 
-    master = delmod.render_master(proj, tl, out_dir)
+    master = delmod.render_master(proj, tl, out_dir, preset=args.resolve_preset)
     errs = delmod.probe_output(master, expect_audio)
     if errs:
         print("DELIVERY FAIL (master):")
