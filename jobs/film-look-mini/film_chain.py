@@ -83,8 +83,8 @@ def display_code(v):
     return round(255 * min(max(v, 0.0), 1.0) ** (1 / 2.4))
 
 
-def load(names=None):
-    with open(RECIPES) as f:
+def load(names=None, path=RECIPES):
+    with open(path) as f:
         book = json.load(f)["recipes"]
     return {n: book[n] for n in (names or book)}
 

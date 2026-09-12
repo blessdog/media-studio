@@ -278,6 +278,150 @@
      }
     }
    ]
+  },
+  "rich-halation-grain-400": {
+   "why": "rich-halation-grain with 400 grains per pixel instead of 100, for Ryan's 'lower the grain strength' (2026-09-12). Film Grain samples each layer's grain count from Normal(np, np(1-p)), so grain noise scales with 1/sqrt(grains) and the mean tone does not change: 400 leaves half of the grain measured at 100 (fine-detail std 7.4 vs 0.75 without grain).",
+   "stages": [
+    {
+     "dctl": "Clamp",
+     "role": "clamp 0+",
+     "params": {
+      "Min Clamp": 0.0,
+      "Clamp Min": 1,
+      "Clamp Max": 0
+     }
+    },
+    {
+     "dctl": "Halation",
+     "role": "halation",
+     "params": {
+      "Reflection exposure lost": -5.0,
+      "Red Shift Correction": 2
+     }
+    },
+    {
+     "dctl": "Clamp",
+     "role": "clamp 0+ after halation",
+     "params": {
+      "Min Clamp": 0.0,
+      "Clamp Min": 1,
+      "Clamp Max": 0
+     }
+    },
+    {
+     "dctl": "Film Grain",
+     "role": "negative grain",
+     "params": {
+      "D Max": 2.6,
+      "D Min": 0.01,
+      "Grains Per Pixel": 400,
+      "Num Layers of Grains": 5,
+      "Activation Threshold": 0.18,
+      "Photon Gain": 0.5,
+      "Noise Mode": 1
+     }
+    },
+    {
+     "dctl": "Multiplication Function",
+     "role": "printer lights",
+     "params": {
+      "Global Gain": "solve"
+     }
+    },
+    {
+     "dctl": "Film Curve",
+     "role": "print",
+     "params": {
+      "Red Gamma": 2.8,
+      "Red D_MIN": 0.06,
+      "Red D_MAX": 3.2,
+      "Red Offset": 0.0,
+      "Green Gamma": 2.8,
+      "Green D_MIN": 0.06,
+      "Green D_MAX": 3.2,
+      "Green Offset": 0.0,
+      "Blue Gamma": 2.8,
+      "Blue D_MIN": 0.06,
+      "Blue D_MAX": 3.2,
+      "Blue Offset": 0.0,
+      "Mid Gray": 0.18,
+      "Exposure Gain": 1.0,
+      "Curve Type": 0
+     }
+    }
+   ]
+  },
+  "rich-halation-grain-1600": {
+   "why": "rich-halation-grain with 1600 grains per pixel instead of 100, for Ryan's 'lower the grain strength' (2026-09-12). Film Grain samples each layer's grain count from Normal(np, np(1-p)), so grain noise scales with 1/sqrt(grains) and the mean tone does not change: 1600 leaves a quarter of the grain measured at 100 (fine-detail std 7.4 vs 0.75 without grain).",
+   "stages": [
+    {
+     "dctl": "Clamp",
+     "role": "clamp 0+",
+     "params": {
+      "Min Clamp": 0.0,
+      "Clamp Min": 1,
+      "Clamp Max": 0
+     }
+    },
+    {
+     "dctl": "Halation",
+     "role": "halation",
+     "params": {
+      "Reflection exposure lost": -5.0,
+      "Red Shift Correction": 2
+     }
+    },
+    {
+     "dctl": "Clamp",
+     "role": "clamp 0+ after halation",
+     "params": {
+      "Min Clamp": 0.0,
+      "Clamp Min": 1,
+      "Clamp Max": 0
+     }
+    },
+    {
+     "dctl": "Film Grain",
+     "role": "negative grain",
+     "params": {
+      "D Max": 2.6,
+      "D Min": 0.01,
+      "Grains Per Pixel": 1600,
+      "Num Layers of Grains": 5,
+      "Activation Threshold": 0.18,
+      "Photon Gain": 0.5,
+      "Noise Mode": 1
+     }
+    },
+    {
+     "dctl": "Multiplication Function",
+     "role": "printer lights",
+     "params": {
+      "Global Gain": "solve"
+     }
+    },
+    {
+     "dctl": "Film Curve",
+     "role": "print",
+     "params": {
+      "Red Gamma": 2.8,
+      "Red D_MIN": 0.06,
+      "Red D_MAX": 3.2,
+      "Red Offset": 0.0,
+      "Green Gamma": 2.8,
+      "Green D_MIN": 0.06,
+      "Green D_MAX": 3.2,
+      "Green Offset": 0.0,
+      "Blue Gamma": 2.8,
+      "Blue D_MIN": 0.06,
+      "Blue D_MAX": 3.2,
+      "Blue Offset": 0.0,
+      "Mid Gray": 0.18,
+      "Exposure Gain": 1.0,
+      "Curve Type": 0
+     }
+    }
+   ]
   }
  }
 }

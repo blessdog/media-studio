@@ -2,7 +2,7 @@
 """Runs ON the Mac mini. Builds Thatcher Freeman's utility-dctls film pipeline in a clip's Fusion comp and exports stills or a render.
 
     python3 dctl_film_mini.py <clip> <out_dir> <tag> --recipes a,b [--grey PNG] [--at SECONDS] [--fps 24]
-                              [--size 1920x1080] [--render RECIPE]
+                              [--size 1920x1080] [--render RECIPE[,RECIPE]] [--recipe-file JSON]
 
 Project `<tag>-utility-dctls`, colour managed so every DCTL receives scene-linear light: timeline Rec.709 / Linear,
 output Rec.709 / Gamma 2.4, no tone or gamut mapping (measured accepted on 21.1, 2026-09-12). The clip's input transform
@@ -43,8 +43,8 @@ GREY = arg("--grey")
 AT = float(arg("--at", "10"))
 FPS = arg("--fps", "24")
 W, H = (int(v) for v in arg("--size", "1920x1080").split("x"))
-RENDER = arg("--render")
-RECIPES = film_chain.load(RECIPE_NAMES)
+RENDER = [r for r in (arg("--render") or "").split(",") if r]
+RECIPES = film_chain.load(RECIPE_NAMES, arg("--recipe-file") or film_chain.RECIPES)
 os.makedirs(OUT, exist_ok=True)
 
 app = dvr.scriptapp("Resolve")
@@ -192,7 +192,7 @@ print("clip input as auto-detected:", repr(clip.GetClipProperty("Input Color Spa
 stem = os.path.splitext(os.path.basename(CLIP))[0].lower().replace("_", "-")
 sources.append((stem, clip, AT))
 
-render_tl = None
+render_tls = []
 for label, item, seconds in sources:
     for rname in ["null"] + RECIPE_NAMES:
         recipe = RECIPES.get(rname)
@@ -203,12 +203,13 @@ for label, item, seconds in sources:
         if gain is not None:
             print(f"  printer-lights gain {gain:.6g}")
         still(tl, os.path.join(OUT, f"{tl_name}.png"), seconds)
-        if label == stem and rname == RENDER:
-            render_tl = (tl, f"{stem}-{rname}")
+        if label == stem and rname in RENDER:
+            render_tls.append((tl, f"{stem}-{rname}"))
 pm.SaveProject()
-if RENDER:
-    if not render_tl:
-        sys.exit(f"--render {RENDER!r} is not among --recipes")
-    print(f"\n[render {render_tl[1]}]")
-    render(*render_tl)
+missing = set(RENDER) - {name.split(f"{stem}-", 1)[1] for _, name in render_tls}
+if missing:
+    sys.exit(f"--render {sorted(missing)} not among --recipes")
+for tl, out_name in render_tls:
+    print(f"\n[render {out_name}]")
+    render(tl, out_name)
     pm.SaveProject()
