@@ -3,13 +3,16 @@
 
 # media-studio — STATE
 
-*Generated 2026-09-12 11:40 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
+*Generated 2026-09-12 13:15 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
 
 ## What is open
 
 Every `kind: open` claim in the store. These are PLANS, not specs — `proven: false`. Do not build against one without a verdict.
 
 ```
+? compile-py-still-uses-project-setsetting-resolve   (2026-09-12)
+    compile.py still uses Project.SetSetting; Resolve 21.1 deprecates it for SetSettings({...})
+    why: README.md line 595 in the installed Scripting docs marks SetSetting/GetSetting deprecated; still works t
 ? docs-story-ir-md-is-cited-by-status-md-and-agent   (2026-09-07)
     docs/STORY-IR.md is cited by STATUS.md and AGENTS.md but does not exist
     why: the Story IR contract is documented only in schema/story-ir.schema.json and docstrings; a cold agent fol
@@ -22,6 +25,9 @@ Every `kind: open` claim in the store. These are PLANS, not specs — `proven: f
 ? obs-camera-isolates-in-movies-iso-are-an-untouch   (2026-09-07)
     OBS camera isolates in movies/iso are an untouched multicam B-roll lane
     why: Six *-cam.mp4 isolates (Sept 5 and 7 sessions, one 15GB with no matching program recording) exist beside
+? studio-lint-refuses-a-1001-denominator-frame-rat   (2026-09-12)
+    studio.lint refuses a 1001-denominator frame rate (23.976) as an error; the Osmo may write 23.976
+    why: lint.py line 40 appends 'drop-frame-ish rate' to errors, so a 23.976 clip cannot compile; decide NDF han
 ```
 
 ## What this project knows
@@ -29,7 +35,7 @@ Every `kind: open` claim in the store. These are PLANS, not specs — `proven: f
 The full index. Query it before choosing any technique — `find-technique.py "<your situation>"` — rather than reading it. Every claim declares the questions that must find it, and `check-retrieval.py` asserts they do.
 
 ```
-KNOWLEDGE — 12 live claims: 12 from this project (/Users/SSDrive/projects/mediaStudio/media-studio/knowledge), 0 universal (~/.claude/knowledge/store)
+KNOWLEDGE — 15 live claims: 15 from this project (/Users/SSDrive/projects/mediaStudio/media-studio/knowledge), 0 universal (~/.claude/knowledge/store)
 Query before choosing any technique:  python3 ~/.claude/knowledge/bin/find-technique.py "<your situation>"
 
 LAWS — absolute, no exceptions
@@ -40,6 +46,7 @@ PROCEDURES — the routes that are currently believed
   · photos-library-originals-come-down-with-osxphotos answers how-to-get-a-photos-library-video-into-the-studio   (sibling: none)
 
 VERDICTS — measured, and SCOPED; check the scope before reusing
+  · a-yrgb-project-timeline-colour-space-is-one-combined-key DaVinci Resolve Studio 21.1.0 on macOS, colorScienceMode davinciYRGB with the default sepa
   · gpcr-interface-faces-are-90-degrees-apart Class A GPCR heteromers assembled from real coordinates, specifically the A2AR-D2R heterot
   · the-mini-renders-the-story-ir-with-ffmpeg-not-resolve straight-cut timelines (track-1 edits only) rendered from a workspace's story.json; the Ma
   · the-native-resolve-mcp-server-works-over-stdio DaVinci Resolve Studio 21.1.0.14 on this MacBook (macOS 26), external scripting = Local, R
@@ -49,10 +56,12 @@ REFUTED — already tried, do NOT retry
   ✗ auto-editor-multi-input-drops-inputs-from-v3-export on the v3 export path the first input is consumed as the templateFile (stream rotation and attachmen
 
 OPEN — plans, NOT specs. proven: false. Do not build against these.
+  ? compile-py-still-uses-project-setsetting-resolve Why it matters: README.md line 595 in the installed Scripting docs marks SetSetting/GetSet
   ? docs-story-ir-md-is-cited-by-status-md-and-agent Why it matters: the Story IR contract is documented only in schema/story-ir.schema.json an
   ? edit-ir-find-does-not-work-on-a-multi-recording- Why it matters: moments.spans_from_ir raises 'need asset_id' when track 1 references more 
   ? every-ingest-and-build-tool-should-write-sha256- Why it matters: measured 2026-09-09 on summer-reel: after reconforming three clips in plac
   ? obs-camera-isolates-in-movies-iso-are-an-untouch Why it matters: Six -cam.mp4 isolates (Sept 5 and 7 sessions, one 15GB with no matching pr
+  ? studio-lint-refuses-a-1001-denominator-frame-rat Why it matters: lint.py line 40 appends 'drop-frame-ish rate' to errors, so a 23.976 clip
 ```
 
 ## Where the work stands
@@ -68,18 +77,18 @@ OPEN — plans, NOT specs. proven: false. Do not build against these.
 *From git. The full narrative lives in `docs/journal/`; commit subjects are written as search bait, so `git log --grep` is the index.*
 
 ```
+2026-09-12  12f4552  film-look recipe: the project colour stamp belongs to ingest-osmo, not a hand setting
+2026-09-12  90c090f  cinematic lane: VERIFY ledger items 15-18 measured; claims for the combined YRGB colour key, SetSetting deprecation, lint 23.976 refusal
+2026-09-12  34f6d19  render-preset + deliver --resolve-preset/--timeline: 4K H.265 Main10 master through a named Resolve preset
+2026-09-12  527e363  apply-grade: base .drx onto every V1 clip of a DUPLICATE timeline, verified by reading the node graph back
+2026-09-12  960d408  ingest-osmo: Osmo Action 5 Pro clips asserted (hevc, 10-bit, 4K, 24/23.976) into a Story IR and a YRGB Rec.709 project
+2026-09-12  80d79ba  cinematic lane: Ryan's Osmo Action 5 Pro spec filed verbatim, VERIFY ledger measured against Resolve 21.1, build plan mapped onto studio modules
+2026-09-12  171bcfa  STATE regenerated: film-look grade library, Osmo D-Log M route claim
 2026-09-12  580e25c  grade-library validate: ValidateDCTL takes DCTL source text and returns None on success
 2026-09-12  d5c51ea  knowledge: Osmo D-Log M is not the CST's DJI D-Log; route through the Action 5 IDT DCTL or DJI's own LUT
 2026-09-12  7a7c523  film-look recipe: two node chains for Osmo D-Log M, and the Cineon trap before the shipped 2383 LUT
 2026-09-12  ed942af  grade-library: free Osmo Action 5 Pro film-look assets, pinned by sha256 and fetched by tool
 2026-09-09  59df18e  summer-reel: widescreen with the whole picture, nothing cropped; portrait clips full height, sides filled
-2026-09-09  e0e6aa4  summer-reel: widescreen 1280x720, the YouTube shape; portrait clips cropped to a 16:9 window placed per cut
-2026-09-09  6df5e46  STATE regenerated after summer-reel open
-2026-09-09  6805624  STATE regenerated: summer-reel full-frame, sha256 bookmark
-2026-09-09  99d9958  knowledge: bookmark, every ingest tool should write asset sha256 so a reconform is a new timeline
-2026-09-09  0930ad5  summer-reel: landscape clips fill the frame with a centre crop; asset sha256 in the IR so a reconform is a new timeline, not a cached one
-2026-09-09  7e0c067  STATE regenerated: summer-reel job, native ResolveMCP verdict, osxphotos procedure
-2026-09-09  fc960df  journal: Resolve 21.1 native MCP measured, summer reel cut on an 80 BPM grid, the cave-concert mislabel
 ```
 
 *Remote: `https://github.com/blessdog/media-studio.git` — `master` is pushed.*
