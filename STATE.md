@@ -3,7 +3,7 @@
 
 # media-studio — STATE
 
-*Generated 2026-09-12 13:37 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
+*Generated 2026-09-12 13:40 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
 
 ## What is open
 
@@ -77,6 +77,7 @@ OPEN — plans, NOT specs. proven: false. Do not build against these.
 *From git. The full narrative lives in `docs/journal/`; commit subjects are written as search bait, so `git log --grep` is the index.*
 
 ```
+2026-09-12  319ddf1  STATE regenerated: iPhone Apple Log 2 clip through the cinematic lane with --force
 2026-09-12  98a4918  ingest-osmo --force and render-preset --size: run the lane on an iPhone 17 Pro Apple Log 2 ProRes clip; Apple Log IDTs pulled into film-look
 2026-09-12  7f28bec  STATE regenerated: cinematic lane tools, VERIFY ledger, film-look claims
 2026-09-12  12f4552  film-look recipe: the project colour stamp belongs to ingest-osmo, not a hand setting
@@ -88,7 +89,6 @@ OPEN — plans, NOT specs. proven: false. Do not build against these.
 2026-09-12  171bcfa  STATE regenerated: film-look grade library, Osmo D-Log M route claim
 2026-09-12  580e25c  grade-library validate: ValidateDCTL takes DCTL source text and returns None on success
 2026-09-12  d5c51ea  knowledge: Osmo D-Log M is not the CST's DJI D-Log; route through the Action 5 IDT DCTL or DJI's own LUT
-2026-09-12  7a7c523  film-look recipe: two node chains for Osmo D-Log M, and the Cineon trap before the shipped 2383 LUT
 ```
 
 *Remote: `https://github.com/blessdog/media-studio.git` — `master` is pushed.*
