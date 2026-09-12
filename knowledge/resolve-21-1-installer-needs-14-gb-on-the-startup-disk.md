@@ -31,6 +31,10 @@ Measured 2026-09-12:
 Consequence: deleting the old Resolve frees nothing on the internal disk, and
 clearing caches plus staged macOS updates recovers only about 5.5 GB. Ryan
 chose on 2026-09-12 to make room by moving the 57 GB Spectrasonics STEAM
-library to BleSSD with Spectrasonics' documented procedure.
+library to BleSSD with Spectrasonics' documented procedure. Done the same day:
+`ditto` to `/Volumes/BleSSD/Spectrasonics/STEAM` in 296 s, verified 235 files and
+60,886,231,876 bytes on both sides before the original was removed; the internal
+disk went from 4.9 GB to 61 GB free. Omnisphere asks for the new STEAM location
+once when it next opens.
 
 Related: [[resolve-exportlut-bakes-the-node-grade-not-colour-management]].
