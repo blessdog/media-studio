@@ -3,7 +3,7 @@
 
 # media-studio — STATE
 
-*Generated 2026-09-12 13:15 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
+*Generated 2026-09-12 13:37 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
 
 ## What is open
 
@@ -77,6 +77,8 @@ OPEN — plans, NOT specs. proven: false. Do not build against these.
 *From git. The full narrative lives in `docs/journal/`; commit subjects are written as search bait, so `git log --grep` is the index.*
 
 ```
+2026-09-12  98a4918  ingest-osmo --force and render-preset --size: run the lane on an iPhone 17 Pro Apple Log 2 ProRes clip; Apple Log IDTs pulled into film-look
+2026-09-12  7f28bec  STATE regenerated: cinematic lane tools, VERIFY ledger, film-look claims
 2026-09-12  12f4552  film-look recipe: the project colour stamp belongs to ingest-osmo, not a hand setting
 2026-09-12  90c090f  cinematic lane: VERIFY ledger items 15-18 measured; claims for the combined YRGB colour key, SetSetting deprecation, lint 23.976 refusal
 2026-09-12  34f6d19  render-preset + deliver --resolve-preset/--timeline: 4K H.265 Main10 master through a named Resolve preset
@@ -87,8 +89,6 @@ OPEN — plans, NOT specs. proven: false. Do not build against these.
 2026-09-12  580e25c  grade-library validate: ValidateDCTL takes DCTL source text and returns None on success
 2026-09-12  d5c51ea  knowledge: Osmo D-Log M is not the CST's DJI D-Log; route through the Action 5 IDT DCTL or DJI's own LUT
 2026-09-12  7a7c523  film-look recipe: two node chains for Osmo D-Log M, and the Cineon trap before the shipped 2383 LUT
-2026-09-12  ed942af  grade-library: free Osmo Action 5 Pro film-look assets, pinned by sha256 and fetched by tool
-2026-09-09  59df18e  summer-reel: widescreen with the whole picture, nothing cropped; portrait clips full height, sides filled
 ```
 
 *Remote: `https://github.com/blessdog/media-studio.git` — `master` is pushed.*
