@@ -60,4 +60,23 @@ Halation at `Reflection exposure lost` -5 (default -3) is invisible on IMG_0006:
 against the same chain without it, mean difference 0.035 display codes and 129 of
 2,073,600 pixels moved by more than 2 codes. A visible glow needs a value nearer the default.
 
+What each knob did on IMG_0006 at 30 s, one setting changed from the look with Halation
+and a 400-grain Film Grain negative (darkest 1% / brightest 1% / fine grain, display codes):
+
+| knob | down | now | up |
+|---|---|---|---|
+| print gamma 2.2 / 2.8 / 3.4 | 35 / 199 | 26 / 211 | 20 / 220 |
+| print D max 2.6 / 3.2 / 4.0 | 29 / 219 | 26 / 211 | 27 / 201 |
+| Black Point 0 / 0.5 / 1.5 nits | 26 | 33 | 47 (whites unchanged) |
+| Film Grain grains per pixel 100 / 400 / 1600 | grain 7.4 | 3.8 | 2.0 |
+
+- **Print gamma moves both ends** and saturation with them (17.0 to 23.2).
+- **Print D max barely touches blacks in this look**, because the grain negative sets the floor; it mostly dims the whites.
+- **Grains per pixel is the grain strength.** Grain halves each time it is quadrupled and tone does not move, as the
+  source's Normal(np, np(1-p)) sampling predicts.
+- **Halation stays faint.** With grain blurred out, -3 stops added 0.6 codes of red in shadows beside bright areas and -1.5
+  added 1.8. The default Base Blur Amount is 3 thousandths of frame width, about 6 px at 1080p.
+
+Evidence: `jobs/film-look-mini/evidence/2026-09-12-img-0006-knob-ladder-sheet.jpg`.
+
 Related: [[film-look-creator-renders-on-the-mini-through-a-fusion-comp]].
