@@ -24,6 +24,12 @@ and `Rec.2020 (Scene)` / `Apple Log` with it on. The file's colour tags read
 primaries bt2020, matrix bt2020nc, which is Apple Log's gamut; Apple Log 2 uses
 Apple Wide Gamut.
 
+Final Cut Camera side, measured the same day on IMG_0004.MOV (metadata
+`com.apple.proapps.appBundleID = com.apple.FinalCutApp.companion`): HEVC Rext 4:2:2
+10-bit, 3840x2160, 30 fps, primaries tag `unknown`. Resolve auto-detected
+`Apple Log 2` / `Apple Log`. Size 212,564,612 bytes for 57.3 s = about 223 MB a
+minute, against about 3.1 GB a minute for the Camera app's 1080p60 ProRes Log.
+
 Consequence: every IMG_0883 render this session set the input to Apple Log 2 by
 hand, so that clip was converted with the wrong gamut. The measurements in
 [[a-print-lut-needs-a-cineon-working-space-in-resolve]] still show the print

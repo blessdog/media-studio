@@ -40,6 +40,19 @@ The one trap: the tool's image input is `Source`, not `Input`.
 Film Look Creator keeps the whites and the colour that the print LUT lost on
 regular video. Ryan's verdict on the look is still pending.
 
+Other ResolveFX the mini's Fusion page registers (100 in total, `fusion.GetRegList(1)`,
+2026-09-12) include CineFocus, DepthMap, LensBlur, NoiseReduction, Relight,
+CinematicHaze, HalationPlugin, FilmGrain, SoftSharpenSkin and Vignette. Magic Mask is
+NOT among them. Key input IDs read back from a live comp:
+
+| tool | inputs that matter |
+|---|---|
+| CineFocus | `apertureEnhanced` 0.5, `focusDistance` 0.5, `focusLocationXY` point (0.5,0.5), `focusExtendRange`, `depthMapQuality` |
+| NoiseReduction | `neighbourhoodWidth` frames either side, `temporalLumaThresh` 0 (a no-op until raised), `temporalMotionThresh` 50, `spatialLumaThresh` |
+| LensBlur | `BlurStrength` 4, `ShapeType`, `Anamorphism` 1 |
+| Relight | `lightSourceType` point, `reflBright` 1, `reflFallOff` 0.5, `lightPosXYZX` 0.25 |
+| CinematicHaze | `inputColorSpace` timeline, `depthMapSource` internal, `scalingIsOn` 1 |
+
 Mini prerequisites, done once: Studio activation and Preferences > System >
 General > External scripting = Local, both in Resolve's GUI.
 
