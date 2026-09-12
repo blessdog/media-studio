@@ -5,7 +5,7 @@ conflict-key: how-to-convert-iphone-apple-log-in-resolve-by-api
 status: live
 supersedes: [iphone-apple-log-2-converts-by-colour-management-not-a-node]
 verified-on: 2026-09-12
-scope: Resolve Studio 21.1.0, davinciYRGBColorManagedv2, a Kodak 2383 print emulation LUT (Juan Melara's, grey axis identical to Resolve's shipped one) on node 1; iPhone 17 Pro Apple Log 2 ProRes and iPhone SDR HEVC
+scope: Resolve Studio 21.1.0, davinciYRGBColorManagedv2, a Kodak 2383 print emulation LUT (Juan Melara's, grey axis identical to Resolve's shipped one) on node 1; iPhone 17 Pro Camera-app ProRes Log (converted as Apple Log 2 by mistake; it is Apple Log, see iphone-camera-app-prores-log-is-apple-log-not-log-2) and iPhone SDR HEVC
 evidence: grades/film-look/evidence/2026-09-12-kodak-2383-fed-rec709-vs-cineon.jpg; Melara's page ("PFE LUTs expect log film scans in Rec709 colour space as their input"); the 33-point grey-axis comparison of the two 2383 cubes
 asked-as:
   - my iPhone log footage looks washed out in Resolve
@@ -25,7 +25,7 @@ colour space, and put the print LUT on node 1.**
     proj.SetSettings({"colorSpaceTimelineGamma": "Cineon Film Log"})
     proj.SetSettings({"colorSpaceOutput": "Rec.709"})
     proj.SetSettings({"colorSpaceOutputGamma": "Cineon Film Log"})
-    mediaPoolItem.SetClipProperty("Input Color Space", "Apple Log 2")
+    # leave the clip input to Resolve's auto-detection (Camera-app ProRes Log is Apple Log)
 
 Output equals timeline, so Resolve adds no second transform after the print; the
 print itself turns log into display Rec.709. A clip WITHOUT the print therefore
