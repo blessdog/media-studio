@@ -3,7 +3,7 @@
 
 # media-studio — STATE
 
-*Generated 2026-09-12 13:48 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
+*Generated 2026-09-12 14:46 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
 
 ## What is open
 
@@ -25,9 +25,6 @@ Every `kind: open` claim in the store. These are PLANS, not specs — `proven: f
 ? obs-camera-isolates-in-movies-iso-are-an-untouch   (2026-09-07)
     OBS camera isolates in movies/iso are an untouched multicam B-roll lane
     why: Six *-cam.mp4 isolates (Sept 5 and 7 sessions, one 15GB with no matching program recording) exist beside
-? studio-lint-refuses-a-1001-denominator-frame-rat   (2026-09-12)
-    studio.lint refuses a 1001-denominator frame rate (23.976) as an error; the Osmo may write 23.976
-    why: lint.py line 40 appends 'drop-frame-ish rate' to errors, so a 23.976 clip cannot compile; decide NDF han
 ```
 
 ## What this project knows
@@ -35,7 +32,7 @@ Every `kind: open` claim in the store. These are PLANS, not specs — `proven: f
 The full index. Query it before choosing any technique — `find-technique.py "<your situation>"` — rather than reading it. Every claim declares the questions that must find it, and `check-retrieval.py` asserts they do.
 
 ```
-KNOWLEDGE — 16 live claims: 16 from this project (/Users/SSDrive/projects/mediaStudio/media-studio/knowledge), 0 universal (~/.claude/knowledge/store)
+KNOWLEDGE — 18 live claims: 18 from this project (/Users/SSDrive/projects/mediaStudio/media-studio/knowledge), 0 universal (~/.claude/knowledge/store)
 Query before choosing any technique:  python3 ~/.claude/knowledge/bin/find-technique.py "<your situation>"
 
 LAWS — absolute, no exceptions
@@ -46,9 +43,12 @@ PROCEDURES — the routes that are currently believed
   · photos-library-originals-come-down-with-osxphotos answers how-to-get-a-photos-library-video-into-the-studio   (sibling: none)
 
 VERDICTS — measured, and SCOPED; check the scope before reusing
+  · a-print-lut-needs-a-cineon-working-space-in-resolve Resolve Studio 21.1.0, davinciYRGBColorManagedv2, a Kodak 2383 print emulation LUT (Juan M
   · a-yrgb-project-timeline-colour-space-is-one-combined-key DaVinci Resolve Studio 21.1.0 on macOS, colorScienceMode davinciYRGB with the default sepa
   · gpcr-interface-faces-are-90-degrees-apart Class A GPCR heteromers assembled from real coordinates, specifically the A2AR-D2R heterot
-  · iphone-apple-log-2-converts-by-colour-management-not-a-node DaVinci Resolve Studio 21.1.0 on macOS, iPhone 17 Pro Apple Log 2 ProRes 422 HQ (IMG_0883.
+  · resolve-21-1-installer-needs-14-gb-on-the-startup-disk DaVinci_Resolve_Studio_21.1_Mac.dmg ("Install Resolve 21.1.pkg", 11 GB) on macOS; the Mac 
+  · resolve-exportlut-bakes-the-node-grade-not-colour-management Resolve Studio 21.1.0, TimelineItem.ExportLUT(EXPORT_LUT_65PTCUBE) on a clip in a davinciY
+  · resolve-ntsc-rates-compile-as-non-drop-frame-strings Resolve Studio 21.1.0 through studio.compile (OTIO import); 30000/1001 measured on IMG_088
   · the-mini-renders-the-story-ir-with-ffmpeg-not-resolve straight-cut timelines (track-1 edits only) rendered from a workspace's story.json; the Ma
   · the-native-resolve-mcp-server-works-over-stdio DaVinci Resolve Studio 21.1.0.14 on this MacBook (macOS 26), external scripting = Local, R
 
@@ -62,7 +62,6 @@ OPEN — plans, NOT specs. proven: false. Do not build against these.
   ? edit-ir-find-does-not-work-on-a-multi-recording- Why it matters: moments.spans_from_ir raises 'need asset_id' when track 1 references more 
   ? every-ingest-and-build-tool-should-write-sha256- Why it matters: measured 2026-09-09 on summer-reel: after reconforming three clips in plac
   ? obs-camera-isolates-in-movies-iso-are-an-untouch Why it matters: Six -cam.mp4 isolates (Sept 5 and 7 sessions, one 15GB with no matching pr
-  ? studio-lint-refuses-a-1001-denominator-frame-rat Why it matters: lint.py line 40 appends 'drop-frame-ish rate' to errors, so a 23.976 clip
 ```
 
 ## Where the work stands
@@ -78,21 +77,29 @@ OPEN — plans, NOT specs. proven: false. Do not build against these.
 *From git. The full narrative lives in `docs/journal/`; commit subjects are written as search bait, so `git log --grep` is the index.*
 
 ```
+2026-09-12  652124a  knowledge: Spectrasonics STEAM moved to BleSSD, verified by count and bytes; mini internal disk 61 GB free for Resolve 21.1
+2026-09-12  bbd7d53  knowledge: Resolve 21.1 installer needs 14.1 GB on the startup disk; the mini's Resolve folder links to BleSSD
+2026-09-12  3a50a88  STATE regenerated: print LUT Cineon correction, NTSC rates, ExportLUT claim
+2026-09-12  e5aa773  knowledge: Resolve ExportLUT bakes the node grade, not colour management; Hald lattice bake unsettled
+2026-09-12  4bfdd6a  correction: Kodak 2383 print LUTs take Cineon log input; the first iPhone render fed them display Rec.709
+2026-09-12  6b708f6  23.976 and 29.97 footage compile: project rate stamped as Resolve's NDF menu string via ir.resolve_rate
 2026-09-12  7afb94d  STATE regenerated: iPhone Apple Log 2 rendered with Kodak 2383 print
 2026-09-12  0398831  knowledge: iPhone Apple Log 2 converts by project colour management and a clip input space, not a node; ledger 19-20
 2026-09-12  94b48a1  evidence: iPhone Apple Log 2 frame in three stages, as shot vs Resolve-converted vs Kodak 2383 print
 2026-09-12  319ddf1  STATE regenerated: iPhone Apple Log 2 clip through the cinematic lane with --force
 2026-09-12  98a4918  ingest-osmo --force and render-preset --size: run the lane on an iPhone 17 Pro Apple Log 2 ProRes clip; Apple Log IDTs pulled into film-look
 2026-09-12  7f28bec  STATE regenerated: cinematic lane tools, VERIFY ledger, film-look claims
-2026-09-12  12f4552  film-look recipe: the project colour stamp belongs to ingest-osmo, not a hand setting
-2026-09-12  90c090f  cinematic lane: VERIFY ledger items 15-18 measured; claims for the combined YRGB colour key, SetSetting deprecation, lint 23.976 refusal
-2026-09-12  34f6d19  render-preset + deliver --resolve-preset/--timeline: 4K H.265 Main10 master through a named Resolve preset
-2026-09-12  527e363  apply-grade: base .drx onto every V1 clip of a DUPLICATE timeline, verified by reading the node graph back
-2026-09-12  960d408  ingest-osmo: Osmo Action 5 Pro clips asserted (hevc, 10-bit, 4K, 24/23.976) into a Story IR and a YRGB Rec.709 project
-2026-09-12  80d79ba  cinematic lane: Ryan's Osmo Action 5 Pro spec filed verbatim, VERIFY ledger measured against Resolve 21.1, build plan mapped onto studio modules
 ```
 
 *Remote: `https://github.com/blessdog/media-studio.git` — `master` is pushed.*
+
+### Uncommitted
+
+```
+ M STATE.md
+```
+
+*Uncommitted is not learned. Commit at the moment of learning.*
 
 ---
 
