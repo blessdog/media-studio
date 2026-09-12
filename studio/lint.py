@@ -38,7 +38,7 @@ def lint(ir, base_dir):
     if fps <= 0:
         errors.append(f"timebase.fps {ir['timebase']['fps']} is not positive")
     if fps.denominator == 1001:
-        errors.append(f"warning: drop-frame-ish rate {fps} — v0.1 has no NDF/DF handling; proceed knowingly")
+        errors.append(f"warning: NTSC rate {fps}, stamped as Resolve non-drop-frame '{irmod.resolve_rate(ir)}'")
 
     used = {e["asset"] for e in ir["edits"]}
     assets = {}

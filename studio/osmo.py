@@ -34,14 +34,6 @@ def assess(meta):
     return (not reasons), reasons
 
 
-def is_ntsc_rate(fps):
-    """True for 24000/1001-style rates the lint refuses (VERIFY 12)."""
-    try:
-        return Fraction(fps).denominator == 1001
-    except (TypeError, ValueError, ZeroDivisionError):
-        return False
-
-
 def iso_from_tags(meta):
     """Best-effort ISO from container/stream tags. Unverified where DJI puts it."""
     for tags in (meta.get("stream_tags") or {}, meta.get("format_tags") or {}):

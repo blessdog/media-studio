@@ -2,7 +2,7 @@
 id: studio-lint-refuses-a-1001-denominator-frame-rat
 kind: open
 conflict-key: should-we-studio-lint-refuses-a-1001-denominator-frame-rat
-status: live
+status: superseded
 supersedes: []
 proven: false
 verified-on: 2026-09-12

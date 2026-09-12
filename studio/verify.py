@@ -69,8 +69,12 @@ def verify_timeline(ir, proj, timeline):
                 errors.append(f"audio {w['id']}: duration {it.GetDuration()} "
                               f"!= IR {w['dur']}")
     got_fps = str(timeline.GetSetting("timelineFrameRate"))
-    want_fps = float(irmod.fps(ir))
-    if got_fps not in (str(want_fps), str(int(want_fps))):
+    want_fps = irmod.resolve_rate(ir)
+    try:
+        same = abs(float(got_fps) - float(want_fps)) < 0.005
+    except ValueError:
+        same = False
+    if not same:
         errors.append(f"timeline fps {got_fps} != IR {want_fps}")
     return errors
 

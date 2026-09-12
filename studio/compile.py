@@ -27,8 +27,7 @@ def compile_ir(ir, base_dir, otio_path):
     pm = app.GetProjectManager()
     proj_name = irmod.timeline_name(ir)          # {name}@{hash8}
     tl_name = proj_name                          # project holds one same-named timeline
-    fps = ir["timebase"]["fps"].split("/")[0] if ir["timebase"]["fps"].endswith("/1") \
-        else str(float(irmod.fps(ir)))
+    fps = irmod.resolve_rate(ir)
 
     # -- idempotence: existing project with the timeline -> reuse -------------
     existing = pm.LoadProject(proj_name)

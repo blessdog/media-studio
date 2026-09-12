@@ -175,11 +175,9 @@ the grade-apply verb and the report.
 
 Blocked on the camera, not on code: the base `.drx` (Ryan authors it on the
 hero shot), the Resolve render preset (saved once in the GUI, then loaded by
-name), whether the file is 24.000 or 23.976. **Known constraint found while
-planning:** `studio.lint` currently REFUSES a 1001-denominator rate (it lists
-"drop-frame-ish rate" under errors). If the camera writes 23.976, that lint
-line must become a warning before step 1 can compile, and the project rate
-must be stamped `'23.976'`.
+name), whether the file is 24.000 or 23.976. **Resolved 2026-09-12:** 23.976 and 29.97 footage compile; the project rate
+is stamped `'23.976'` / `'29.97'` non-drop-frame (`studio.ir.resolve_rate`).
+The earlier note here that lint refused those rates was wrong; lint only warned.
 
 ## Phase 7 drill-down — Scene Forge
 

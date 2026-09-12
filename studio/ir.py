@@ -36,6 +36,22 @@ def fps(ir):
     return Fraction(int(num), int(den))
 
 
+RESOLVE_NDF = {Fraction(24000, 1001): "23.976", Fraction(30000, 1001): "29.97",
+               Fraction(60000, 1001): "59.94"}
+
+
+def resolve_rate(ir):
+    """The timelineFrameRate string Resolve accepts: '24', or '29.97' for 30000/1001.
+
+    1001-denominator rates are stamped non-drop-frame (no 'DF' suffix): the
+    README documents 'DF' as opt-in, and frame-integer edits need no DF counting.
+    """
+    f = fps(ir)
+    if f.denominator == 1:
+        return str(f.numerator)
+    return RESOLVE_NDF.get(f, str(float(f)))
+
+
 def asset_path(asset, base_dir):
     p = Path(asset["path"])
     return p if p.is_absolute() else (base_dir / p).resolve()

@@ -130,12 +130,6 @@ def main():
     regmod.record_ir(reg, ir, ir_path)
     print(f"IR written: {ir_path}")
 
-    if osmo.is_ntsc_rate(passing[0]["fps"]):
-        write_report(ws, manifest, compiled=False)
-        print(f"BLOCKED: the camera wrote {passing[0]['fps']} (23.976). studio.lint refuses 1001-denominator rates "
-              "until NDF handling is decided — VERIFY 12 in docs/CINEMATIC-PIPELINE-VERIFY.md")
-        return 2
-
     errors, warnings = lintmod.lint(ir, ws)
     for w in warnings:
         print(f"  {w}")

@@ -8,6 +8,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
+from studio import ir as irmod
 from studio import osmo
 
 passed = 0
@@ -31,8 +32,9 @@ check("to-spec clip passes", ok and why == [])
 
 ok, why = osmo.assess({**GOOD, "fps": "24000/1001"})
 check("23.976 passes assess (lint decides later)", ok)
-check("23.976 is flagged as an NTSC rate", osmo.is_ntsc_rate("24000/1001"))
-check("24.000 is not an NTSC rate", not osmo.is_ntsc_rate("24/1"))
+check("24/1 stamps as Resolve '24'", irmod.resolve_rate({"timebase": {"fps": "24/1"}}) == "24")
+check("24000/1001 stamps as Resolve '23.976'", irmod.resolve_rate({"timebase": {"fps": "24000/1001"}}) == "23.976")
+check("30000/1001 stamps as Resolve '29.97'", irmod.resolve_rate({"timebase": {"fps": "30000/1001"}}) == "29.97")
 
 ok, why = osmo.assess({**GOOD, "codec": "h264", "pix_fmt": "yuv420p", "bits": 8})
 check("8-bit H.264 is flagged with both reasons", (not ok) and len(why) == 2)
