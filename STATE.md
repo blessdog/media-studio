@@ -3,7 +3,7 @@
 
 # media-studio — STATE
 
-*Generated 2026-09-12 17:08 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
+*Generated 2026-09-12 17:36 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
 
 ## What is open
 
@@ -32,7 +32,7 @@ Every `kind: open` claim in the store. These are PLANS, not specs — `proven: f
 The full index. Query it before choosing any technique — `find-technique.py "<your situation>"` — rather than reading it. Every claim declares the questions that must find it, and `check-retrieval.py` asserts they do.
 
 ```
-KNOWLEDGE — 21 live claims: 21 from this project (/Users/SSDrive/projects/mediaStudio/media-studio/knowledge), 0 universal (~/.claude/knowledge/store)
+KNOWLEDGE — 23 live claims: 23 from this project (/Users/SSDrive/projects/mediaStudio/media-studio/knowledge), 0 universal (~/.claude/knowledge/store)
 Query before choosing any technique:  python3 ~/.claude/knowledge/bin/find-technique.py "<your situation>"
 
 LAWS — absolute, no exceptions
@@ -42,6 +42,7 @@ PROCEDURES — the routes that are currently believed
   · film-look-creator-renders-on-the-mini-through-a-fusion-comp answers how-to-apply-film-look-creator-by-script   (sibling: none)
   · osmo-d-log-m-into-resolve-goes-through-the-idt-dctl answers how-to-convert-osmo-action-5-pro-d-log-m-in-resolve   (sibling: none)
   · photos-library-originals-come-down-with-osxphotos answers how-to-get-a-photos-library-video-into-the-studio   (sibling: none)
+  · utility-dctls-film-chain-in-resolve-matches-its-published-math answers how-to-run-the-utility-dctls-film-pipeline-by-script-in-resolve   (sibling: none)
 
 VERDICTS — measured, and SCOPED; check the scope before reusing
   · a-print-lut-needs-a-cineon-working-space-in-resolve Resolve Studio 21.1.0, davinciYRGBColorManagedv2, a Kodak 2383 print emulation LUT (Juan M
@@ -51,6 +52,7 @@ VERDICTS — measured, and SCOPED; check the scope before reusing
   · resolve-21-1-installer-needs-14-gb-on-the-startup-disk DaVinci_Resolve_Studio_21.1_Mac.dmg ("Install Resolve 21.1.pkg", 11 GB) on macOS; the Mac 
   · resolve-exportlut-bakes-the-node-grade-not-colour-management Resolve Studio 21.1.0, TimelineItem.ExportLUT(EXPORT_LUT_65PTCUBE) on a clip in a davinciY
   · resolve-ntsc-rates-compile-as-non-drop-frame-strings Resolve Studio 21.1.0 through studio.compile (OTIO import); 30000/1001 measured on IMG_088
+  · resolve-scripting-cannot-set-input-gamma-on-a-still Resolve Studio 21.1.0 on the Mac mini, davinciYRGBColorManagedv2 with separate colour spac
   · resolve-stoprendering-returns-before-the-render-stops Resolve Studio 21.1.0 on the Mac mini, stopping a Fusion CineFocus render started through 
   · the-mini-renders-the-story-ir-with-ffmpeg-not-resolve straight-cut timelines (track-1 edits only) rendered from a workspace's story.json; the Ma
   · the-native-resolve-mcp-server-works-over-stdio DaVinci Resolve Studio 21.1.0.14 on this MacBook (macOS 26), external scripting = Local, R
@@ -80,29 +82,21 @@ OPEN — plans, NOT specs. proven: false. Do not build against these.
 *From git. The full narrative lives in `docs/journal/`; commit subjects are written as search bait, so `git log --grep` is the index.*
 
 ```
+2026-09-12  6d3573c  journal: film emulation from the utility-dctls library, the grey frame that lied, and speckles on the teal bowl
+2026-09-12  e5a76fb  film-look-mini: Clamp 0+ after Halation stops speckles on saturated teal; gamma-2.4 grey frame holds 0.18 at code 125 through every utility-dctls recipe
+2026-09-12  f43b143  knowledge: utility-dctls Film Curve chain in Resolve matches its published math within 1 code; a still's Input Gamma cannot be scripted and decodes as gamma 2.4
+2026-09-12  a1ab3bf  film-look-mini: grey test frame encoded with the Rec.709 camera curve, since Resolve 21.1 scripting refuses every Input Gamma on a PNG still
+2026-09-12  3353bad  film-look-mini: utility-dctls film pipeline in the Fusion comp, recipes by DCTL setting name, printer-lights gain solved offline to hold 0.18
+2026-09-12  4984374  ledger: Film Look Creator hand-tuning stopped at Ryan's redirect to his utility-dctls fork; README film pipeline is next
+2026-09-12  39477a4  grade-library: Black Point, Clamp, Multiplication, DWG to Linear, Linear to BT1886 from Ryan's utility-dctls fork and dwg-transforms, for the README film pipeline
+2026-09-12  cd03bc1  evidence: IMG_0895 Film Look Creator tuned for richness and a light fade, glow down (halation 0.08, bloom 0.05), fade 0.285 threshold 0.2
 2026-09-12  4975c8d  ledger: print plus Film Look Creator texture oversaturates (154) with filmLookBlend 0; Ryan wants richness, depth and a light fade instead of the print
 2026-09-12  068df81  evidence: IMG_0895 contact sheet, Kodak 2383 print vs Film Look Creator vs print with FLC texture at three glow levels
 2026-09-12  0dbd901  flc_tune.py: Kodak 2383 print with Film Look Creator texture on top (combo timeline), and any FLC input set by name for stills or renders
 2026-09-12  775c799  evidence: IMG_0895 Film Look Creator contrast 1.25 vs eased 1.15, same 30 s frame
-2026-09-12  dff4913  flc_ease.py: contrast ladder stills and eased render for Film Look Creator on the mini
-2026-09-12  20cc21e  ledger: IMG_0895 4K on the mini, print 24 s vs Film Look Creator 603 s; FLC default clips the darkest shadows to 0 on every log clip tested
-2026-09-12  d4fa054  STATE regenerated: IMG_0895 4K emulations on the mini, IMG_0005 queued
-2026-09-12  c6f8c64  knowledge: Resolve StopRendering returns before the render stops; CreateProject returns None until the modal clears
-2026-09-12  3462eef  film_mini, stack_mini: wait for Resolve to be free before touching a project; StopRendering returns before the render stops
-2026-09-12  82054e5  film_mini: --size WxH so a 4K clip renders at 4K (80 Mbps limit at 4K)
-2026-09-12  fbaa4b8  stack_mini: Resolve output blanking is a percent per edge, not pixels; 138 blanked the whole letterbox render, 2.39:1 is 12.81
-2026-09-12  e8f3504  STATE regenerated: IMG_0004 pro-finish variants rendering on the mini
 ```
 
 *Remote: `https://github.com/blessdog/media-studio.git` — `master` is pushed.*
-
-### Uncommitted
-
-```
- M STATE.md
-```
-
-*Uncommitted is not learned. Commit at the moment of learning.*
 
 ---
 
