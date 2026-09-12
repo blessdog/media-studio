@@ -10,8 +10,8 @@ is whatever Resolve auto-detects. One timeline per recipe (`<clip stem>-<recipe>
 `-null` timeline with no chain as the control. Each DCTL tool is loaded by file name, and its settings are set by their
 UI names (the numbered slots take the DCTL's names once it loads; measured on Film Curve) and read back.
 
---grey imports a 16-bit PNG encoded to match the default 'Rec.709 (Scene)' input Resolve gives a still (test/grey-ramp-
-rec709-scene.png) and exports a still per recipe, so the 0.18 patch can be checked against film_chain.py's prediction. The printer-lights gain ("solve" in the recipe) comes from
+--grey imports a 16-bit PNG encoded with gamma 1/2.4, which the default 'Rec.709 (Scene)' input of a still decodes back
+to linear (test/grey-ramp-gamma24.png) and exports a still per recipe, so the 0.18 patch can be checked against film_chain.py's prediction. The printer-lights gain ("solve" in the recipe) comes from
 film_chain.solve_gain.
 
 PRIOR ART: the looks are the utility-dctls DCTLs (blessdog/utility-dctls @ 693bf81), unmodified; this file only wires them.

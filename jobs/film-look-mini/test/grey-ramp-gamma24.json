@@ -3,7 +3,7 @@
   1920,
   1080
  ],
- "encoding": "16-bit PNG, the SAME scene-linear values as grey-ramp-linear.png encoded with the BT.709 camera OETF, matching the 'Rec.709 (Scene)' input Resolve 21.1 assigns a PNG still by default; scripting refuses every Input Gamma value on a still (measured 2026-09-12)",
+ "encoding": "16-bit PNG, the scene-linear values of grey-ramp-linear.png raised to 1/2.4. Resolve 21.1 gives a PNG still input 'Rec.709 (Scene)', which in a Rec.709 Linear timeline with Gamma 2.4 output decodes as V**2.4 (measured: the no-chain timeline returned every stored code unchanged), so the chain receives the linear values",
  "patches_top_row": {
   "y": [
    0,
