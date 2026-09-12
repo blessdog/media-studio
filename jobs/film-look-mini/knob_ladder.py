@@ -6,7 +6,7 @@
 
 The recipes start from BASE in dctl-film-recipes.json and change one DCTL setting each; dctl_film_mini.py renders a
 still per recipe on the mini (--recipe-file knob-ladder-recipes.json). The sheet lays them out one row per knob with a
-plain-English caption, full frames for tone knobs and 1:1 crops for glow and grain, which vanish when scaled down.
+plain-English caption, full frames for tone knobs and 2x-zoomed crops for glow and grain, which vanish when scaled down.
 
 Writer: this file. Reader: Ryan, deciding which way to turn each knob. Fails when wrong: a panel is labelled with a
 setting it was not rendered with (every caption is built from the same KNOBS table that builds the recipe).
@@ -50,11 +50,11 @@ def _grain(r, n):
 KNOBS = [
     ("contrast", "PRINT CONTRAST  (Film Curve print gamma)", "how hard the midtones separate: up = punchier, down = softer",
      "frame", lambda r, v: _set_print(r, "Gamma", v), [(2.2, "2.2  softer"), (None, "2.8  now"), (3.4, "3.4  punchier")]),
-    ("blacks", "BLACK DEPTH  (Film Curve print D max)", "how black the darkest shadows can get: up = inky, down = milky",
-     "frame", lambda r, v: _set_print(r, "D_MAX", v), [(2.6, "2.6  milky blacks"), (None, "3.2  now"), (4.0, "4.0  inky blacks")]),
+    ("blacks", "PRINT RANGE  (Film Curve print D max)", "in this look it mostly sets highlight brightness: up = softer, dimmer whites",
+     "frame", lambda r, v: _set_print(r, "D_MAX", v), [(2.6, "2.6  brighter whites"), (None, "3.2  now"), (4.0, "4.0  softer whites")]),
     ("fade", "FADE  (Black Point DCTL, not used yet)", "lifts only the very bottom, like old faded print: up = more fade",
      "frame", _black_point, [(None, "off  now"), (0.5, "0.5 nits  light fade"), (1.5, "1.5 nits  strong fade")]),
-    ("glow", "GLOW  (Halation reflection exposure lost)", "red glow bleeding around bright edges: closer to 0 = more glow",
+    ("glow", "GLOW  (Halation reflection exposure lost)", "red glow around bright edges: closer to 0 = more; only ~6 px wide at the default blur, so faint here",
      "crop-bright", _halation, [(None, "-5 stops  now"), (-3.0, "-3 stops  DCTL default"), (-1.5, "-1.5 stops  strong")]),
     ("grain", "GRAIN  (Film Grain grains per pixel)", "more grains = finer, quieter grain; fewer = coarser, stronger",
      "crop-mid", _grain, [(100, "100  first video"), (None, "400  new"), (1600, "1600  finest")]),
@@ -91,25 +91,27 @@ def sheet(stills, out_path, stem):
     ref = np.asarray(still(BASE).convert("L")).astype(np.float64)
     detail = np.abs(ref - np.asarray(still("null").convert("L").filter(ImageFilter.GaussianBlur(2))).astype(np.float64))
 
-    def best_window(score):
+    def best_window(score, cw=320, ch=180):
         h, w = score.shape
         ii = np.pad(score.cumsum(0).cumsum(1), ((1, 0), (1, 0)))
         best, pos = -1e18, (0, 0)
-        for y in range(0, h - 360, 20):
-            for x in range(0, w - 640, 20):
-                s = ii[y + 360, x + 640] - ii[y, x + 640] - ii[y + 360, x] + ii[y, x]
+        for y in range(0, h - ch, 10):
+            for x in range(0, w - cw, 10):
+                s = ii[y + ch, x + cw] - ii[y, x + cw] - ii[y + ch, x] + ii[y, x]
                 if s > best:
                     best, pos = s, (x, y)
         return pos
 
-    crops = {"crop-bright": best_window((ref > 200).astype(np.float64)),
+    # glow shows where a bright area meets shadow: bright pixels with a dark pixel within 12 px
+    dark_near = np.asarray(Image.fromarray(((ref < 70) * 255).astype(np.uint8)).filter(ImageFilter.MaxFilter(25))) > 0
+    crops = {"crop-bright": best_window(((ref > 200) & dark_near).astype(np.float64)),
              "crop-mid": best_window(((ref > 70) & (ref < 170)).astype(np.float64) - 0.05 * detail)}
     try:
         big = ImageFont.truetype("/System/Library/Fonts/Helvetica.ttc", 30)
         small = ImageFont.truetype("/System/Library/Fonts/Helvetica.ttc", 24)
     except OSError:
         big = small = ImageFont.load_default()
-    pad, head, cap = 16, 78, 34
+    pad, head, cap = 16, 78, 64
     W = 3 * 640 + 4 * pad
     H = len(KNOBS) * (head + 360 + cap + pad) + pad
     sheet_img = Image.new("RGB", (W, H), (16, 16, 16))
@@ -124,7 +126,7 @@ def sheet(stills, out_path, stem):
                 tile = im.resize((640, 360), Image.LANCZOS)
             else:
                 cx, cy = crops[view]
-                tile = im.crop((cx, cy, cx + 640, cy + 360))
+                tile = im.crop((cx, cy, cx + 320, cy + 180)).resize((640, 360), Image.NEAREST)  # 2x zoom
             a = np.asarray(im.convert("L")).astype(np.float64)
             lum = np.asarray(im).astype(np.float64) @ np.array([0.2126, 0.7152, 0.0722])
             grain = (a - np.asarray(im.convert("L").filter(ImageFilter.MedianFilter(3))).astype(np.float64)).std()
@@ -134,7 +136,7 @@ def sheet(stills, out_path, stem):
             now = value is None
             d.rectangle((x - 3, y + head - 3, x + 642, y + head + 362), outline=(230, 190, 60) if now else (16, 16, 16), width=3)
             d.text((x + 4, y + head + 366), caption, fill=(230, 190, 60) if now else (235, 235, 235), font=small)
-            d.text((x + 330, y + head + 366), stat, fill=(150, 150, 150), font=small)
+            d.text((x + 4, y + head + 394), stat, fill=(150, 150, 150), font=small)
         y += head + 360 + cap + pad
     sheet_img.save(out_path, quality=90)
     print("sheet", out_path, "crops", crops)
