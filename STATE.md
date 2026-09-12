@@ -3,7 +3,7 @@
 
 # media-studio — STATE
 
-*Generated 2026-09-09 19:03 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
+*Generated 2026-09-12 11:40 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
 
 ## What is open
 
@@ -29,13 +29,14 @@ Every `kind: open` claim in the store. These are PLANS, not specs — `proven: f
 The full index. Query it before choosing any technique — `find-technique.py "<your situation>"` — rather than reading it. Every claim declares the questions that must find it, and `check-retrieval.py` asserts they do.
 
 ```
-KNOWLEDGE — 11 live claims: 11 from this project (/Users/SSDrive/projects/mediaStudio/media-studio/knowledge), 0 universal (~/.claude/knowledge/store)
+KNOWLEDGE — 12 live claims: 12 from this project (/Users/SSDrive/projects/mediaStudio/media-studio/knowledge), 0 universal (~/.claude/knowledge/store)
 Query before choosing any technique:  python3 ~/.claude/knowledge/bin/find-technique.py "<your situation>"
 
 LAWS — absolute, no exceptions
   · hide-the-crystallography-scaffolds: A deposited structure contains parts that exist only so the structure could be
 
 PROCEDURES — the routes that are currently believed
+  · osmo-d-log-m-into-resolve-goes-through-the-idt-dctl answers how-to-convert-osmo-action-5-pro-d-log-m-in-resolve   (sibling: none)
   · photos-library-originals-come-down-with-osxphotos answers how-to-get-a-photos-library-video-into-the-studio   (sibling: none)
 
 VERDICTS — measured, and SCOPED; check the scope before reusing
@@ -67,6 +68,11 @@ OPEN — plans, NOT specs. proven: false. Do not build against these.
 *From git. The full narrative lives in `docs/journal/`; commit subjects are written as search bait, so `git log --grep` is the index.*
 
 ```
+2026-09-12  580e25c  grade-library validate: ValidateDCTL takes DCTL source text and returns None on success
+2026-09-12  d5c51ea  knowledge: Osmo D-Log M is not the CST's DJI D-Log; route through the Action 5 IDT DCTL or DJI's own LUT
+2026-09-12  7a7c523  film-look recipe: two node chains for Osmo D-Log M, and the Cineon trap before the shipped 2383 LUT
+2026-09-12  ed942af  grade-library: free Osmo Action 5 Pro film-look assets, pinned by sha256 and fetched by tool
+2026-09-09  59df18e  summer-reel: widescreen with the whole picture, nothing cropped; portrait clips full height, sides filled
 2026-09-09  e0e6aa4  summer-reel: widescreen 1280x720, the YouTube shape; portrait clips cropped to a 16:9 window placed per cut
 2026-09-09  6df5e46  STATE regenerated after summer-reel open
 2026-09-09  6805624  STATE regenerated: summer-reel full-frame, sha256 bookmark
@@ -74,14 +80,17 @@ OPEN — plans, NOT specs. proven: false. Do not build against these.
 2026-09-09  0930ad5  summer-reel: landscape clips fill the frame with a centre crop; asset sha256 in the IR so a reconform is a new timeline, not a cached one
 2026-09-09  7e0c067  STATE regenerated: summer-reel job, native ResolveMCP verdict, osxphotos procedure
 2026-09-09  fc960df  journal: Resolve 21.1 native MCP measured, summer reel cut on an 80 BPM grid, the cave-concert mislabel
-2026-09-09  25ee701  summer-reel: ten Photos clips to a 30 s vertical reel on an 80 BPM grid; native ResolveMCP reads the timeline back and trials a dissolve on a duplicate; rendered on the mini
-2026-09-09  117d47c  research: Resolve 21.1 report retags the free-edition scripting change as REPORTED, the installed changelog does not say it
-2026-09-09  f33a5ed  knowledge: the native Resolve MCP server works over stdio (verdict, scoped to 21.1.0.14 with a ten-second overlap)
-2026-09-09  e1ebe26  research: Resolve 21.1 native MCP server measured live, 14 tools, run_script sandbox; 20 new scripting APIs mapped to studio gaps
-2026-09-07  23b2ee2  knowledge: an rsync remote path with a space arrives at openrsync as two arguments; STATE regenerated
 ```
 
 *Remote: `https://github.com/blessdog/media-studio.git` — `master` is pushed.*
+
+### Uncommitted
+
+```
+ M STATE.md
+```
+
+*Uncommitted is not learned. Commit at the moment of learning.*
 
 ---
 
