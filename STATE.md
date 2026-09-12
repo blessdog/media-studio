@@ -3,7 +3,7 @@
 
 # media-studio — STATE
 
-*Generated 2026-09-12 16:57 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
+*Generated 2026-09-12 17:08 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
 
 ## What is open
 
@@ -80,18 +80,18 @@ OPEN — plans, NOT specs. proven: false. Do not build against these.
 *From git. The full narrative lives in `docs/journal/`; commit subjects are written as search bait, so `git log --grep` is the index.*
 
 ```
+2026-09-12  4975c8d  ledger: print plus Film Look Creator texture oversaturates (154) with filmLookBlend 0; Ryan wants richness, depth and a light fade instead of the print
+2026-09-12  068df81  evidence: IMG_0895 contact sheet, Kodak 2383 print vs Film Look Creator vs print with FLC texture at three glow levels
+2026-09-12  0dbd901  flc_tune.py: Kodak 2383 print with Film Look Creator texture on top (combo timeline), and any FLC input set by name for stills or renders
+2026-09-12  775c799  evidence: IMG_0895 Film Look Creator contrast 1.25 vs eased 1.15, same 30 s frame
+2026-09-12  dff4913  flc_ease.py: contrast ladder stills and eased render for Film Look Creator on the mini
+2026-09-12  20cc21e  ledger: IMG_0895 4K on the mini, print 24 s vs Film Look Creator 603 s; FLC default clips the darkest shadows to 0 on every log clip tested
+2026-09-12  d4fa054  STATE regenerated: IMG_0895 4K emulations on the mini, IMG_0005 queued
 2026-09-12  c6f8c64  knowledge: Resolve StopRendering returns before the render stops; CreateProject returns None until the modal clears
 2026-09-12  3462eef  film_mini, stack_mini: wait for Resolve to be free before touching a project; StopRendering returns before the render stops
 2026-09-12  82054e5  film_mini: --size WxH so a 4K clip renders at 4K (80 Mbps limit at 4K)
 2026-09-12  fbaa4b8  stack_mini: Resolve output blanking is a percent per edge, not pixels; 138 blanked the whole letterbox render, 2.39:1 is 12.81
 2026-09-12  e8f3504  STATE regenerated: IMG_0004 pro-finish variants rendering on the mini
-2026-09-12  d4738ac  knowledge: Final Cut Camera HEVC log is Apple Log 2 at about 223 MB/min (IMG_0004); ResolveFX available to Fusion scripting on the mini, with CineFocus and NoiseReduction input IDs
-2026-09-12  1928129  stack_mini.py: pro-finish test variants on an iPhone log clip, rendered by Resolve on the Mac mini (print, letterbox, denoise, CineFocus, full stack, Film Look Creator)
-2026-09-12  85ee356  knowledge: mark the IMG_0883 Apple Log bookmark superseded in the archive
-2026-09-12  4d9eb11  knowledge: iPhone Camera-app ProRes Log is Apple Log, not Log 2 (Resolve auto-detect on IMG_0891); IMG_0883 renders used the wrong input; two mini emulations measured
-2026-09-12  39dc0cf  STATE regenerated: IMG_0891 two emulations on the mini
-2026-09-12  228abe3  film_mini.py: one iPhone log clip, two film emulations rendered by Resolve on the Mac mini (Kodak 2383 print fed Cineon log; Film Look Creator in DaVinci Wide Gamut)
-2026-09-12  511eec5  STATE regenerated
 ```
 
 *Remote: `https://github.com/blessdog/media-studio.git` — `master` is pushed.*

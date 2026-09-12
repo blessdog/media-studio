@@ -1,0 +1,265 @@
+{
+ "about": "Film emulation recipes built only from Thatcher Freeman's utility-dctls (blessdog/utility-dctls @ 693bf81), following its README pipeline: Clamp 0+, Film Curve negative, printer-lights gain holding 0.18, Film Curve print, display encoding by Resolve colour management. Setting names are the DCTLs' own UI names. 'solve' is filled by film_chain.solve_gain. Writer: the agent, from measured renders and Ryan's verdicts. Reader: dctl_film_mini.py.",
+ "recipes": {
+  "readme-defaults": {
+   "why": "Control: the README chain with every Film Curve setting at its default, gain solved.",
+   "stages": [
+    {
+     "dctl": "Clamp",
+     "role": "clamp 0+",
+     "params": {
+      "Min Clamp": 0.0,
+      "Clamp Min": 1,
+      "Clamp Max": 0
+     }
+    },
+    {
+     "dctl": "Film Curve",
+     "role": "negative",
+     "params": {
+      "Red Gamma": 1.0,
+      "Red D_MIN": 0.01,
+      "Red D_MAX": 4.0,
+      "Red Offset": 0.0,
+      "Green Gamma": 1.0,
+      "Green D_MIN": 0.01,
+      "Green D_MAX": 4.0,
+      "Green Offset": 0.0,
+      "Blue Gamma": 1.0,
+      "Blue D_MIN": 0.01,
+      "Blue D_MAX": 4.0,
+      "Blue Offset": 0.0,
+      "Mid Gray": 0.18,
+      "Exposure Gain": 1.0,
+      "Curve Type": 0
+     }
+    },
+    {
+     "dctl": "Multiplication Function",
+     "role": "printer lights",
+     "params": {
+      "Global Gain": "solve"
+     }
+    },
+    {
+     "dctl": "Film Curve",
+     "role": "print",
+     "params": {
+      "Red Gamma": 1.0,
+      "Red D_MIN": 0.01,
+      "Red D_MAX": 4.0,
+      "Red Offset": 0.0,
+      "Green Gamma": 1.0,
+      "Green D_MIN": 0.01,
+      "Green D_MAX": 4.0,
+      "Green Offset": 0.0,
+      "Blue Gamma": 1.0,
+      "Blue D_MIN": 0.01,
+      "Blue D_MAX": 4.0,
+      "Blue Offset": 0.0,
+      "Mid Gray": 0.18,
+      "Exposure Gain": 1.0,
+      "Curve Type": 0
+     }
+    }
+   ]
+  },
+  "rich": {
+   "why": "Negative gamma 0.6 (long latitude), print gamma 2.8 with D max 3.2 so blacks sit near code 13, a slight fade, and whites roll off near 203. Chosen offline for mid contrast about 1.15 for Ryan's 'richness, a deepness, a little bit of the fade'.",
+   "stages": [
+    {
+     "dctl": "Clamp",
+     "role": "clamp 0+",
+     "params": {
+      "Min Clamp": 0.0,
+      "Clamp Min": 1,
+      "Clamp Max": 0
+     }
+    },
+    {
+     "dctl": "Film Curve",
+     "role": "negative",
+     "params": {
+      "Red Gamma": 0.6,
+      "Red D_MIN": 0.01,
+      "Red D_MAX": 2.6,
+      "Red Offset": 0.0,
+      "Green Gamma": 0.6,
+      "Green D_MIN": 0.01,
+      "Green D_MAX": 2.6,
+      "Green Offset": 0.0,
+      "Blue Gamma": 0.6,
+      "Blue D_MIN": 0.01,
+      "Blue D_MAX": 2.6,
+      "Blue Offset": 0.0,
+      "Mid Gray": 0.18,
+      "Exposure Gain": 1.0,
+      "Curve Type": 0
+     }
+    },
+    {
+     "dctl": "Multiplication Function",
+     "role": "printer lights",
+     "params": {
+      "Global Gain": "solve"
+     }
+    },
+    {
+     "dctl": "Film Curve",
+     "role": "print",
+     "params": {
+      "Red Gamma": 2.8,
+      "Red D_MIN": 0.06,
+      "Red D_MAX": 3.2,
+      "Red Offset": 0.0,
+      "Green Gamma": 2.8,
+      "Green D_MIN": 0.06,
+      "Green D_MAX": 3.2,
+      "Green Offset": 0.0,
+      "Blue Gamma": 2.8,
+      "Blue D_MIN": 0.06,
+      "Blue D_MAX": 3.2,
+      "Blue Offset": 0.0,
+      "Mid Gray": 0.18,
+      "Exposure Gain": 1.0,
+      "Curve Type": 0
+     }
+    }
+   ]
+  },
+  "rich-halation": {
+   "why": "rich plus Halation on the negative side, reflection 5 stops down (default 3) to keep glow low.",
+   "stages": [
+    {
+     "dctl": "Clamp",
+     "role": "clamp 0+",
+     "params": {
+      "Min Clamp": 0.0,
+      "Clamp Min": 1,
+      "Clamp Max": 0
+     }
+    },
+    {
+     "dctl": "Halation",
+     "role": "halation",
+     "params": {
+      "Reflection exposure lost": -5.0,
+      "Red Shift Correction": 2
+     }
+    },
+    {
+     "dctl": "Film Curve",
+     "role": "negative",
+     "params": {
+      "Red Gamma": 0.6,
+      "Red D_MIN": 0.01,
+      "Red D_MAX": 2.6,
+      "Red Offset": 0.0,
+      "Green Gamma": 0.6,
+      "Green D_MIN": 0.01,
+      "Green D_MAX": 2.6,
+      "Green Offset": 0.0,
+      "Blue Gamma": 0.6,
+      "Blue D_MIN": 0.01,
+      "Blue D_MAX": 2.6,
+      "Blue Offset": 0.0,
+      "Mid Gray": 0.18,
+      "Exposure Gain": 1.0,
+      "Curve Type": 0
+     }
+    },
+    {
+     "dctl": "Multiplication Function",
+     "role": "printer lights",
+     "params": {
+      "Global Gain": "solve"
+     }
+    },
+    {
+     "dctl": "Film Curve",
+     "role": "print",
+     "params": {
+      "Red Gamma": 2.8,
+      "Red D_MIN": 0.06,
+      "Red D_MAX": 3.2,
+      "Red Offset": 0.0,
+      "Green Gamma": 2.8,
+      "Green D_MIN": 0.06,
+      "Green D_MAX": 3.2,
+      "Green Offset": 0.0,
+      "Blue Gamma": 2.8,
+      "Blue D_MIN": 0.06,
+      "Blue D_MAX": 3.2,
+      "Blue Offset": 0.0,
+      "Mid Gray": 0.18,
+      "Exposure Gain": 1.0,
+      "Curve Type": 0
+     }
+    }
+   ]
+  },
+  "rich-halation-grain": {
+   "why": "rich-halation with Film Grain as the negative, which outputs the negative's transmittance itself (README: one instance per stock), so it replaces the negative Film Curve.",
+   "stages": [
+    {
+     "dctl": "Clamp",
+     "role": "clamp 0+",
+     "params": {
+      "Min Clamp": 0.0,
+      "Clamp Min": 1,
+      "Clamp Max": 0
+     }
+    },
+    {
+     "dctl": "Halation",
+     "role": "halation",
+     "params": {
+      "Reflection exposure lost": -5.0,
+      "Red Shift Correction": 2
+     }
+    },
+    {
+     "dctl": "Film Grain",
+     "role": "negative grain",
+     "params": {
+      "D Max": 2.6,
+      "D Min": 0.01,
+      "Grains Per Pixel": 100,
+      "Num Layers of Grains": 5,
+      "Activation Threshold": 0.18,
+      "Photon Gain": 0.5,
+      "Noise Mode": 1
+     }
+    },
+    {
+     "dctl": "Multiplication Function",
+     "role": "printer lights",
+     "params": {
+      "Global Gain": "solve"
+     }
+    },
+    {
+     "dctl": "Film Curve",
+     "role": "print",
+     "params": {
+      "Red Gamma": 2.8,
+      "Red D_MIN": 0.06,
+      "Red D_MAX": 3.2,
+      "Red Offset": 0.0,
+      "Green Gamma": 2.8,
+      "Green D_MIN": 0.06,
+      "Green D_MAX": 3.2,
+      "Green Offset": 0.0,
+      "Blue Gamma": 2.8,
+      "Blue D_MIN": 0.06,
+      "Blue D_MAX": 3.2,
+      "Blue Offset": 0.0,
+      "Mid Gray": 0.18,
+      "Exposure Gain": 1.0,
+      "Curve Type": 0
+     }
+    }
+   ]
+  }
+ }
+}
