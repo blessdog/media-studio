@@ -3,7 +3,7 @@
 
 # media-studio — STATE
 
-*Generated 2026-09-12 14:46 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
+*Generated 2026-09-12 14:54 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
 
 ## What is open
 
@@ -77,6 +77,7 @@ OPEN — plans, NOT specs. proven: false. Do not build against these.
 *From git. The full narrative lives in `docs/journal/`; commit subjects are written as search bait, so `git log --grep` is the index.*
 
 ```
+2026-09-12  0c23b32  STATE regenerated: IMG_0888 film look rendered on the mini, Spectrasonics moved, Resolve 21.1 installer open
 2026-09-12  652124a  knowledge: Spectrasonics STEAM moved to BleSSD, verified by count and bytes; mini internal disk 61 GB free for Resolve 21.1
 2026-09-12  bbd7d53  knowledge: Resolve 21.1 installer needs 14.1 GB on the startup disk; the mini's Resolve folder links to BleSSD
 2026-09-12  3a50a88  STATE regenerated: print LUT Cineon correction, NTSC rates, ExportLUT claim
@@ -88,7 +89,6 @@ OPEN — plans, NOT specs. proven: false. Do not build against these.
 2026-09-12  94b48a1  evidence: iPhone Apple Log 2 frame in three stages, as shot vs Resolve-converted vs Kodak 2383 print
 2026-09-12  319ddf1  STATE regenerated: iPhone Apple Log 2 clip through the cinematic lane with --force
 2026-09-12  98a4918  ingest-osmo --force and render-preset --size: run the lane on an iPhone 17 Pro Apple Log 2 ProRes clip; Apple Log IDTs pulled into film-look
-2026-09-12  7f28bec  STATE regenerated: cinematic lane tools, VERIFY ledger, film-look claims
 ```
 
 *Remote: `https://github.com/blessdog/media-studio.git` — `master` is pushed.*
