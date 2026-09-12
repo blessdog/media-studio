@@ -2,7 +2,7 @@
 id: iphone-apple-log-2-converts-by-colour-management-not-a-node
 kind: verdict
 conflict-key: how-to-convert-iphone-apple-log-in-resolve-by-api
-status: live
+status: superseded
 supersedes: []
 verified-on: 2026-09-12
 scope: DaVinci Resolve Studio 21.1.0 on macOS, iPhone 17 Pro Apple Log 2 ProRes 422 HQ (IMG_0883.MOV, 1080p60); not re-measured for iPhone 15/16 Apple Log or for Osmo D-Log M, which Resolve has no built-in space for

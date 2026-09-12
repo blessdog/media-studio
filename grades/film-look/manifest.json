@@ -40,7 +40,7 @@
     },
     {
       "id": "melara-print-film-emulation",
-      "role": "finished print-stock emulations, Rec.709 in (chain A, after node 1; or chain B after the output CST)",
+      "role": "print-stock emulations. INPUT IS LOG, not Rec.709: Melara's page says 'PFE LUTs expect log film scans in Rec709 colour space' and puts a CST to Cineon (or ARRI LogC) with Rec.709 gamut before them. Measured 2026-09-12: the 2383 grey axis matches Resolve's shipped Cineon-input 2383 to three decimals",
       "kind": "zip",
       "url": "https://juanmelara.com.au/s/Print-Film-Emulation-LUTs.zip",
       "source_page": "https://juanmelara.com.au/blog/print-film-emulation-luts-for-download",
@@ -54,7 +54,7 @@
       ],
       "license": "free download from the author's site, no license text in the archive",
       "upstream": "Juan Melara, files dated 2020-03-10 inside the archive",
-      "input": "Rec.709 Gamma 2.4",
+      "input": "Cineon Film Log (or ARRI LogC3), Rec.709 primaries",
       "output": "Rec.709 Gamma 2.4"
     },
     {

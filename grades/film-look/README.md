@@ -23,7 +23,7 @@ Resolve lists new files after **LUT browser > Update Lists**, or a restart.
 |---|---|---|---|---|
 | `dji/` | DJI OSMO Action 5 Pro D-Log M to Rec.709 V1.cube | DJI's official conversion. Its header says it is the Mavic 3 Pro LUT | D-Log M | Rec.709 |
 | `dji/looks/` | Mei, Ju, Zhu, Lan .cube | DJI's four finished creative looks for this camera | Rec.709 | Rec.709 |
-| `melara/` | Rec709_Kodak_2383_D65, Rec709_Kodak_2393_D65, Rec709_Fujifilm_3510_D65 | Juan Melara's free print-stock emulations | Rec.709 | Rec.709 |
+| `melara/` | Rec709_Kodak_2383_D65, Rec709_Kodak_2393_D65, Rec709_Fujifilm_3510_D65 | Juan Melara's free print-stock emulations; the 2383 grey axis is measured identical to Resolve's shipped one | **Cineon Film Log (or ARRI LogC3), Rec.709 primaries** | Rec.709 |
 | `thatcher/` | DJI Action 5 D-Log M to DWG.dctl | camera log to DaVinci Wide Gamut, fit to real Action 5 footage | D-Log M | DaVinci Intermediate |
 | `thatcher/` | Halation, Film Grain, Film Curve, Subtractive Saturation, Gamut Compression | parameter tools, MIT | scene linear | scene linear |
 | `thatcher/` | Printer Lights | per-shot exposure and balance in printer points | log | log |
@@ -42,7 +42,7 @@ it back. Do not set it by hand; a fresh project otherwise defaults to
 | 1 | Temporal NR | Studio only. NR before anything else so grain later is not NR'd away |
 | 2 | LUT: `film-look/dji/DJI OSMO Action 5 Pro D-Log M to Rec.709 V1.cube` | the conversion. Primaries on THIS node apply before the LUT, so exposure and balance corrections here happen in log, which is where they belong |
 | 3 | primaries | contrast, saturation, warmth. Taste |
-| 4 | LUT: one of `film-look/melara/*.cube`, or one of `film-look/dji/looks/*.cube` | the print or the DJI look. Key output at 50 to 70 percent if it bites too hard |
+| 4 | LUT: one of `film-look/dji/looks/*.cube`, **or** for a print: CST Rec.709 Gamma 2.4 → Rec.709 gamut / Cineon Film Log, then LUT `film-look/melara/*.cube` | a print LUT fed display Rec.709 instead of log comes out too contrasty and too saturated; Melara's own instructions put the CST to log first. Key output 50 to 70 percent if it bites |
 | 5 | Magic Mask, secondaries | only where something needs isolating |
 | 6 | Depth Map, Lens Blur | optional, subtle, watch hair edges |
 | timeline node | Film Look Creator, grain and halation only | Colour Space Override: input **and** output Rec.709 Gamma 2.4, because everything is display-referred by the time it arrives here |
@@ -68,8 +68,8 @@ output Rec.709 Gamma 2.4. Set every Osmo clip's input colour space to
 | 7 | **Print, two choices** | (a) Cullen Kelly 2383: DWG in, Rec.709 out, done. (b) Resolve's shipped Kodak 2383: **first** a CST from DaVinci Wide Gamut / Intermediate to **Rec.709 gamut with Cineon Film Log gamma**, then the LUT. Feeding the shipped LUT DaVinci Intermediate directly is the mistake every forum thread on this subject is about |
 | timeline node | Film Look Creator grain and halation, or Thatcher `Film Grain.dctl` | if using FLC, set its colour space to what enters it |
 
-Melara's LUTs also fit chain B at the very end, after the output transform to
-Rec.709, since they expect Rec.709 in.
+Melara's LUTs go exactly where Resolve's shipped 2383 goes in node 7 (b): after
+the CST to Rec.709 gamut / Cineon Film Log. They are numerically the same curve.
 
 ## The one human download
 
