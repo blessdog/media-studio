@@ -29,6 +29,7 @@ CLIP, OUT, TAG = sys.argv[1:4]
 ROUTES = sys.argv[4:] or ["print", "flc"]
 PRINT_LUT = "Film Looks/Rec709 Kodak 2383 D65.cube"
 FLC_ID = "ofx.com.blackmagicdesign.resolvefx.FilmLook"
+W, H = (int(x) for x in (sys.argv[sys.argv.index("--size") + 1] if "--size" in sys.argv else "1920x1080").split("x"))
 KEYS = ("colorScienceMode", "separateColorSpaceAndGamma", "colorSpaceTimeline", "colorSpaceTimelineGamma",
         "colorSpaceOutput", "colorSpaceOutputGamma", "timelineFrameRate")
 
@@ -53,8 +54,8 @@ def open_project(name, fps):
         return proj, False
     proj = pm.CreateProject(name)
     setting(proj, "timelineFrameRate", fps)
-    setting(proj, "timelineResolutionWidth", "1920")
-    setting(proj, "timelineResolutionHeight", "1080")
+    setting(proj, "timelineResolutionWidth", str(W))
+    setting(proj, "timelineResolutionHeight", str(H))
     setting(proj, "colorScienceMode", "davinciYRGBColorManagedv2")
     return proj, True
 
@@ -81,8 +82,8 @@ def clip_on_timeline(proj, name):
 
 def render(proj, name):
     print("  format mp4/H265 ->", proj.SetCurrentRenderFormatAndCodec("mp4", "H265"))
-    rs = {"TargetDir": OUT, "CustomName": name, "SelectAllFrames": True, "FormatWidth": 1920, "FormatHeight": 1080,
-          "VideoQuality": 40000, "EncodingProfile": "Main10", "ExportVideo": True, "ExportAudio": True,
+    rs = {"TargetDir": OUT, "CustomName": name, "SelectAllFrames": True, "FormatWidth": W, "FormatHeight": H,
+          "VideoQuality": 80000 if W >= 3840 else 40000, "EncodingProfile": "Main10", "ExportVideo": True, "ExportAudio": True,
           "ColorSpaceTag": "Same as Project", "GammaTag": "Same as Project"}
     print("  render settings ->", proj.SetRenderSettings(rs))
     job = proj.AddRenderJob() or proj.AddRenderJob()
