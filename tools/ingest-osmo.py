@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """ingest-osmo — Osmo Action 5 Pro clips -> asserted manifest -> Story IR -> Resolve timeline.
 
-    .venv/bin/python tools/ingest-osmo.py <clip.MP4>... --name N [--no-compile]
+    .venv/bin/python tools/ingest-osmo.py <clip.MP4>... --name N [--no-compile] [--force]
 
 Spec: docs/CINEMATIC-PIPELINE.md §3-4. Originals are copied read-only into a
 dated workspace, every clip is ffprobed and asserted (hevc, 10-bit, 3840x2160,
@@ -52,13 +52,14 @@ def _frames(meta):
 
 
 def write_report(ws, manifest, compiled):
-    ok = [c for c in manifest["clips"] if c["status"] == "ok"]
+    ok = [c for c in manifest["clips"] if c["status"] in ("ok", "forced")]
     bad = [c for c in manifest["clips"] if c["status"] == "flagged"]
     lines = [f"# {manifest['name']} — ingest report", "",
              f"Created {manifest['created']}. Workspace `{ws}`.", "",
              f"## Imported ({len(ok)})", ""]
     lines += [f"- `{c['file']}` {c['width']}x{c['height']} @ {c['fps']} {c['codec']} {c['pix_fmt']}"
-              f" {c['duration']:.1f}s  ISO {c['iso'] or 'not in tags'}" for c in ok] or ["- none"]
+              f" {c['duration']:.1f}s  ISO {c['iso'] or 'not in tags'}"
+              + (" **FORCED, off-spec:** " + "; ".join(c["reasons"]) if c["status"] == "forced" else "") for c in ok] or ["- none"]
     lines += ["", f"## Flagged, not imported ({len(bad)})", ""]
     lines += [f"- `{c['file']}`: " + "; ".join(c["reasons"]) for c in bad] or ["- none"]
     lines += ["", "## Awaiting the human pass (all imported clips, by design)", ""]
@@ -73,6 +74,7 @@ def main():
     ap.add_argument("clips", nargs="+")
     ap.add_argument("--name", required=True, help="workspace name; the folder is <date>-<name>")
     ap.add_argument("--no-compile", action="store_true", help="manifest + IR + lint only, skip Resolve")
+    ap.add_argument("--force", action="store_true", help="import flagged clips anyway (status 'forced', reasons kept); for testing the lane on non-Osmo footage")
     args = ap.parse_args()
 
     today = dt.date.today().isoformat()
@@ -100,12 +102,12 @@ def main():
                  "pix_fmt": meta["pix_fmt"], "bits": meta["bits"],
                  "width": meta["width"], "height": meta["height"],
                  "iso": osmo.iso_from_tags(meta), "tags": {**meta["format_tags"], **meta["stream_tags"]},
-                 "status": "ok" if ok else "flagged", "reasons": reasons}
+                 "status": "ok" if ok else ("forced" if args.force else "flagged"), "reasons": reasons}
         manifest["clips"].append(entry)
-        tag = "ok     " if ok else "FLAGGED"
+        tag = "ok     " if ok else ("FORCED " if args.force else "FLAGGED")
         print(f"{tag} {dest.name}: {meta['width']}x{meta['height']} @ {meta['fps']} {meta['codec']} {meta['pix_fmt']} {meta['duration']:.1f}s"
               + ("" if ok else "  <- " + "; ".join(reasons)))
-        if ok:
+        if ok or args.force:
             passing.append({"id": f"c{i:02d}", "path": str(dest), "frames": _frames(meta),
                             "fps": meta["fps"], "width": meta["width"], "height": meta["height"]})
 

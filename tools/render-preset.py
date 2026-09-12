@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """render-preset — save (or update) a named Resolve render preset from the CLI.
 
-    .venv/bin/python tools/render-preset.py osmo-4k-h265 [--format mp4] [--codec auto] [--bitrate-kbps 80000] [--color-space-tag Rec.709] [--gamma-tag "Gamma 2.4"]
+    .venv/bin/python tools/render-preset.py osmo-4k-h265 [--size 3840x2160] [--format mp4] [--codec auto] [--bitrate-kbps 80000] [--color-space-tag Rec.709] [--gamma-tag "Gamma 2.4"]
 
 Spec: docs/CINEMATIC-PIPELINE.md §8. Needs Resolve open with a project loaded
 (the preset is stored per user, not per project). `--codec auto` picks the
 first codec whose name mentions H265 or HEVC for the chosen format; the flag
 `--gamma-tag` exists so the §8 upload test can flip Rec.709 to Rec.709-A once.
-Resolution is pinned to 3840x2160; frame rate is left to follow the timeline.
+Resolution defaults to 3840x2160 (`--size` for a 1080p source); frame rate follows the timeline.
 """
 import argparse
 import sys
@@ -22,6 +22,7 @@ from studio.resolve import connect, ResolveUnavailable  # noqa: E402
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("name")
+    ap.add_argument("--size", default="3840x2160", help="output WxH; the spec pins 4K, use 1920x1080 for iPhone tests")
     ap.add_argument("--format", default="mp4")
     ap.add_argument("--codec", default="auto", help="exact codec key from GetRenderCodecs, or auto (H265/HEVC)")
     ap.add_argument("--bitrate-kbps", type=int, default=80000, help="VideoQuality bit-rate limit; err high, YouTube re-encodes")
@@ -56,7 +57,8 @@ def main():
     if not proj.SetCurrentRenderFormatAndCodec(args.format, codec):
         print(f"FAIL: SetCurrentRenderFormatAndCodec({args.format!r}, {codec!r}); have {sorted(codecs)}")
         return 1
-    settings = {"FormatWidth": 3840, "FormatHeight": 2160, "VideoQuality": args.bitrate_kbps,
+    w, h = (int(x) for x in args.size.lower().split("x"))
+    settings = {"FormatWidth": w, "FormatHeight": h, "VideoQuality": args.bitrate_kbps,
                 "EncodingProfile": "Main10", "ColorSpaceTag": args.color_space_tag,
                 "GammaTag": args.gamma_tag, "ExportVideo": True, "ExportAudio": True}
     if not proj.SetRenderSettings(settings):

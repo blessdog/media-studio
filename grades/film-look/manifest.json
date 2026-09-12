@@ -72,6 +72,34 @@
       "output": "DaVinci Intermediate / DaVinci Wide Gamut (selectable in the DCTL UI)"
     },
     {
+      "id": "thatcher-apple-log-2-to-dwg",
+      "role": "camera log to DaVinci Wide Gamut for iPhone Apple Log 2 (iPhone 17 Pro) footage, scene-referred path; the iPhone stand-in for the Osmo IDT while testing the lane",
+      "kind": "dctl",
+      "url": "https://raw.githubusercontent.com/thatcherfreeman/dwg-transforms/22f2134e5b2f62a8508ebe02f77f2691d4794d8a/RCM%20IDTs/Apple%20Log%202%20to%20DWG.dctl",
+      "source_page": "https://github.com/thatcherfreeman/dwg-transforms",
+      "dest": "thatcher/Apple Log 2 to DWG.dctl",
+      "install": "thatcher",
+      "sha256": "5df1c78238b2d0faaf498e520fadafcf88bb4d0292fffd3f888f17e2cde0acda",
+      "license": "repo has no LICENSE file; published openly on GitHub",
+      "upstream": "thatcherfreeman/dwg-transforms @ 22f2134 (2026-07-27)",
+      "input": "Apple Log 2 (iPhone 17 Pro)",
+      "output": "DaVinci Intermediate / DaVinci Wide Gamut"
+    },
+    {
+      "id": "thatcher-apple-log-to-dwg",
+      "role": "camera log to DaVinci Wide Gamut for iPhone Apple Log (iPhone 15/16 Pro) footage, scene-referred path; the iPhone stand-in for the Osmo IDT while testing the lane",
+      "kind": "dctl",
+      "url": "https://raw.githubusercontent.com/thatcherfreeman/dwg-transforms/22f2134e5b2f62a8508ebe02f77f2691d4794d8a/RCM%20IDTs/Apple%20Log%20to%20DWG.dctl",
+      "source_page": "https://github.com/thatcherfreeman/dwg-transforms",
+      "dest": "thatcher/Apple Log to DWG.dctl",
+      "install": "thatcher",
+      "sha256": "ca4cdf1b4826113d6a6db35789a063410eb3687a389703396825829daf58a7d5",
+      "license": "repo has no LICENSE file; published openly on GitHub",
+      "upstream": "thatcherfreeman/dwg-transforms @ 22f2134 (2026-07-27)",
+      "input": "Apple Log (iPhone 15/16 Pro)",
+      "output": "DaVinci Intermediate / DaVinci Wide Gamut"
+    },
+    {
       "id": "thatcher-halation",
       "role": "parameter tool; film halation; expects a LINEAR image",
       "kind": "dctl",

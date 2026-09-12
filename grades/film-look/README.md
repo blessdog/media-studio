@@ -97,3 +97,5 @@ manifest. `validate` asks Resolve to compile each DCTL.
 
 Not verified: how any of this LOOKS. There is no D-Log M footage on this machine
 yet. The first clip off the camera is the test, and the verdict is Ryan's eyes.
+
+iPhone clips (Apple Log, Apple Log 2): the same chains apply. Chain A node 2 becomes a CST node (Apple Log → Rec.709 Gamma 2.4, Resolve has it natively); chain B node 2 is `thatcher/Apple Log 2 to DWG.dctl` (iPhone 17 Pro) or `Apple Log to DWG.dctl` (15/16 Pro).
