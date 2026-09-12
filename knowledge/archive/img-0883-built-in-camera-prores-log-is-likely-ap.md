@@ -2,7 +2,7 @@
 id: img-0883-built-in-camera-prores-log-is-likely-ap
 kind: open
 conflict-key: should-we-img-0883-built-in-camera-prores-log-is-likely-ap
-status: live
+status: superseded
 supersedes: []
 proven: false
 verified-on: 2026-09-12
