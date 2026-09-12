@@ -33,6 +33,9 @@ Resolve lists new files after **LUT browser > Update Lists**, or a restart.
 ## Chain A — camera-day morning (display-referred, all finished LUTs)
 
 Project: DaVinci YRGB, not colour managed. Timeline colour space Rec.709 Gamma 2.4.
+`tools/ingest-osmo.py` creates the project and stamps exactly this, and reads
+it back. Do not set it by hand; a fresh project otherwise defaults to
+"Rec.709 (Scene)".
 
 | Node | On it | Notes |
 |---|---|---|
