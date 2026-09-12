@@ -3,7 +3,7 @@
 
 # media-studio — STATE
 
-*Generated 2026-09-12 15:48 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
+*Generated 2026-09-12 16:12 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
 
 ## What is open
 
@@ -22,9 +22,6 @@ Every `kind: open` claim in the store. These are PLANS, not specs — `proven: f
 ? every-ingest-and-build-tool-should-write-sha256-   (2026-09-09)
     Every ingest and build tool should write sha256 into IR assets, so reconformed media at the same path compiles
     why: measured 2026-09-09 on summer-reel: after reconforming three clips in place, compile-ir reported 'reused
-? img-0883-built-in-camera-prores-log-is-likely-ap   (2026-09-12)
-    IMG_0883 (built-in Camera ProRes Log) is likely Apple Log, not Apple Log 2: its colour primaries tag is bt2020
-    why: The log render Ryan judged unimpressive may have used the wrong input transform; the claim a-print-lut-n
 ? obs-camera-isolates-in-movies-iso-are-an-untouch   (2026-09-07)
     OBS camera isolates in movies/iso are an untouched multicam B-roll lane
     why: Six *-cam.mp4 isolates (Sept 5 and 7 sessions, one 15GB with no matching program recording) exist beside
@@ -50,6 +47,7 @@ VERDICTS — measured, and SCOPED; check the scope before reusing
   · a-print-lut-needs-a-cineon-working-space-in-resolve Resolve Studio 21.1.0, davinciYRGBColorManagedv2, a Kodak 2383 print emulation LUT (Juan M
   · a-yrgb-project-timeline-colour-space-is-one-combined-key DaVinci Resolve Studio 21.1.0 on macOS, colorScienceMode davinciYRGB with the default sepa
   · gpcr-interface-faces-are-90-degrees-apart Class A GPCR heteromers assembled from real coordinates, specifically the A2AR-D2R heterot
+  · iphone-camera-app-prores-log-is-apple-log-not-log-2 iPhone 17 Pro, iOS 26.6.2, built-in Camera app with ProRes Log (ProRes 422 HQ 1080p); Reso
   · resolve-21-1-installer-needs-14-gb-on-the-startup-disk DaVinci_Resolve_Studio_21.1_Mac.dmg ("Install Resolve 21.1.pkg", 11 GB) on macOS; the Mac 
   · resolve-exportlut-bakes-the-node-grade-not-colour-management Resolve Studio 21.1.0, TimelineItem.ExportLUT(EXPORT_LUT_65PTCUBE) on a clip in a davinciY
   · resolve-ntsc-rates-compile-as-non-drop-frame-strings Resolve Studio 21.1.0 through studio.compile (OTIO import); 30000/1001 measured on IMG_088
@@ -65,7 +63,6 @@ OPEN — plans, NOT specs. proven: false. Do not build against these.
   ? docs-story-ir-md-is-cited-by-status-md-and-agent Why it matters: the Story IR contract is documented only in schema/story-ir.schema.json an
   ? edit-ir-find-does-not-work-on-a-multi-recording- Why it matters: moments.spans_from_ir raises 'need asset_id' when track 1 references more 
   ? every-ingest-and-build-tool-should-write-sha256- Why it matters: measured 2026-09-09 on summer-reel: after reconforming three clips in plac
-  ? img-0883-built-in-camera-prores-log-is-likely-ap Why it matters: The log render Ryan judged unimpressive may have used the wrong input tran
   ? obs-camera-isolates-in-movies-iso-are-an-untouch Why it matters: Six -cam.mp4 isolates (Sept 5 and 7 sessions, one 15GB with no matching pr
 ```
 
@@ -82,6 +79,11 @@ OPEN — plans, NOT specs. proven: false. Do not build against these.
 *From git. The full narrative lives in `docs/journal/`; commit subjects are written as search bait, so `git log --grep` is the index.*
 
 ```
+2026-09-12  d4738ac  knowledge: Final Cut Camera HEVC log is Apple Log 2 at about 223 MB/min (IMG_0004); ResolveFX available to Fusion scripting on the mini, with CineFocus and NoiseReduction input IDs
+2026-09-12  1928129  stack_mini.py: pro-finish test variants on an iPhone log clip, rendered by Resolve on the Mac mini (print, letterbox, denoise, CineFocus, full stack, Film Look Creator)
+2026-09-12  85ee356  knowledge: mark the IMG_0883 Apple Log bookmark superseded in the archive
+2026-09-12  4d9eb11  knowledge: iPhone Camera-app ProRes Log is Apple Log, not Log 2 (Resolve auto-detect on IMG_0891); IMG_0883 renders used the wrong input; two mini emulations measured
+2026-09-12  39dc0cf  STATE regenerated: IMG_0891 two emulations on the mini
 2026-09-12  228abe3  film_mini.py: one iPhone log clip, two film emulations rendered by Resolve on the Mac mini (Kodak 2383 print fed Cineon log; Film Look Creator in DaVinci Wide Gamut)
 2026-09-12  511eec5  STATE regenerated
 2026-09-12  b6cc168  knowledge: bookmark, IMG_0883 is likely Apple Log not Apple Log 2 (bt2020 primaries, built-in Camera app); re-verify input space and re-render
@@ -89,11 +91,6 @@ OPEN — plans, NOT specs. proven: false. Do not build against these.
 2026-09-12  ecc6e66  Film Look Creator renders IMG_0888 on the Mac mini through a Fusion comp: OFX tool FilmLook, image input Source, 49 s
 2026-09-12  87209d4  STATE regenerated: Resolve 21.1 on the mini awaiting activation
 2026-09-12  49bc6f0  knowledge: Resolve 21.1 installer followed the /Applications symlink and upgraded in place on BleSSD; mini needs Studio activation and External scripting before scripts reach it
-2026-09-12  0c23b32  STATE regenerated: IMG_0888 film look rendered on the mini, Spectrasonics moved, Resolve 21.1 installer open
-2026-09-12  652124a  knowledge: Spectrasonics STEAM moved to BleSSD, verified by count and bytes; mini internal disk 61 GB free for Resolve 21.1
-2026-09-12  bbd7d53  knowledge: Resolve 21.1 installer needs 14.1 GB on the startup disk; the mini's Resolve folder links to BleSSD
-2026-09-12  3a50a88  STATE regenerated: print LUT Cineon correction, NTSC rates, ExportLUT claim
-2026-09-12  e5aa773  knowledge: Resolve ExportLUT bakes the node grade, not colour management; Hald lattice bake unsettled
 ```
 
 *Remote: `https://github.com/blessdog/media-studio.git` — `master` is pushed.*
