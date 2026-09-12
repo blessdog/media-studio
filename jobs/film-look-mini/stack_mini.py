@@ -25,7 +25,9 @@ FPS = sys.argv[sys.argv.index("--fps") + 1] if "--fps" in sys.argv else "30"
 PRINT_LUT = "Film Looks/Rec709 Kodak 2383 D65.cube"
 RFX = "ofx.com.blackmagicdesign.resolvefx."
 W, H = 1920, 1080
-BARS = round((H - W / 2.39) / 2)
+# Resolve's timeline output blanking is a PERCENT of frame per edge, not pixels: measured
+# 2026-09-12, Top/Bottom 138 blanked the whole frame. 2.39:1 in a 16:9 frame is 12.81%.
+BARS = round((1 - (W / 2.39) / H) / 2 * 100, 2)
 DENOISE = ("NoiseReduction", {"temporalLumaThresh": 12.0})
 SPEC = {
     "print":     ("print", [], False),
