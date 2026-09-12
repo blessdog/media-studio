@@ -3,7 +3,7 @@
 
 # media-studio — STATE
 
-*Generated 2026-09-12 15:01 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
+*Generated 2026-09-12 15:11 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
 
 ## What is open
 
@@ -32,13 +32,14 @@ Every `kind: open` claim in the store. These are PLANS, not specs — `proven: f
 The full index. Query it before choosing any technique — `find-technique.py "<your situation>"` — rather than reading it. Every claim declares the questions that must find it, and `check-retrieval.py` asserts they do.
 
 ```
-KNOWLEDGE — 18 live claims: 18 from this project (/Users/SSDrive/projects/mediaStudio/media-studio/knowledge), 0 universal (~/.claude/knowledge/store)
+KNOWLEDGE — 19 live claims: 19 from this project (/Users/SSDrive/projects/mediaStudio/media-studio/knowledge), 0 universal (~/.claude/knowledge/store)
 Query before choosing any technique:  python3 ~/.claude/knowledge/bin/find-technique.py "<your situation>"
 
 LAWS — absolute, no exceptions
   · hide-the-crystallography-scaffolds: A deposited structure contains parts that exist only so the structure could be
 
 PROCEDURES — the routes that are currently believed
+  · film-look-creator-renders-on-the-mini-through-a-fusion-comp answers how-to-apply-film-look-creator-by-script   (sibling: none)
   · osmo-d-log-m-into-resolve-goes-through-the-idt-dctl answers how-to-convert-osmo-action-5-pro-d-log-m-in-resolve   (sibling: none)
   · photos-library-originals-come-down-with-osxphotos answers how-to-get-a-photos-library-video-into-the-studio   (sibling: none)
 
@@ -77,6 +78,8 @@ OPEN — plans, NOT specs. proven: false. Do not build against these.
 *From git. The full narrative lives in `docs/journal/`; commit subjects are written as search bait, so `git log --grep` is the index.*
 
 ```
+2026-09-12  992e47e  STATE regenerated: Film Look Creator on the mini
+2026-09-12  ecc6e66  Film Look Creator renders IMG_0888 on the Mac mini through a Fusion comp: OFX tool FilmLook, image input Source, 49 s
 2026-09-12  87209d4  STATE regenerated: Resolve 21.1 on the mini awaiting activation
 2026-09-12  49bc6f0  knowledge: Resolve 21.1 installer followed the /Applications symlink and upgraded in place on BleSSD; mini needs Studio activation and External scripting before scripts reach it
 2026-09-12  0c23b32  STATE regenerated: IMG_0888 film look rendered on the mini, Spectrasonics moved, Resolve 21.1 installer open
@@ -87,8 +90,6 @@ OPEN — plans, NOT specs. proven: false. Do not build against these.
 2026-09-12  4bfdd6a  correction: Kodak 2383 print LUTs take Cineon log input; the first iPhone render fed them display Rec.709
 2026-09-12  6b708f6  23.976 and 29.97 footage compile: project rate stamped as Resolve's NDF menu string via ir.resolve_rate
 2026-09-12  7afb94d  STATE regenerated: iPhone Apple Log 2 rendered with Kodak 2383 print
-2026-09-12  0398831  knowledge: iPhone Apple Log 2 converts by project colour management and a clip input space, not a node; ledger 19-20
-2026-09-12  94b48a1  evidence: iPhone Apple Log 2 frame in three stages, as shot vs Resolve-converted vs Kodak 2383 print
 ```
 
 *Remote: `https://github.com/blessdog/media-studio.git` — `master` is pushed.*
