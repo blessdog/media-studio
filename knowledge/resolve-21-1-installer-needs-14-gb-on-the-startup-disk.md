@@ -37,4 +37,11 @@ library to BleSSD with Spectrasonics' documented procedure. Done the same day:
 disk went from 4.9 GB to 61 GB free. Omnisphere asks for the new STEAM location
 once when it next opens.
 
+Install result, 2026-09-12: the installer FOLLOWED the `/Applications/DaVinci Resolve`
+symlink and upgraded the app in place on BleSSD. Both paths now report 21.1.0,
+8.9 GB; the package receipt says version 21.1, volume `/`. The old 21.0.4 app no
+longer exists, so there was nothing left to delete. Resolve launches on the mini
+but needs Studio activation and External scripting = Local, both set in its GUI,
+before any script can reach it.
+
 Related: [[resolve-exportlut-bakes-the-node-grade-not-colour-management]].
