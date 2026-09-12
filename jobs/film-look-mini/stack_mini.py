@@ -43,6 +43,15 @@ app = dvr.scriptapp("Resolve")
 if not app:
     sys.exit("Resolve is not answering on the mini")
 pm = app.GetProjectManager()
+# StopRendering returns at once, but Resolve keeps stopping the render and holds a modal
+# dialog until it is done; CreateProject returns None meanwhile (measured 2026-09-12).
+for _ in range(150):
+    _cur = pm.GetCurrentProject()
+    if app.GetCurrentPage() is not None and not (_cur and _cur.IsRenderingInProgress()):
+        break
+    time.sleep(2)
+else:
+    sys.exit("Resolve stayed busy for 5 minutes (modal dialog up or a render still stopping)")
 
 
 def setting(proj, key, value):
@@ -54,6 +63,8 @@ name = f"{TAG}-finish-{kind}"
 proj = pm.LoadProject(name)
 if not proj:
     proj = pm.CreateProject(name)
+    if not proj:
+        sys.exit(f"CreateProject({name!r}) returned None: Resolve busy, or the name is taken")
     for k, v in (("timelineFrameRate", FPS), ("timelineResolutionWidth", str(W)),
                  ("timelineResolutionHeight", str(H)), ("colorScienceMode", "davinciYRGBColorManagedv2")):
         setting(proj, k, v)
