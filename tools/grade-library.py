@@ -207,9 +207,13 @@ def cmd_validate(m, lut_root):
         if a.get("kind") != "dctl" or not a.get("install"):
             continue
         for _, installed in _installed_files(m, a, lut_root):
-            res = app.ValidateDCTL(installed)
-            ok = bool(res) if not isinstance(res, dict) else not res.get("error")
-            print(f"{'compiles ' if ok else 'FAILS    '} {a['id']}  {installed}  -> {res!r}")
+            # Measured 2026-09-12 on 21.1.0: ValidateDCTL takes the DCTL SOURCE
+            # TEXT, not a path (a path yields "cannot find main DCTL function"),
+            # and returns None when it compiles, else the compiler's error string.
+            with open(installed, encoding="utf-8") as f:
+                res = app.ValidateDCTL(f.read())
+            ok = not res
+            print(f"{'compiles ' if ok else 'FAILS    '} {a['id']}  {installed}" + ("" if ok else f"  -> {res!r}"))
             bad += 0 if ok else 1
     return bad
 
