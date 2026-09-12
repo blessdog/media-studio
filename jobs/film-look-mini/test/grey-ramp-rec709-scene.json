@@ -1,0 +1,44 @@
+{
+ "size": [
+  1920,
+  1080
+ ],
+ "encoding": "16-bit PNG, the SAME scene-linear values as grey-ramp-linear.png encoded with the BT.709 camera OETF, matching the 'Rec.709 (Scene)' input Resolve 21.1 assigns a PNG still by default; scripting refuses every Input Gamma value on a still (measured 2026-09-12)",
+ "patches_top_row": {
+  "y": [
+   0,
+   540
+  ],
+  "patch_width": 213,
+  "values": [
+   0.0,
+   0.005,
+   0.0225,
+   0.045,
+   0.09,
+   0.18,
+   0.36,
+   0.72,
+   1.0
+  ]
+ },
+ "ramp_middle_row": {
+  "y": [
+   540,
+   810
+  ],
+  "x_to_value": "10**(-3 + 3*x/1919)"
+ },
+ "colour_checks_bottom_row": {
+  "y": [
+   810,
+   1080
+  ],
+  "base": 0.18,
+  "channel_at_0.36": [
+   "R",
+   "G",
+   "B"
+  ]
+ }
+}

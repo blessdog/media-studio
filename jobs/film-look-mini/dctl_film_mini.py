@@ -10,8 +10,8 @@ is whatever Resolve auto-detects. One timeline per recipe (`<clip stem>-<recipe>
 `-null` timeline with no chain as the control. Each DCTL tool is loaded by file name, and its settings are set by their
 UI names (the numbered slots take the DCTL's names once it loads; measured on Film Curve) and read back.
 
---grey imports a scene-linear 16-bit PNG with input Rec.709 / Linear and exports a still per recipe, so the 0.18 patch
-can be checked against film_chain.py's prediction. The printer-lights gain ("solve" in the recipe) comes from
+--grey imports a 16-bit PNG encoded to match the default 'Rec.709 (Scene)' input Resolve gives a still (test/grey-ramp-
+rec709-scene.png) and exports a still per recipe, so the 0.18 patch can be checked against film_chain.py's prediction. The printer-lights gain ("solve" in the recipe) comes from
 film_chain.solve_gain.
 
 PRIOR ART: the looks are the utility-dctls DCTLs (blessdog/utility-dctls @ 693bf81), unmodified; this file only wires them.
@@ -183,10 +183,9 @@ def render(tl, stem):
 sources = []
 if GREY:
     g = pool_item(os.path.abspath(GREY))
-    for k, v in (("Input Color Space", "Rec.709"), ("Input Gamma", "Linear")):
-        if g.GetClipProperty(k) != v and not g.SetClipProperty(k, v):
-            sys.exit(f"grey frame: {k}={v!r} refused (reads {g.GetClipProperty(k)!r})")
-    print("grey frame input:", g.GetClipProperty("Input Color Space"), "/", g.GetClipProperty("Input Gamma"))
+    # Scripting refuses every Input Gamma value on a PNG still (21.1, measured), so the frame is encoded to match
+    # the default input instead; the -null timeline's 0.18 patch at code 125 is the check that the decode is exact.
+    print("grey frame input as assigned:", repr(g.GetClipProperty("Input Color Space")), "/", repr(g.GetClipProperty("Input Gamma")))
     sources.append(("grey", g, 1))
 clip = pool_item(CLIP)
 print("clip input as auto-detected:", repr(clip.GetClipProperty("Input Color Space")), "/", repr(clip.GetClipProperty("Input Gamma")))
