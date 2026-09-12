@@ -3,7 +3,7 @@
 
 # media-studio — STATE
 
-*Generated 2026-09-12 13:40 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
+*Generated 2026-09-12 13:48 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
 
 ## What is open
 
@@ -35,7 +35,7 @@ Every `kind: open` claim in the store. These are PLANS, not specs — `proven: f
 The full index. Query it before choosing any technique — `find-technique.py "<your situation>"` — rather than reading it. Every claim declares the questions that must find it, and `check-retrieval.py` asserts they do.
 
 ```
-KNOWLEDGE — 15 live claims: 15 from this project (/Users/SSDrive/projects/mediaStudio/media-studio/knowledge), 0 universal (~/.claude/knowledge/store)
+KNOWLEDGE — 16 live claims: 16 from this project (/Users/SSDrive/projects/mediaStudio/media-studio/knowledge), 0 universal (~/.claude/knowledge/store)
 Query before choosing any technique:  python3 ~/.claude/knowledge/bin/find-technique.py "<your situation>"
 
 LAWS — absolute, no exceptions
@@ -48,6 +48,7 @@ PROCEDURES — the routes that are currently believed
 VERDICTS — measured, and SCOPED; check the scope before reusing
   · a-yrgb-project-timeline-colour-space-is-one-combined-key DaVinci Resolve Studio 21.1.0 on macOS, colorScienceMode davinciYRGB with the default sepa
   · gpcr-interface-faces-are-90-degrees-apart Class A GPCR heteromers assembled from real coordinates, specifically the A2AR-D2R heterot
+  · iphone-apple-log-2-converts-by-colour-management-not-a-node DaVinci Resolve Studio 21.1.0 on macOS, iPhone 17 Pro Apple Log 2 ProRes 422 HQ (IMG_0883.
   · the-mini-renders-the-story-ir-with-ffmpeg-not-resolve straight-cut timelines (track-1 edits only) rendered from a workspace's story.json; the Ma
   · the-native-resolve-mcp-server-works-over-stdio DaVinci Resolve Studio 21.1.0.14 on this MacBook (macOS 26), external scripting = Local, R
 
@@ -77,6 +78,9 @@ OPEN — plans, NOT specs. proven: false. Do not build against these.
 *From git. The full narrative lives in `docs/journal/`; commit subjects are written as search bait, so `git log --grep` is the index.*
 
 ```
+2026-09-12  7afb94d  STATE regenerated: iPhone Apple Log 2 rendered with Kodak 2383 print
+2026-09-12  0398831  knowledge: iPhone Apple Log 2 converts by project colour management and a clip input space, not a node; ledger 19-20
+2026-09-12  94b48a1  evidence: iPhone Apple Log 2 frame in three stages, as shot vs Resolve-converted vs Kodak 2383 print
 2026-09-12  319ddf1  STATE regenerated: iPhone Apple Log 2 clip through the cinematic lane with --force
 2026-09-12  98a4918  ingest-osmo --force and render-preset --size: run the lane on an iPhone 17 Pro Apple Log 2 ProRes clip; Apple Log IDTs pulled into film-look
 2026-09-12  7f28bec  STATE regenerated: cinematic lane tools, VERIFY ledger, film-look claims
@@ -86,20 +90,9 @@ OPEN — plans, NOT specs. proven: false. Do not build against these.
 2026-09-12  527e363  apply-grade: base .drx onto every V1 clip of a DUPLICATE timeline, verified by reading the node graph back
 2026-09-12  960d408  ingest-osmo: Osmo Action 5 Pro clips asserted (hevc, 10-bit, 4K, 24/23.976) into a Story IR and a YRGB Rec.709 project
 2026-09-12  80d79ba  cinematic lane: Ryan's Osmo Action 5 Pro spec filed verbatim, VERIFY ledger measured against Resolve 21.1, build plan mapped onto studio modules
-2026-09-12  171bcfa  STATE regenerated: film-look grade library, Osmo D-Log M route claim
-2026-09-12  580e25c  grade-library validate: ValidateDCTL takes DCTL source text and returns None on success
-2026-09-12  d5c51ea  knowledge: Osmo D-Log M is not the CST's DJI D-Log; route through the Action 5 IDT DCTL or DJI's own LUT
 ```
 
 *Remote: `https://github.com/blessdog/media-studio.git` — `master` is pushed.*
-
-### Uncommitted
-
-```
- M STATE.md
-```
-
-*Uncommitted is not learned. Commit at the moment of learning.*
 
 ---
 
