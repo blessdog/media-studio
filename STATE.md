@@ -82,6 +82,7 @@ OPEN — plans, NOT specs. proven: false. Do not build against these.
 *From git. The full narrative lives in `docs/journal/`; commit subjects are written as search bait, so `git log --grep` is the index.*
 
 ```
+2026-09-12  e6de774  state: regenerated after the knob ladder and lower-grain recipes
 2026-09-12  744a155  knowledge: what each utility-dctls knob measurably does on IMG_0006 (print gamma, print D max, Black Point, grains per pixel, halation)
 2026-09-12  ab68a3a  evidence: IMG_0006 knob ladder, print contrast / print D max / Black Point fade / halation / grain each turned down and up
 2026-09-12  c93e2c0  film-look-mini: knob ladder recipes generated from rich-halation-grain-400 (contrast, black depth, fade, glow, grain)
@@ -93,18 +94,9 @@ OPEN — plans, NOT specs. proven: false. Do not build against these.
 2026-09-12  f43b143  knowledge: utility-dctls Film Curve chain in Resolve matches its published math within 1 code; a still's Input Gamma cannot be scripted and decodes as gamma 2.4
 2026-09-12  a1ab3bf  film-look-mini: grey test frame encoded with the Rec.709 camera curve, since Resolve 21.1 scripting refuses every Input Gamma on a PNG still
 2026-09-12  3353bad  film-look-mini: utility-dctls film pipeline in the Fusion comp, recipes by DCTL setting name, printer-lights gain solved offline to hold 0.18
-2026-09-12  4984374  ledger: Film Look Creator hand-tuning stopped at Ryan's redirect to his utility-dctls fork; README film pipeline is next
 ```
 
 *Remote: `https://github.com/blessdog/media-studio.git` — `master` is pushed.*
-
-### Uncommitted
-
-```
- M STATE.md
-```
-
-*Uncommitted is not learned. Commit at the moment of learning.*
 
 ---
 
