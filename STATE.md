@@ -3,7 +3,7 @@
 
 # media-studio — STATE
 
-*Generated 2026-09-12 17:53 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
+*Generated 2026-09-12 18:01 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
 
 ## What is open
 
@@ -82,6 +82,8 @@ OPEN — plans, NOT specs. proven: false. Do not build against these.
 *From git. The full narrative lives in `docs/journal/`; commit subjects are written as search bait, so `git log --grep` is the index.*
 
 ```
+2026-09-12  c72210a  state: regenerated after the lower-grain renders
+2026-09-12  283c2bf  ledger: grains per pixel is Film Grain's strength (video grain 5.0 / 2.2 / 1.5 at 100 / 400 / 1600) and the IMG_0006 knob ladder numbers
 2026-09-12  e6de774  state: regenerated after the knob ladder and lower-grain recipes
 2026-09-12  744a155  knowledge: what each utility-dctls knob measurably does on IMG_0006 (print gamma, print D max, Black Point, grains per pixel, halation)
 2026-09-12  ab68a3a  evidence: IMG_0006 knob ladder, print contrast / print D max / Black Point fade / halation / grain each turned down and up
@@ -92,8 +94,6 @@ OPEN — plans, NOT specs. proven: false. Do not build against these.
 2026-09-12  6d3573c  journal: film emulation from the utility-dctls library, the grey frame that lied, and speckles on the teal bowl
 2026-09-12  e5a76fb  film-look-mini: Clamp 0+ after Halation stops speckles on saturated teal; gamma-2.4 grey frame holds 0.18 at code 125 through every utility-dctls recipe
 2026-09-12  f43b143  knowledge: utility-dctls Film Curve chain in Resolve matches its published math within 1 code; a still's Input Gamma cannot be scripted and decodes as gamma 2.4
-2026-09-12  a1ab3bf  film-look-mini: grey test frame encoded with the Rec.709 camera curve, since Resolve 21.1 scripting refuses every Input Gamma on a PNG still
-2026-09-12  3353bad  film-look-mini: utility-dctls film pipeline in the Fusion comp, recipes by DCTL setting name, printer-lights gain solved offline to hold 0.18
 ```
 
 *Remote: `https://github.com/blessdog/media-studio.git` — `master` is pushed.*

@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """Runs ON the Mac mini. Builds Thatcher Freeman's utility-dctls film pipeline in a clip's Fusion comp and exports stills or a render.
 
-    python3 dctl_film_mini.py <clip> <out_dir> <tag> --recipes a,b [--grey PNG] [--at SECONDS] [--fps 24]
+    python3 dctl_film_mini.py <clip> <out_dir> <tag> [--recipes a,b] [--grey PNG] [--at SECONDS] [--fps 24]
                               [--size 1920x1080] [--render RECIPE[,RECIPE]] [--recipe-file JSON]
+
+Without --recipes it builds the recipe marked "approved" in the recipe file (Ryan's pick).
 
 Project `<tag>-utility-dctls`, colour managed so every DCTL receives scene-linear light: timeline Rec.709 / Linear,
 output Rec.709 / Gamma 2.4, no tone or gamut mapping (measured accepted on 21.1, 2026-09-12). The clip's input transform
@@ -38,7 +40,8 @@ def arg(flag, default=None):
 
 
 CLIP, OUT, TAG = (os.path.abspath(a) if i < 2 else a for i, a in enumerate(sys.argv[1:4]))
-RECIPE_NAMES = [r for r in (arg("--recipes") or "").split(",") if r]
+RECIPE_NAMES = [r for r in (arg("--recipes") or "").split(",") if r] or [
+    r for r in [film_chain.approved(arg("--recipe-file") or film_chain.RECIPES)] if r]
 GREY = arg("--grey")
 AT = float(arg("--at", "10"))
 FPS = arg("--fps", "24")

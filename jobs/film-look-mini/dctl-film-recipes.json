@@ -1,5 +1,12 @@
 {
  "about": "Film emulation recipes built only from Thatcher Freeman's utility-dctls (blessdog/utility-dctls @ 693bf81), following its README pipeline: Clamp 0+, Film Curve negative, printer-lights gain holding 0.18, Film Curve print, display encoding by Resolve colour management. Setting names are the DCTLs' own UI names. 'solve' is filled by film_chain.solve_gain. Writer: the agent, from measured renders and Ryan's verdicts. Reader: dctl_film_mini.py.",
+ "approved": {
+  "recipe": "rich-halation-grain-400",
+  "by": "Ryan",
+  "on": "2026-09-12",
+  "words": "img-0006-rich-halation-grain-400.mp4 looks good",
+  "claim": "knowledge/ryan-approved-the-utility-dctls-film-look-with-400-grain.md"
+ },
  "recipes": {
   "readme-defaults": {
    "why": "Control: the README chain with every Film Curve setting at its default, gain solved.",

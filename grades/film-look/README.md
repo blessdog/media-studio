@@ -71,6 +71,26 @@ output Rec.709 Gamma 2.4. Set every Osmo clip's input colour space to
 Melara's LUTs go exactly where Resolve's shipped 2383 goes in node 7 (b): after
 the CST to Rec.709 gamut / Cineon Film Log. They are numerically the same curve.
 
+## Chain C — Ryan's approved look (utility-dctls, scene-linear)
+
+Approved 2026-09-12 on iPhone clip IMG_0006: *"img-0006-rich-halation-grain-400.mp4 looks good."*
+Built only from the utility-dctls DCTLs, wired in the clip's Fusion comp by
+`jobs/film-look-mini/dctl_film_mini.py`, which builds this recipe when none is named.
+The project is colour managed with a Rec.709 / Linear timeline and Rec.709 / Gamma 2.4 output.
+
+| stage | DCTL | settings |
+|---|---|---|
+| 1 | Clamp | min 0, max off |
+| 2 | Halation | reflection exposure lost -5 |
+| 3 | Clamp | min 0, max off (stops speckles on saturated colour) |
+| 4 | Film Grain (negative) | D max 2.6, 400 grains per pixel |
+| 5 | Multiplication Function | gain solved by `film_chain.py` so 0.18 stays 0.18 |
+| 6 | Film Curve (print) | gamma 2.8, D min 0.06, D max 3.2 |
+
+Knobs and what they do, measured: `jobs/film-look-mini/evidence/2026-09-12-img-0006-knob-ladder-sheet.jpg`.
+Reference frame: `evidence/2026-09-12-approved-look-img-0006-before-after.jpg`.
+Not yet seen on Osmo D-Log M footage.
+
 ## The one human download
 
 Cullen Kelly's free Kodak 2383 for DaVinci Wide Gamut sits behind an email form
