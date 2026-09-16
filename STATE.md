@@ -3,7 +3,7 @@
 
 # media-studio — STATE
 
-*Generated 2026-09-16 16:06 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
+*Generated 2026-09-16 16:19 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
 
 ## What is open
 
@@ -41,7 +41,7 @@ Every `kind: open` claim in the store. These are PLANS, not specs — `proven: f
 The full index. Query it before choosing any technique — `find-technique.py "<your situation>"` — rather than reading it. Every claim declares the questions that must find it, and `check-retrieval.py` asserts they do.
 
 ```
-KNOWLEDGE — 30 live claims: 30 from this project (/Users/SSDrive/projects/mediaStudio/media-studio/knowledge), 0 universal (~/.claude/knowledge/store)
+KNOWLEDGE — 32 live claims: 32 from this project (/Users/SSDrive/projects/mediaStudio/media-studio/knowledge), 0 universal (~/.claude/knowledge/store)
 Query before choosing any technique:  python3 ~/.claude/knowledge/bin/find-technique.py "<your situation>"
 
 LAWS — absolute, no exceptions
@@ -59,6 +59,7 @@ VERDICTS — measured, and SCOPED; check the scope before reusing
   · a-yrgb-project-timeline-colour-space-is-one-combined-key DaVinci Resolve Studio 21.1.0 on macOS, colorScienceMode davinciYRGB with the default sepa
   · gpcr-interface-faces-are-90-degrees-apart Class A GPCR heteromers assembled from real coordinates, specifically the A2AR-D2R heterot
   · iphone-camera-app-prores-log-is-apple-log-not-log-2 iPhone 17 Pro, iOS 26.6.2, built-in Camera app with ProRes Log (ProRes 422 HQ 1080p); Reso
+  · osmo-clip-0004-was-shot-at-about-iso-3200 DJI Osmo Action 5 Pro (firmware field 10.00.16.13), auto exposure, D-Log M, 4K 29.97, clip
   · resolve-21-1-installer-needs-14-gb-on-the-startup-disk DaVinci_Resolve_Studio_21.1_Mac.dmg ("Install Resolve 21.1.pkg", 11 GB) on macOS; the Mac 
   · resolve-exportlut-bakes-the-node-grade-not-colour-management Resolve Studio 21.1.0, TimelineItem.ExportLUT(EXPORT_LUT_65PTCUBE) on a clip in a davinciY
   · resolve-ntsc-rates-compile-as-non-drop-frame-strings Resolve Studio 21.1.0 through studio.compile (OTIO import); 30000/1001 measured on IMG_088
@@ -66,6 +67,7 @@ VERDICTS — measured, and SCOPED; check the scope before reusing
   · resolve-scripting-sets-a-clip-input-only-with-the-split-off Resolve Studio 21.1 on the MacBook, davinciYRGBColorManagedv2, timeline Rec.709 / Linear, 
   · resolve-stoprendering-returns-before-the-render-stops Resolve Studio 21.1.0 on the Mac mini, stopping a Fusion CineFocus render started through 
   · ryan-approved-the-utility-dctls-film-look-with-400-grain iPhone 17 Pro log clip IMG_0006 (Final Cut Camera HEVC, Resolve detected Apple Log 2), 108
+  · the-approved-film-look-fails-on-osmo-clip-0004 recipe rich-halation-grain-400 (utility-dctls, 400 grains per pixel) after the D-Log M con
   · the-mini-renders-the-story-ir-with-ffmpeg-not-resolve straight-cut timelines (track-1 edits only) rendered from a workspace's story.json; the Ma
   · the-native-resolve-mcp-server-works-over-stdio DaVinci Resolve Studio 21.1.0.14 on this MacBook (macOS 26), external scripting = Local, R
   · the-osmo-wav-leads-its-mp4-audio-by-about-120-ms DJI Osmo Action 5 Pro, two clips shot 2026-09-16 (DJI_20260916114233_0001_D, DJI_202609161
@@ -98,6 +100,10 @@ OPEN — plans, NOT specs. proven: false. Do not build against these.
 *From git. The full narrative lives in `docs/journal/`; commit subjects are written as search bait, so `git log --grep` is the index.*
 
 ```
+2026-09-16  0bd1f2b  film-look: free emulator candidates after the Osmo rejection (spektrafilm OFX, OpenDRT, JP-2499, DWG 2383 LUTs, Mononodes) with checked vs reported status
+2026-09-16  1ee053f  verdict: Osmo clip 0004 ran auto exposure at about ISO 3200 and 1/110-1/200 s, the cause of its low-light look (ISO read from DJI field 3-2-3-1 by pattern)
+2026-09-16  f35c618  verdict: Ryan rejected the approved utility-dctls film look on Osmo clip 0004 ("looks like shit"); approved-look scope narrowed to the iPhone clip
+2026-09-16  a1e0d34  state: regenerated after the second Osmo render and the WAV offset verdict
 2026-09-16  9c80c89  verdict: the Osmo Action 5 Pro WAV leads its MP4 audio by 116-121 ms; clip 0004 rendered with the approved look in 547 s and the WAV delayed 5,556 samples lands at 0.0 ms
 2026-09-16  781cbff  bookmark: sync the Osmo WAV inside Resolve with MediaPool.AutoSyncAudio by waveform instead of a hand-measured ffmpeg remux
 2026-09-16  0f04164  film-look-mini: audio_lag.py measures how far a second recording sits from a reference track (Osmo WAV vs its MP4 audio)
@@ -106,15 +112,11 @@ OPEN — plans, NOT specs. proven: false. Do not build against these.
 2026-09-16  a1df5fd  state: regenerated after the first Osmo render and the two bookmarks
 2026-09-16  f938e98  ledger: first Osmo D-Log M clip rendered with the approved look on the MacBook in 519 s, render frame matches the still within 2 codes
 2026-09-16  5688f16  bookmark: compare other free film emulators on Osmo footage; reshoot with ND filters at 24p (sky clipped 1.9-3.2% on the first clip)
-2026-09-16  3c48777  verdict: scaling a 4K clip to 1080p before the film chain restores the approved grain (3.28 vs 1.60 unscaled, 3.60 approved)
-2026-09-16  f5d36c9  state: regenerated after the first Osmo D-Log M clip went through the approved look
-2026-09-16  24e12c3  knowledge: first Osmo D-Log M clip through the approved look; clip input is scriptable only with the colour space split off; 4K source on a 1080p timeline thins grain to 1.60 vs 3.60
-2026-09-16  7648e25  film-look-mini: Osmo D-Log M input (clip input Linear, D-Log M DCTL, DWG to Rec.709) ahead of the approved look, several still times, render window, resize to timeline first
 ```
 
 ### ⚠ UNPUSHED
 
-**4 commit(s) ahead of `origin/master`.** Committed is not the same as safe — a commit that has not left this machine has the durability of the disk it is on.
+**3 commit(s) ahead of `origin/master`.** Committed is not the same as safe — a commit that has not left this machine has the durability of the disk it is on.
 
 ```
 git push origin master
