@@ -72,6 +72,20 @@
       "output": "DaVinci Intermediate / DaVinci Wide Gamut (selectable in the DCTL UI)"
     },
     {
+      "id": "thatcher-gamut-primaries-conversion",
+      "role": "parameter tool; linear 3x3 gamut conversion between named primaries. Chain C's Osmo input: after the D-Log M DCTL outputs Linear / DaVinci Wide Gamut, this takes DaVinci Wide Gamut to Rec.709 so the approved look receives the Rec.709 linear light it was built in",
+      "kind": "dctl",
+      "url": "https://raw.githubusercontent.com/thatcherfreeman/utility-dctls/693bf813b42178a3f993bd529450ac7d433ebac3/Utilities/Gamut%20Primaries%20Conversion.dctl",
+      "source_page": "https://github.com/thatcherfreeman/utility-dctls",
+      "dest": "thatcher/Gamut Primaries Conversion.dctl",
+      "install": "thatcher",
+      "license": "MIT (LICENSE-utility-dctls beside it)",
+      "upstream": "thatcherfreeman/utility-dctls @ 693bf81 (2026-09-11)",
+      "input": "scene linear, source primaries",
+      "output": "scene linear, target primaries",
+      "sha256": "3239a8f9ce17fe1b8860a82382670e173ffcba661634d32de81513cfd84f2770"
+    },
+    {
       "id": "thatcher-apple-log-2-to-dwg",
       "role": "camera log to DaVinci Wide Gamut for iPhone Apple Log 2 (iPhone 17 Pro) footage, scene-referred path; the iPhone stand-in for the Osmo IDT while testing the lane",
       "kind": "dctl",
