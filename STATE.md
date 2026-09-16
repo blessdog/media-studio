@@ -3,7 +3,7 @@
 
 # media-studio — STATE
 
-*Generated 2026-09-16 13:34 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
+*Generated 2026-09-16 15:51 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
 
 ## What is open
 
@@ -93,6 +93,7 @@ OPEN — plans, NOT specs. proven: false. Do not build against these.
 *From git. The full narrative lives in `docs/journal/`; commit subjects are written as search bait, so `git log --grep` is the index.*
 
 ```
+2026-09-16  4613238  state: regenerated
 2026-09-16  a1df5fd  state: regenerated after the first Osmo render and the two bookmarks
 2026-09-16  f938e98  ledger: first Osmo D-Log M clip rendered with the approved look on the MacBook in 519 s, render frame matches the still within 2 codes
 2026-09-16  5688f16  bookmark: compare other free film emulators on Osmo footage; reshoot with ND filters at 24p (sky clipped 1.9-3.2% on the first clip)
@@ -104,7 +105,6 @@ OPEN — plans, NOT specs. proven: false. Do not build against these.
 2026-09-12  32d0c0e  verdict: Ryan approved the utility-dctls film look with 400 grains per pixel on IMG_0006 ("looks good")
 2026-09-12  c72210a  state: regenerated after the lower-grain renders
 2026-09-12  283c2bf  ledger: grains per pixel is Film Grain's strength (video grain 5.0 / 2.2 / 1.5 at 100 / 400 / 1600) and the IMG_0006 knob ladder numbers
-2026-09-12  e6de774  state: regenerated after the knob ladder and lower-grain recipes
 ```
 
 *Remote: `https://github.com/blessdog/media-studio.git` — `master` is pushed.*
