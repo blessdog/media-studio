@@ -3,7 +3,7 @@
 
 # media-studio — STATE
 
-*Generated 2026-09-12 18:01 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
+*Generated 2026-09-16 12:26 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
 
 ## What is open
 
@@ -32,7 +32,7 @@ Every `kind: open` claim in the store. These are PLANS, not specs — `proven: f
 The full index. Query it before choosing any technique — `find-technique.py "<your situation>"` — rather than reading it. Every claim declares the questions that must find it, and `check-retrieval.py` asserts they do.
 
 ```
-KNOWLEDGE — 23 live claims: 23 from this project (/Users/SSDrive/projects/mediaStudio/media-studio/knowledge), 0 universal (~/.claude/knowledge/store)
+KNOWLEDGE — 26 live claims: 26 from this project (/Users/SSDrive/projects/mediaStudio/media-studio/knowledge), 0 universal (~/.claude/knowledge/store)
 Query before choosing any technique:  python3 ~/.claude/knowledge/bin/find-technique.py "<your situation>"
 
 LAWS — absolute, no exceptions
@@ -45,6 +45,7 @@ PROCEDURES — the routes that are currently believed
   · utility-dctls-film-chain-in-resolve-matches-its-published-math answers how-to-run-the-utility-dctls-film-pipeline-by-script-in-resolve   (sibling: none)
 
 VERDICTS — measured, and SCOPED; check the scope before reusing
+  · a-4k-clip-on-a-1080p-timeline-thins-per-pixel-grain Resolve Studio 21.1, utility-dctls Film Grain (400 grains per pixel) in a clip's Fusion co
   · a-print-lut-needs-a-cineon-working-space-in-resolve Resolve Studio 21.1.0, davinciYRGBColorManagedv2, a Kodak 2383 print emulation LUT (Juan M
   · a-yrgb-project-timeline-colour-space-is-one-combined-key DaVinci Resolve Studio 21.1.0 on macOS, colorScienceMode davinciYRGB with the default sepa
   · gpcr-interface-faces-are-90-degrees-apart Class A GPCR heteromers assembled from real coordinates, specifically the A2AR-D2R heterot
@@ -53,7 +54,9 @@ VERDICTS — measured, and SCOPED; check the scope before reusing
   · resolve-exportlut-bakes-the-node-grade-not-colour-management Resolve Studio 21.1.0, TimelineItem.ExportLUT(EXPORT_LUT_65PTCUBE) on a clip in a davinciY
   · resolve-ntsc-rates-compile-as-non-drop-frame-strings Resolve Studio 21.1.0 through studio.compile (OTIO import); 30000/1001 measured on IMG_088
   · resolve-scripting-cannot-set-input-gamma-on-a-still Resolve Studio 21.1.0 on the Mac mini, davinciYRGBColorManagedv2 with separate colour spac
+  · resolve-scripting-sets-a-clip-input-only-with-the-split-off Resolve Studio 21.1 on the MacBook, davinciYRGBColorManagedv2, timeline Rec.709 / Linear, 
   · resolve-stoprendering-returns-before-the-render-stops Resolve Studio 21.1.0 on the Mac mini, stopping a Fusion CineFocus render started through 
+  · ryan-approved-the-utility-dctls-film-look-with-400-grain iPhone 17 Pro log clip IMG_0006 (Final Cut Camera HEVC, Resolve detected Apple Log 2), 108
   · the-mini-renders-the-story-ir-with-ffmpeg-not-resolve straight-cut timelines (track-1 edits only) rendered from a workspace's story.json; the Ma
   · the-native-resolve-mcp-server-works-over-stdio DaVinci Resolve Studio 21.1.0.14 on this MacBook (macOS 26), external scripting = Local, R
 
@@ -82,6 +85,10 @@ OPEN — plans, NOT specs. proven: false. Do not build against these.
 *From git. The full narrative lives in `docs/journal/`; commit subjects are written as search bait, so `git log --grep` is the index.*
 
 ```
+2026-09-16  24e12c3  knowledge: first Osmo D-Log M clip through the approved look; clip input is scriptable only with the colour space split off; 4K source on a 1080p timeline thins grain to 1.60 vs 3.60
+2026-09-16  7648e25  film-look-mini: Osmo D-Log M input (clip input Linear, D-Log M DCTL, DWG to Rec.709) ahead of the approved look, several still times, render window, resize to timeline first
+2026-09-16  556dc3a  grade library: utility-dctls Gamut Primaries Conversion, the DaVinci Wide Gamut to Rec.709 step between the Osmo D-Log M DCTL and the approved film look
+2026-09-12  32d0c0e  verdict: Ryan approved the utility-dctls film look with 400 grains per pixel on IMG_0006 ("looks good")
 2026-09-12  c72210a  state: regenerated after the lower-grain renders
 2026-09-12  283c2bf  ledger: grains per pixel is Film Grain's strength (video grain 5.0 / 2.2 / 1.5 at 100 / 400 / 1600) and the IMG_0006 knob ladder numbers
 2026-09-12  e6de774  state: regenerated after the knob ladder and lower-grain recipes
@@ -90,13 +97,17 @@ OPEN — plans, NOT specs. proven: false. Do not build against these.
 2026-09-12  c93e2c0  film-look-mini: knob ladder recipes generated from rich-halation-grain-400 (contrast, black depth, fade, glow, grain)
 2026-09-12  73bb116  film-look-mini: lower-grain recipes (400 and 1600 grains per pixel) and a knob ladder that shows each look setting turned down and up
 2026-09-12  8579802  state: regenerated after the utility-dctls film pipeline session
-2026-09-12  8f2b645  ledger: IMG_0006 full utility-dctls chain rendered on the mini in 265 s, render frame matches the still
-2026-09-12  6d3573c  journal: film emulation from the utility-dctls library, the grey frame that lied, and speckles on the teal bowl
-2026-09-12  e5a76fb  film-look-mini: Clamp 0+ after Halation stops speckles on saturated teal; gamma-2.4 grey frame holds 0.18 at code 125 through every utility-dctls recipe
-2026-09-12  f43b143  knowledge: utility-dctls Film Curve chain in Resolve matches its published math within 1 code; a still's Input Gamma cannot be scripted and decodes as gamma 2.4
 ```
 
 *Remote: `https://github.com/blessdog/media-studio.git` — `master` is pushed.*
+
+### Uncommitted
+
+```
+ M STATE.md
+```
+
+*Uncommitted is not learned. Commit at the moment of learning.*
 
 ---
 
