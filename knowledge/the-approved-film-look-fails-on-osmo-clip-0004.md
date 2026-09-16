@@ -42,6 +42,14 @@ grain texture and pink skin. The agent's reading of that sheet, not Ryan's. The 
 in row 29 gave 1.26 converted and 1.63 look here, lower than clip 0001's 3.28, so that measure does not match
 what the eye sees on this clip and is not evidence either way.
 
+Third and fourth messages, after 4K windows of the plain conversion and of the look (30 s each):
+"they all look terrible. very pixulated. like an old vhs camera", then "the film emulation is not working with
+the video from the dji". So the failure is not only the 1080p output
+([[render-4k-footage-at-4k]]). The look is retired for DJI footage. At the same 5 s frame, set side by side at
+normal size, DJI's own D-Log M LUT gives natural contrast. The Thatcher conversion the look is built on is
+displayed with no tone curve and reads flat with clipped whites, and the look reads milky and pastel. That is the
+agent's reading, not measured.
+
 What his verdict does not say: whether the D-Log M conversion alone is
 acceptable, and whether the look fails on clip 0001 too (no verdict was given
 there).
