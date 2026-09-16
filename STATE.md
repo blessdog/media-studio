@@ -3,7 +3,7 @@
 
 # media-studio — STATE
 
-*Generated 2026-09-16 16:19 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
+*Generated 2026-09-16 16:40 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
 
 ## What is open
 
@@ -41,7 +41,7 @@ Every `kind: open` claim in the store. These are PLANS, not specs — `proven: f
 The full index. Query it before choosing any technique — `find-technique.py "<your situation>"` — rather than reading it. Every claim declares the questions that must find it, and `check-retrieval.py` asserts they do.
 
 ```
-KNOWLEDGE — 32 live claims: 32 from this project (/Users/SSDrive/projects/mediaStudio/media-studio/knowledge), 0 universal (~/.claude/knowledge/store)
+KNOWLEDGE — 33 live claims: 33 from this project (/Users/SSDrive/projects/mediaStudio/media-studio/knowledge), 0 universal (~/.claude/knowledge/store)
 Query before choosing any technique:  python3 ~/.claude/knowledge/bin/find-technique.py "<your situation>"
 
 LAWS — absolute, no exceptions
@@ -60,6 +60,7 @@ VERDICTS — measured, and SCOPED; check the scope before reusing
   · gpcr-interface-faces-are-90-degrees-apart Class A GPCR heteromers assembled from real coordinates, specifically the A2AR-D2R heterot
   · iphone-camera-app-prores-log-is-apple-log-not-log-2 iPhone 17 Pro, iOS 26.6.2, built-in Camera app with ProRes Log (ProRes 422 HQ 1080p); Reso
   · osmo-clip-0004-was-shot-at-about-iso-3200 DJI Osmo Action 5 Pro (firmware field 10.00.16.13), auto exposure, D-Log M, 4K 29.97, clip
+  · render-4k-footage-at-4k renders made for Ryan to watch from 4K camera footage (DJI Osmo Action 5 Pro, 3840x2160), 
   · resolve-21-1-installer-needs-14-gb-on-the-startup-disk DaVinci_Resolve_Studio_21.1_Mac.dmg ("Install Resolve 21.1.pkg", 11 GB) on macOS; the Mac 
   · resolve-exportlut-bakes-the-node-grade-not-colour-management Resolve Studio 21.1.0, TimelineItem.ExportLUT(EXPORT_LUT_65PTCUBE) on a clip in a davinciY
   · resolve-ntsc-rates-compile-as-non-drop-frame-strings Resolve Studio 21.1.0 through studio.compile (OTIO import); 30000/1001 measured on IMG_088
@@ -100,6 +101,11 @@ OPEN — plans, NOT specs. proven: false. Do not build against these.
 *From git. The full narrative lives in `docs/journal/`; commit subjects are written as search bait, so `git log --grep` is the index.*
 
 ```
+2026-09-16  8e3a69d  verdict: utility-dctls look retired for DJI footage after 4K windows; clip 0004 full 4K conversion with synced WAV in 287 s; DJI's four looks sheet at 4K
+2026-09-16  1d81d9f  verdict: render 4K footage at 4K (Ryan: 'very pixulated... why are you not rendering in 4k?'); 4K timings on the MacBook, conversion 26 s and look 493 s per 30 s
+2026-09-16  8eec86b  film-look-mini: render at the clip's own resolution by default (4K Osmo renders 4K), --render idt renders the camera conversion alone
+2026-09-16  19dd592  evidence: Osmo clip 0004 render is real 1080p at 40 Mbps; same-region crops of 4K original (DJI LUT), 1080p conversion and 1080p look show where the grain comes from
+2026-09-16  5069d5c  state: regenerated after the ISO diagnosis and the emulator candidates
 2026-09-16  0bd1f2b  film-look: free emulator candidates after the Osmo rejection (spektrafilm OFX, OpenDRT, JP-2499, DWG 2383 LUTs, Mononodes) with checked vs reported status
 2026-09-16  1ee053f  verdict: Osmo clip 0004 ran auto exposure at about ISO 3200 and 1/110-1/200 s, the cause of its low-light look (ISO read from DJI field 3-2-3-1 by pattern)
 2026-09-16  f35c618  verdict: Ryan rejected the approved utility-dctls film look on Osmo clip 0004 ("looks like shit"); approved-look scope narrowed to the iPhone clip
@@ -107,16 +113,11 @@ OPEN — plans, NOT specs. proven: false. Do not build against these.
 2026-09-16  9c80c89  verdict: the Osmo Action 5 Pro WAV leads its MP4 audio by 116-121 ms; clip 0004 rendered with the approved look in 547 s and the WAV delayed 5,556 samples lands at 0.0 ms
 2026-09-16  781cbff  bookmark: sync the Osmo WAV inside Resolve with MediaPool.AutoSyncAudio by waveform instead of a hand-measured ffmpeg remux
 2026-09-16  0f04164  film-look-mini: audio_lag.py measures how far a second recording sits from a reference track (Osmo WAV vs its MP4 audio)
-2026-09-16  b1a9e27  state: regenerated (timestamp and recent-commit log only)
-2026-09-16  4613238  state: regenerated
-2026-09-16  a1df5fd  state: regenerated after the first Osmo render and the two bookmarks
-2026-09-16  f938e98  ledger: first Osmo D-Log M clip rendered with the approved look on the MacBook in 519 s, render frame matches the still within 2 codes
-2026-09-16  5688f16  bookmark: compare other free film emulators on Osmo footage; reshoot with ND filters at 24p (sky clipped 1.9-3.2% on the first clip)
 ```
 
 ### ⚠ UNPUSHED
 
-**3 commit(s) ahead of `origin/master`.** Committed is not the same as safe — a commit that has not left this machine has the durability of the disk it is on.
+**1 commit(s) ahead of `origin/master`.** Committed is not the same as safe — a commit that has not left this machine has the durability of the disk it is on.
 
 ```
 git push origin master
