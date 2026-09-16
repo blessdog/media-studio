@@ -101,7 +101,26 @@ two stages run ahead of stage 1, and the clip's input is set to `Linear` so Reso
 
 First clip: `jobs/film-look-mini/evidence/2026-09-16-osmo-dji-0001-dlogm-approved-look-sheet-scaled-first.jpg`
 (grain 3.28 against the approved 3.60). The `...-sheet.jpg` beside it was made before stage 0 existed and shows
-the thin grain (1.60). Ryan's verdict on the look is pending.
+the thin grain (1.60). No verdict from Ryan on that clip. On the second clip (0004, indoor, about ISO 3200) he
+rejected it: "looks like shit" (`knowledge/the-approved-film-look-fails-on-osmo-clip-0004.md`). Do not use Chain C
+as the Osmo default.
+
+## Candidates not yet in the library (searched 2026-09-16)
+
+Found after Chain C failed on Osmo clip 0004. Nothing below is installed or rendered yet. Status words:
+CHECKED (read or verified here), REPORTED (the vendor or a review says so).
+
+| Candidate | What it is | Fits this lane because | Status |
+|---|---|---|---|
+| **spektrafilm OFX** 0.4.7 ([site](https://spektrafilm.114c.de/), [repo](https://github.com/chaert-s/spektrafilm-ofx)) | a free spectral film simulation: camera negative, then print, with grain, halation, diffusion. 35 stocks incl. Kodak Vision3 50D/250D/200T/500T; prints 2383, 2393 | a finished emulator instead of parts we wire. Its Input Color Space takes DaVinci Intermediate WideGamut, which the D-Log M DCTL outputs. Output Role "Display Out SDR" to Rec.709 Gamma 2.4, or "RCM/ACES" back to the working space | CHECKED: GPL-3.0; pkg signed "Developer ID Installer: Aedan Diez (3495LZ53BZ)" and notarized 2026-09-09; zip sha256 39c94770…; installs spektrafilm, spektrafilm_flow and spektrafilm_lens into `/Library/OFX/Plugins` (admin password); Studio only per its install notes. UNKNOWN: whether a script can add it to a Fusion comp, and under what id |
+| **OpenDRT** ([repo](https://github.com/jedypod/open-display-transform)) | a free display-rendering DCTL with look presets | runs through the existing DCTL stage system, no admin | REPORTED |
+| **JP-2499 DRT** ([repo](https://github.com/JuanPabloZambrano/DCTL/tree/main/2499_DRT)) | a free film-inspired image formation DCTL, not a film emulation | same | REPORTED |
+| **Jamie Fenn DWG 2383 and Fuji 351** ([page](https://www.jamiefenn.com/p/free-dwg-film-emulation-luts/)) | free print LUTs for DaVinci Wide Gamut | the Chain B node 7 slot | REPORTED |
+| **ProColor free 2383** ([page](https://procolor.ist/freelut/)) | a free scene-referred 2383 for DWG or ACES | same | REPORTED |
+| **Mononodes free PowerGrades** ([page](https://mononodes.com/film-emulation/)) | .drx photochemical emulation | `ApplyGradeFromDRX` applies .drx by script | REPORTED |
+
+Already here and never rendered on Osmo footage: DJI's own D-Log M cube and its four looks, Melara prints fed
+Cineon, Resolve's Film Looks folder, Film Look Creator.
 
 ## The one human download
 
@@ -119,6 +138,9 @@ else in the library was fetched by the tool.
 - Slow shutter plus max RockSteady smears. One or the other.
 - Sharpness and in-camera NR at minimum.
 - ISO ceiling 1600 for graded work (chosen line; reviews call 3200+ destructive).
+  Clip 0004 (2026-09-16) broke four lines of this list under auto exposure: 29.97, shutter 1/110 to 1/200,
+  about ISO 3200, and Ryan read the result as low light (`knowledge/osmo-clip-0004-was-shot-at-about-iso-3200.md`).
+  Read a clip's settings with `exiftool -ee -u -G3 -s -n -ShutterSpeed -Dvtm_ac204_3-2-3-1 <clip>`.
 - Dewarp or narrower field of view. The 155 degree look reads action-cam regardless.
 
 ## What has been verified and what has not

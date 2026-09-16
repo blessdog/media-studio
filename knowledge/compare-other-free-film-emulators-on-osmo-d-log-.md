@@ -8,8 +8,8 @@ proven: false
 verified-on: 2026-09-16
 asked-as:
   - Compare other free film emulators on Osmo D-Log M footage
-  - compare other free film emulators on osmo d log 
-  - why is manifest.json like this
+  - which free film emulation should we try on the DJI footage
+  - is there a better free film look than utility-dctls
 ---
 
 **This is a PLAN, not a finding. `proven: false`. Do not build against it.**
@@ -21,5 +21,11 @@ asked-as:
 **Where it lands:** `jobs/film-look-mini/ and grades/film-look/manifest.json`
 
 **First step:** web-search free Resolve film emulation (DCTL, LUT, OFX) first; render each on outputs/osmo/2026-09-16-first-clip/DJI_20260916114233_0001_D.MP4 at 5/60/300 s next to the approved look, using dctl_film_mini.py --input dji-action5-dlogm for the conversion; one sheet, Ryan picks
+
+**Update 2026-09-16, after Chain C was rejected on clip 0004:** the search is done. The candidate table, with
+what is checked and what is only reported, is in `grades/film-look/README.md` § Candidates. Strongest fit:
+spektrafilm OFX (needs Ryan's admin password to install). Footage caveat: clip 0004 was shot at about ISO 3200
+([[osmo-clip-0004-was-shot-at-about-iso-3200]]), so a sheet made from it judges noise as much as emulation. Use
+frames of clip 0001 that ran at 1/2000 s with the ISO field near 240, or the ND reshoot, for the comparison.
 
 Bookmarked 2026-09-16 at the moment of deferral, because the record of a deferral is what fails, not the decision to defer.
