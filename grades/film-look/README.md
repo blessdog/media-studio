@@ -99,8 +99,9 @@ two stages run ahead of stage 1, and the clip's input is set to `Linear` so Reso
 | A | DJI Action 5 D-Log M to DWG | Output Transfer Function Linear, Output Color Gamut DaVinci Wide Gamut |
 | B | Gamut Primaries Conversion | DaVinci Wide Gamut to Rec. 709 |
 
-First clip: `jobs/film-look-mini/evidence/2026-09-16-osmo-dji-0001-dlogm-approved-look-sheet.jpg`
-(made before stage 0 existed, so its grain is thinner than approved). Ryan's verdict on it is pending.
+First clip: `jobs/film-look-mini/evidence/2026-09-16-osmo-dji-0001-dlogm-approved-look-sheet-scaled-first.jpg`
+(grain 3.28 against the approved 3.60). The `...-sheet.jpg` beside it was made before stage 0 existed and shows
+the thin grain (1.60). Ryan's verdict on the look is pending.
 
 ## The one human download
 
