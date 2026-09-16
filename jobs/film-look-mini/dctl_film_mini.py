@@ -3,7 +3,7 @@
 utility-dctls film pipeline in a clip's Fusion comp and exports stills or a render.
 
     python3 dctl_film_mini.py <clip> <out_dir> <tag> [--recipes a,b] [--grey PNG] [--at S[,S...]] [--fps 24]
-                              [--size 1920x1080] [--render RECIPE[,RECIPE]] [--window START,END]
+                              [--size WxH] [--render NAME[,NAME]] [--window START,END]
                               [--input NAME] [--recipe-file JSON]
 
 Without --recipes it builds the recipe marked "approved" in the recipe file (Ryan's pick).
@@ -19,8 +19,9 @@ colour management cannot convert). The clip's input colour space is set to the e
 code values through untouched, the entry's stages run ahead of every recipe, and an extra `-idt` timeline holds the
 conversion alone: the "before" of a before/after. `-null` stays the no-stage control that proves the pass-through.
 
-A source larger than --size is scaled to it before any stage (Fusion otherwise runs the chain at source resolution,
-which thins per-pixel grain). --at takes several times, one still each. --window START,END renders only that span (seconds).
+--size defaults to the clip's own resolution (4K Osmo footage renders at 4K). A source larger than --size is scaled to it
+before any stage (Fusion otherwise runs the chain at source resolution, which thins per-pixel grain). --render takes
+recipe names, and `idt` for the camera conversion alone. --at takes several times, one still each. --window START,END renders only that span (seconds).
 
 --grey imports a 16-bit PNG encoded with gamma 1/2.4, which the default 'Rec.709 (Scene)' input of a still decodes back
 to linear (test/grey-ramp-gamma24.png) and exports a still per recipe, so the 0.18 patch can be checked against film_chain.py's prediction. The printer-lights gain ("solve" in the recipe) comes from
@@ -28,7 +29,9 @@ film_chain.solve_gain.
 
 PRIOR ART: the looks are the utility-dctls DCTLs (blessdog/utility-dctls @ 693bf81), unmodified; this file only wires them.
 """
+import json
 import os
+import subprocess
 import sys
 import time
 
@@ -50,6 +53,14 @@ def arg(flag, default=None):
     return sys.argv[sys.argv.index(flag) + 1] if flag in sys.argv else default
 
 
+def source_size(path):
+    # Ryan, 2026-09-16, on a 1080p render of a 4K Osmo clip: "very pixulated... why are you not rendering in 4k?"
+    probe = subprocess.run(["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries", "stream=width,height",
+                            "-of", "json", path], capture_output=True, text=True, check=True)
+    s = json.loads(probe.stdout)["streams"][0]
+    return f"{s['width']}x{s['height']}"
+
+
 CLIP, OUT, TAG = (os.path.abspath(a) if i < 2 else a for i, a in enumerate(sys.argv[1:4]))
 RECIPE_NAMES = [r for r in (arg("--recipes") or "").split(",") if r] or [
     r for r in [film_chain.approved(arg("--recipe-file") or film_chain.RECIPES)] if r]
@@ -57,7 +68,7 @@ GREY = arg("--grey")
 ATS = [float(t) for t in arg("--at", "10").split(",")]
 FPS = arg("--fps", "24")
 WINDOW = [float(t) for t in arg("--window").split(",")] if arg("--window") else None
-W, H = (int(v) for v in arg("--size", "1920x1080").split("x"))
+W, H = (int(v) for v in (arg("--size") or source_size(CLIP)).split("x"))
 RENDER = [r for r in (arg("--render") or "").split(",") if r]
 RECIPES = film_chain.load(RECIPE_NAMES, arg("--recipe-file") or film_chain.RECIPES)
 INPUT = film_chain.load_input(arg("--input"), arg("--recipe-file") or film_chain.RECIPES) if arg("--input") else None
