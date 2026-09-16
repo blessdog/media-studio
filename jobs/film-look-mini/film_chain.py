@@ -88,6 +88,14 @@ def approved(path=RECIPES):
         return (json.load(f).get("approved") or {}).get("recipe")
 
 
+def load_input(name, path=RECIPES):
+    with open(path) as f:
+        inputs = json.load(f).get("inputs", {})
+    if name not in inputs:
+        sys.exit(f"no input {name!r} in {path}; it has {sorted(inputs)}")
+    return inputs[name]
+
+
 def load(names=None, path=RECIPES):
     with open(path) as f:
         book = json.load(f)["recipes"]

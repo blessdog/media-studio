@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
-"""Runs ON the Mac mini. Builds Thatcher Freeman's utility-dctls film pipeline in a clip's Fusion comp and exports stills or a render.
+"""Runs where Resolve runs (the Mac mini for long renders, the MacBook for stills). Builds Thatcher Freeman's
+utility-dctls film pipeline in a clip's Fusion comp and exports stills or a render.
 
-    python3 dctl_film_mini.py <clip> <out_dir> <tag> [--recipes a,b] [--grey PNG] [--at SECONDS] [--fps 24]
-                              [--size 1920x1080] [--render RECIPE[,RECIPE]] [--recipe-file JSON]
+    python3 dctl_film_mini.py <clip> <out_dir> <tag> [--recipes a,b] [--grey PNG] [--at S[,S...]] [--fps 24]
+                              [--size 1920x1080] [--render RECIPE[,RECIPE]] [--window START,END]
+                              [--input NAME] [--recipe-file JSON]
 
 Without --recipes it builds the recipe marked "approved" in the recipe file (Ryan's pick).
 
@@ -11,6 +13,14 @@ output Rec.709 / Gamma 2.4, no tone or gamut mapping (measured accepted on 21.1,
 is whatever Resolve auto-detects. One timeline per recipe (`<clip stem>-<recipe>`), rebuilt on every run, plus a
 `-null` timeline with no chain as the control. Each DCTL tool is loaded by file name, and its settings are set by their
 UI names (the numbered slots take the DCTL's names once it loads; measured on Film Curve) and read back.
+
+--input NAME takes a camera conversion from the recipe file's "inputs" (e.g. dji-action5-dlogm, for footage Resolve
+colour management cannot convert). The clip's input colour space is set to the entry's "clip_input" so Resolve passes the
+code values through untouched, the entry's stages run ahead of every recipe, and an extra `-idt` timeline holds the
+conversion alone: the "before" of a before/after. `-null` stays the no-stage control that proves the pass-through.
+
+A source larger than --size is scaled to it before any stage (Fusion otherwise runs the chain at source resolution,
+which thins per-pixel grain). --at takes several times, one still each. --window START,END renders only that span (seconds).
 
 --grey imports a 16-bit PNG encoded with gamma 1/2.4, which the default 'Rec.709 (Scene)' input of a still decodes back
 to linear (test/grey-ramp-gamma24.png) and exports a still per recipe, so the 0.18 patch can be checked against film_chain.py's prediction. The printer-lights gain ("solve" in the recipe) comes from
@@ -32,6 +42,7 @@ sys.path.append(os.path.join(API, "Modules"))
 import DaVinciResolveScript as dvr  # noqa: E402
 
 DCTL_ID = "ofx.com.blackmagicdesign.resolvefx.DCTL"
+RESIZE_ID = "BetterResize"
 SLOT_PREFIXES = ("sliderFloatParam", "sliderIntParam", "valueBoxParam", "checkBoxParam", "comboBoxParam", "colorPicker")
 
 
@@ -43,11 +54,13 @@ CLIP, OUT, TAG = (os.path.abspath(a) if i < 2 else a for i, a in enumerate(sys.a
 RECIPE_NAMES = [r for r in (arg("--recipes") or "").split(",") if r] or [
     r for r in [film_chain.approved(arg("--recipe-file") or film_chain.RECIPES)] if r]
 GREY = arg("--grey")
-AT = float(arg("--at", "10"))
+ATS = [float(t) for t in arg("--at", "10").split(",")]
 FPS = arg("--fps", "24")
+WINDOW = [float(t) for t in arg("--window").split(",")] if arg("--window") else None
 W, H = (int(v) for v in arg("--size", "1920x1080").split("x"))
 RENDER = [r for r in (arg("--render") or "").split(",") if r]
 RECIPES = film_chain.load(RECIPE_NAMES, arg("--recipe-file") or film_chain.RECIPES)
+INPUT = film_chain.load_input(arg("--input"), arg("--recipe-file") or film_chain.RECIPES) if arg("--input") else None
 os.makedirs(OUT, exist_ok=True)
 
 app = dvr.scriptapp("Resolve")
@@ -88,6 +101,21 @@ def pool_item(path):
     if not got:
         sys.exit(f"ImportMedia refused {path}")
     return got[0]
+
+
+def set_clip_input(item, value):
+    # 21.1 scripting refuses every value while the project splits colour space and gamma, and accepts the combined
+    # names with the split off (measured 2026-09-16 on the Osmo clip: 'Linear' accepted, 'Bypass' refused in both).
+    proj.SetSettings({"separateColorSpaceAndGamma": "0"})
+    ok = item.SetClipProperty("Input Color Space", value)
+    proj.SetSettings({"separateColorSpaceAndGamma": "1"})
+    got = (item.GetClipProperty("Input Color Space"), item.GetClipProperty("Input Gamma"))
+    if not ok or proj.GetSettings().get("separateColorSpaceAndGamma") != "1":
+        sys.exit(f"clip input {value!r} refused (reads {got!r})")
+    drift = {k: proj.GetSettings().get(k) for k, v in SETTINGS if k.startswith("colorSpace") and proj.GetSettings().get(k) != v}
+    if drift:
+        sys.exit(f"toggling the colour space split changed project colour settings: {drift}")
+    print(f"clip input set to {value!r}, reads {got!r}")
 
 
 def fresh_timeline(tl_name, item):
@@ -141,25 +169,48 @@ def add_stage(comp, prev, stage, gain, index):
     return tool
 
 
-def build(item, recipe):
+def resize_first(comp, prev, source):
+    # Fusion runs a clip's comp at the SOURCE resolution. Film Grain is per pixel, so a 4K source graded for a 1080p
+    # timeline got its grain averaged away in the downscale: 1.60 against the approved 3.60 (2026-09-16, Osmo clip).
+    # Scaling first puts every source on the pixel grid the look was approved on, and quarters the work.
+    tool = comp.AddTool(RESIZE_ID)
+    tool.SetAttrs({"TOOLS_Name": "s0_resize_to_timeline"})
+    tool.SetInput("Width", W)
+    tool.SetInput("Height", H)
+    tool.ConnectInput("Input", prev)
+    got = (tool.GetInput("Width"), tool.GetInput("Height"))
+    if tuple(int(v) for v in got) != (W, H) or not tool.Input.GetConnectedOutput():
+        sys.exit(f"resize to {W}x{H} did not take (reads {got})")
+    print(f"    s0_resize_to_timeline: {source[0]}x{source[1]} -> {W}x{H}")
+    return tool
+
+
+def build(item, recipe, pre=(), source=None):
     comp = item.GetFusionCompByIndex(1) if item.GetFusionCompCount() else item.AddFusionComp()
     reg = {t.GetAttrs("TOOLS_RegID"): t for t in comp.GetToolList(False).values()}
     for t in comp.GetToolList(False).values():
-        if t.GetAttrs("TOOLS_RegID") == DCTL_ID:
+        if t.GetAttrs("TOOLS_RegID") in (DCTL_ID, RESIZE_ID):
             t.Delete()
     prev = reg["MediaIn"]
+    if source and source != (W, H):
+        prev = resize_first(comp, prev, source)
     gain = film_chain.solve_gain(recipe) if recipe else None
-    for i, stage in enumerate(recipe["stages"] if recipe else [], 1):
+    for i, stage in enumerate(list(pre) + (recipe["stages"] if recipe else []), 1):
         prev = add_stage(comp, prev, stage, gain, i)
     reg["MediaOut"].ConnectInput("Input", prev)
     return gain
 
 
+def timecode(tl, seconds):
+    # Non-drop timecode counts whole frames at the nominal rate (30 for 29.97), so a frame index converts directly.
+    nominal = round(float(FPS))
+    f = tl.GetStartFrame() + round(seconds * float(FPS))
+    return f"{f // (3600 * nominal):02d}:{f // (60 * nominal) % 60:02d}:{f // nominal % 60:02d}:{f % nominal:02d}"
+
+
 def still(tl, path, seconds):
     app.OpenPage("color")
-    hh = tl.GetStartTimecode().split(":")[0]
-    s = int(seconds)
-    tl.SetCurrentTimecode(f"{hh}:{s // 60:02d}:{s % 60:02d}:00")
+    tl.SetCurrentTimecode(timecode(tl, seconds))
     time.sleep(4)
     ok = proj.ExportCurrentFrameAsStill(path)
     print(f"  STILL {path} -> {ok}")
@@ -170,7 +221,11 @@ def render(tl, stem):
     proj.SetCurrentTimeline(tl)
     app.OpenPage("deliver")
     print("  format mp4/H265 ->", proj.SetCurrentRenderFormatAndCodec("mp4", "H265"))
-    proj.SetRenderSettings({"TargetDir": OUT, "CustomName": stem, "SelectAllFrames": True, "FormatWidth": W,
+    span = {"SelectAllFrames": True}
+    if WINDOW:
+        span = {"SelectAllFrames": False, "MarkIn": tl.GetStartFrame() + round(WINDOW[0] * float(FPS)),
+                "MarkOut": tl.GetStartFrame() + round(WINDOW[1] * float(FPS)) - 1}
+    proj.SetRenderSettings({"TargetDir": OUT, "CustomName": stem, **span, "FormatWidth": W,
                             "FormatHeight": H, "VideoQuality": 80000 if W >= 3840 else 40000,
                             "EncodingProfile": "Main10", "ExportVideo": True, "ExportAudio": True,
                             "ColorSpaceTag": "Same as Project", "GammaTag": "Same as Project"})
@@ -179,7 +234,10 @@ def render(tl, stem):
     proj.StartRendering([job], False)
     while proj.IsRenderingInProgress():
         time.sleep(2)
-    print("  status", proj.GetRenderJobStatus(job), f"{time.time() - t0:.0f}s")
+    status = proj.GetRenderJobStatus(job)
+    print("  status", status, f"{time.time() - t0:.0f}s")
+    if status.get("JobStatus") != "Complete":
+        sys.exit(f"render {stem} ended {status.get('JobStatus')!r}, not Complete")
     print(f"  RENDERED {os.path.join(OUT, stem + '.mp4')}")
 
 
@@ -189,30 +247,35 @@ if GREY:
     # Scripting refuses every Input Gamma value on a PNG still (21.1, measured), so the frame is encoded to match
     # the default input instead; the -null timeline's 0.18 patch at code 125 is the check that the decode is exact.
     print("grey frame input as assigned:", repr(g.GetClipProperty("Input Color Space")), "/", repr(g.GetClipProperty("Input Gamma")))
-    sources.append(("grey", g, 1))
+    sources.append(("grey", g, [1], ()))
 clip = pool_item(CLIP)
 print("clip input as auto-detected:", repr(clip.GetClipProperty("Input Color Space")), "/", repr(clip.GetClipProperty("Input Gamma")))
+if INPUT:
+    set_clip_input(clip, INPUT["clip_input"])
 stem = os.path.splitext(os.path.basename(CLIP))[0].lower().replace("_", "-")
-sources.append((stem, clip, AT))
+sources.append((stem, clip, ATS, INPUT["stages"] if INPUT else ()))
 
 render_tls = []
-for label, item, seconds in sources:
-    for rname in ["null"] + RECIPE_NAMES:
+for label, item, times, pre in sources:
+    size = tuple(int(v) for v in str(item.GetClipProperty("Resolution")).split("x")) if item.GetClipProperty("Resolution") else None
+    for rname in ["null"] + (["idt"] if pre else []) + RECIPE_NAMES:
         recipe = RECIPES.get(rname)
         tl_name = f"{label}-{rname}"
         print(f"\n[{tl_name}]")
         tl = fresh_timeline(tl_name, item)
-        gain = build(tl.GetItemListInTrack("video", 1)[0], recipe)
+        gain = build(tl.GetItemListInTrack("video", 1)[0], recipe, () if rname == "null" else pre, size)
         if gain is not None:
             print(f"  printer-lights gain {gain:.6g}")
-        still(tl, os.path.join(OUT, f"{tl_name}.png"), seconds)
+        for t in times:
+            still(tl, os.path.join(OUT, f"{tl_name}.png" if len(times) == 1 else f"{tl_name}-t{t:g}.png"), t)
         if label == stem and rname in RENDER:
-            render_tls.append((tl, f"{stem}-{rname}"))
+            window = f"-{WINDOW[0]:g}-{WINDOW[1]:g}s" if WINDOW else ""
+            render_tls.append((tl, rname, f"{stem}-{rname}{window}"))
 pm.SaveProject()
-missing = set(RENDER) - {name.split(f"{stem}-", 1)[1] for _, name in render_tls}
+missing = set(RENDER) - {rname for _, rname, _ in render_tls}
 if missing:
     sys.exit(f"--render {sorted(missing)} not among --recipes")
-for tl, out_name in render_tls:
+for tl, _, out_name in render_tls:
     print(f"\n[render {out_name}]")
     render(tl, out_name)
     pm.SaveProject()
