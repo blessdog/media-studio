@@ -32,6 +32,16 @@ camera's noise. Not tested: whether the recipe fails on well-exposed Osmo
 footage too. The recipe was tuned on one iPhone clip, and 1.06% of this clip's
 pixels are at code 255 as shot (the door).
 
+Second message, on a frame of the render: "grainy as all hell", and "is this the actual quality or a low res
+sample?" It is the actual render, but it is 1920x1080 at 40.3 Mbps: `dctl_film_mini.py` renders at the
+timeline size (default 1920x1080), a quarter of the camera's 3840x2160 pixels, so a Retina screen shows it
+enlarged 2x. Same-region crops at 5 s
+(`jobs/film-look-mini/evidence/2026-09-16-osmo-dji-0004-where-the-grain-comes-from.jpg`): the 4K original
+through DJI's own LUT is the sharpest and cleanest; the 1080p conversion is softer; the 1080p look adds visible
+grain texture and pink skin. The agent's reading of that sheet, not Ryan's. The whole-frame grain measure used
+in row 29 gave 1.26 converted and 1.63 look here, lower than clip 0001's 3.28, so that measure does not match
+what the eye sees on this clip and is not evidence either way.
+
 What his verdict does not say: whether the D-Log M conversion alone is
 acceptable, and whether the look fails on clip 0001 too (no verdict was given
 there).
