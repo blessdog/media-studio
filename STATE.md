@@ -3,7 +3,7 @@
 
 # media-studio — STATE
 
-*Generated 2026-09-16 15:51 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
+*Generated 2026-09-16 16:06 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
 
 ## What is open
 
@@ -31,6 +31,9 @@ Every `kind: open` claim in the store. These are PLANS, not specs — `proven: f
 ? reshoot-the-osmo-test-with-nd-filters-arriving-2   (2026-09-16)
     Reshoot the Osmo test with ND filters (arriving 2026-09-17), 24p at 1/48
     why: the first Osmo clip clipped the sky in camera: 1.9 to 3.2% of pixels at the maximum code in the 60 s and
+? sync-the-osmo-wav-inside-resolve-with-autosyncau   (2026-09-16)
+    Sync the Osmo WAV inside Resolve with AutoSyncAudio
+    why: The Osmo's WAV leads its MP4 audio by 116-121 ms (clips 0001 and 0004); today the fix is a hand-measured
 ```
 
 ## What this project knows
@@ -38,7 +41,7 @@ Every `kind: open` claim in the store. These are PLANS, not specs — `proven: f
 The full index. Query it before choosing any technique — `find-technique.py "<your situation>"` — rather than reading it. Every claim declares the questions that must find it, and `check-retrieval.py` asserts they do.
 
 ```
-KNOWLEDGE — 28 live claims: 28 from this project (/Users/SSDrive/projects/mediaStudio/media-studio/knowledge), 0 universal (~/.claude/knowledge/store)
+KNOWLEDGE — 30 live claims: 30 from this project (/Users/SSDrive/projects/mediaStudio/media-studio/knowledge), 0 universal (~/.claude/knowledge/store)
 Query before choosing any technique:  python3 ~/.claude/knowledge/bin/find-technique.py "<your situation>"
 
 LAWS — absolute, no exceptions
@@ -65,6 +68,7 @@ VERDICTS — measured, and SCOPED; check the scope before reusing
   · ryan-approved-the-utility-dctls-film-look-with-400-grain iPhone 17 Pro log clip IMG_0006 (Final Cut Camera HEVC, Resolve detected Apple Log 2), 108
   · the-mini-renders-the-story-ir-with-ffmpeg-not-resolve straight-cut timelines (track-1 edits only) rendered from a workspace's story.json; the Ma
   · the-native-resolve-mcp-server-works-over-stdio DaVinci Resolve Studio 21.1.0.14 on this MacBook (macOS 26), external scripting = Local, R
+  · the-osmo-wav-leads-its-mp4-audio-by-about-120-ms DJI Osmo Action 5 Pro, two clips shot 2026-09-16 (DJI_20260916114233_0001_D, DJI_202609161
 
 REFUTED — already tried, do NOT retry
   ✗ an-rsync-remote-path-with-a-space-arrives-as-two-arguments rsync hands the remote path to the remote login shell as text, the shell word-splits it, and the far
@@ -78,6 +82,7 @@ OPEN — plans, NOT specs. proven: false. Do not build against these.
   ? every-ingest-and-build-tool-should-write-sha256- Why it matters: measured 2026-09-09 on summer-reel: after reconforming three clips in plac
   ? obs-camera-isolates-in-movies-iso-are-an-untouch Why it matters: Six -cam.mp4 isolates (Sept 5 and 7 sessions, one 15GB with no matching pr
   ? reshoot-the-osmo-test-with-nd-filters-arriving-2 Why it matters: the first Osmo clip clipped the sky in camera: 1.9 to 3.2% of pixels at th
+  ? sync-the-osmo-wav-inside-resolve-with-autosyncau Why it matters: The Osmo's WAV leads its MP4 audio by 116-121 ms (clips 0001 and 0004); to
 ```
 
 ## Where the work stands
@@ -93,6 +98,10 @@ OPEN — plans, NOT specs. proven: false. Do not build against these.
 *From git. The full narrative lives in `docs/journal/`; commit subjects are written as search bait, so `git log --grep` is the index.*
 
 ```
+2026-09-16  9c80c89  verdict: the Osmo Action 5 Pro WAV leads its MP4 audio by 116-121 ms; clip 0004 rendered with the approved look in 547 s and the WAV delayed 5,556 samples lands at 0.0 ms
+2026-09-16  781cbff  bookmark: sync the Osmo WAV inside Resolve with MediaPool.AutoSyncAudio by waveform instead of a hand-measured ffmpeg remux
+2026-09-16  0f04164  film-look-mini: audio_lag.py measures how far a second recording sits from a reference track (Osmo WAV vs its MP4 audio)
+2026-09-16  b1a9e27  state: regenerated (timestamp and recent-commit log only)
 2026-09-16  4613238  state: regenerated
 2026-09-16  a1df5fd  state: regenerated after the first Osmo render and the two bookmarks
 2026-09-16  f938e98  ledger: first Osmo D-Log M clip rendered with the approved look on the MacBook in 519 s, render frame matches the still within 2 codes
@@ -101,13 +110,15 @@ OPEN — plans, NOT specs. proven: false. Do not build against these.
 2026-09-16  f5d36c9  state: regenerated after the first Osmo D-Log M clip went through the approved look
 2026-09-16  24e12c3  knowledge: first Osmo D-Log M clip through the approved look; clip input is scriptable only with the colour space split off; 4K source on a 1080p timeline thins grain to 1.60 vs 3.60
 2026-09-16  7648e25  film-look-mini: Osmo D-Log M input (clip input Linear, D-Log M DCTL, DWG to Rec.709) ahead of the approved look, several still times, render window, resize to timeline first
-2026-09-16  556dc3a  grade library: utility-dctls Gamut Primaries Conversion, the DaVinci Wide Gamut to Rec.709 step between the Osmo D-Log M DCTL and the approved film look
-2026-09-12  32d0c0e  verdict: Ryan approved the utility-dctls film look with 400 grains per pixel on IMG_0006 ("looks good")
-2026-09-12  c72210a  state: regenerated after the lower-grain renders
-2026-09-12  283c2bf  ledger: grains per pixel is Film Grain's strength (video grain 5.0 / 2.2 / 1.5 at 100 / 400 / 1600) and the IMG_0006 knob ladder numbers
 ```
 
-*Remote: `https://github.com/blessdog/media-studio.git` — `master` is pushed.*
+### ⚠ UNPUSHED
+
+**4 commit(s) ahead of `origin/master`.** Committed is not the same as safe — a commit that has not left this machine has the durability of the disk it is on.
+
+```
+git push origin master
+```
 
 ### Uncommitted
 
