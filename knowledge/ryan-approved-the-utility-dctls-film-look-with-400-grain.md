@@ -5,7 +5,7 @@ conflict-key: which-film-look-is-approved-for-ryans-footage
 status: live
 supersedes: []
 verified-on: 2026-09-12
-scope: iPhone 17 Pro log clip IMG_0006 (Final Cut Camera HEVC, Resolve detected Apple Log 2), 1080p24, rendered by Resolve Studio 21.1 on the Mac mini; not yet seen on DJI Osmo Action 5 Pro D-Log M or on other scenes
+scope: iPhone 17 Pro log clip IMG_0006 (Final Cut Camera HEVC, Resolve detected Apple Log 2), 1080p24, rendered by Resolve Studio 21.1 on the Mac mini; rejected on DJI Osmo Action 5 Pro D-Log M clip 0004 (see the-approved-film-look-fails-on-osmo-clip-0004), not seen on other scenes
 evidence: Ryan, 2026-09-12, "img-0006-rich-halation-grain-400.mp4 looks good"; grades/film-look/evidence/2026-09-12-approved-look-img-0006-before-after.jpg; render at /Volumes/BleSSD/media-studio/img-0006/knobs/img-0006-rich-halation-grain-400.mp4
 asked-as:
   - which film look did Ryan approve
@@ -36,7 +36,8 @@ Rejected on the way, with his words:
 
 Still open: he chose no panel from the knob ladder
 (`jobs/film-look-mini/evidence/2026-09-12-img-0006-knob-ladder-sheet.jpg`), so print
-contrast stays at 2.8 and the Black Point fade stays off. The look has not been
-seen on Osmo footage.
+contrast stays at 2.8 and the Black Point fade stays off. On Osmo footage it was
+rejected: [[the-approved-film-look-fails-on-osmo-clip-0004]] ("looks like shit",
+2026-09-16).
 
 Related: [[utility-dctls-film-chain-in-resolve-matches-its-published-math]].
