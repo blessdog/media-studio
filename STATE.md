@@ -3,13 +3,16 @@
 
 # media-studio — STATE
 
-*Generated 2026-09-16 12:26 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
+*Generated 2026-09-16 12:49 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
 
 ## What is open
 
 Every `kind: open` claim in the store. These are PLANS, not specs — `proven: false`. Do not build against one without a verdict.
 
 ```
+? compare-other-free-film-emulators-on-osmo-d-log-   (2026-09-16)
+    Compare other free film emulators on Osmo D-Log M footage
+    why: Ryan, 2026-09-16: 'we can use other film emulators. there are loads of free, high quality ways we can ac
 ? compile-py-still-uses-project-setsetting-resolve   (2026-09-12)
     compile.py still uses Project.SetSetting; Resolve 21.1 deprecates it for SetSettings({...})
     why: README.md line 595 in the installed Scripting docs marks SetSetting/GetSetting deprecated; still works t
@@ -25,6 +28,9 @@ Every `kind: open` claim in the store. These are PLANS, not specs — `proven: f
 ? obs-camera-isolates-in-movies-iso-are-an-untouch   (2026-09-07)
     OBS camera isolates in movies/iso are an untouched multicam B-roll lane
     why: Six *-cam.mp4 isolates (Sept 5 and 7 sessions, one 15GB with no matching program recording) exist beside
+? reshoot-the-osmo-test-with-nd-filters-arriving-2   (2026-09-16)
+    Reshoot the Osmo test with ND filters (arriving 2026-09-17), 24p at 1/48
+    why: the first Osmo clip clipped the sky in camera: 1.9 to 3.2% of pixels at the maximum code in the 60 s and
 ```
 
 ## What this project knows
@@ -32,7 +38,7 @@ Every `kind: open` claim in the store. These are PLANS, not specs — `proven: f
 The full index. Query it before choosing any technique — `find-technique.py "<your situation>"` — rather than reading it. Every claim declares the questions that must find it, and `check-retrieval.py` asserts they do.
 
 ```
-KNOWLEDGE — 26 live claims: 26 from this project (/Users/SSDrive/projects/mediaStudio/media-studio/knowledge), 0 universal (~/.claude/knowledge/store)
+KNOWLEDGE — 28 live claims: 28 from this project (/Users/SSDrive/projects/mediaStudio/media-studio/knowledge), 0 universal (~/.claude/knowledge/store)
 Query before choosing any technique:  python3 ~/.claude/knowledge/bin/find-technique.py "<your situation>"
 
 LAWS — absolute, no exceptions
@@ -65,11 +71,13 @@ REFUTED — already tried, do NOT retry
   ✗ auto-editor-multi-input-drops-inputs-from-v3-export on the v3 export path the first input is consumed as the templateFile (stream rotation and attachmen
 
 OPEN — plans, NOT specs. proven: false. Do not build against these.
+  ? compare-other-free-film-emulators-on-osmo-d-log- Why it matters: Ryan, 2026-09-16: 'we can use other film emulators. there are loads of fre
   ? compile-py-still-uses-project-setsetting-resolve Why it matters: README.md line 595 in the installed Scripting docs marks SetSetting/GetSet
   ? docs-story-ir-md-is-cited-by-status-md-and-agent Why it matters: the Story IR contract is documented only in schema/story-ir.schema.json an
   ? edit-ir-find-does-not-work-on-a-multi-recording- Why it matters: moments.spans_from_ir raises 'need asset_id' when track 1 references more 
   ? every-ingest-and-build-tool-should-write-sha256- Why it matters: measured 2026-09-09 on summer-reel: after reconforming three clips in plac
   ? obs-camera-isolates-in-movies-iso-are-an-untouch Why it matters: Six -cam.mp4 isolates (Sept 5 and 7 sessions, one 15GB with no matching pr
+  ? reshoot-the-osmo-test-with-nd-filters-arriving-2 Why it matters: the first Osmo clip clipped the sky in camera: 1.9 to 3.2% of pixels at th
 ```
 
 ## Where the work stands
@@ -85,6 +93,10 @@ OPEN — plans, NOT specs. proven: false. Do not build against these.
 *From git. The full narrative lives in `docs/journal/`; commit subjects are written as search bait, so `git log --grep` is the index.*
 
 ```
+2026-09-16  f938e98  ledger: first Osmo D-Log M clip rendered with the approved look on the MacBook in 519 s, render frame matches the still within 2 codes
+2026-09-16  5688f16  bookmark: compare other free film emulators on Osmo footage; reshoot with ND filters at 24p (sky clipped 1.9-3.2% on the first clip)
+2026-09-16  3c48777  verdict: scaling a 4K clip to 1080p before the film chain restores the approved grain (3.28 vs 1.60 unscaled, 3.60 approved)
+2026-09-16  f5d36c9  state: regenerated after the first Osmo D-Log M clip went through the approved look
 2026-09-16  24e12c3  knowledge: first Osmo D-Log M clip through the approved look; clip input is scriptable only with the colour space split off; 4K source on a 1080p timeline thins grain to 1.60 vs 3.60
 2026-09-16  7648e25  film-look-mini: Osmo D-Log M input (clip input Linear, D-Log M DCTL, DWG to Rec.709) ahead of the approved look, several still times, render window, resize to timeline first
 2026-09-16  556dc3a  grade library: utility-dctls Gamut Primaries Conversion, the DaVinci Wide Gamut to Rec.709 step between the Osmo D-Log M DCTL and the approved film look
@@ -93,10 +105,6 @@ OPEN — plans, NOT specs. proven: false. Do not build against these.
 2026-09-12  283c2bf  ledger: grains per pixel is Film Grain's strength (video grain 5.0 / 2.2 / 1.5 at 100 / 400 / 1600) and the IMG_0006 knob ladder numbers
 2026-09-12  e6de774  state: regenerated after the knob ladder and lower-grain recipes
 2026-09-12  744a155  knowledge: what each utility-dctls knob measurably does on IMG_0006 (print gamma, print D max, Black Point, grains per pixel, halation)
-2026-09-12  ab68a3a  evidence: IMG_0006 knob ladder, print contrast / print D max / Black Point fade / halation / grain each turned down and up
-2026-09-12  c93e2c0  film-look-mini: knob ladder recipes generated from rich-halation-grain-400 (contrast, black depth, fade, glow, grain)
-2026-09-12  73bb116  film-look-mini: lower-grain recipes (400 and 1600 grains per pixel) and a knob ladder that shows each look setting turned down and up
-2026-09-12  8579802  state: regenerated after the utility-dctls film pipeline session
 ```
 
 *Remote: `https://github.com/blessdog/media-studio.git` — `master` is pushed.*
