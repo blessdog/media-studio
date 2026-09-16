@@ -16,17 +16,21 @@ asked-as:
 **Ryan rejected the approved iPhone film look on the second Osmo clip: "looks
 like shit." Do not apply `rich-halation-grain-400` to Osmo footage as a default.**
 
-Seen at 5 s, the plain D-Log M conversion next to the look, not measured:
+The agent's reading of the 5 s frame, not Ryan's words and not measured:
 whites turn cream-grey, skin moves toward orange-red, a milky haze spreads from
 the bright door, and the frame reads flat. Measured on the same frame (darkest
 1% / brightest 1% / luma std / mean max-min channel): converted 46/255/64.0/21.2,
 look 28/240/69.8/24.1. So the whole-frame numbers say "more contrast" while the
 picture reads flatter. Whole-frame statistics are not the verdict here, his eyes are.
 
-The mechanism is NOT diagnosed. Candidates, none tested: the recipe was tuned on
-one iPhone clip with a different exposure and scene; this clip is overexposed in
-camera (1.06% of pixels at code 255 as shot, the door); the Osmo's own
-sharpening and wide lens.
+His follow-up: "it looks low light but its not actually that dark where the shot
+came from". Measured cause of the low-light look, upstream of any grade: the
+camera ran about ISO 3200 at 1/110 to 1/200 s
+([[osmo-clip-0004-was-shot-at-about-iso-3200]]). The look made it worse by
+darkening the surroundings (dark wall 84 to 62) and adding grain over the
+camera's noise. Not tested: whether the recipe fails on well-exposed Osmo
+footage too. The recipe was tuned on one iPhone clip, and 1.06% of this clip's
+pixels are at code 255 as shot (the door).
 
 What his verdict does not say: whether the D-Log M conversion alone is
 acceptable, and whether the look fails on clip 0001 too (no verdict was given
