@@ -3,7 +3,7 @@
 
 # media-studio — STATE
 
-*Generated 2026-09-16 16:40 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
+*Generated 2026-09-16 16:46 from git, the knowledge store, and this project's own status script. Nothing here is typed by hand, so nothing here can be stale.*
 
 ## What is open
 
@@ -16,6 +16,9 @@ Every `kind: open` claim in the store. These are PLANS, not specs — `proven: f
 ? compile-py-still-uses-project-setsetting-resolve   (2026-09-12)
     compile.py still uses Project.SetSetting; Resolve 21.1 deprecates it for SetSettings({...})
     why: README.md line 595 in the installed Scripting docs marks SetSetting/GetSetting deprecated; still works t
+? denoise-high-iso-osmo-footage-with-resolve-s-noi   (2026-09-16)
+    Denoise high-ISO Osmo footage with Resolve's Noise Reduction plugin before DJI's LUT
+    why: At 4K the plain conversion of clip 0004 shows the camera's ISO 3200 speckle noise plainly, and no grade 
 ? docs-story-ir-md-is-cited-by-status-md-and-agent   (2026-09-07)
     docs/STORY-IR.md is cited by STATUS.md and AGENTS.md but does not exist
     why: the Story IR contract is documented only in schema/story-ir.schema.json and docstrings; a cold agent fol
@@ -41,7 +44,7 @@ Every `kind: open` claim in the store. These are PLANS, not specs — `proven: f
 The full index. Query it before choosing any technique — `find-technique.py "<your situation>"` — rather than reading it. Every claim declares the questions that must find it, and `check-retrieval.py` asserts they do.
 
 ```
-KNOWLEDGE — 33 live claims: 33 from this project (/Users/SSDrive/projects/mediaStudio/media-studio/knowledge), 0 universal (~/.claude/knowledge/store)
+KNOWLEDGE — 34 live claims: 34 from this project (/Users/SSDrive/projects/mediaStudio/media-studio/knowledge), 0 universal (~/.claude/knowledge/store)
 Query before choosing any technique:  python3 ~/.claude/knowledge/bin/find-technique.py "<your situation>"
 
 LAWS — absolute, no exceptions
@@ -80,6 +83,7 @@ REFUTED — already tried, do NOT retry
 OPEN — plans, NOT specs. proven: false. Do not build against these.
   ? compare-other-free-film-emulators-on-osmo-d-log- Why it matters: Ryan, 2026-09-16: 'we can use other film emulators. there are loads of fre
   ? compile-py-still-uses-project-setsetting-resolve Why it matters: README.md line 595 in the installed Scripting docs marks SetSetting/GetSet
+  ? denoise-high-iso-osmo-footage-with-resolve-s-noi Why it matters: At 4K the plain conversion of clip 0004 shows the camera's ISO 3200 speckl
   ? docs-story-ir-md-is-cited-by-status-md-and-agent Why it matters: the Story IR contract is documented only in schema/story-ir.schema.json an
   ? edit-ir-find-does-not-work-on-a-multi-recording- Why it matters: moments.spans_from_ir raises 'need asset_id' when track 1 references more 
   ? every-ingest-and-build-tool-should-write-sha256- Why it matters: measured 2026-09-09 on summer-reel: after reconforming three clips in plac
@@ -101,6 +105,8 @@ OPEN — plans, NOT specs. proven: false. Do not build against these.
 *From git. The full narrative lives in `docs/journal/`; commit subjects are written as search bait, so `git log --grep` is the index.*
 
 ```
+2026-09-16  e3cfd9d  bookmark: denoise high-ISO Osmo footage with Resolve's NoiseReduction OFX in the Fusion comp, then DJI's LUT on node 1 (blocked: Resolve closed)
+2026-09-16  78c3952  state: regenerated after the 4K renders
 2026-09-16  8e3a69d  verdict: utility-dctls look retired for DJI footage after 4K windows; clip 0004 full 4K conversion with synced WAV in 287 s; DJI's four looks sheet at 4K
 2026-09-16  1d81d9f  verdict: render 4K footage at 4K (Ryan: 'very pixulated... why are you not rendering in 4k?'); 4K timings on the MacBook, conversion 26 s and look 493 s per 30 s
 2026-09-16  8eec86b  film-look-mini: render at the clip's own resolution by default (4K Osmo renders 4K), --render idt renders the camera conversion alone
@@ -111,8 +117,6 @@ OPEN — plans, NOT specs. proven: false. Do not build against these.
 2026-09-16  f35c618  verdict: Ryan rejected the approved utility-dctls film look on Osmo clip 0004 ("looks like shit"); approved-look scope narrowed to the iPhone clip
 2026-09-16  a1e0d34  state: regenerated after the second Osmo render and the WAV offset verdict
 2026-09-16  9c80c89  verdict: the Osmo Action 5 Pro WAV leads its MP4 audio by 116-121 ms; clip 0004 rendered with the approved look in 547 s and the WAV delayed 5,556 samples lands at 0.0 ms
-2026-09-16  781cbff  bookmark: sync the Osmo WAV inside Resolve with MediaPool.AutoSyncAudio by waveform instead of a hand-measured ffmpeg remux
-2026-09-16  0f04164  film-look-mini: audio_lag.py measures how far a second recording sits from a reference track (Osmo WAV vs its MP4 audio)
 ```
 
 ### ⚠ UNPUSHED
